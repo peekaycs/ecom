@@ -3,8 +3,8 @@
         <nav class="pull-left">
             <ul class="nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="https://www.themekita.com">
-                        ThemeKita
+                    <a class="nav-link" href="/">
+                        {{env('APP_NAME')}}
                     </a>
                 </li>
                 <li class="nav-item">
@@ -12,15 +12,15 @@
                         Help
                     </a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" href="#">
                         Licenses
                     </a>
-                </li>
+                </li> -->
             </ul>
         </nav>
         <div class="copyright ml-auto">
-            2018, made with <i class="fa fa-heart heart text-danger"></i> by <a href="https://www.themekita.com">ThemeKita</a>
+           {{date('Y')}} , made with <i class="fa fa-angry angry text-danger"></i> by <a href="/"><i>Pramod</i></a>
         </div>				
     </div>
 </footer>

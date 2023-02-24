@@ -17,7 +17,10 @@
    <div class="main-panel">
 		<div class="content">
             @include('admin.includes.panel-header')
+            <div class="d-flex justify-content-center bd-highlight mb-3">
             @yield('content')
+            </div>
+           
         </div>
         @include('admin.includes.footer')
    </div>
