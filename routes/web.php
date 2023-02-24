@@ -13,6 +13,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+//admin routes
+
+
+
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.register');
 });
+
+
+
+
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth'])->name('dashboard');
+
+require __DIR__.'/auth.php';
+
+require __DIR__.'/admin_routes.php';
