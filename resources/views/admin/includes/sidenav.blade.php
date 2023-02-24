@@ -8,18 +8,22 @@
 						</div>
 						<div class="info">
 							<a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
+							@if(Auth::user()->user_type == 'admin')
 								<span>
-									Hizrian
+									
+										{{ Auth::user()->first_name}}
+									
 									<span class="user-level">Administrator</span>
 									<span class="caret"></span>
 								</span>
+							@endif
 							</a>
 							<div class="clearfix"></div>
 
 							<div class="collapse in" id="collapseExample">
 								<ul class="nav">
 									<li>
-										<a href="#profile">
+										<a href="{{route('admin-profile')}}">
 											<span class="link-collapse">My Profile</span>
 										</a>
 									</li>
@@ -43,29 +47,29 @@
 							<span class="sidebar-mini-icon">
 								<i class="fa fa-ellipsis-h"></i>
 							</span>
-							<h4 class="text-section">Components</h4>
+							<h4 class="text-section">Menu</h4>
 						</li>
 						<li class="nav-item">
 							<a data-toggle="collapse" href="#base">
 								<i class="fas fa-layer-group"></i>
-								<p>Base</p>
+								<p>Catalog</p>
 								<span class="caret"></span>
 							</a>
 							<div class="collapse" id="base">
 								<ul class="nav nav-collapse">
 									<li>
-										<a href="components/avatars.html">
-											<span class="sub-item">Avatars</span>
+										<a href="{{route('attribute-groups')}}">
+											<span class="sub-item">Attribute Groups</span>
 										</a>
 									</li>
 									<li>
-										<a href="components/buttons.html">
-											<span class="sub-item">Buttons</span>
+									<a href="{{route('attributes')}}">
+											<span class="sub-item">Attributes</span>
 										</a>
 									</li>
 									<li>
-										<a href="components/gridsystem.html">
-											<span class="sub-item">Grid System</span>
+										<a href="{{route('categories')}}">
+											<span class="sub-item">Categories</span>
 										</a>
 									</li>
 									<li>
