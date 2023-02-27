@@ -1,38 +1,50 @@
-@extends('admin.layouts.app',['page_title' => 'Category','action_title' => 'Categories','page_action' => route('categories')])
+@extends('admin.layouts.app',['page_title' => 'Sub Category','action_title' => 'Sub Categories','page_action' => route('subcategories')])
 
 @section('content')
 
 <div class="col-md-12">
     <div class="card">
-    <form class="form-horizontal" id="" method="post" action="{{route('store-category')}}">
+    <form class="form-horizontal" id="" method="post" action="{{route('store-subcategory')}}">
         <div class="card-header">
             <!-- <div class="card-title">Hoverable Table</div> -->
         </div>
         @csrf
         <div class="card-body">
             
-            <div class="form-group form-floating-label has-error">
-                <input id="" name="category" value="{{old('category') ? old('category') : $category->category}}" type="text" class="form-control input-border-bottom @error('name')  @enderror" required>
-                <label for="inputFloatingLabel" class="placeholder">Category</label>
+            <div class="form-group form-floating-label">
+                <input id="" name="subcategory" value="{{old('subcategory')}}" type="text" class="form-control input-border-bottom" required>
+                <label for="inputFloatingLabel" class="placeholder">Sub Category</label>
+                @error('subcategory')
+                <p class="text-danger">{{ $message }}</p>
+                @enderror
+            </div>
+            <div class="form-group form-floating-label">
+                <select id="" name="category" " class="form-control input-border-bottom" required>
+                    <option value=""></option>
+                    @foreach($categories as $category)
+                        <option value="{{$category->uuid}}" {{old('category') ? "selected" :''}}>{{$category->category}}</option>
+                    @endforeach
+                </select>
+                <label for="inputFloatingLabel" class="placeholder">Sub Category</label>
                 @error('category')
                 <p class="text-danger">{{ $message }}</p>
                 @enderror
             </div>
-            <div class="form-group form-floating-label has-error">
-                <input id="" name="slug" value="{{old('slug')}}" type="text" class="form-control input-border-bottom @error('name')  @enderror" required>
+            <div class="form-group form-floating-label ">
+                <input id="" name="slug" value="{{old('slug')}}" type="text" class="form-control input-border-bottom" required>
                 <label for="inputFloatingLabel" class="placeholder">Slug</label>
                 @error('slug')
                 <p class="text-danger">{{ $message }}</p>
                 @enderror
             </div>
-            <div class="form-group form-floating-label has-error">
-                <textarea id="" name="description"   class="form-control input-border-bottom @error('name')  @enderror" required>{{old('description')}}</textarea>
+            <div class="form-group form-floating-label ">
+                <textarea id="" name="description"   class="form-control input-border-bottom" required>{{old('description')}}</textarea>
                 <label for="inputFloatingLabel" class="placeholder">Description</label>
                 @error('description')
                 <p class="text-danger">{{ $message }}</p>
                 @enderror
             </div>
-            <div class="form-group form-floating-label has-error">
+            <div class="form-group form-floating-label ">
                 <input id="" name="order" value="{{old('order')}}" type="number" min="0" class="form-control input-border-bottom @error('name')  @enderror" required>
                 <label for="inputFloatingLabel" class="placeholder">Order</label>
                 @error('order')

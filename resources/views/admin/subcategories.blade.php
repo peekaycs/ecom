@@ -1,4 +1,4 @@
-@extends('admin.layouts.app',['page_title' => 'Category','action_title' => 'Add','page_action' => route('create-category'),'manage'=>'Sub Category','manage_action' => route('subcategories')])
+@extends('admin.layouts.app',['page_title' => 'Sub Category','action_title' => 'Add','page_action' => route('create-subcategory'),'manage'=>'Category','manage_action' => route('categories')])
 
 @section('content')
 <div class="col-md-12">
@@ -11,6 +11,7 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">Sub Category</th>
                         <th scope="col">Category</th>
                         <th scope="col">Slug</th>
                         <th scope="col">Description</th>
@@ -21,17 +22,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($categories as $category)
+                    @foreach($subCategories as $subCategory)
                     <tr>
                         <td>{{$loop->iteration}}</td>
-                        <td>{{ $category->category }}</td>
-                        <td>{{ $category->slug }}</td>
-                        <td>{{ Str::limit($category->description, 50) }}</td>
-                        <td>{{ $category->status ? "Enabled" : "Disabled" }}</td>
-                        <td>{{ $category->order }}</td>
-                        <td>{{ $category->visibility ? "Visible" : "Invisible" }}</td>
+                        <td>{{ $subCategory->subcategory }}</td>
+                        <td>{{ $subCategory->category[0]->category }}</td>
+                        <td>{{ $subCategory->slug }}</td>
+                        <td>{{ Str::limit($subCategory->description, 50) }}</td>
+                        <td>{{ $subCategory->status ? "Enabled" : "Disabled" }}</td>
+                        <td>{{ $subCategory->order }}</td>
+                        <td>{{ $subCategory->visibility ? "Visible" : "Invisible" }}</td>
                         <td>
-                            <a href="{{route('edit-category', $category->uuid)}}" title="view"><i class="far fa-eye"></i></a>
+                            <a href="{{route('edit-subcategory', $subCategory->uuid)}}" title="view"><i class="far fa-eye"></i></a>
                         </td>
                     </tr>
                     @endforeach
@@ -41,7 +43,7 @@
         </div>
         <div class="col-sm-12 col-md-6"></div>
         <div class="col-sm-12 col-md-6">
-        {{ $categories->links() }}
+        {{ $subCategories->links() }}
         </div>
     </div>
     
