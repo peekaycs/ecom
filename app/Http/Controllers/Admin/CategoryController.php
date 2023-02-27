@@ -42,21 +42,13 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         //
-        $request->validate(
-            [
-                'category' => 'required|string|min:3|max:255|unique:categories',
-                'slug' => 'required|string|min:3|max:255|unique:categories',
-                'description' => 'string|min:3|max:1000',
-                'status' => 'required|boolean',
-                'order' => 'required|integer',
-                'visibility' => 'required|boolean',
-            ]
-        );
-
+       
+        $this->validateCategory($request);
         $category = Category::create(
             [
                 'uuid' => Str::uuid(),
-                'category'  =>  $request->category,
+                'category_id' =>    $request->category_id,
+                'subcategory'  =>  $request->subcategory,
                 'slug'  =>  $request->slug,
                 'description'   => $request->description,
                 'status' => $request->status,
@@ -65,9 +57,9 @@ class CategoryController extends Controller
             ]
         );
         if($category){
-            return redirect(route('create-category'))->with('success','Attribute group saved successfully');
+            return redirect(route('create-category'))->with('success','Category saved successfully');
            }
-           return redirect(route('create-category'))->with('error','Can\'t create attribute group');
+           return redirect(route('create-category'))->with('error','Can\'t create category');
     }
 
     /**
@@ -79,11 +71,7 @@ class CategoryController extends Controller
     public function show(Category $category, $id)
     {
         //
-        // dd($category);
-        echo $id;
-        $category = $category->whereUuid('uuid',$id);
-        dd($category);
-        return view('admin.show-category', compact('category'));
+       
     }
 
     /**
@@ -92,9 +80,12 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit(Category $category, $id)
     {
         //
+        $category = $category->whereUuid($id)->first();
+        
+        return view('admin.edit-category', array('category'=> $category));
     }
 
     /**
@@ -104,9 +95,23 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, Category $category, $id)
     {
         //
+        $this->validateCategory($request);
+
+        $category = Category::whereUuid($id)->first();
+        $category->category = $request->category;
+        $category->slug = $request->slug;
+        $category->description = $request->description;
+        $category->status = $request->status;
+        $category->order = $request->order;
+        $category->visibility = $request->visibility;
+        $saved = $category->save();
+        if($saved){
+            return redirect(route('categories'))->with('success','Category saved successfully');
+           }
+           return redirect(route('edit-category',$id))->with('error','Can\'t update category');
     }
 
     /**
@@ -118,5 +123,18 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         //
+    }
+
+    private function validateCategory($request){
+        $request->validate(
+            [
+                'category' => 'required|string|min:3|max:255',
+                'slug' => 'required|string|min:3|max:255',
+                'description' => 'string|min:3|max:1000',
+                'status' => 'required|boolean',
+                'order' => 'required|integer',
+                'visibility' => 'required|boolean',
+            ]
+        );
     }
 }

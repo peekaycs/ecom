@@ -44,4 +44,15 @@ class AttributeController extends Controller
 
        return $attribute ? redirect(route('create-attribute'))->with('success', 'Attribute saved successfully') : redirect(route('create-attribute'))->with('error', 'Can\'t save attribute'); 
     }
+
+    public function form(Request $request){
+        $attributeGroups = AttributeGroup::all();
+
+        echo view('admin.auxiliary.attribute-form', array('attributeGroups' => $attributeGroups));
+    }
+
+    public  function options(Request $request,$id){
+        $attributes = Attribute::where('group_id',$id)->get();
+        echo view('admin.auxiliary.attribute-options', array('attributes' => $attributes));
+    }
 }
