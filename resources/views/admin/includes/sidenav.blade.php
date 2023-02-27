@@ -77,7 +77,7 @@
 											<span class="sub-item">Products</span>
 										</a>
 									</li>
-									<li>
+									<!-- <li>
 										<a href="components/notifications.html">
 											<span class="sub-item">Notifications</span>
 										</a>
@@ -106,11 +106,11 @@
 										<a href="components/typography.html">
 											<span class="sub-item">Typography</span>
 										</a>
-									</li>
+									</li> -->
 								</ul>
 							</div>
 						</li>
-						<li class="nav-item">
+						<!-- <li class="nav-item">
 							<a data-toggle="collapse" href="#sidebarLayouts">
 								<i class="fas fa-th-list"></i>
 								<p>Sidebar Layouts</p>
@@ -277,9 +277,9 @@
 									</li>
 								</ul>
 							</div>
-						</li>
+						</li> -->
 						<li class="mx-4 mt-2">
-							<a href="http://themekita.com/atlantis-bootstrap-dashboard.html" class="btn btn-primary btn-block"><span class="btn-label mr-2"> <i class="fa fa-heart"></i> </span>Buy Pro</a> 
+							<a href="#" class="btn btn-primary btn-block"><span class="btn-label mr-2"> <i class="fa fa-heart"></i> </span>Buy Pro</a> 
 						</li>
 					</ul>
 				</div>
