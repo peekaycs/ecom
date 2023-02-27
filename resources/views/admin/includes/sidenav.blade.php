@@ -73,8 +73,8 @@
 										</a>
 									</li>
 									<li>
-										<a href="components/panels.html">
-											<span class="sub-item">Panels</span>
+										<a href="{{route('products')}}">
+											<span class="sub-item">Products</span>
 										</a>
 									</li>
 									<li>

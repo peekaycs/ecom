@@ -7,6 +7,8 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\AttributeGroupController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\SubCategoryController;
+use App\Http\Controllers\Admin\ProductController;
 
 Route::get('/admin', function(){
     return view('auth.login');
@@ -14,15 +16,34 @@ Route::get('/admin', function(){
 Route::group(['prefix'=>'admin','middleware' => ['auth','isAdmin']], function(){
     Route::get('/dashboard', [DashboardController::class,'index'])->name('admin-dashboard');
     Route::get('/profile', [ProfileController::class,'index'])->name('admin-profile');
+    // attributes group
     Route::get('/attribute-groups/', [AttributeGroupController::class,'index'])->name('attribute-groups');
     Route::get('/attribute-groups/create', [AttributeGroupController::class,'create'])->name('create-attribute-group');
     Route::post('/attribute-groups/store', [AttributeGroupController::class,'store'])->name('store-attribute-group');
+    // attributes
     Route::get('/attributes', [AttributeController::class,'index'])->name('attributes');
     Route::get('/attributes/create', [AttributeController::class,'create'])->name('create-attribute');
     Route::post('/attributes/store', [AttributeController::class,'store'])->name('store-attribute');
+    // category 
     Route::get('/categories', [CategoryController::class,'index'])->name('categories');
     Route::get('/categories/create', [CategoryController::class,'create'])->name('create-category');
     Route::post('/categories/store', [CategoryController::class,'store'])->name('store-category');
-    Route::get('/categories/show/{id}', [CategoryController::class,'show'])->name('show-category');
-    
+    Route::get('/categories/edit/{id}', [CategoryController::class,'edit'])->name('edit-category');
+    Route::put('/categories/update/{id}', [CategoryController::class,'update'])->name('update-category');
+    // subcategory
+    Route::get('/subcategories', [SubCategoryController::class,'index'])->name('subcategories');
+    Route::get('/subcategories/create', [SubCategoryController::class,'create'])->name('create-subcategory');
+    Route::post('/subcategories/store', [SubCategoryController::class,'store'])->name('store-subcategory');
+    Route::get('/subcategories/edit/{id}', [SubCategoryController::class,'edit'])->name('edit-subcategory');
+    Route::put('/subcategories/update/{id}', [SubCategoryController::class,'update'])->name('update-subcategory');
+    // Product
+    Route::get('/products', [ProductController::class,'index'])->name('products');
+    Route::get('/products/create', [ProductController::class,'create'])->name('create-product');
+    Route::post('/products/store', [ProductController::class,'store'])->name('store-product');
+    Route::get('/products/edit/{id}', [ProductController::class,'edit'])->name('edit-product');
+    Route::put('/products/update/{id}', [ProductController::class,'update'])->name('update-product');
+
+    // auxiliary routes
+    Route::get('/attributes/form',[AttributeController::class,'form'])->name('get-attribute-form');
+    Route::get('/attributes/options/{id}',[AttributeController::class,'options'])->name('get-attribute-options');
 });

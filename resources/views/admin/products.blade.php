@@ -1,4 +1,4 @@
-@extends('admin.layouts.app',['page_title' => 'Category','action_title' => 'Add','page_action' => route('create-category'),'manage'=>'Sub Category','manage_action' => route('subcategories')])
+@extends('admin.layouts.app',['page_title' => 'Products','action_title' => 'Add product','page_action' => route('create-product'),'manage'=>'Add attribute','manage_action' => route('create-attribute')])
 
 @section('content')
 <div class="col-md-12">
@@ -21,6 +21,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {{--
                     @foreach($categories as $category)
                     <tr>
                         <td>{{$loop->iteration}}</td>
@@ -35,13 +36,13 @@
                         </td>
                     </tr>
                     @endforeach
-                    
+                    --}}
                 </tbody>
             </table>
         </div>
         <div class="col-sm-12 col-md-6"></div>
         <div class="col-sm-12 col-md-6">
-        {{ $categories->links() }}
+        {{-- {{ $categories->links() }} --}}
         </div>
     </div>
     
