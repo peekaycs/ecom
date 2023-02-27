@@ -22,7 +22,7 @@ class CreateProductAttributesTable extends Migration
             $table->foreign('product_id')->references('id')->on('products');
             $table->unsignedBigInteger('attribute_group_id')->index();
             $table->foreign('attribute_group_id')->references('id')->on('attribute_groups');
-            $table->integer('attribute_id')->index();
+            $table->unsignedBigInteger('attribute_id')->index();
             $table->foreign('attribute_id')->references('id')->on('attributes');
             $table->float('price',8,2);
             $table->float('discount',8,2)->default(0);
