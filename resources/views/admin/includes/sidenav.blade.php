@@ -278,9 +278,9 @@
 								</ul>
 							</div>
 						</li> -->
-						<li class="mx-4 mt-2">
+						<!-- <li class="mx-4 mt-2">
 							<a href="#" class="btn btn-primary btn-block"><span class="btn-label mr-2"> <i class="fa fa-heart"></i> </span>Buy Pro</a> 
-						</li>
+						</li> -->
 					</ul>
 				</div>
 			</div>

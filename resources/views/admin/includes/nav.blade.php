@@ -42,9 +42,9 @@
 							</a>
 						</li>
 						<li class="nav-item dropdown hidden-caret">
-							<a class="nav-link dropdown-toggle" href="#" id="messageDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<i class="fa fa-envelope"></i>
-							</a>
+							<!-- <a class="nav-link dropdown-toggle" href="#" id="messageDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> -->
+								<!-- <i class="fa fa-envelope"></i> -->
+							<!-- </a> -->
 							<ul class="dropdown-menu messages-notif-box animated fadeIn" aria-labelledby="messageDropdown">
 								<li>
 									<div class="dropdown-title d-flex justify-content-between align-items-center">
@@ -244,7 +244,7 @@
 										<a class="dropdown-item" href="{{route('admin-profile')}}">My Profile</a>
 										
 										<div class="dropdown-divider"></div>
-										<a class="dropdown-item" href="#">Account Setting</a>
+										<!-- <a class="dropdown-item" href="#">Account Setting</a> -->
 										<div class="dropdown-divider"></div>
 										
 										<form method="POST" action="{{ route('logout') }}">

@@ -93,6 +93,16 @@
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
+                    <div class="form-group form-floating-label @error('featured') has-error @enderror">
+                    <select class="form-control input-border-bottom" name="featured" id="featured" required>
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>
+                        </select>
+                        <label for="selectFloatingLabel" class="placeholder">Featured</label>
+                        @error('featured')
+                        <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
                     <div class="form-group form-floating-label @error('order') has-error @enderror">
                         <input type="number" class="form-control input-border-bottom" name="order" min=0 step=1 id="order" required>
                         <label for="selectFloatingLabel" class="placeholder">Order</label>

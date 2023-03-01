@@ -10,6 +10,7 @@ use App\Models\SubCategory;
 use App\Models\AttributeGroup;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use App\Models\ProductAttribute;
 
 class ProductController extends Controller
 {
@@ -21,7 +22,8 @@ class ProductController extends Controller
     public function index()
     {
         //
-        return view('admin.products');
+        $products = Product::paginate(env('PER_PAGE'))->withQueryString();
+        return view('admin.products',array('products' => $products));
     }
 
     /**
@@ -51,8 +53,11 @@ class ProductController extends Controller
         // $this->validateProduct($request);
         $product_id = Str::uuid();
         $user_id = Auth::user()->uuid;
+        // $image = 
+        $product_id = Str::uuid();
         $product = Product::create(
             [
+            'id' => $product_id,
             'user_id' => $user_id,
             'product' => $request->product,
             'category_id' =>    $request->category_id,
@@ -66,10 +71,29 @@ class ProductController extends Controller
             'short_description' => $request->short_description,
             'featured'  => $request->featured,
             'order' => $request->order,
-            
+            'image' => $request->file('file')
             ]
-
         );
+        $input_data = $request->all();
+        $attribute_groups_count = $request->attribute_group_id;
+        for($i = 0; $i < count($attribute_groups_count); $i++){
+            $attribute_data[] = [
+                'id' => Str::uuid(),
+                'product_id' => $product_id,
+                'attribute_group_id' => $input_data['attribute_group_id'][$i],
+                'attribute_id' => $input_data['attribute'][$i],
+                'price' => $input_data['attribute_price'][$i],
+                'discount' => $input_data['attribute_discount'][$i],
+                'order' => $input_data['attribute_order'][$i],
+            ];
+        }
+        if($product){
+            foreach($attribute_data as $attribute){
+                ProductAttribute::create($attribute);
+            }
+            return redirect(route('create-product'))->with('success','Product saved successfully');
+           }
+           return redirect(route('create-product'))->with('error','Can\'t save product');
     }
 
     /**

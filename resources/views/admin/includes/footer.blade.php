@@ -20,7 +20,7 @@
             </ul>
         </nav>
         <div class="copyright ml-auto">
-           {{date('Y')}} , made with <i class="fa fa-angry angry text-danger"></i> by <a href="/"><i>Pramod</i></a>
+           <!-- {{date('Y')}} , made with <i class="fa fa-angry angry text-danger"></i> by <a href="/"><i>Pramod</i></a> -->
         </div>				
     </div>
 </footer>
