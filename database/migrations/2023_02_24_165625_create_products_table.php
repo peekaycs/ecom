@@ -28,6 +28,7 @@ class CreateProductsTable extends Migration
             $table->float('discount',8,2)->default(0);
             $table->integer('quantity');
             $table->boolean('published')->default(true);
+            $table->boolean('featured')->default(1);
             $table->string('short_description',500)->nullable();
             $table->string('image')->nullable();
             $table->timestamps();

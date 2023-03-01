@@ -17,7 +17,7 @@ class CreateProductAttributesTable extends Migration
             $table->engine = 'InnoDB';
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_general_ci';
-            $table->uuid('uuid')->primary()->index();
+            $table->uuid('id')->primary()->index();
             $table->uuid('product_id')->index();
             $table->foreign('product_id')->references('id')->on('products');
             $table->unsignedBigInteger('attribute_group_id')->index();

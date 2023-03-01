@@ -11,38 +11,38 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Category</th>
+                        <th scope="col">Product</th>
                         <th scope="col">Slug</th>
                         <th scope="col">Description</th>
                         <th scope="col">Status</th>
                         <th scope="col">Order</th>
-                        <th scope="col">Show in menu</th>
+                        <th scope="col">Published</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {{--
-                    @foreach($categories as $category)
+                    
+                    @foreach($products as $product)
                     <tr>
                         <td>{{$loop->iteration}}</td>
-                        <td>{{ $category->category }}</td>
-                        <td>{{ $category->slug }}</td>
-                        <td>{{ Str::limit($category->description, 50) }}</td>
-                        <td>{{ $category->status ? "Enabled" : "Disabled" }}</td>
-                        <td>{{ $category->order }}</td>
-                        <td>{{ $category->visibility ? "Visible" : "Invisible" }}</td>
+                        <td>{{ $product->product }}</td>
+                        <td>{{ $product->slug }}</td>
+                        <td>{{ Str::limit($product->short_description, 50) }}</td>
+                        <td>{{ $product->status ? "Enabled" : "Disabled" }}</td>
+                        <td>{{ $product->order }}</td>
+                        <td>{{ $product->published ? "Published" : "Unpublished" }}</td>
                         <td>
-                            <a href="{{route('edit-category', $category->uuid)}}" title="view"><i class="far fa-eye"></i></a>
+                            <!-- <a href="{{route('edit-category', $product->id)}}" title="view"><i class="far fa-eye"></i></a> -->
                         </td>
                     </tr>
                     @endforeach
-                    --}}
+                    
                 </tbody>
             </table>
         </div>
         <div class="col-sm-12 col-md-6"></div>
         <div class="col-sm-12 col-md-6">
-        {{-- {{ $categories->links() }} --}}
+        {{ $products->links() }} 
         </div>
     </div>
     
