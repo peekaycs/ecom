@@ -225,7 +225,7 @@
 						<li class="nav-item dropdown hidden-caret">
 							<a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
 								<div class="avatar-sm">
-									<img src="{{ url(Auth::user()->userProfile->image ?? '')  }}" alt="..." class="avatar-img rounded-circle">
+									<img src="{{ url(Auth::user()->userProfile->image ?? 'assets/admin/img/logo.jpeg')  }}" alt="..." class="avatar-img rounded-circle">
 								</div>
 							</a>
 							<ul class="dropdown-menu dropdown-user animated fadeIn">
