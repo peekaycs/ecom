@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Str;
+use App\Models\UserProfile;
+
 
 class RegisteredUserController extends Controller
 {
@@ -41,20 +43,23 @@ class RegisteredUserController extends Controller
             'mobile' => ['required', 'integer','min:10',  'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
-
+        $user_id = Str::uuid();
         $user = User::create([
             'first_name' => Str::ucfirst($request->first_name),
             'last_name' => Str::ucfirst($request->last_name),
-            'uuid' => Str::uuid(),
+            'uuid' => $user_id,
             'email' => $request->email,
             'mobile'    => $request->mobile,
             'password' => Hash::make($request->password),
         ]);
 
         event(new Registered($user));
-
+        UserProfile::create([
+            'id' => Str::uuid(),
+            'user_id' => $user_id,
+        ]);
         Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+        return redirect(RouteServiceProvider::ADMIN_HOME);
     }
 }

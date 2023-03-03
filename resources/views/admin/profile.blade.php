@@ -1,4 +1,4 @@
-@extends('admin.layouts.app',['page_title' => 'My Profile'])
+@extends('admin.layouts.app',['page_title' => 'My Profile','manage'=>'Update','manage_action' => route('admin-profile-edit')])
 
 @section('content')
 <div class="col-md-12">

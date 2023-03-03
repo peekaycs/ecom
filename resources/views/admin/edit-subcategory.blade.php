@@ -14,7 +14,7 @@
             
             <div class="form-group form-floating-label @error('subcategory') has-error @enderror">
                 <input id="" name="subcategory" value="{{old('subcategory') ? old('subcategory') : $subCategory->subcategory}}" type="text" class="form-control input-border-bottom " required>
-                <label for="inputFloatingLabel" class="placeholder">Category</label>
+                <label for="inputFloatingLabel" class="placeholder">Sub Category</label>
                 @error('subcategory')
                 <p class="text-danger">{{ $message }}</p>
                 @enderror
@@ -26,7 +26,7 @@
                         <option value="{{$category->uuid}}" {{ old('category') ? (old('category') == $category->uuid ? "selected" : '') : ($category->uuid == $subCategory->category_id ? " selected " :'')   }}>{{$category->category}}</option>
                     @endforeach
                 </select>
-                <label for="inputFloatingLabel" class="placeholder">Sub Category</label>
+                <label for="inputFloatingLabel" class="placeholder">Category</label>
                 @error('category')
                 <p class="text-danger">{{ $message }}</p>
                 @enderror

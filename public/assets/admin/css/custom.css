@@ -2,3 +2,7 @@
     max-height: 850px;
     overflow-y: scroll;
 }
+
+#custom-logo{
+    width: 95px;
+}

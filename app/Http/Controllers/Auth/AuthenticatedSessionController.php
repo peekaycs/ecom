@@ -7,6 +7,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -32,6 +33,8 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
         if(Auth::check()){
+            $userProfile = User::with('userProfile')->find(Auth::user()->id);
+            Auth::user()->userProfile = $userProfile;
             if(Auth::user()->user_type == 'admin'){
                 return redirect()->intended(RouteServiceProvider::ADMIN_HOME);
                 exit;

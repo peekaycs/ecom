@@ -17,7 +17,7 @@
                         <th scope="col">Status</th>
                         <th scope="col">Order</th>
                         <th scope="col">Published</th>
-                        <th scope="col">Action</th>
+                        <!-- <th scope="col">Action</th> -->
                     </tr>
                 </thead>
                 <tbody>
@@ -32,7 +32,7 @@
                         <td>{{ $product->order }}</td>
                         <td>{{ $product->published ? "Published" : "Unpublished" }}</td>
                         <td>
-                            <!-- <a href="{{route('edit-category', $product->id)}}" title="view"><i class="far fa-eye"></i></a> -->
+                            <!-- <a href="{{route('edit-product', $product->id)}}" title="view"><i class="far fa-eye"></i></a> -->
                         </td>
                     </tr>
                     @endforeach

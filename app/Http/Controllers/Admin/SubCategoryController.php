@@ -114,8 +114,8 @@ class SubCategoryController extends Controller
         $saved = $subCategory->save();
         if($saved){
             return redirect(route('subcategories'))->with('success','Sub category saved successfully');
-           }
-           return redirect(route('edit-category',$id))->with('error','Can\'t update sub category');
+        }
+        return redirect(route('edit-category',$id))->with('error','Can\'t update sub category');
     }
 
     /**

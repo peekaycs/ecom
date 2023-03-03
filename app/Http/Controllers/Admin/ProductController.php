@@ -11,7 +11,10 @@ use App\Models\AttributeGroup;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use App\Models\ProductAttribute;
-
+use App\Models\ProductImage;
+use App\Models\ProductAttributeImage;
+use Image;
+use File;
 class ProductController extends Controller
 {
     /**
@@ -53,8 +56,10 @@ class ProductController extends Controller
         // $this->validateProduct($request);
         $product_id = Str::uuid();
         $user_id = Auth::user()->uuid;
-        // $image = 
+        // Product Image
+        $productImage = $this->getProductImage($request->file('image'), $request->product);
         $product_id = Str::uuid();
+        // product
         $product = Product::create(
             [
             'id' => $product_id,
@@ -71,25 +76,49 @@ class ProductController extends Controller
             'short_description' => $request->short_description,
             'featured'  => $request->featured,
             'order' => $request->order,
-            'image' => $request->file('file')
+            'image' => $productImage['actualImage']
             ]
         );
-        $input_data = $request->all();
+
+        // product image
+
+        $productImage = ProductImage::create(
+            [
+                'uuid'  => Str::uuid(),
+                'product_id' => $product_id,
+                'image' => $productImage['actualImage'],
+            ]
+        );
+
+        $inputData = $request->all();
+       
         $attribute_groups_count = $request->attribute_group_id;
         for($i = 0; $i < count($attribute_groups_count); $i++){
             $attribute_data[] = [
                 'id' => Str::uuid(),
                 'product_id' => $product_id,
-                'attribute_group_id' => $input_data['attribute_group_id'][$i],
-                'attribute_id' => $input_data['attribute'][$i],
-                'price' => $input_data['attribute_price'][$i],
-                'discount' => $input_data['attribute_discount'][$i],
-                'order' => $input_data['attribute_order'][$i],
+                'attribute_group_id' => $inputData['attribute_group_id'][$i],
+                'attribute_id' => $inputData['attribute'][$i],
+                'price' => $inputData['attribute_price'][$i],
+                'discount' => $inputData['attribute_discount'][$i],
+                'order' => $inputData['attribute_order'][$i],
             ];
         }
         if($product){
-            foreach($attribute_data as $attribute){
-                ProductAttribute::create($attribute);
+            foreach($attribute_data as $key=>$attribute){
+                $productAttribute = false;
+                $productAttribute = ProductAttribute::create($attribute);
+                if($productAttribute){
+                    $attributeImage = $this->getProductImage($inputData['attribute_images'][$key], $request->product);
+                    ProductAttributeImage::create(
+                        [
+                            'uuid'  => Str::uuid(),
+                            'product_id' => $product_id,
+                            'product_attribute_id'  => $attribute['id'],
+                            'image' => $attributeImage['actualImage']
+                        ]
+                    );
+                }
             }
             return redirect(route('create-product'))->with('success','Product saved successfully');
            }
@@ -113,9 +142,20 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit(Product $product, $id)
     {
         //
+        echo '<pre>';
+        $product = Product::with('attributes')->get();
+        foreach ($product as $p){
+            print_r($p);
+        }
+        die;
+        $categories = Category::all();
+        $subCategories = SubCategory::all();
+        $attributeGroups = AttributeGroup::all();
+        return view('admin.create-product',array('categories' => $categories,'subCategories' => $subCategories, 'attributeGroups' => $attributeGroups));
+
     }
 
     /**
@@ -147,5 +187,35 @@ class ProductController extends Controller
                 'product' => 'required',
             ]
         );
+    }
+
+    private function getProductImage($image, $name){
+        if($image){
+            $input['file'] = Str::lower($name.Str::random(10)).'.'.$image->getClientOriginalExtension();
+            $thumbnail = '/images/products/thumbnails';
+            $actualImage = '/images/products';
+            $targetPath = public_path($thumbnail);
+            if (!File::exists($targetPath)) {
+                File::makeDirectory($targetPath);
+            }
+            $imgFile = Image::make($image->getRealPath());
+            $imgFile->resize(200, 200, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($targetPath.'/'.$input['file']);
+            $path['thumbnail'] = $thumbnail.'/'.$input['file'];
+
+            $actualImage = '/images/products';
+            $targetPath = public_path($actualImage);
+            if (!File::exists($targetPath)) {
+                File::makeDirectory($targetPath);
+            }
+            $imgFile = Image::make($image->getRealPath());
+            $imgFile->resize(600, 600, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($targetPath.'/'.$input['file']);
+            $path['actualImage'] = $actualImage.'/'.$input['file'];
+            return $path;
+
+        }
     }
 }
