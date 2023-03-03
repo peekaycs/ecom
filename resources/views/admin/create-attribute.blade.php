@@ -1,4 +1,4 @@
-@extends('admin.layouts.app',['page_title' => 'Attributes','page_action' => route('attributes')])
+@extends('admin.layouts.app',['page_title' => 'Attributes','action_title' => 'Attributes','page_action' => route('attributes')])
 
 @section('content')
 

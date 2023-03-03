@@ -3,7 +3,7 @@
 			<div class="logo-header" data-background-color="blue">
 				
 				<a href="index.html" class="logo">
-					<img src="{{URL::asset('assets/admin/img/logo.svg')}}" alt="navbar brand" class="navbar-brand">
+					<img id="custom-logo" src="{{URL::asset('assets/admin/img/logo.jpeg')}}" alt="navbar brand" class="navbar-brand ">
 				</a>
 				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon">
@@ -225,14 +225,14 @@
 						<li class="nav-item dropdown hidden-caret">
 							<a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
 								<div class="avatar-sm">
-									<img src="{{URL::asset('assets/admin/img/profile.jpg')}}" alt="..." class="avatar-img rounded-circle">
+									<img src="{{ url(Auth::user()->userProfile->image) }}" alt="..." class="avatar-img rounded-circle">
 								</div>
 							</a>
 							<ul class="dropdown-menu dropdown-user animated fadeIn">
 								<div class="dropdown-user-scroll scrollbar-outer">
 									<li>
 										<div class="user-box">
-											<div class="avatar-lg"><img src="{{URL::asset('assets/admin/img/profile.jpg')}}" alt="image profile" class="avatar-img rounded"></div>
+											<div class="avatar-lg"><img src="{{ url(Auth::user()->userProfile->image) }}" alt="image profile" class="avatar-img rounded"></div>
 											<div class="u-text">
 												<h4>{{ Auth::user()->first_name}}</h4>
 												<p class="text-muted">{{ Auth::user()->email}}</p><a href="{{route('admin-profile')}}" class="btn btn-xs btn-secondary btn-sm">View Profile</a>

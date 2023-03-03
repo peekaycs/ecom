@@ -11,13 +11,7 @@
         @csrf
         <div class="card-body">
             
-            <div class="form-group form-floating-label">
-                <input id="" name="subcategory" value="{{old('subcategory')}}" type="text" class="form-control input-border-bottom" required>
-                <label for="inputFloatingLabel" class="placeholder">Sub Category</label>
-                @error('subcategory')
-                <p class="text-danger">{{ $message }}</p>
-                @enderror
-            </div>
+            
             <div class="form-group form-floating-label">
                 <select id="" name="category" " class="form-control input-border-bottom" required>
                     <option value=""></option>
@@ -25,8 +19,15 @@
                         <option value="{{$category->uuid}}" {{old('category') ? "selected" :''}}>{{$category->category}}</option>
                     @endforeach
                 </select>
-                <label for="inputFloatingLabel" class="placeholder">Sub Category</label>
+                <label for="inputFloatingLabel" class="placeholder">Category</label>
                 @error('category')
+                <p class="text-danger">{{ $message }}</p>
+                @enderror
+            </div>
+            <div class="form-group form-floating-label">
+                <input id="" name="subcategory" value="{{old('subcategory')}}" type="text" class="form-control input-border-bottom" required>
+                <label for="inputFloatingLabel" class="placeholder">Sub Category</label>
+                @error('subcategory')
                 <p class="text-danger">{{ $message }}</p>
                 @enderror
             </div>

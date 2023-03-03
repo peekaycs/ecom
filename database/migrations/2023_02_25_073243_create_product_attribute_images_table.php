@@ -21,7 +21,7 @@ class CreateProductAttributeImagesTable extends Migration
             $table->uuid('product_id')->index();
             $table->foreign('product_id')->references('id')->on('products');
             $table->uuid('product_attribute_id')->index();
-            $table->foreign('product_attribute_id')->references('uuid')->on('product_attributes');
+            $table->foreign('product_attribute_id')->references('id')->on('product_attributes');
             $table->string('image');
             $table->timestamps();
         });

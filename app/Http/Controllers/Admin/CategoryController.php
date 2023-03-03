@@ -47,8 +47,7 @@ class CategoryController extends Controller
         $category = Category::create(
             [
                 'uuid' => Str::uuid(),
-                'category_id' =>    $request->category_id,
-                'subcategory'  =>  $request->subcategory,
+                'category' =>    $request->category,
                 'slug'  =>  $request->slug,
                 'description'   => $request->description,
                 'status' => $request->status,

@@ -4,15 +4,13 @@
 				<div class="sidebar-content">
 					<div class="user">
 						<div class="avatar-sm float-left mr-2">
-							<img src="{{URL::asset('assets/admin/img/profile.jpg')}}" alt="..." class="avatar-img rounded-circle">
+							<img src="{{ url(Auth::user()->userProfile->image) }}" alt="..." class="avatar-img rounded-circle">
 						</div>
 						<div class="info">
 							<a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
 							@if(Auth::user()->user_type == 'admin')
 								<span>
-									
 										{{ Auth::user()->first_name}}
-									
 									<span class="user-level">Administrator</span>
 									<span class="caret"></span>
 								</span>
@@ -28,15 +26,11 @@
 										</a>
 									</li>
 									<li>
-										<a href="#edit">
+										<a href="{{route('admin-profile-edit')}}">
 											<span class="link-collapse">Edit Profile</span>
 										</a>
 									</li>
-									<li>
-										<a href="#settings">
-											<span class="link-collapse">Settings</span>
-										</a>
-									</li>
+									
 								</ul>
 							</div>
 						</div>

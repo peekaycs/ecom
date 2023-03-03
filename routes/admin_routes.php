@@ -15,7 +15,11 @@ Route::get('/admin', function(){
 });
 Route::group(['prefix'=>'admin','middleware' => ['auth','isAdmin']], function(){
     Route::get('/dashboard', [DashboardController::class,'index'])->name('admin-dashboard');
+    // admin 
     Route::get('/profile', [ProfileController::class,'index'])->name('admin-profile');
+    Route::get('/profile/edit', [ProfileController::class,'edit'])->name('admin-profile-edit');
+    Route::put('/profile/store/{id}', [ProfileController::class,'update'])->name('admin-profile-store');
+    
     // attributes group
     Route::get('/attribute-groups/', [AttributeGroupController::class,'index'])->name('attribute-groups');
     Route::get('/attribute-groups/create', [AttributeGroupController::class,'create'])->name('create-attribute-group');
