@@ -118,12 +118,12 @@
                         @enderror
                     </div>
                     <div class="form-group form-floating-label">
-                        <select class="form-control input-border-bottom" name="status" id="status" required>
+                        <select class="form-control input-border-bottom" name="published" id="published" required>
                             <option value="1">Enable</option>
                             <option value="0">Disable</option>
                         </select>
                         <label for="selectFloatingLabel" class="placeholder">Status</label>
-                        @error('status')
+                        @error('published')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
@@ -150,29 +150,5 @@
         </form>
     </div>
 </div>
-<script>
-    function fetchAttributeForm(url){
-        fetch(url)
-        .then(response => response.text())
-        .then(html => {
-            document.getElementById("attribute-form").insertAdjacentHTML('beforeend',html);
-        })
-        .catch(error => {console.log(error)});
-    }
-
-    function fetchAttributeOptions(element){
-        let url = element.options[element.selectedIndex].getAttribute('href');;
-        fetch(url)
-        .then( response => response.text())
-        .then( html => {
-          let node =  document.querySelectorAll('.dynamic-attribute');
-          for(let i  of  node){
-            if(i.childNodes.length == 3){
-                i.insertAdjacentHTML('beforeend',html);
-            }
-          }
-        }).catch( error => {console.log(error)});
-    }
-
-</script>
+<script src="{{URL::asset('assets/admin/js/product.js')}}"></script>
 @endsection

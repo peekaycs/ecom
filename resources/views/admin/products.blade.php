@@ -12,12 +12,13 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Product</th>
+                        <!-- <th scope="col">Category</th> -->
                         <th scope="col">Slug</th>
                         <th scope="col">Description</th>
                         <th scope="col">Status</th>
                         <th scope="col">Order</th>
                         <th scope="col">Published</th>
-                        <!-- <th scope="col">Action</th> -->
+                        <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -26,13 +27,14 @@
                     <tr>
                         <td>{{$loop->iteration}}</td>
                         <td>{{ $product->product }}</td>
+                        <!-- <td>{{$product->attributes[0]->product_id ?? ''}}</td> -->
                         <td>{{ $product->slug }}</td>
                         <td>{{ Str::limit($product->short_description, 50) }}</td>
                         <td>{{ $product->status ? "Enabled" : "Disabled" }}</td>
                         <td>{{ $product->order }}</td>
-                        <td>{{ $product->published ? "Published" : "Unpublished" }}</td>
+                        <td>{{ $product->published ? "Published" : "Unpublished" }} </td>
                         <td>
-                            <!-- <a href="{{route('edit-product', $product->id)}}" title="view"><i class="far fa-eye"></i></a> -->
+                            <a href="{{route('edit-product', $product->id)}}" title="view"><i class="far fa-eye"></i></a>
                         </td>
                     </tr>
                     @endforeach

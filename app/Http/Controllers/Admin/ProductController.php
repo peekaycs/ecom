@@ -13,8 +13,10 @@ use Illuminate\Support\Str;
 use App\Models\ProductAttribute;
 use App\Models\ProductImage;
 use App\Models\ProductAttributeImage;
+use App\Models\Attribute;
 use Image;
 use File;
+use DB;
 class ProductController extends Controller
 {
     /**
@@ -72,7 +74,7 @@ class ProductController extends Controller
             'price' => $request->price,
             'discount' => $request->discount,
             'quantity' => $request->quantity,
-            'published' => $request->status,
+            'published' => $request->published,
             'short_description' => $request->short_description,
             'featured'  => $request->featured,
             'order' => $request->order,
@@ -145,17 +147,17 @@ class ProductController extends Controller
     public function edit(Product $product, $id)
     {
         //
-        echo '<pre>';
-        $product = Product::with('attributes')->get();
-        foreach ($product as $p){
-            print_r($p);
-        }
-        die;
+        
+        $product = Product::find($id); 
+        
+        // all attributes
+        $productAttributes = ProductAttribute::with('productAttributeImage')->where('product_id',$product->id)->get();
         $categories = Category::all();
-        $subCategories = SubCategory::all();
+        $subCategories = SubCategory::where('category_id',$product->category_id)->get();
         $attributeGroups = AttributeGroup::all();
-        return view('admin.create-product',array('categories' => $categories,'subCategories' => $subCategories, 'attributeGroups' => $attributeGroups));
-
+        $attributes = Attribute::all();
+        return view('admin.edit-product',array('product'=>$product,'categories' => $categories,'subCategories' => $subCategories, 'attributeGroups' => $attributeGroups,'productAttributes' => $productAttributes,'attributes'=>$attributes));
+        
     }
 
     /**
@@ -165,9 +167,83 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, Product $product, $id)
     {
         //
+        $product = Product::find($id);
+
+        // update product
+        $product->product = $request->product;
+        $product->category_id = $request->category_id;
+        $product->subcategory_id = $request->subcategory_id;
+        $product->slug = $request->slug;
+        $product->sku = $request->sku;
+        $product->price = $request->price;
+        $product->discount = $request->discount;
+        $product->quantity = $request->quantity;
+        $product->published = $request->published;
+        $product->short_description = $request->short_description;
+        $product->featured = $request->featured;
+        $product->order = $request->order;
+        if(!empty($request->file('image'))){
+            $productImage =  $this->getProductImage($request->file('image'),$request->product);
+            $product->image = $productImage['actualImage'];
+        }
+
+        $product_saved = $product->save();
+        // attributes
+        $inputData = $request->all();
+       
+        $attribute_groups_count = $request->attribute_group_id;
+        for($i = 0; $i < count($attribute_groups_count); $i++){
+            if(isset($inputData['old_attribute'][$i])){
+               $productAttribute = ProductAttribute::where('id',$inputData['old_attribute'][$i])->first();
+               if($productAttribute){
+                    $productAttribute->attribute_group_id = $inputData['attribute_group_id'][$i];
+                    $productAttribute->attribute_id  = $inputData['attribute'][$i];
+                    $productAttribute->price = $inputData['attribute_price'][$i];
+                    $productAttribute->discount = $inputData['attribute_discount'][$i];
+                    $productAttribute->order = $inputData['attribute_order'][$i];
+                    // echo $inputData['attribute_images'][$i];
+                    // echo '>br>';
+                    if(!empty($inputData['attribute_images'][$i])){
+                        $productImage =  $this->getProductImage($inputData['attribute_images'][$i],$request->product);
+                        if(isset($inputData['old_attribute_image'][$i]) && !empty($inputData['old_attribute_image'][$i]) ){
+                            $productAttributeImage = ProductAttributeImage::find($inputData['old_attribute_image'][$i]);
+                            $productAttributeImage->image = $productImage['actualImage'];
+                            $productAttributeImage->save();
+                        }
+                    }
+                    $productAttribute->save();
+               }
+            }else{
+                $productAttrbuteId = Str::uuid();
+                $new_attribute = [
+                    'id' => $productAttrbuteId,
+                    'product_id' => $id,
+                    'attribute_group_id' => $inputData['attribute_group_id'][$i],
+                    'attribute_id' => $inputData['attribute'][$i],
+                    'price' => $inputData['attribute_price'][$i],
+                    'discount' => $inputData['attribute_discount'][$i],
+                    'order' => $inputData['attribute_order'][$i],
+                ];
+                ProductAttribute::create($new_attribute);
+                $newImage = $this->getProductImage($inputData['attribute_images'][$i],$request->product);
+                ProductAttributeImage::create([
+                    'uuid'  => Str::uuid(),
+                    'product_id' => $id,
+                    'product_attribute_id' => $productAttrbuteId,
+                    'image' => $newImage['actualImage']
+                    ]
+                ); 
+               }
+        }
+          
+        // die;    
+        if($product_saved)
+            return redirect(route('edit-product',$id))->with('success','Product updated successfully');
+        else   
+            return redirect(route('create-product',$id))->with('error','Can\'t update product');
     }
 
     /**

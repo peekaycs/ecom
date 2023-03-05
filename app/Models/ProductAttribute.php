@@ -15,7 +15,6 @@ class ProductAttribute extends Model
 
 
     public function productAttributeImage(){
-        echo 'aaaaaaaaaaaaaa';
-        return $this->hasMany(ProductAttributeImage::class, 'uuid');
+        return $this->hasMany(ProductAttributeImage::class, 'product_attribute_id','id');
     }
 }
