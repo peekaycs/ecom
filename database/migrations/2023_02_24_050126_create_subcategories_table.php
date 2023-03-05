@@ -14,6 +14,9 @@ class CreateSubcategoriesTable extends Migration
     public function up()
     {
         Schema::create('subcategories', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8mb4';
+            $table->collation = 'utf8mb4_general_ci';
             $table->uuid('uuid')->index()->unique();
             $table->uuid('category_id')->index();
             $table->foreign('category_id')->references('uuid')->on('categories');

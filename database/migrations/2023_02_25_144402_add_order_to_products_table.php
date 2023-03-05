@@ -16,7 +16,7 @@ class AddOrderToProductsTable extends Migration
         Schema::table('products', function (Blueprint $table) {
             //
             $table->integer('order')->default(0)->after('status');
-            $table->boolean('featured')->default(false)->after('image');
+            // $table->boolean('featured')->default(false)->after('image');
         });
     }
 

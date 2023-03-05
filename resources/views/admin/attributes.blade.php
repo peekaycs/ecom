@@ -1,4 +1,4 @@
-@extends('admin.layouts.app',['page_title' => 'Attributes','page_action' => route('create-attribute')])
+@extends('admin.layouts.app',['page_title' => 'Attributes','page_action' => route('create-attribute'),'manage'=>'Attribute Groups','manage_action' => route('attribute-groups')])
 
 @section('content')
 
