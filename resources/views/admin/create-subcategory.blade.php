@@ -12,7 +12,7 @@
         <div class="card-body">
             
             
-            <div class="form-group form-floating-label">
+            <div class="form-group form-floating-label@error('categorry')@enderror">
                 <select id="" name="category" " class="form-control input-border-bottom" required>
                     <option value=""></option>
                     @foreach($categories as $category)
@@ -24,35 +24,35 @@
                 <p class="text-danger">{{ $message }}</p>
                 @enderror
             </div>
-            <div class="form-group form-floating-label">
+            <div class="form-group form-floating-label@error('subcategory')@enderror">
                 <input id="" name="subcategory" value="{{old('subcategory')}}" type="text" class="form-control input-border-bottom" required>
                 <label for="inputFloatingLabel" class="placeholder">Sub Category</label>
                 @error('subcategory')
                 <p class="text-danger">{{ $message }}</p>
                 @enderror
             </div>
-            <div class="form-group form-floating-label ">
+            <div class="form-group form-floating-label @error('slug')@enderror">
                 <input id="" name="slug" value="{{old('slug')}}" type="text" class="form-control input-border-bottom" required>
                 <label for="inputFloatingLabel" class="placeholder">Slug</label>
                 @error('slug')
                 <p class="text-danger">{{ $message }}</p>
                 @enderror
             </div>
-            <div class="form-group form-floating-label ">
+            <div class="form-group form-floating-label @error('description')@enderror">
                 <textarea id="" name="description"   class="form-control input-border-bottom" required>{{old('description')}}</textarea>
                 <label for="inputFloatingLabel" class="placeholder">Description</label>
                 @error('description')
                 <p class="text-danger">{{ $message }}</p>
                 @enderror
             </div>
-            <div class="form-group form-floating-label ">
-                <input id="" name="order" value="{{old('order')}}" type="number" min="0" class="form-control input-border-bottom @error('name')  @enderror" required>
+            <div class="form-group form-floating-label @error('order')@enderror">
+                <input id="" name="order" value="{{old('order')}}" type="number" min="0" class="form-control input-border-bottom" required>
                 <label for="inputFloatingLabel" class="placeholder">Order</label>
                 @error('order')
                 <p class="text-danger">{{ $message }}</p>
                 @enderror
             </div>
-            <div class="form-group form-floating-label">
+            <div class="form-group form-floating-label@error('visibility')@enderror">
                 <select class="form-control input-border-bottom" name="visibility" id="visibility" required>
                     <option value="0">No</option>
                     <option value="1">Yes</option>
@@ -62,7 +62,7 @@
                 <p class="text-danger">{{ $message }}</p>
                 @enderror
             </div>
-            <div class="form-group form-floating-label">
+            <div class="form-group form-floating-label@error('status')@enderror">
                 <select class="form-control input-border-bottom" name="status" id="status" required>
                     <option value="1">Enable</option>
                     <option value="0">Disable</option>

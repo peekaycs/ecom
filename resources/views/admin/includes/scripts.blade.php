@@ -149,11 +149,11 @@ $.notify({
 });
 @elseif(session('error'))
 $.notify({
-	icon: "flaticon-success",
+	icon: "flaticon-error",
 	title: "Error",
 	message: "{{session('error')}}",
 },{
-	type: 'info',
+	type: 'danger',
 	placement: {
 		from: "bottom",
 		align: "right"

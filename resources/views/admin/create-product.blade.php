@@ -26,6 +26,20 @@
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
+                    <div class="form-group form-floating-label @error('brand_id') has-error @enderror">
+                        <select class="form-control input-border-bottom" name="brand_id" id="brand_id" >
+                            <option value=""></option>
+                            @forelse($brands as $brand)
+                                <option value="{{$brand->id}}" @if(old('brand_id') == $brand->id) selected @endif>{{$brand->brand}}</option>
+                            @empty
+                                <option value="">Please create brand</option>
+                            @endforelse
+                        </select>
+                        <label for="selectFloatingLabel" style="top:0px" class="placeholder">Brand</label>
+                        @error('brand_id')
+                        <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
                     <!-- Category -->
                     <div class="form-group form-floating-label @error('category_id') has-error @enderror">
                         <select class="form-control input-border-bottom" name="category_id" id="category_id" required>
@@ -80,7 +94,7 @@
                         @enderror
                     </div>
                     <div class="form-group form-floating-label @error('discount') has-error @enderror">
-                        <input type="number" class="form-control input-border-bottom" name="discount" min=0 id="discount" step=0.01 required>
+                        <input type="number" class="form-control input-border-bottom" name="discount" min=0 id="discount" step=0.01 >
                         <label for="selectFloatingLabel" class="placeholder">Discount</label>
                         @error('discount')
                         <p class="text-danger">{{ $message }}</p>

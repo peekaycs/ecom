@@ -8,13 +8,15 @@
 						</div>
 						<div class="info">
 							<a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
-							@if(Auth::user()->user_type == 'admin')
+							
 								<span>
-										{{ Auth::user()->first_name}}
+									{{ Auth::user()->first_name}}
+									@if(Auth::user()->user_type == 'admin')
 									<span class="user-level">Administrator</span>
+									@endif
 									<span class="caret"></span>
 								</span>
-							@endif
+							
 							</a>
 							<div class="clearfix"></div>
 
@@ -51,6 +53,11 @@
 							</a>
 							<div class="collapse" id="base">
 								<ul class="nav nav-collapse">
+									<li>
+										<a href="{{route('brands')}}">
+											<span class="sub-item">Brands</span>
+										</a>
+									</li>
 									<li>
 										<a href="{{route('attribute-groups')}}">
 											<span class="sub-item">Attribute Groups</span>
@@ -104,17 +111,18 @@
 								</ul>
 							</div>
 						</li>
-						<!-- <li class="nav-item">
+						<!--
+						 <li class="nav-item">
 							<a data-toggle="collapse" href="#sidebarLayouts">
 								<i class="fas fa-th-list"></i>
-								<p>Sidebar Layouts</p>
+								<p>User Management</p>
 								<span class="caret"></span>
 							</a>
 							<div class="collapse" id="sidebarLayouts">
 								<ul class="nav nav-collapse">
 									<li>
-										<a href="sidebar-style-1.html">
-											<span class="sub-item">Sidebar Style 1</span>
+										<a href="">
+											<span class="sub-item">Users</span>
 										</a>
 									</li>
 									<li>
@@ -127,20 +135,11 @@
 											<span class="sub-item">Compact Sidebar</span>
 										</a>
 									</li>
-									<li>
-										<a href="static-sidebar.html">
-											<span class="sub-item">Static Sidebar</span>
-										</a>
-									</li>
-									<li>
-										<a href="icon-menu.html">
-											<span class="sub-item">Icon Menu</span>
-										</a>
-									</li>
 								</ul>
 							</div>
 						</li>
-						<li class="nav-item">
+-->
+					<!--	<li class="nav-item">
 							<a data-toggle="collapse" href="#forms">
 								<i class="fas fa-pen-square"></i>
 								<p>Forms</p>

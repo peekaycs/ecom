@@ -12,7 +12,7 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Product</th>
-                        <!-- <th scope="col">Category</th> -->
+                        <th scope="col">Brand</th>
                         <th scope="col">Slug</th>
                         <th scope="col">Description</th>
                         <th scope="col">Status</th>
@@ -27,7 +27,7 @@
                     <tr>
                         <td>{{$loop->iteration}}</td>
                         <td>{{ $product->product }}</td>
-                        <!-- <td>{{$product->attributes[0]->product_id ?? ''}}</td> -->
+                        <td>{{$product->brand->brand ?? 'N/A'}}</td>
                         <td>{{ $product->slug }}</td>
                         <td>{{ Str::limit($product->short_description, 50) }}</td>
                         <td>{{ $product->status ? "Enabled" : "Disabled" }}</td>

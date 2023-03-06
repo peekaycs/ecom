@@ -14,6 +14,7 @@ use App\Models\ProductAttribute;
 use App\Models\ProductImage;
 use App\Models\ProductAttributeImage;
 use App\Models\Attribute;
+use App\Models\Brand;
 use Image;
 use File;
 use DB;
@@ -27,7 +28,7 @@ class ProductController extends Controller
     public function index()
     {
         //
-        $products = Product::paginate(env('PER_PAGE'))->withQueryString();
+        $products = Product::with(['brand'])->paginate(env('PER_PAGE'))->withQueryString();
         return view('admin.products',array('products' => $products));
     }
 
@@ -42,7 +43,8 @@ class ProductController extends Controller
         $categories = Category::all();
         $subCategories = SubCategory::all();
         $attributeGroups = AttributeGroup::all();
-        return view('admin.create-product',array('categories' => $categories,'subCategories' => $subCategories, 'attributeGroups' => $attributeGroups));
+        $brands = Brand::all();
+        return view('admin.create-product',array('categories' => $categories,'subCategories' => $subCategories, 'attributeGroups' => $attributeGroups,'brands'=>$brands));
     
     }
 
@@ -67,12 +69,13 @@ class ProductController extends Controller
             'id' => $product_id,
             'user_id' => $user_id,
             'product' => $request->product,
+            'brand_id' => $request->brand_id,
             'category_id' =>    $request->category_id,
             'subcategory_id' => $request->subcategory_id,
             'slug' => $request->slug,
             'sku' => $request->sku,
             'price' => $request->price,
-            'discount' => $request->discount,
+            'discount' => $request->discount ?? 0,
             'quantity' => $request->quantity,
             'published' => $request->published,
             'short_description' => $request->short_description,
@@ -95,36 +98,40 @@ class ProductController extends Controller
         $inputData = $request->all();
        
         $attribute_groups_count = $request->attribute_group_id;
-        for($i = 0; $i < count($attribute_groups_count); $i++){
-            $attribute_data[] = [
-                'id' => Str::uuid(),
-                'product_id' => $product_id,
-                'attribute_group_id' => $inputData['attribute_group_id'][$i],
-                'attribute_id' => $inputData['attribute'][$i],
-                'price' => $inputData['attribute_price'][$i],
-                'discount' => $inputData['attribute_discount'][$i],
-                'order' => $inputData['attribute_order'][$i],
-            ];
-        }
-        if($product){
-            foreach($attribute_data as $key=>$attribute){
-                $productAttribute = false;
-                $productAttribute = ProductAttribute::create($attribute);
-                if($productAttribute){
-                    $attributeImage = $this->getProductImage($inputData['attribute_images'][$key], $request->product);
-                    ProductAttributeImage::create(
-                        [
-                            'uuid'  => Str::uuid(),
-                            'product_id' => $product_id,
-                            'product_attribute_id'  => $attribute['id'],
-                            'image' => $attributeImage['actualImage']
-                        ]
-                    );
+        if($attribute_groups_count){
+            for($i = 0; $i < count($attribute_groups_count); $i++){
+                $attribute_data[] = [
+                    'id' => Str::uuid(),
+                    'product_id' => $product_id,
+                    'attribute_group_id' => $inputData['attribute_group_id'][$i],
+                    'attribute_id' => $inputData['attribute'][$i],
+                    'price' => $inputData['attribute_price'][$i],
+                    'discount' => $inputData['attribute_discount'][$i],
+                    'order' => $inputData['attribute_order'][$i],
+                ];
+            }
+            if($product){
+                foreach($attribute_data as $key=>$attribute){
+                    $productAttribute = false;
+                    $productAttribute = ProductAttribute::create($attribute);
+                    if($productAttribute){
+                        $attributeImage = $this->getProductImage($inputData['attribute_images'][$key], $request->product);
+                        ProductAttributeImage::create(
+                            [
+                                'uuid'  => Str::uuid(),
+                                'product_id' => $product_id,
+                                'product_attribute_id'  => $attribute['id'],
+                                'image' => $attributeImage['actualImage']
+                            ]
+                        );
+                    }
                 }
             }
-            return redirect(route('create-product'))->with('success','Product saved successfully');
-           }
-           return redirect(route('create-product'))->with('error','Can\'t save product');
+        }
+    if($product)
+        return redirect(route('create-product'))->with('success','Product saved successfully');
+    else
+        return redirect(route('create-product'))->with('error','Can\'t save product');
     }
 
     /**
@@ -156,7 +163,8 @@ class ProductController extends Controller
         $subCategories = SubCategory::where('category_id',$product->category_id)->get();
         $attributeGroups = AttributeGroup::all();
         $attributes = Attribute::all();
-        return view('admin.edit-product',array('product'=>$product,'categories' => $categories,'subCategories' => $subCategories, 'attributeGroups' => $attributeGroups,'productAttributes' => $productAttributes,'attributes'=>$attributes));
+        $brands = Brand::all();
+        return view('admin.edit-product',array('product'=>$product,'categories' => $categories,'subCategories' => $subCategories, 'attributeGroups' => $attributeGroups,'productAttributes' => $productAttributes,'attributes'=>$attributes,'brands'=>$brands));
         
     }
 
@@ -174,6 +182,7 @@ class ProductController extends Controller
 
         // update product
         $product->product = $request->product;
+        $product->brand_id = $request->brand_id;
         $product->category_id = $request->category_id;
         $product->subcategory_id = $request->subcategory_id;
         $product->slug = $request->slug;
