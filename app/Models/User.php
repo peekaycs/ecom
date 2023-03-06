@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\UserProfile;
+use App\Models\Address;
 
 class User extends Authenticatable
 {
@@ -48,5 +49,9 @@ class User extends Authenticatable
 
     public function userProfile(){
         return $this->hasOne(UserProfile::class,'user_id','uuid');
+    }
+
+    public function userAddress(){
+        return $this->hasMany(Address::class,'user_id','uuid');
     }
 }

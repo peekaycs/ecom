@@ -24,10 +24,14 @@ Route::group(['prefix'=>'admin','middleware' => ['auth','isAdmin']], function(){
     Route::get('/attribute-groups/', [AttributeGroupController::class,'index'])->name('attribute-groups');
     Route::get('/attribute-groups/create', [AttributeGroupController::class,'create'])->name('create-attribute-group');
     Route::post('/attribute-groups/store', [AttributeGroupController::class,'store'])->name('store-attribute-group');
+    Route::get('/attribute-groups/edit/{id}', [AttributeGroupController::class,'edit'])->name('edit-attribute-group');
+    Route::put('/attribute-groups/update/{id}', [AttributeGroupController::class,'update'])->name('update-attribute-group');
     // attributes
     Route::get('/attributes', [AttributeController::class,'index'])->name('attributes');
     Route::get('/attributes/create', [AttributeController::class,'create'])->name('create-attribute');
     Route::post('/attributes/store', [AttributeController::class,'store'])->name('store-attribute');
+    Route::get('/attributes/edit/{id}', [AttributeController::class,'edit'])->name('edit-attribute');
+    Route::put('/attributes/update/{id}', [AttributeController::class,'update'])->name('update-attribute');
     // category 
     Route::get('/categories', [CategoryController::class,'index'])->name('categories');
     Route::get('/categories/create', [CategoryController::class,'create'])->name('create-category');

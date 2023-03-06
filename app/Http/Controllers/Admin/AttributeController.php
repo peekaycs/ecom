@@ -55,4 +55,28 @@ class AttributeController extends Controller
         $attributes = Attribute::where('group_id',$id)->get();
         echo view('admin.auxiliary.attribute-options', array('attributes' => $attributes));
     }
+
+    public function edit(Request $request, $id) {
+        $attribute = Attribute::find($id);
+        $attributeGroups = AttributeGroup::all();
+        return view('admin.edit-attribute', array('attribute' => $attribute,'attributeGroups'=>$attributeGroups));
+    }
+
+    public function update(Request $request, $id){
+        $request->validate(
+            [
+                'name' => 'required|string|min:3|max:25',
+                'group_id' => 'required|integer',
+                'status' => 'required|integer'
+            ]
+        );
+
+        $attribute = Attribute::find($id);
+
+            $attribute->group_id = $request->group_id;
+            $attribute->name = $request->name;
+            $attribute->status = $request->status;            
+            $saved = $attribute->save();
+       return $saved ? redirect(route('edit-attribute',$id))->with('success', 'Attribute updated successfully') : redirect(route('edit-attribute',$id))->with('error', 'Can\'t update attribute'); 
+    }
 }
