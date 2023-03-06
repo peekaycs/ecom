@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Str;
 use Image;
+use App\Models\Address;
 use File;
 
 class ProfileController extends Controller
@@ -22,7 +23,7 @@ class ProfileController extends Controller
     }
 
     public function edit(Request $request){
-        $user = User::with('userProfile')->find(Auth::user()->id);
+        $user = User::with('userProfile','userAddress')->find(Auth::user()->id);
         return view('admin.edit-profile', array('user' => $user));
     }
 
@@ -30,13 +31,18 @@ class ProfileController extends Controller
         $request->validate([
             'first_name' => ['required', 'string', 'max:255'],
             'mobile' => ['required', 'integer','min:10'],
+            'gender' => ['required'],
+            'address' => ['nullable','string', 'max:255','min:3'],
+            'city' => ['nullable','string', 'max:255','min:3'],
+            'state' =>  ['nullable','string', 'max:255','min:3'],
+            'image' => ['nullable','image', 'mimes:jpeg,jpg,png','size:1024']    
         ]);
-        $user = User::with('userProfile')->find(Auth::user()->id);
-        // echo $user->first_name;die;
+        $user = User::with('userProfile','userAddress')->find(Auth::user()->id);
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
         $user->mobile = $request->mobile;
         $saved = $user->save();
+        $userProfile = UserProfile::find($user->userProfile->id);
         if($request->file('image')){
             $image = $request->file('image');
             $input['file'] = Str::lower($request->first_name.Str::random()).'.'.$image->getClientOriginalExtension();
@@ -49,10 +55,31 @@ class ProfileController extends Controller
             $imgFile->resize(200, 200, function ($constraint) {
                 $constraint->aspectRatio();
             })->save($targetPath.'/'.$input['file']);
-            $userProfile = UserProfile::find($user->userProfile->id);
+           
             $userProfile->image = $filePath.'/'.$input['file'];
-            $userProfile->save();
         }
+        $userProfile->age = $request->age;
+        $userProfile->gender = $request->gender;
+        $userProfile->save();
+        // user address
+        
+        if(isset($user->userAddress[0]->uuid)){
+            $address = Address::find($user->userAddress[0]->uuid);
+            $address->address = $request->address;
+            $address->city = $request->city;
+            $address->state = $request->state;
+            $address->save();
+        }else{
+            Address::create([
+                'uuid'   => Str::uuid(),
+                'user_id' => $id,
+                'address' => $request->address,
+                'city' => $request->city,
+                'state' => $request->state,
+            ]);
+        }
+
+
         if($saved){
             return redirect(route('admin-profile-edit'))->with('success','Profile updated successfully');
         }

@@ -34,4 +34,26 @@ class AttributeGroupController extends Controller
        }
        return redirect(route('create-attribute-group'))->with('error','Can\'t create attribute group');
     }
+
+
+    public function edit(Request $request, $id) {
+        $attributeGroup = AttributeGroup::find($id);
+        return view('admin.edit-attribute-group', array('attributeGroup' => $attributeGroup));
+    }
+
+    public function update(Request $request, $id) {
+        $request->validate( // validate attributes group
+            [
+                'name' => 'required|string|min:3|max:25|unique:attribute_groups',
+            ]
+        );
+
+        $attributeGroup =  AttributeGroup::find($id);
+        $attributeGroup->name = $request->name;
+        $attributeGroup = $attributeGroup->save();
+       if($attributeGroup){
+        return redirect(route('edit-attribute-group',$id))->with('success','Attribute group updated successfully');
+       }
+       return redirect(route('edit-attribute-group',$id))->with('error','Can\'t create attribute group');
+    }
 }

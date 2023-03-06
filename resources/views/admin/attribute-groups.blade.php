@@ -12,7 +12,7 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Attribute Group</th>
-                        
+                        <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -20,7 +20,11 @@
                     <tr>
                         <td>{{$loop->iteration}}</td>
                         <td>{{ $attributeGroup->name }}</td>
-                        
+                        <td>
+                            <a href="{{route('edit-attribute-group',$attributeGroup->id)}}" title="view">
+                                <i class="far fa-eye"></i>
+                            </a>
+                        </td>
                     </tr>
                     @endforeach
                     

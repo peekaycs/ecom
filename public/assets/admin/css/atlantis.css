@@ -3287,6 +3287,7 @@ label {
     margin-bottom: 0 !important;
     font-size: 14px !important;
     font-weight: 400;
+    text-transform: capitalize;
     top: 12px; }
   .form-floating-label .form-control:focus + .placeholder, .form-floating-label .form-control:valid + .placeholder, .form-floating-label .form-control.filled + .placeholder {
     font-size: 85% !important;
@@ -8960,3 +8961,4 @@ body {
   background: linear-gradient(-45deg, #E80A15, #F25961) !important; }
 
 /*# sourceMappingURL=atlantis.css.map */
+.placeholder{text-transform: capitalize;}
