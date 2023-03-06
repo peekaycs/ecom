@@ -46,7 +46,7 @@
         </div>
         <div class="card-action text-right">
             <button type="submit" class="btn btn-success">Submit</button>
-            <a href="{{route('attribute-groups')}}" class="btn btn-danger">Cancel</a>
+            <a href="{{route('attributes')}}" class="btn btn-danger">Cancel</a>
         </div>
         </form>
     </div>

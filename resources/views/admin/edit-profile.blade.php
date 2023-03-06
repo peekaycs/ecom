@@ -88,7 +88,7 @@
                 </div>
                 <div class="col-md-2">
                     <label class="imagecheck mb-4">
-                        @if($user->userProfile->image)
+                        @if(isset($user->userProfile->image) && $user->userProfile->image)
                         <figure class="imagecheck-figure">
                             <img src="{{url($user->userProfile->image ?? '')}}" alt="title" class="imagecheck-image">
                         </figure>
@@ -100,7 +100,7 @@
         </div>
         <div class="card-action text-right">
             <button type="submit" class="btn btn-success">Update</button>
-            <a href="{{route('categories')}}" class="btn btn-danger">Cancel</a>
+            <a href="{{route('admin-profile')}}" class="btn btn-danger">Cancel</a>
         </div>
         </form>
     </div>

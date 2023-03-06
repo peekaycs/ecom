@@ -18,7 +18,7 @@ class ProfileController extends Controller
     //
 
     public function index(Request $request){
-        $user = User::find(Auth::user()->id);
+        $user = User::with('userProfile','userAddress')->find(Auth::user()->id);
         return view('admin.profile', array('user' => $user));
     }
 
@@ -42,7 +42,8 @@ class ProfileController extends Controller
         $user->last_name = $request->last_name;
         $user->mobile = $request->mobile;
         $saved = $user->save();
-        $userProfile = UserProfile::find($user->userProfile->id);
+       
+        $ProfileImage = null;
         if($request->file('image')){
             $image = $request->file('image');
             $input['file'] = Str::lower($request->first_name.Str::random()).'.'.$image->getClientOriginalExtension();
@@ -56,11 +57,29 @@ class ProfileController extends Controller
                 $constraint->aspectRatio();
             })->save($targetPath.'/'.$input['file']);
            
-            $userProfile->image = $filePath.'/'.$input['file'];
+            $ProfileImage = $filePath.'/'.$input['file'];
         }
-        $userProfile->age = $request->age;
-        $userProfile->gender = $request->gender;
-        $userProfile->save();
+        if(isset($user->userProfile->id)){
+            $userProfile = UserProfile::find($user->userProfile->id);
+        
+            $userProfile->age = $request->age;
+            $userProfile->gender = $request->gender;
+            if(!empty($ProfileImage)){
+                $userProfile->image = $ProfileImage;
+            }
+            $userProfile->save();
+        }else{
+            $profileArray = [
+                'id' => Str::uuid(),
+                'user_id' => $id,
+                'age' => $request->age,
+                'gender' => $request->gender,
+            ];
+            if(!empty($ProfileImage)){
+                $profileArray['image'] = $ProfileImage;
+            }
+            UserProfile::create($profileArray);
+        }
         // user address
         
         if(isset($user->userAddress[0]->uuid)){
