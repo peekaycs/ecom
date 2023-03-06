@@ -18,18 +18,39 @@
                 </thead> -->
                 <tbody>
                     <tr>
-                        <td>First Name</td>
+                        <td><strong>First Name</strong></td>
                         <td>{{ $user->first_name ?? '' }}</td>
-                        <td>Last Name</td>
+                        <td><strong>Last Name</strong></td>
                         <td>{{ $user->last_name ?? '' }}</td>
                     </tr>
                     <tr>
-                        <td>Email</td>
+                        <td><strong>Email</strong></td>
                         <td>{{ $user->email ?? '' }}</td>
-                        <td>Mobile</td>
+                        <td><strong>Mobile</strong></td>
                         <td>{{ $user->mobile ?? '' }}</td>
                     </tr>
-                    
+
+                    <tr>
+                        <td><strong>Age</strong></td>
+                        <td>{{ $user->userProfile->age ?? '' }}</td>
+                        <td><strong>Gender</strong></td>
+                        <td>{{ $user->userProfile->gender ?? '' }}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" class="text-center"><strong>Address</strong></td>
+                        
+                    </tr>
+                    <tr>
+                        <td><strong>Address</strong></td>
+                        <td>{{ $user->userAddress[0]->address ?? '' }}</td>
+                        <td><strong>City</strong></td>
+                        <td>{{ $user->userAddress[0]->city ?? '' }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>State</strong></td>
+                        <td>{{ $user->userAddress[0]->state ?? '' }}</td>
+                        <td colspan="2"><a href="{{route('admin-profile-edit')}}" class="btn btn-warning">Update</a></td>
+                    </tr>
                 </tbody>
             </table>
         </div>
