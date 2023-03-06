@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\AttributeGroupController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\BrandController;
 
 Route::get('/admin', function(){
     return view('auth.login');
@@ -51,7 +52,16 @@ Route::group(['prefix'=>'admin','middleware' => ['auth','isAdmin']], function(){
     Route::get('/products/edit/{id}', [ProductController::class,'edit'])->name('edit-product');
     Route::put('/products/update/{id}', [ProductController::class,'update'])->name('update-product');
 
+    // Brnads 
+
+    Route::get('/brands',[BrandController::class,'index'])->name('brands');
+    Route::get('/brands/create',[BrandController::class,'create'])->name('create-brand');
+    Route::post('/brands/store',[BrandController::class,'store'])->name('store-brand');
+    Route::get('/brands/edit/{id}',[BrandController::class,'edit'])->name('edit-brand');
+    Route::put('/brands/update/{id}',[BrandController::class,'update'])->name('update-brand');
+
     // auxiliary routes
     Route::get('/attributes/form',[AttributeController::class,'form'])->name('get-attribute-form');
     Route::get('/attributes/options/{id}',[AttributeController::class,'options'])->name('get-attribute-options');
+
 });
