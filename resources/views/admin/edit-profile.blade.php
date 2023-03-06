@@ -45,9 +45,9 @@
                 <div class="form-group form-floating-label @error('age') has-error @enderror">
                 <select id="" name="gender"  class="form-control input-border-bottom" >
                     <option value=""></option>
-                    <option value="male" {{old('gender') ? "selected" : ( $user->userProfile->gender == 'male' ? "selected" : "")}}>Male</option>
-                    <option value="female" {{old('gender') ? "selected" : ( $user->userProfile->gender == 'female' ? "selected" : "")}}>Female</option>
-                    <option value="other" {{old('gender') ? "selected" : ( $user->userProfile->gender == 'other' ? "selected" : "")}}>Other</option>
+                    <option value="male" {{old('gender') ? "selected" : ( isset($user->userProfile->gender) && $user->userProfile->gender == 'male' ? "selected" : "")}}>Male</option>
+                    <option value="female" {{old('gender') ? "selected" : ( isset($user->userProfile->gender) &&  $user->userProfile->gender == 'female' ? "selected" : "")}}>Female</option>
+                    <option value="other" {{old('gender') ? "selected" : (isset($user->userProfile->gender) &&  $user->userProfile->gender == 'other' ? "selected" : "")}}>Other</option>
                 </select>
                     <label for="inputFloatingLabel" class="placeholder">Gender</label>
                     @error('gender')
@@ -58,21 +58,21 @@
             <div class="col-md-6 col-lg-6">
                
                 <div class="form-group form-floating-label @error('address') has-error @enderror">
-                <input id="" name="address" value="{{old('address') ? old('address') : $user->userAddress[0]->address}}" type="text" class="form-control input-border-bottom "  >
+                <input id="" name="address" value="{{old('address') ? old('address') : $user->userAddress[0]->address ?? ''}}" type="text" class="form-control input-border-bottom "  >
                     <label for="inputFloatingLabel" class="placeholder">Address</label>
                     @error('address')
                     <p class="text-danger">{{ $message }}</p>
                     @enderror
                 </div>
                 <div class="form-group form-floating-label @error('city') has-error @enderror">
-                <input id="" name="city" value="{{old('city') ? old('city') : $user->userAddress[0]->city}}" type="text" class="form-control input-border-bottom "  >
+                <input id="" name="city" value="{{old('city') ? old('city') : $user->userAddress[0]->city ?? ''}}" type="text" class="form-control input-border-bottom "  >
                     <label for="inputFloatingLabel" class="placeholder">City</label>
                     @error('city')
                     <p class="text-danger">{{ $message }}</p>
                     @enderror
                 </div>
                 <div class="form-group form-floating-label @error('state') has-error @enderror">
-                <input id="" name="state" value="{{old('state') ? old('state') : $user->userAddress[0]->state}}" type="text" class="form-control input-border-bottom "  >
+                <input id="" name="state" value="{{old('state') ? old('state') : $user->userAddress[0]->state ?? ''}}" type="text" class="form-control input-border-bottom "  >
                     <label for="inputFloatingLabel" class="placeholder">State</label>
                     @error('state')
                     <p class="text-danger">{{ $message }}</p>
