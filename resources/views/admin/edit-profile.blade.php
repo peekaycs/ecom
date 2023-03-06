@@ -79,18 +79,20 @@
                     @enderror
                 </div>
                 <div class="form-group d-flex @error('image') has-error @enderror" >
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <label for="exampleFormControlFile" class="placeholder">Profile Image</label>
                         <input type="file" class="form-control input-border-bottom" name="image" id="image" >
                         @error('image')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <label class="imagecheck mb-4">
+                        @if($user->userProfile->image)
                         <figure class="imagecheck-figure">
                             <img src="{{url($user->userProfile->image ?? '')}}" alt="title" class="imagecheck-image">
                         </figure>
+                        @endif
                     </label>
                 </div>
             </div>

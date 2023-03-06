@@ -35,7 +35,7 @@ class ProfileController extends Controller
             'address' => ['nullable','string', 'max:255','min:3'],
             'city' => ['nullable','string', 'max:255','min:3'],
             'state' =>  ['nullable','string', 'max:255','min:3'],
-            'image' => ['nullable','image', 'mimes:jpeg,jpg,png','size:1024']    
+            'image' => ['nullable','image', 'mimes:jpeg,jpg,png','max:1024']    
         ]);
         $user = User::with('userProfile','userAddress')->find(Auth::user()->id);
         $user->first_name = $request->first_name;
