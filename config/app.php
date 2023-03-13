@@ -176,6 +176,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         // Image Service provider 
         Intervention\Image\ImageServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class,
 
     ],
 

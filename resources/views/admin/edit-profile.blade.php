@@ -42,7 +42,7 @@
                     <p class="text-danger">{{ $message }}</p>
                     @enderror
                 </div>
-                <div class="form-group form-floating-label @error('age') has-error @enderror">
+                <div class="form-group form-floating-label @error('gender') has-error @enderror">
                 <select id="" name="gender"  class="form-control input-border-bottom" >
                     <option value=""></option>
                     <option value="male" {{old('gender') ? "selected" : ( isset($user->userProfile->gender) && $user->userProfile->gender == 'male' ? "selected" : "")}}>Male</option>
