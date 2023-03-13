@@ -10,6 +10,9 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\AdminUserController;
 
 Route::get('/admin', function(){
     return view('auth.login');
@@ -63,5 +66,23 @@ Route::group(['prefix'=>'admin','middleware' => ['auth','isAdmin']], function(){
     // auxiliary routes
     Route::get('/attributes/form',[AttributeController::class,'form'])->name('get-attribute-form');
     Route::get('/attributes/options/{id}',[AttributeController::class,'options'])->name('get-attribute-options');
+    // Roles routes
 
+    Route::get('/roles',[RoleController::class,'index'])->name('roles');
+    Route::get('role/create',[RoleController::class,'create'])->name('create-role');
+    Route::post('role/store',[RoleController::class,'store'])->name('store-role');
+    Route::put('role/update/{id}',[RoleController::class,'update'])->name('update-role');
+    Route::get('/role/edit/{id}',[RoleController::class,'edit'])->name('edit-role');
+    // Permissions routes
+    Route::get('/permissions',[PermissionController::class,'index'])->name('permissions');
+    Route::get('permission/create',[PermissionController::class,'create'])->name('create-permission');
+    Route::post('permission/store',[PermissionController::class,'store'])->name('store-permission');
+    Route::put('permission/update/{id}',[PermissionController::class,'update'])->name('update-permission');
+    Route::get('/permission/edit/{id}',[PermissionController::class,'edit'])->name('edit-permission');
+    // Admin user's routes
+    Route::get('/admin-users',[AdminUserController::class,'index'])->name('admin-users');
+    Route::get('admin-user/create',[AdminUserController::class,'create'])->name('create-admin-user');
+    Route::post('admin-user/store',[AdminUserController::class,'store'])->name('store-admin-user');
+    Route::put('admin-user/update/{id}',[AdminUserController::class,'update'])->name('update-admin-user');
+    Route::get('/admin-user/edit/{id}',[AdminUserController::class,'edit'])->name('edit-admin-user');
 });

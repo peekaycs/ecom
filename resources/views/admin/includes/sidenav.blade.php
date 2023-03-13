@@ -111,7 +111,7 @@
 								</ul>
 							</div>
 						</li>
-						<!--
+						
 						 <li class="nav-item">
 							<a data-toggle="collapse" href="#sidebarLayouts">
 								<i class="fas fa-th-list"></i>
@@ -121,24 +121,34 @@
 							<div class="collapse" id="sidebarLayouts">
 								<ul class="nav nav-collapse">
 									<li>
-										<a href="">
-											<span class="sub-item">Users</span>
+										<a href="{{route('roles')}}">
+											<span class="sub-item">Roles</span>
 										</a>
 									</li>
 									<li>
+										<a href="{{route('permissions')}}">
+											<span class="sub-item">Permissions</span>
+										</a>
+									</li>
+									<li>
+										<a href="{{route('admin-users')}}">
+											<span class="sub-item">Admin Users</span>
+										</a>
+									</li>
+									<!-- <li>
 										<a href="overlay-sidebar.html">
 											<span class="sub-item">Overlay Sidebar</span>
 										</a>
-									</li>
-									<li>
+									</li> -->
+									<!-- <li>
 										<a href="compact-sidebar.html">
 											<span class="sub-item">Compact Sidebar</span>
 										</a>
-									</li>
+									</li> -->
 								</ul>
 							</div>
 						</li>
--->
+
 					<!--	<li class="nav-item">
 							<a data-toggle="collapse" href="#forms">
 								<i class="fas fa-pen-square"></i>
