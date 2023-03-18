@@ -50,7 +50,7 @@ class ProfileController extends Controller
             $filePath = '/images/users/profile/thumbnail';
             $targetPath = public_path($filePath);
             if (!File::exists($targetPath)) {
-                File::makeDirectory($targetPath);
+                File::makeDirectory($targetPath,0755, true);
             }
             $imgFile = Image::make($image->getRealPath());
             $imgFile->resize(200, 200, function ($constraint) {

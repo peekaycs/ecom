@@ -13,6 +13,8 @@
 				sessionStorage.fonts = true;
 			}
 		});
+		// base url
+		const BASE_URL = '{{url('/')}}';
 	</script>
 
 	<!-- CSS Files -->

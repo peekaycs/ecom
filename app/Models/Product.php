@@ -11,7 +11,7 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id','user_id','product','category_id','subcategory_id','slug','sku','price','discount','quantity','published','short_description','image','featured','status','order','brand_id'];
+    protected $fillable = ['id','user_id','product','category_id','subcategory_id','slug','sku','price','discount','comission','shipping_cost','quantity','published','short_description','image','featured','status','order','brand_id'];
     public $primaryKey = 'id';
     public $incrementing = false;
 

@@ -1,4 +1,4 @@
-@extends('admin.layouts.app',['page_title' => 'Product','action_title' => 'Products','page_action' => route('products'),'manage'=>'Products','manage_action'=>route('products')])
+@extends('admin.layouts.app',['page_title' => 'Product','action_title' => 'Add','page_action' => route('create-product'),'manage'=>'Products','manage_action'=>route('products')])
 
 @section('content')
 
@@ -98,6 +98,20 @@
                         <input type="number" value="{{old('discount') ? old('discount') : ($product->discount ?? '')}}" class="form-control input-border-bottom" name="discount" min=0 id="discount" step=0.01 required>
                         <label for="selectFloatingLabel" class="placeholder">Discount</label>
                         @error('discount')
+                        <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="form-group form-floating-label @error('comission') has-error @enderror">
+                        <input type="number" value="{{old('comission') ? old('comission') : ($product->comission ?? '')}}" class="form-control input-border-bottom" name="comission" min=0 id="comission" step=0.01 required>
+                        <label for="selectFloatingLabel" class="placeholder">Commission</label>
+                        @error('comission')
+                        <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="form-group form-floating-label @error('shipping_cost') has-error @enderror">
+                        <input type="number" value="{{old('shipping_cost') ? old('shipping_cost') : ($product->shipping_cost ?? '')}}" class="form-control input-border-bottom" name="shipping_cost" min=0 id="shipping_cost" step=0.01 required>
+                        <label for="selectFloatingLabel" class="placeholder">Shipping Cost</label>
+                        @error('shipping_cost')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>

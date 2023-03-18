@@ -24,3 +24,11 @@ function fetchAttributeOptions(element){
         }).catch( error => {console.log(error)});
     }
 }
+
+function getSubcategories(category){
+    fetch(BASE_URL+'/admin/subcategory/get-options/'+category)
+    .then( (response) => response.text())
+    .then  ( html => {
+        document.getElementById('subcategory_id').innerHTML = html
+    })
+}
