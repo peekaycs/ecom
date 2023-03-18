@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Front;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use App\Models\Product;
+
 class HomeController extends Controller
 {
     /**
@@ -15,7 +17,9 @@ class HomeController extends Controller
     public function index()
     {
         //
-        return view('front.index');
+        $best_selling = Product::All();
+        return view('front.index', array('best_selling' => $best_selling));
+        //dd($best_selling);
     }
 
     /**

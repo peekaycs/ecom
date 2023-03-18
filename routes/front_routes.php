@@ -8,4 +8,4 @@ Route::get('/', function(){
     return view('front.index');
 });
 
-//Route::get('/', [HomeController::class,'index'])->name('home');
+Route::get('/', [HomeController::class,'index'])->name('home');
