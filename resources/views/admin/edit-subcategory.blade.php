@@ -6,7 +6,7 @@
     <form class="form-horizontal" id="" method="post" action="{{route('update-subcategory',$subCategory->uuid)}}">
         
         <div class="card-header">
-            <!-- <div class="card-title">Hoverable Table</div> -->
+            <!-- <div class="card-title">Hoverable Table</div> new commit -->
         </div>
         @csrf
         @method('put')
