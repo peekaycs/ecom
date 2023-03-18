@@ -16,15 +16,6 @@ use Illuminate\Support\Facades\Route;
 
 //admin routes
 
-
-
-Route::get('/', function () {
-    return view('auth.login ');
-});
-
-
-
-
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
 // })->middleware(['auth'])->name('dashboard');
@@ -32,3 +23,5 @@ Route::get('/', function () {
 require __DIR__.'/auth.php';
 
 require __DIR__.'/admin_routes.php';
+
+require __DIR__.'/front_routes.php'; 
