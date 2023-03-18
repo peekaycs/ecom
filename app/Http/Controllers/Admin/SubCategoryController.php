@@ -32,6 +32,7 @@ class SubCategoryController extends Controller
     {
         //
         $categories = Category::all();
+        // dd($categories);
         return view('admin.create-subcategory',array('categories' => $categories));
     }
 
@@ -74,6 +75,12 @@ class SubCategoryController extends Controller
     public function show(SubCategory $subCategory)
     {
         //
+    }
+
+
+    public function getSubcategoryOption(Request $request, $categoryId){
+        $subCategories = SubCategory::where('category_id', $categoryId)->get();
+        return view('admin.auxiliary.subcategory-options',array('subCategories'=>$subCategories));
     }
 
     /**

@@ -1,4 +1,4 @@
-@extends('admin.layouts.app',['page_title' => 'Admin Users','page_action' => route('create-admin-user'),'manage'=>'Admin Users','manage_action' => route('create-admin-user')])
+@extends('admin.layouts.app',['page_title' => 'Banners','page_action' => route('create-banner'),'manage'=>'Products','manage_action' => route('products')])
 
 @section('content')
 
@@ -13,20 +13,22 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Mobile</th>
+                        <th scope="col">Banner Name</th>
+                        <th scope="col">Banner Type</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Status</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($users as $user)
+                    @foreach($banners as $banner)
                     <tr>
                         <td>{{$loop->iteration}}</td>
-                        <td>{{ $user->full_name }}</td>
-                        <td>{{ $user->email }}</td>
-                        <td>{{ $user->mobile }}</td>
-                        <!-- <td><a href="{{route('edit-admin-user',$user->id) }}" title="view"><i class="far fa-eye"></i></a></td> -->
+                        <td>{{ $banner->name }}</td>
+                        <td>{{ ucfirst($banner->type) }}</td>
+                        <td>{{ $banner->description }}</td>
+                        <td>{{ $banner->status }}</td>
+                        <td><a href="{{route('edit-banner',$banner->id) }}" title="view"><i class="far fa-eye"></i></a></td>
                     </tr>
                     @endforeach
                     
@@ -35,7 +37,7 @@
         </div>
         <div class="col-sm-12 col-md-6"></div>
         <div class="col-sm-12 col-md-6">
-        {{ $users->links() }}
+        {{ $banners->links() }}
         </div>
     </div>
     
