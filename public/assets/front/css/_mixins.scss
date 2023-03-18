@@ -1,0 +1,39 @@
+@mixin border-radius ($radius-size){
+    border-radius: $radius-size;
+    -webkit-border-radius: $radius-size;
+    -moz-border-radius: $radius-size;
+}
+
+@mixin img-zoom($zoom-size){     
+    -moz-transition: $zoom-size; 
+    -webkit-transition: $zoom-size; 
+    transition: $zoom-size;      
+}
+@mixin img-zoom-on-hover($zoom-scale){
+    -moz-transform: $zoom-scale; 
+    -webkit-transform: $zoom-scale; 
+    transform: $zoom-scale;
+}
+
+// @mixin font-family() 
+// {
+//     font-family: 'Playfair Display',serif;
+// }
+
+@mixin a-tag()
+{
+    display: block;
+    text-decoration: none;
+}
+
+@mixin ul-tag()
+{
+    list-style: none;
+    padding: 0px;
+    margin: 0;
+}
+@mixin img-tag()
+{
+    min-width: auto;
+    max-width: 100%;
+}
