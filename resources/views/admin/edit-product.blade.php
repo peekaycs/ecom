@@ -43,7 +43,7 @@
                     </div>
                     <!-- Category -->
                     <div class="form-group form-floating-label @error('category_id') has-error @enderror">
-                        <select class="form-control input-border-bottom" name="category_id" id="category_id" required>
+                        <select class="form-control input-border-bottom" name="category_id" id="category_id" onchange="getSubcategories(this.value)" required>
                             <option value=""></option>
                             @forelse($categories as $category)
                                 <option value="{{$category->uuid}}" {{old('category_id') == $category->uuid  ? "selected" :($product->category_id == $category->uuid ? "selected" : '') }}>{{$category->category}}</option>
