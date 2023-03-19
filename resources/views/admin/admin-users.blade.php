@@ -26,7 +26,7 @@
                         <td>{{ $user->full_name }}</td>
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->mobile }}</td>
-                        <!-- <td><a href="{{route('edit-admin-user',$user->id) }}" title="view"><i class="far fa-eye"></i></a></td> -->
+                        <td><a href="{{route('edit-admin-user',$user->id) }}" title="view"><i class="far fa-eye"></i></a></td>
                     </tr>
                     @endforeach
                     

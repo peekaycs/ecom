@@ -11,6 +11,7 @@ use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\Models\UserProfile;
+use Illuminate\Validation\Rule;
 
 class AdminUserController extends Controller
 {
@@ -102,6 +103,12 @@ class AdminUserController extends Controller
     public function edit($id)
     {
         //
+
+        $user = User::with(['userProfile','userPermissions','userRoles'])->find($id);
+        $roles = Role::all();
+        $permissions = Permission::all();
+        // dd($user);
+        return view('admin.edit-admin-user', array('user' => $user, 'roles' => $roles, 'permissions' => $permissions));
     }
 
     /**
@@ -114,6 +121,38 @@ class AdminUserController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $user = User::with('userProfile')->find($id);
+        $request->validate([
+            'first_name' => 'required|string',
+            'middle_name' => 'nullable|string',
+            'last_name' => 'nullable|string',
+            'email' => ['required', 'email','string',Rule::unique('users')->ignore($user)],
+            'mobile' => ['required', 'integer',Rule::unique('users')->ignore($user)],
+            'age' => 'nullable|integer',
+            'gender' => 'required',
+            'is_active' => 'required|boolean'
+        ]);
+        // echo 'ssssss';die;
+        $user->first_name = $request->first_name;
+        $user->middle_name = $request->middle_name;
+        $user->last_name = $request->last_name;
+        $user->email = $request->email;
+        $user->mobile = $request->mobile;
+        $user->is_active =   $request->is_active;
+        $saved = $user->save();
+        if($saved){
+            $userProfile = UserProfile::find($user->userProfile->id);
+            $userProfile->age = $request->age;
+            $userProfile->gender = $request->gender;
+            $userProfile->save();
+        }
+        // dd($user);        
+        
+        if($saved)
+            return redirect(route('edit-admin-user', $id))->with('success','User updated successfully');
+        else
+            return redirect(route('edit-admin-user',$id))->with('error','Can\'t update user');
+
     }
 
     /**
