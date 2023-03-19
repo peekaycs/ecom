@@ -28,7 +28,7 @@ class ProductController extends Controller
     public function index()
     {
         //
-        $products = Product::with(['brand'])->paginate(env('PER_PAGE'))->withQueryString();
+        $products = Product::with(['brand'])->orderBy('updated_at','desc')->paginate(env('PER_PAGE'))->withQueryString();
         return view('admin.products',array('products' => $products));
     }
 
@@ -76,6 +76,8 @@ class ProductController extends Controller
             'sku' => $request->sku,
             'price' => $request->price,
             'discount' => $request->discount ?? 0,
+            'comission' => $request->comission ?? 0,
+            'shipping_cost' => $request->shipping_cost ?? 0,
             'quantity' => $request->quantity,
             'published' => $request->published,
             'short_description' => $request->short_description,
@@ -189,6 +191,8 @@ class ProductController extends Controller
         $product->sku = $request->sku;
         $product->price = $request->price;
         $product->discount = $request->discount;
+        $product->comission = $request->comission ?? 0;
+        $product->shipping_cost = $request->shipping_cost ?? 0;
         $product->quantity = $request->quantity;
         $product->published = $request->published;
         $product->short_description = $request->short_description;
@@ -282,7 +286,7 @@ class ProductController extends Controller
             $actualImage = '/images/products';
             $targetPath = public_path($thumbnail);
             if (!File::exists($targetPath)) {
-                File::makeDirectory($targetPath);
+                File::makeDirectory($targetPath,0755, true);
             }
             $imgFile = Image::make($image->getRealPath());
             $imgFile->resize(200, 200, function ($constraint) {
@@ -293,7 +297,7 @@ class ProductController extends Controller
             $actualImage = '/images/products';
             $targetPath = public_path($actualImage);
             if (!File::exists($targetPath)) {
-                File::makeDirectory($targetPath);
+                File::makeDirectory($targetPath,0755, true);
             }
             $imgFile = Image::make($image->getRealPath());
             $imgFile->resize(600, 600, function ($constraint) {

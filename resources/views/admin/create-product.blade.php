@@ -42,7 +42,7 @@
                     </div>
                     <!-- Category -->
                     <div class="form-group form-floating-label @error('category_id') has-error @enderror">
-                        <select class="form-control input-border-bottom" name="category_id" id="category_id" required>
+                        <select class="form-control input-border-bottom" name="category_id" id="category_id" onchange="getSubcategories(this.value)" required>
                             <option value=""></option>
                             @forelse($categories as $category)
                                 <option value="{{$category->uuid}}" {{old('category_id') == $category->uuid  ? "selected" :""}}>{{$category->category}}</option>
@@ -60,11 +60,6 @@
                     <div class="form-group form-floating-label @error('category_id') has-error @enderror">
                         <select class="form-control input-border-bottom" name="subcategory_id" id="subcategory_id" required>
                             <option value=""></option>
-                            @forelse($subCategories as $subCategory)
-                                <option value="{{$subCategory->uuid}}" {{old('subcategory_id') == $category->uuid  ? "selected" :""}}>{{$subCategory->subcategory}}</option>
-                            @empty
-                                <option value="">Please create category</option>
-                            @endforelse
                         </select>
                         <label for="selectFloatingLabel" style="top:0px" class="placeholder">Sub Category</label>
                         @error('category_id')
@@ -97,6 +92,20 @@
                         <input type="number" class="form-control input-border-bottom" name="discount" min=0 id="discount" step=0.01 >
                         <label for="selectFloatingLabel" class="placeholder">Discount</label>
                         @error('discount')
+                        <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="form-group form-floating-label @error('comission') has-error @enderror">
+                        <input type="number" class="form-control input-border-bottom" name="comission" min=0 id="comission" step=0.01 >
+                        <label for="selectFloatingLabel" class="placeholder">Commission</label>
+                        @error('comission')
+                        <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="form-group form-floating-label @error('shipping_cost') has-error @enderror">
+                        <input type="number" class="form-control input-border-bottom" name="shipping_cost" min=0 id="shipping_cost" step=0.01 >
+                        <label for="selectFloatingLabel" class="placeholder">Shipping Cost</label>
+                        @error('shipping_cost')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>

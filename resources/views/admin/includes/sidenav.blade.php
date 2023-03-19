@@ -111,7 +111,23 @@
 								</ul>
 							</div>
 						</li>
-						
+						<li class="nav-item">
+							<a data-toggle="collapse" href="#banners">
+								<i class="fas fa-th-list"></i>
+								<p>Banners</p>
+								<span class="caret"></span>
+							</a>
+							<div class="collapse" id="banners">
+								<ul class="nav nav-collapse">
+									<li>
+										<a href="{{route('banners')}}">
+											<span class="sub-item">Banners</span>
+										</a>
+									</li>
+									
+								</ul>
+							</div>
+						</li>
 						 <li class="nav-item">
 							<a data-toggle="collapse" href="#sidebarLayouts">
 								<i class="fas fa-th-list"></i>
@@ -135,20 +151,11 @@
 											<span class="sub-item">Admin Users</span>
 										</a>
 									</li>
-									<!-- <li>
-										<a href="overlay-sidebar.html">
-											<span class="sub-item">Overlay Sidebar</span>
-										</a>
-									</li> -->
-									<!-- <li>
-										<a href="compact-sidebar.html">
-											<span class="sub-item">Compact Sidebar</span>
-										</a>
-									</li> -->
+									
 								</ul>
 							</div>
 						</li>
-
+						
 					<!--	<li class="nav-item">
 							<a data-toggle="collapse" href="#forms">
 								<i class="fas fa-pen-square"></i>

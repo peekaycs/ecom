@@ -10,6 +10,8 @@ use Laravel\Sanctum\HasApiTokens;
 use App\Models\UserProfile;
 use App\Models\Address;
 use Spatie\Permission\Traits\HasRoles;
+use App\Models\ModelHasRole;
+use App\Models\ModelHasPermission;
 
 class User extends Authenticatable
 {
@@ -60,5 +62,13 @@ class User extends Authenticatable
 
     public function getFullNameAttribute(){
         return "{$this->first_name}  {$this->middle_name} {$this->last_name}";
+    }
+
+    public function userRoles(){
+        return $this->hasMany(ModelHasRole::class,'role_id','model_id');
+    }
+
+    public function userPermissions(){
+        return $this->hasMany(ModelHasPermission::class,'permission_id','model_id');
     }
 }
