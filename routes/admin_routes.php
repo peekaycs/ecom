@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\BannerController;
+use App\Http\Controllers\CouponController;
 
 Route::get('/admin', function(){
     return view('auth.login');
@@ -89,10 +90,17 @@ Route::group(['prefix'=>'admin','middleware' => ['auth','isAdmin']], function(){
     Route::get('/admin-user/edit/{id}',[AdminUserController::class,'edit'])->name('edit-admin-user');
 
     // Banner routes
-    Route::get('/admin/banners',[BannerController::class,'index'])->name('banners');
+    Route::get('/banners',[BannerController::class,'index'])->name('banners');
     Route::get('banner/create',[BannerController::class,'create'])->name('create-banner');
     Route::post('banner/store',[BannerController::class,'store'])->name('store-banner');
     Route::put('banner/update/{id}',[BannerController::class,'update'])->name('update-banner');
     Route::get('banner/edit/{id}',[BannerController::class,'edit'])->name('edit-banner');
     Route::get('get-banner-image-form',[BannerController::class,'getBannerImageForm'])->name('get-banner-image-form');
+
+    // Coupons
+    Route::get('coupons',[CouponController::class,'index'])->name('coupons');
+    Route::get('coupon/create',[CouponController::class,'create'])->name('create-coupon');
+    Route::post('coupon/store',[CouponController::class,'store'])->name('store-coupon');
+    Route::get('coupon/edit/{id}',[CouponController::class,'edit'])->name('edit-coupon');
+    Route::put('coupon/update/{id}',[CouponController::class,'update'])->name('update-coupon');
 });

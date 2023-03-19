@@ -128,6 +128,27 @@
 								</ul>
 							</div>
 						</li>
+						<li class="nav-item">
+							<a data-toggle="collapse" href="#coupons">
+								<i class="fas fa-th-list"></i>
+								<p>Coupons</p>
+								<span class="caret"></span>
+							</a>
+							<div class="collapse" id="coupons">
+								<ul class="nav nav-collapse">
+									<li>
+										<a href="{{route('coupons')}}">
+											<span class="sub-item">Coupons</span>
+										</a>
+									</li>
+									<li>
+										<a href="{{route('create-coupon')}}">
+											<span class="sub-item">Create Coupon</span>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</li>
 						 <li class="nav-item">
 							<a data-toggle="collapse" href="#sidebarLayouts">
 								<i class="fas fa-th-list"></i>
