@@ -9,12 +9,14 @@
     <!-- The slideshow/carousel -->
   	<div class="carousel-inner">
 	  	<?php $i = 0; ?>
-	  	@foreach($main as $banner)
-		<?php $i++; ?>
-		<div class="carousel-item <?php if($i == 1){ echo 'active';}?>">
-			<img src="{{URL::asset($banner->bannerImages[0]->image)}}" alt="" class="d-block" style="width:100%">
-		</div>
-		@endforeach
+		@if (isset($main) && !empty($main))
+			@foreach($main as $banner)
+			<?php $i++; ?>
+			<div class="carousel-item <?php if($i == 1){ echo 'active';}?>">
+				<img src="{{URL::asset($banner->bannerImages[0]->image)}}" alt="" class="d-block" style="width:100%">
+			</div>
+			@endforeach
+		@endif
 		<!--<div class="carousel-item">
 			<img src="{{URL::asset('assets/front/images/banner2.jpg')}}" alt="" class="d-block" style="width:100%">
 		</div>-->

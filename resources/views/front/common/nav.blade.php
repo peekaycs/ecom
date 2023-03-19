@@ -42,54 +42,56 @@
 				<div class="col-md-9 col-sm-12 col-12">
 					<div class="header-menu">
 						<ul>
-							@foreach($category as $cat)
-							<li><a href="javascript:void(0)">{{$cat->category}}</a>
-								<ul class="dropdown-on-hover animated fadeInUp">
-									<li>
-										<a href="digital-marketing.php">
-											<img src="{{URL::asset('assets/front/images/digital-marketing.png')}}" alt="">	
-											Digital Marketing
-										</a>
-									</li>			
-									
-									<li>
-										<a href="hosting-services.php">
-											<img src="{{URL::asset('assets/front/images/hosting-services.png')}}" alt="">
-											Hosting
-										</a>
-									</li>
-									<li>
-										<a href="website-desiging.php">
-											<img src="{{URL::asset('assets/front/images/graphic-desig.png')}}" alt="">
-											Website Desiging
-										</a>
-									</li>
-									<li>
-										<a href="crm.php">
-											<img src="{{URL::asset('assets/front/images/crm.png')}}" alt="">
-											CRM
-										</a>
-									</li>
-									<li>
-										<a href="data-server.php">
-											<img src="{{URL::asset('assets/front/images/data-server.png')}}" alt="">
-											Server
-										</a>
-									</li>
-									<li>
-										<a href="cloud-data.php">
-											<img src="{{URL::asset('assets/front/images/cloud-data.png')}}" alt="">Cloud
-										</a>
-									</li>
-									<li>
-										<a href="app-development.php">
-											<img src="{{URL::asset('assets/front/images/user-interface.png')}}" alt="">
-											App Development
-										</a>
-									</li>
-								</ul>
-							</li>
-							@endforeach
+							@if (isset($category) && !empty($category))
+								@foreach($category as $cat)
+								<li><a href="javascript:void(0)">{{$cat->category}}</a>
+									<ul class="dropdown-on-hover animated fadeInUp">
+										<li>
+											<a href="digital-marketing.php">
+												<img src="{{URL::asset('assets/front/images/digital-marketing.png')}}" alt="">	
+												Digital Marketing
+											</a>
+										</li>			
+										
+										<li>
+											<a href="hosting-services.php">
+												<img src="{{URL::asset('assets/front/images/hosting-services.png')}}" alt="">
+												Hosting
+											</a>
+										</li>
+										<li>
+											<a href="website-desiging.php">
+												<img src="{{URL::asset('assets/front/images/graphic-desig.png')}}" alt="">
+												Website Desiging
+											</a>
+										</li>
+										<li>
+											<a href="crm.php">
+												<img src="{{URL::asset('assets/front/images/crm.png')}}" alt="">
+												CRM
+											</a>
+										</li>
+										<li>
+											<a href="data-server.php">
+												<img src="{{URL::asset('assets/front/images/data-server.png')}}" alt="">
+												Server
+											</a>
+										</li>
+										<li>
+											<a href="cloud-data.php">
+												<img src="{{URL::asset('assets/front/images/cloud-data.png')}}" alt="">Cloud
+											</a>
+										</li>
+										<li>
+											<a href="app-development.php">
+												<img src="{{URL::asset('assets/front/images/user-interface.png')}}" alt="">
+												App Development
+											</a>
+										</li>
+									</ul>
+								</li>
+								@endforeach
+							@endif	
 							<!--<li class="animatedParent"><a href="javascript:void(0)">Personal Care</a></li>
 							<li><a href="javascript:void(0)">Diabetes</a></li>
 							<li><a href="javascript:void(0)">Baby Care</a></li>-->

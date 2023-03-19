@@ -9,13 +9,15 @@
                 </div>
                 <div class="col-lg-10 col-md-10 col-sm-9 col-12">
                     <div class="best-selling-products-slide">
-                        @foreach($best_selling as $best) 
-                        <div class="best-selling-box">
-                            <a href="javascript:void(0)">
-                                <img src="{{URL::asset($best->image)}}" alt="">
-                            </a>
-                        </div>
-                        @endforeach
+                        @if (isset($best_selling) && !empty($best_selling))
+                            @foreach($best_selling as $best) 
+                            <div class="best-selling-box">
+                                <a href="javascript:void(0)">
+                                    <img src="{{URL::asset($best->image)}}" alt="">
+                                </a>
+                            </div>
+                            @endforeach
+                        @endif    
                         
                         <!--<div class="best-selling-box">
                             <a href="javascript:void(0)">

@@ -8,19 +8,21 @@
             <div class="row mt-2">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="featured-brand-slide">
-                        @foreach($featured as $banner)
-                        <div class="product-box">
-                            <a href="javascript:void(0)" class="text-center">
-                                <span class="zoomimg">
-                                    <img src="{{URL::asset($banner->bannerImages[0]->image)}}" alt="" class="circle">
-                                </span>
-                            </a>
-                            <a href="javascript:void(0)" class="text-center">
-                                <h5 class="product-name">{{$banner->name}}</h5>
-                                <span class="offer-btn">up to 50% off</span>
-                            </a>
-                        </div>
-                        @endforeach
+                        @if (isset($featured) && !empty($featured))
+                            @foreach($featured as $banner)
+                            <div class="product-box">
+                                <a href="javascript:void(0)" class="text-center">
+                                    <span class="zoomimg">
+                                        <img src="{{URL::asset($banner->bannerImages[0]->image)}}" alt="" class="circle">
+                                    </span>
+                                </a>
+                                <a href="javascript:void(0)" class="text-center">
+                                    <h5 class="product-name">{{$banner->name}}</h5>
+                                    <span class="offer-btn">up to 50% off</span>
+                                </a>
+                            </div>
+                            @endforeach
+                        @endif
                         <!--<div class="product-box">
                             <a href="javascript:void(0)" class="text-center">
                                 <span class="zoomimg">

@@ -2,22 +2,24 @@
         <div class="container">
             <div class="row">
                 <?php $i = 0; ?>
-                @foreach($popular as $banner)
-                <?php $i++; 
-                if($i == 2){
-                    $cls = 'col-lg-6 col-md-6 col-sm-6';
-                }else{
-                    $cls = 'col-lg-3 col-md-3 col-sm-3';
-                }
-                ?>
-                <div class="{{$cls}} col-12">
-                    <div class="offer-box">
-                        <a href="javascript:void(0)">
-                            <img src="{{URL::asset($banner->bannerImages[0]->image)}}" alt="">
-                        </a>
+                @if (isset($popular) && !empty($popular))
+                    @foreach($popular as $banner)
+                    <?php $i++; 
+                    if($i == 2){
+                        $cls = 'col-lg-6 col-md-6 col-sm-6';
+                    }else{
+                        $cls = 'col-lg-3 col-md-3 col-sm-3';
+                    }
+                    ?>
+                    <div class="{{$cls}} col-12">
+                        <div class="offer-box">
+                            <a href="javascript:void(0)">
+                                <img src="{{URL::asset($banner->bannerImages[0]->image)}}" alt="">
+                            </a>
+                        </div>
                     </div>
-                </div>
-                @endforeach
+                    @endforeach
+                @endif
                 <!--<div class="col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="offer-box">
                         <a href="javascript:void(0)">
