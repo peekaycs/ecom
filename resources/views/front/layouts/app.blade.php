@@ -6,8 +6,7 @@
         <!-- end of header-->
     </head>
     <body>
-        @include('front.common.top_head')
-        @include('front.common.slider')
+        @include('front.common.nav')
         
         <!-- main content -->
         @yield('content') 

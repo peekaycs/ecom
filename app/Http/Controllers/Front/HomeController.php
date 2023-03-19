@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Front;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use App\Models\Product;
+use App\Models\Banner;
+use App\Models\Category;
+
 class HomeController extends Controller
 {
     /**
@@ -15,7 +19,14 @@ class HomeController extends Controller
     public function index()
     {
         //
-        return view('front.index');
+        $data = [];
+        $data['category'] = Category::All();
+        $data['best_selling'] = Product::All();
+        $banners = Banner::All();
+        foreach($banners as $banner){
+            $data[$banner->type][] = $banner;
+        }
+        return view('front.index', $data);
     }
 
     /**
