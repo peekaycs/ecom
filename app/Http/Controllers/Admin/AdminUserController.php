@@ -132,7 +132,6 @@ class AdminUserController extends Controller
             'gender' => 'required',
             'is_active' => 'required|boolean'
         ]);
-        // echo 'ssssss';die;
         $user->first_name = $request->first_name;
         $user->middle_name = $request->middle_name;
         $user->last_name = $request->last_name;
