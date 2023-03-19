@@ -8,12 +8,16 @@
 
     <!-- The slideshow/carousel -->
   	<div class="carousel-inner">
-		<div class="carousel-item active">
-			<img src="{{URL::asset('assets/front/images/banner.jpg')}}" alt="" class="d-block" style="width:100%">
+	  	<?php $i = 0; ?>
+	  	@foreach($main as $banner)
+		<?php $i++; ?>
+		<div class="carousel-item <?php if($i == 1){ echo 'active';}?>">
+			<img src="{{URL::asset($banner->bannerImages[0]->image)}}" alt="" class="d-block" style="width:100%">
 		</div>
-		<div class="carousel-item">
+		@endforeach
+		<!--<div class="carousel-item">
 			<img src="{{URL::asset('assets/front/images/banner2.jpg')}}" alt="" class="d-block" style="width:100%">
-		</div>
+		</div>-->
   	</div>
   
   	<!-- Left and right controls/icons -->

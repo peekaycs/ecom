@@ -42,8 +42,8 @@
 				<div class="col-md-9 col-sm-12 col-12">
 					<div class="header-menu">
 						<ul>
-							<li><a href="index.php">Homeopathy</a></li>
-							<li class="animatedParent"><a href="#">Personal Care</a>
+							@foreach($category as $cat)
+							<li><a href="javascript:void(0)">{{$cat->category}}</a>
 								<ul class="dropdown-on-hover animated fadeInUp">
 									<li>
 										<a href="digital-marketing.php">
@@ -89,15 +89,10 @@
 									</li>
 								</ul>
 							</li>
-							<li><a href="about-us.php">Diabetes</a></li>
-							<!--<li><a href="#">Blog</a></li>-->
-							<li><a href="#">Baby Care</a></li>
-							<!--<li><a href="#">Nutrition</a></li>--->
-							<!-- <li>
-								<a href="javascript:void(0)">
-									<img src="images/cart.png" alt="">
-								</a>
-							</li> -->
+							@endforeach
+							<!--<li class="animatedParent"><a href="javascript:void(0)">Personal Care</a></li>
+							<li><a href="javascript:void(0)">Diabetes</a></li>
+							<li><a href="javascript:void(0)">Baby Care</a></li>-->
 						</ul>
 					</div>					
 				</div>
@@ -138,12 +133,6 @@
 					Homeopathy
 				</a>
 			</li>
-			<!--li>
-				<a href="#">
-					<img src="images/crm.png" alt="">
-					CRM
-				</a>
-			</li-->
 			<li>
 				<a href="data-server.php">
 					<img src="{{URL::asset('assets/front/images/schedule.png')}}" alt="">Nutrition & Supplements
