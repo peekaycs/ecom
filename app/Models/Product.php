@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\ProductAttribute;
 use App\Models\Brand;
 use App\Models\ProductAttributeImage;
+
+use App\Models\Category;
+use App\Models\SubCategory;
+
 class Product extends Model
 {
     use HasFactory;
@@ -25,5 +29,15 @@ class Product extends Model
     // public function productAttributeImage(){
     //     return $this->hasMany(ProductAttributeImage::class, 'product_id');
     // }
+
+    public function category()  
+    {  
+        return $this->belongsTo(Category::class,'category_id','uuid');  
+    }
+
+    public function Subcategory()  
+    {  
+        return $this->belongsTo(SubCategory::class,'subcategory_id','uuid');  
+    }
     
 }

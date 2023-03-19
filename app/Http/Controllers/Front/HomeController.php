@@ -18,8 +18,8 @@ class HomeController extends Controller
     {
         //
         $best_selling = Product::All();
-        return view('front.index', array('best_selling' => $best_selling));
         //dd($best_selling);
+        return view('front.index', array('best_selling' => $best_selling));
     }
 
     /**
