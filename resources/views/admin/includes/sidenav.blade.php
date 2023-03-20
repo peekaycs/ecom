@@ -78,42 +78,13 @@
 											<span class="sub-item">Products</span>
 										</a>
 									</li>
-									<!-- <li>
-										<a href="components/notifications.html">
-											<span class="sub-item">Notifications</span>
-										</a>
-									</li>
-									<li>
-										<a href="components/sweetalert.html">
-											<span class="sub-item">Sweet Alert</span>
-										</a>
-									</li>
-									<li>
-										<a href="components/font-awesome-icons.html">
-											<span class="sub-item">Font Awesome Icons</span>
-										</a>
-									</li>
-									<li>
-										<a href="components/simple-line-icons.html">
-											<span class="sub-item">Simple Line Icons</span>
-										</a>
-									</li>
-									<li>
-										<a href="components/flaticons.html">
-											<span class="sub-item">Flaticons</span>
-										</a>
-									</li>
-									<li>
-										<a href="components/typography.html">
-											<span class="sub-item">Typography</span>
-										</a>
-									</li> -->
+									
 								</ul>
 							</div>
 						</li>
 						<li class="nav-item">
 							<a data-toggle="collapse" href="#banners">
-								<i class="fas fa-th-list"></i>
+								<i class="fas fa-ticket-alt"></i>
 								<p>Banners</p>
 								<span class="caret"></span>
 							</a>
@@ -130,7 +101,7 @@
 						</li>
 						<li class="nav-item">
 							<a data-toggle="collapse" href="#coupons">
-								<i class="fas fa-th-list"></i>
+								<i class="fas fa-box-open"></i>
 								<p>Coupons</p>
 								<span class="caret"></span>
 							</a>
@@ -149,9 +120,30 @@
 								</ul>
 							</div>
 						</li>
+						<li class="nav-item">
+							<a data-toggle="collapse" href="#pages">
+								<i class="far fa-newspaper"></i>
+								<p>Page Management</p>
+								<span class="caret"></span>
+							</a>
+							<div class="collapse" id="pages">
+								<ul class="nav nav-collapse">
+									<li>
+										<a href="{{route('pages')}}">
+											<span class="sub-item">Page</span>
+										</a>
+									</li>
+									<li>
+										<a href="{{route('create-page')}}">
+											<span class="sub-item">Create Page</span>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</li>
 						 <li class="nav-item">
 							<a data-toggle="collapse" href="#sidebarLayouts">
-								<i class="fas fa-th-list"></i>
+								<i class="fas fa-user"></i>
 								<p>User Management</p>
 								<span class="caret"></span>
 							</a>
@@ -173,6 +165,27 @@
 										</a>
 									</li>
 									
+								</ul>
+							</div>
+						</li>
+						<li class="nav-item">
+							<a data-toggle="collapse" href="#vendors">
+								<i class="fas fa-user-friends"></i>
+								<p>Vendor Management</p>
+								<span class="caret"></span>
+							</a>
+							<div class="collapse" id="vendors">
+								<ul class="nav nav-collapse">
+									<li>
+										<a href="{{route('vendors')}}">
+											<span class="sub-item">Vendors</span>
+										</a>
+									</li>
+									<li>
+										<a href="{{route('create-vendor-user')}}">
+											<span class="sub-item">Create Cendor</span>
+										</a>
+									</li>
 								</ul>
 							</div>
 						</li>
