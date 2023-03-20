@@ -308,4 +308,21 @@ class ProductController extends Controller
 
         }
     }
+
+    public function product()
+    {
+        //
+        $data = [];
+        $data['category'] = Category::All();
+        return view('front.product', $data);
+    }
+
+    public function product_detail()
+    {
+        //
+        $data = [];
+        $data['category'] = Category::All();
+        return view('front.product_detail', $data);
+    }
+
 }

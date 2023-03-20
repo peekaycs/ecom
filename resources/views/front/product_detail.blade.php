@@ -1,4 +1,6 @@
-<?php include_once('common/head.php'); ?>		
+@extends('front.layouts.app')
+
+@section('content')		
 <section class="mt-4">
 	<div class="container">			
 		<div class="row mb-3">
@@ -381,4 +383,4 @@
         </div>
     </div>
 </section>
-<?php include_once('common/footer.php'); ?>	
+@endsection		

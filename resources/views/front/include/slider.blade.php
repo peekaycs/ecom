@@ -8,13 +8,13 @@
 
     <!-- The slideshow/carousel -->
   	<div class="carousel-inner">
-	  	<?php $i = 0; ?>
 		@if (isset($main) && !empty($main))
 			@foreach($main as $banner)
-			<?php $i++; ?>
-			<div class="carousel-item <?php if($i == 1){ echo 'active';}?>">
-				<img src="{{URL::asset($banner->bannerImages[0]->image)}}" alt="" class="d-block" style="width:100%">
-			</div>
+				@if (isset($banner) && !empty($banner))
+				<div class="carousel-item {{ ($loop->iteration == 1) ? 'active' : '' }}">
+					<img src="{{ URL::asset($banner->bannerImages[0]->image) ?? ''}}" alt="" class="d-block" style="width:100%">
+				</div>
+				@endif
 			@endforeach
 		@endif
 		<!--<div class="carousel-item">
