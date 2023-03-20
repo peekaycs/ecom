@@ -15,6 +15,8 @@ use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\CouponController;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\VendorController;
 
 Route::get('/admin', function(){
     return view('auth.login');
@@ -103,4 +105,18 @@ Route::group(['prefix'=>'admin','middleware' => ['auth','isAdmin']], function(){
     Route::post('coupon/store',[CouponController::class,'store'])->name('store-coupon');
     Route::get('coupon/edit/{id}',[CouponController::class,'edit'])->name('edit-coupon');
     Route::put('coupon/update/{id}',[CouponController::class,'update'])->name('update-coupon');
+
+    // Pages
+    Route::get('pages',[PageController::class,'index'])->name('pages');
+    Route::get('page/create',[PageController::class,'create'])->name('create-page');
+    Route::post('page/store',[PageController::class,'store'])->name('store-page');
+    Route::get('page/edit/{id}',[PageController::class,'edit'])->name('edit-page');
+    Route::put('page/update/{id}',[PageController::class,'update'])->name('update-page');
+
+    // Vendors
+     Route::get('/vendors',[VendorController::class,'index'])->name('vendors');
+     Route::get('vendor/create',[VendorController::class,'create'])->name('create-vendor-user');
+     Route::post('vendor/store',[VendorController::class,'store'])->name('store-vendor-user');
+     Route::put('vendor/update/{id}',[VendorController::class,'update'])->name('update-vendor-user');
+     Route::get('/vendor/edit/{id}',[VendorController::class,'edit'])->name('edit-vendor-user');
 });
