@@ -6,21 +6,23 @@
                 </div>
             </div>
             <div class="row mt-3">
-                @foreach($bottom as $banner)
-                <div class="col-lg-3 col-md-3 col-sm-3 col-12">
-                    <div class="product-cat-box">
-                        <div class="product-cat-image">
-                            <a href="javascript:void(0)">
-                                <img src="{{URL::asset($banner->bannerImages[0]->image)}}" alt="">
-                            </a>
+                @if (isset($bottom) && !empty($bottom))
+                    @foreach($bottom as $banner)
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-12">
+                        <div class="product-cat-box">
+                            <div class="product-cat-image">
+                                <a href="javascript:void(0)">
+                                    <img src="{{URL::asset($banner->bannerImages[0]->image)}}" alt="">
+                                </a>
+                            </div>
+                            <div class="product-cat-details">
+                                <h4><a href="javascript:void(0)">{{$banner->name}}</a></h4>
+                                <a href="javascript:void(0)" class="shop-now">shop now</a>                        
+                            </div>                    
                         </div>
-                        <div class="product-cat-details">
-                            <h4><a href="javascript:void(0)">{{$banner->name}}</a></h4>
-                            <a href="javascript:void(0)" class="shop-now">shop now</a>                        
-                        </div>                    
                     </div>
-                </div>
-                @endforeach
+                    @endforeach
+                @endif    
                 <!--<div class="col-lg-3 col-md-3 col-sm-3 col-12">
                     <div class="product-cat-box">
                         <div class="product-cat-image">
