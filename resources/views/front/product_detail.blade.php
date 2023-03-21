@@ -8,10 +8,16 @@
                 <div class="product-detail">
                     <div class="tab-section">                        
                         <div class="tab-content">
-                            <div id="img1" class="tab-pane active">
-								<img src="images/b1.jpg" alt="">
-                            </div>
-                            <div id="img2" class="tab-pane fade">
+                            @if( isset($product) && !empty($product) )
+                                @foreach( $product->productImage as $image)
+                                    @if( isset($image) && !empty($image) )
+                                    <div id="img{{$loop->iteration}}" class="tab-pane {{ ($loop->iteration == 1) ? 'active' : '' }}">
+                                        <img src="{{ URL::asset($image->image) ?? '' }}" alt="">
+                                    </div>
+                                    @endif
+                                @endforeach
+                            @endif        
+                            <!--<div id="img2" class="tab-pane fade">
 								<img src="images/b2.jpg" alt="">
                             </div>
                             <div id="img3" class="tab-pane fade">
@@ -22,10 +28,21 @@
                             </div>
                             <div id="img5" class="tab-pane fade">
 								<img src="images/b3.jpg" alt="">
-                            </div>
+                            </div>-->
                         </div>
 						<ul class="nav nav-tabs">
-                            <li class="nav-item">
+                            @if( isset($product) && !empty($product) )
+                                @foreach( $product->productImage as $image)
+                                    @if( isset($image) && !empty($image) )
+                                    <li class="nav-item">
+                                        <a class="nav-link {{ ($loop->iteration == 1) ? 'active' : '' }}" data-bs-toggle="tab" href="#img{{$loop->iteration}}">
+                                            <img src="{{ URL::asset($image->image) ?? '' }}" alt="">
+                                        </a>
+                                    </li>
+                                    @endif
+                                @endforeach
+                            @endif
+                            <!--<li class="nav-item">
                                 <a class="nav-link active" data-bs-toggle="tab" href="#img1">
 									<img src="images/b1.jpg" alt="">
 								</a>
@@ -49,40 +66,46 @@
                                 <a class="nav-link" data-bs-toggle="tab" href="#img5">
 									<img src="images/b3.jpg" alt="">
                                 </a>
-                            </li>
+                            </li>-->
                         </ul>
                     </div>
                 </div>
             </div>
+            
             <div class="col-md-5 col-sm-5 col-12">
                 <div class="product-name">
-                    <h4>Willmar Schwabe India Syzygium Jambolanum 1X (Q) (30ml)</h4>
-                    <h5>For Increased Amount of Sugar in the Blood, Urine and Related Symptoms</h5>
+                    @if( isset($product) && !empty($product) )
+                    <h4>{{ $product->product ?? '' }} ( {{ $product->productAttribute[0]->attribute->name }} )</h4>
+                    <h5>{{ $product->short_description ?? '' }}</h5>
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="additional-discount">
                             <div class="ad-price">
-                                <h5>Rs 275</h5>
+                                <h5>Rs {{$product->price - ($product->price * $product->discount)/100 }}</h5>
                                 <h6>
-                                    <span class="mrp">MRP 200</span>
-                                    <span class="off">17% OFF</span>							
+                                    <span class="mrp">MRP {{ $product->price ?? '' }}</span>
+                                    <span class="off">{{ $product->discount ?? '' }}% OFF</span>							
                                 </h6>
                             </div>
                         </div>
                         <div class="size">
-                            <p>Select from available Sizes :</p>
+                            <p>Select from available {{ $product->productAttribute[0]->attributeGroup->name }} :</p>
                             <div class="size-group">
-                                <a href="javascript:void(0)">
-                                    30ml
-                                    <small>rs 256</small>
-                                </a>
-                                <a href="javascript:void(0)">
+                                @if( isset($product->productAttribute) && !empty($product->productAttribute) )
+                                    @foreach($product->productAttribute as $productAttribute)
+                                    <a href="javascript:void(0)" class=" variant {{ ($loop->iteration == 1) ? 'active' : '' }}">
+                                        <span class="variant_name_{{ $loop->iteration }}" data-name="{{ $productAttribute->attribute->name ?? '' }}">{{ $productAttribute->attribute->name ?? '' }}</span>
+                                        <small class="variant_price_{{ $loop->iteration }}" data-price="{{ $productAttribute->price ?? ''}}">Rs {{ $productAttribute->price ?? ''}}</small>
+                                    </a>
+                                    @endforeach
+                                @endif
+                                <!--<a href="javascript:void(0)">
                                     3x30ml
                                     <small>rs 885</small>
                                 </a>
                                 <a href="javascript:void(0)">
                                     5x30ml
                                     <small>rs 14266</small>
-                                </a>
+                                </a>-->
                             </div>
                         </div>
 						<div class="delivery-pin">
@@ -98,11 +121,12 @@
 							</form>
 						</div>
                     </div>
+                    @endif
                 </div>
             </div>
             <div class="col-md-4 col-sm-4 col-12">
                 <div class="product-price">
-                    <h4>Rs 275</h4>                    
+                    <h4>Rs <span class="price">{{$product->price - ($product->price * $product->discount)/100 }}<span></h4>                    
                     <div class="quantity">
                         <span>
                             <select>
@@ -114,9 +138,7 @@
                             </select>
                             of
                         </span>
-                        <span>
-                            500 gm Paste
-                        </span>                        
+                        <span class="size">100ml</span>                        
                     </div>
 					<a href="cart-list.php" class="btn btn-sm btn-primary">Buy Now</a>
 					<a href="cart-list.php" class="btn btn-sm btn-success">Add to cart</a>
@@ -383,4 +405,22 @@
         </div>
     </div>
 </section>
+
 @endsection		
+
+@section('script')	
+<script>
+    $( document ).ready(function() {
+        $(".variant").each(function(i, obj){
+            var has_class = $(obj).hasClass('active');
+            if(has_class == true){
+                var name = $(".variant_name_" + i ).data("name");
+                var price = $(".variant_price_" + i ).data("price");
+                alert(name);
+                $(".price").html(price);
+                $(".size").html(name);
+            }
+        });
+    },1000);
+</script>
+@endsection	

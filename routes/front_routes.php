@@ -12,6 +12,6 @@ Route::get('/', function(){
 Route::get('/', [HomeController::class,'index'])->name('home');
 
 Route::get('/product', [ProductController::class,'product'])->name('product');
-Route::get('/product-detail/{id}', [ProductController::class,'product_detail'])->name('product_detail');
+Route::get('/product-detail/{slug}', [ProductController::class,'product_detail'])->name('product_detail');
 
 Route::get('/cart-item', [HomeController::class,'cart_item'])->name('cart_item');

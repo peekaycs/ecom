@@ -317,11 +317,13 @@ class ProductController extends Controller
         return view('front.product', $data);
     }
 
-    public function product_detail()
+    public function product_detail($slug)
     {
         //
         $data = [];
         $data['category'] = Category::All();
+        $data['product'] = Product::WHERE('slug',$slug)->first();
+        //dd($data['product']->productAttribute[0]->attributeGroup);
         return view('front.product_detail', $data);
     }
 

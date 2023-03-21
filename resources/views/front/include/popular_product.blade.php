@@ -52,7 +52,7 @@
                                                 <li><small class="px-1">1 review(2)</small></li>
                                             </ul>
                                             <div class="add-to-cart">
-                                                <a href="{{ route('product_detail',['id' => $best->id]) }}" class="btn-sm btn-outlinr-danger">Add to Cart</a>
+                                                <a href="{{ route('product_detail',['slug' => $best->slug]) }}" class="btn-sm btn-outlinr-danger">Add to Cart</a>
                                             </div>
                                         </div>
                                         @endif
