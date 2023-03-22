@@ -75,7 +75,7 @@
             <div class="col-md-5 col-sm-5 col-12">
                 <div class="product-name">
                     @if( isset($product) && !empty($product) )
-                    <h4>{{ $product->product ?? '' }} ( {{ $product->productAttribute[0]->attribute->name }} )</h4>
+                    <h4>{{ $product->product ?? '' }} ( {{ isset($product->productAttribute[0]) ? $product->productAttribute[0]->attribute->name : '' }} )</h4>
                     <h5>{{ $product->short_description ?? '' }}</h5>
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="additional-discount">
@@ -88,11 +88,11 @@
                             </div>
                         </div>
                         <div class="size">
-                            <p>Select from available {{ $product->productAttribute[0]->attributeGroup->name }} :</p>
+                            <p>{{ isset($product->productAttribute[0]) ? ' Select from available '. $product->productAttribute[0]->attributeGroup->name .':' : '' }} </p>
                             <div class="size-group">
                                 @if( isset($product->productAttribute) && !empty($product->productAttribute) )
                                     @foreach($product->productAttribute as $productAttribute)
-                                    <a href="javascript:void(0)" class=" variant {{ ($loop->iteration == 1) ? 'active' : '' }}">
+                                    <a href="javascript:void(0)" onClick="selectVariant(this,{{ $loop->iteration }})" class=" variant {{ ($loop->iteration == 1) ? 'active' : '' }} variant_{{ $loop->iteration }}">
                                         <span class="variant_name_{{ $loop->iteration }}" data-name="{{ $productAttribute->attribute->name ?? '' }}">{{ $productAttribute->attribute->name ?? '' }}</span>
                                         <small class="variant_price_{{ $loop->iteration }}" data-price="{{ $productAttribute->price ?? ''}}">Rs {{ $productAttribute->price ?? ''}}</small>
                                     </a>
@@ -127,7 +127,7 @@
             </div>
             <div class="col-md-4 col-sm-4 col-12">
                 <div class="product-price">
-                    <h4>Rs <span class="price">{{$product->price - ($product->price * $product->discount)/100 }}<span></h4>                    
+                    <h4>Rs <span class="priceAdd">{{ isset($product->price) ? $product->price - ($product->price * $product->discount)/100 : '' }} <span></h4>                    
                     <div class="quantity">
                         <span>
                             <select>
@@ -137,12 +137,12 @@
                                 <option>4</option>
                                 <option>5</option>
                             </select>
-                            of
+                            {{ 'of' }}
                         </span>
-                        <span class="size">100ml</span>                        
+                        <span class="sizeAdd"></span>                        
                     </div>
-					<a href="cart-list.php" class="btn btn-sm btn-primary">Buy Now</a>
-					<a href="cart-list.php" class="btn btn-sm btn-success">Add to cart</a>
+					<a href="{{route('cart_item')}}" class="btn btn-sm btn-primary">Buy Now</a>
+					<a href="{{route('cart_item')}}" class="btn btn-sm btn-success">Add to cart</a>
                 </div>                
             </div>             
         </div>
@@ -152,9 +152,11 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-sm-8 col-12">
+                @if( isset($product) && !empty($product) )
                 <h5>Description</h5>
-                <div class="product-overview">                    
-                    <h6>Also known as</h6>
+                <div class="product-overview">  
+                    {{ $product->description ?? 'N/A' }}                  
+                    <!--<h6>Also known as</h6>
 					<p>Syzygium jamb</p>
 					<h6>Properties</h6>					
 					<ul>
@@ -174,11 +176,14 @@
 					<h6>Causes & Symptoms for Willmar Schwabe Syzygium Jambolinum 1x (Mother Tincture)</h6>
 					<p>Syzygium is a native of India and has effective results in Increased Blood sugar levels. </p>
 					<p>Syzygium is a native of India and has effective results in Increased Blood sugar levels. </p>
-					<p>Syzygium is a native of India and has effective results in Increased Blood sugar levels. </p>
+					<p>Syzygium is a native of India and has effective results in Increased Blood sugar levels. </p>-->
                 </div>
                 <h5>Frequently Asked Questions (FAQs)</h5>
                 <div class="productFAQ">
                     <div class="product-faq-inner">
+                        {{ $product->faq ?? 'N/A' }}  
+                    </div>    
+                    <!--<div class="product-faq-inner">
                         <div class="question-icon">Q</div>
                         <div class="question-answer">
                             <p class="question">How many days do I need to use R 89 (Lipocol) medicine to see effective results?</p>
@@ -191,10 +196,12 @@
                             <p class="question">How many days do I need to use R 89 (Lipocol) medicine to see effective results?</p>
                             <p class="answer">Depending upon the symptoms we can decide the duration of the medicines. For better results you can take the medicines minimum for 1 to 2 months.</p>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
                 <div class="clear border-one"></div>  
+                @endif
             </div>
+
             <div class="col-md-4 col-sm-4 col-12">
                 <div class="similar-product right-sticky">
                     <h5>Similar Product</h5>
@@ -202,7 +209,7 @@
                         <div class="additional-discount">
                             <div class="ad-img">
                                 <p>Pack of 2</p>
-                                <img src="images/b2.jpg" alt="">
+                                <img src="{{URL::asset('assets/front/images/b2.jpg')}}" alt="">
                             </div>
                             <div class="ad-price">
                                 <h5>Rs 275</h5>
@@ -216,7 +223,7 @@
                         <div class="additional-discount">
                             <div class="ad-img">
                                 <p>Pack of 2</p>
-                                <img src="images/b2.jpg" alt="">
+                                <img src="{{URL::asset('assets/front/images/b2.jpg')}}" alt="">
                             </div>
                             <div class="ad-price">
                                 <h5>Rs 275</h5>
@@ -233,195 +240,34 @@
         </div>
     </div>
 </section>
-<section class="slide-section mt-2 mb-4">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-12">
-                <h4 class="heading">Popular Healthcare Products</h4>
-            </div>
-        </div>
-        <div class="row mt-3">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-12">
-                <div class="product-slide">
-                    <div class="product-box">
-                        <span class="product-offer">-16%</span>
-                        <a href="javascript:void(0)" class="text-center">
-                            <img src="images/b1.jpg" alt="">
-                        </a>
-                        <div class="categories-name">
-                            <a href="javascript:void(0)">Personal Care</a>
-                            <a href="javascript:void(0)">Stomach Pain</a>
-                        </div>
-                        <a href="javascript:void(0)">
-                            <h5 class="product-name">Essential Oil Blends – 10mL</h5>
-                        </a>
-                        <p class="item-price">                                    
-                            <ins>$255,00</ins>
-                            <del>$240,00</del>
-                        </p>
-                        <ul class="star-rating">
-                            <li class="str-color"><i class="fas fa-star"></i></li>
-                            <li class="str-color"><i class="fas fa-star"></i></li>
-                            <li class="str-color"><i class="fas fa-star"></i></li>
-                            <li class="str-color"><i class="fas fa-star"></i></li>
-                            <li class="str-color"><i class="fas fa-star-half-alt"></i></li>
-                            <li><small class="px-1">1 review(2)</small></li>
-                        </ul>
-                        <div class="add-to-cart">
-                            <a href="javascript:void(0)" class="btn-sm btn-outlinr-danger">Add to Cart</a>
-                        </div>
-                    </div>
-                    <div class="product-box">
-                        <a href="javascript:void(0)" class="text-center">
-                            <img src="images/b2.jpg" alt="">
-                        </a>
-                        <div class="categories-name">
-                            <a href="javascript:void(0)">Personal Care</a>
-                            <a href="javascript:void(0)">Stomach Pain</a>
-                        </div>
-                        <a href="javascript:void(0)">
-                            <h5 class="product-name">Essential Oil Blends – 10mL</h5>
-                        </a>
-                        <p class="item-price">                                    
-                            <ins>$255,00</ins>
-                            <del>$240,00</del>
-                        </p>
-                        <ul class="star-rating">
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star-half-alt"></i></li>
-                        </ul>
-                        <div class="add-to-cart">
-                            <a href="javascript:void(0)" class="btn-sm btn-outlinr-danger">Add to Cart</a>
-                        </div>
-                    </div>
-                    <div class="product-box">
-                        <a href="javascript:void(0)" class="text-center">
-                            <img src="images/b3.jpg" alt="">
-                        </a>
-                        <div class="categories-name">
-                            <a href="javascript:void(0)">Personal Care</a>
-                            <a href="javascript:void(0)">Stomach Pain</a>
-                        </div>
-                        <a href="javascript:void(0)">
-                            <h5 class="product-name">Essential Oil Blends – 10mL</h5>
-                        </a>
-                        <p class="item-price">                                    
-                            <ins>$255,00</ins>
-                            <del>$240,00</del>
-                        </p>
-                        <ul class="star-rating">
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star-half-alt"></i></li>
-                        </ul>
-                        <div class="add-to-cart">
-                            <a href="javascript:void(0)" class="btn-sm btn-outlinr-danger">Add to Cart</a>
-                        </div>
-                    </div>
-                    <div class="product-box">
-                        <a href="javascript:void(0)" class="text-center">
-                            <img src="images/b4.jpg" alt="">
-                        </a>
-                        <div class="categories-name">
-                            <a href="javascript:void(0)">Personal Care</a>
-                            <a href="javascript:void(0)">Stomach Pain</a>
-                        </div>
-                        <a href="javascript:void(0)">
-                            <h5 class="product-name">Essential Oil Blends – 10mL</h5>
-                        </a>
-                        <p class="item-price">                                    
-                            <ins>$255,00</ins>
-                            <del>$240,00</del>
-                        </p>
-                        <ul class="star-rating">
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star-half-alt"></i></li>
-                        </ul>
-                        <div class="add-to-cart">
-                            <a href="javascript:void(0)" class="btn-sm btn-outlinr-danger">Add to Cart</a>
-                        </div>
-                    </div>
-                    <div class="product-box">
-                        <a href="javascript:void(0)" class="text-center">
-                            <img src="images/b5.jpg" alt="">
-                        </a>
-                        <div class="categories-name">
-                            <a href="javascript:void(0)">Personal Care</a>
-                            <a href="javascript:void(0)">Stomach Pain</a>
-                        </div>
-                        <a href="javascript:void(0)">
-                            <h5 class="product-name">Essential Oil Blends – 10mL</h5>
-                        </a>
-                        <p class="item-price">                                    
-                            <ins>$255,00</ins>
-                            <del>$240,00</del>
-                        </p>
-                        <ul class="star-rating">
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star-half-alt"></i></li>
-                        </ul>
-                        <div class="add-to-cart">
-                            <a href="javascript:void(0)" class="btn-sm btn-outlinr-danger">Add to Cart</a>
-                        </div>
-                    </div>
-                    <div class="product-box">
-                        <a href="javascript:void(0)">
-                            <img src="images/b3.jpg" alt="">
-                        </a>
-                        <div class="categories-name">
-                            <a href="javascript:void(0)">Personal Care</a>
-                            <a href="javascript:void(0)">Stomach Pain</a>
-                        </div>
-                        <a href="javascript:void(0)">
-                            <h5 class="product-name">Essential Oil Blends – 10mL</h5>
-                        </a>
-                        <p class="item-price">                                    
-                            <ins>$255,00</ins>
-                            <del>$240,00</del>
-                        </p>
-                        <ul class="star-rating">
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star-half-alt"></i></li>
-                        </ul>
-                        <div class="add-to-cart">
-                            <a href="javascript:void(0)" class="btn-sm btn-outlinr-danger">Add to Cart</a>
-                        </div>
-                    </div>	
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+@include('front.include.popular_health_product') 
 
 @endsection		
 
 @section('script')	
 <script>
     $( document ).ready(function() {
-        $(".variant").each(function(i, obj){
+        /*$(".variant").each(function(i, obj){
             var has_class = $(obj).hasClass('active');
             if(has_class == true){
-                var name = $(".variant_name_" + i ).data("name");
-                var price = $(".variant_price_" + i ).data("price");
-                alert(name);
-                $(".price").html(price);
-                $(".size").html(name);
+                var k = i+1;
+                var name = $(".variant_name_" + k ).data("name");
+                var price = $(".variant_price_" + k ).data("price");
+                $(".priceAdd").html(price);
+                $(".sizeAdd").html(name);
             }
-        });
-    },1000);
+        });*/
+    });
+    function selectVariant(thiss,iteration){
+        $(".variant").removeClass('active');
+        $(".variant").css('border','none');
+        $(".variant_" + iteration).addClass('active');
+        $(".variant_" + iteration).css('border','2px solid black');
+    
+        var name = $(".variant_name_" + iteration).data("name");
+        var price = $(".variant_price_" + iteration).data("price");
+        $(".priceAdd").html(price);
+        $(".sizeAdd").html(name);
+    }
 </script>
 @endsection	

@@ -323,6 +323,7 @@ class ProductController extends Controller
         $data = [];
         $data['category'] = Category::All();
         $data['product'] = Product::WHERE('slug',$slug)->first();
+        $data['popular_health'] = Product::All();
         //dd($data['product']->productAttribute[0]->attributeGroup);
         return view('front.product_detail', $data);
     }

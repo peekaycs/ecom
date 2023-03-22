@@ -99,7 +99,7 @@
         </div>
 	</div>
 </section>
-<section class="slide-section mt-2 mb-4">
+<!--<section class="slide-section mt-2 mb-4">
     <div class="container">
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-12">
@@ -271,5 +271,6 @@
             </div>
         </div>
     </div>
-</section>
+</section>-->
+@include('front.include.popular_health_product') 
 @endsection	
