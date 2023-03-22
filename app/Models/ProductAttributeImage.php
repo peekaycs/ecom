@@ -11,4 +11,8 @@ class ProductAttributeImage extends Model
     public $primaryKey = 'uuid';
     public $incrementing = false;
     protected $fillable = ['uuid', 'product_id', 'product_attribute_id','image'];
+
+    public function productAttribute(){
+        return $this->belongsTo(ProductAttribute::class);
+    }
 }

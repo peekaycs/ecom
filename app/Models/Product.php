@@ -10,6 +10,7 @@ use App\Models\ProductAttributeImage;
 
 use App\Models\Category;
 use App\Models\SubCategory;
+use App\Models\ProductImage;
 
 class Product extends Model
 {
@@ -38,6 +39,14 @@ class Product extends Model
     public function Subcategory()  
     {  
         return $this->belongsTo(SubCategory::class,'subcategory_id','uuid');  
+    }
+
+    public function productImage(){
+        return $this->hasMany(ProductImage::class);
+    }
+
+    public function productAttribute(){
+        return $this->hasMany(ProductAttribute::class);
     }
     
 }

@@ -94,4 +94,12 @@ class HomeController extends Controller
     {
         //
     }
+
+    public function cart_item()
+    {
+        //
+        $data = [];
+        $data['category'] = Category::All();
+        return view('front.cart_item', $data);
+    }
 }

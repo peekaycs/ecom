@@ -34,7 +34,7 @@
 			</div>
 			<div class="row">
 				<div class="col-md-3 col-sm-6 col-12">
-					<a class="logo zoomimg" id="flip" href="index.php">
+					<a class="logo zoomimg" id="flip" href="{{ route('home') }}">
 						<!-- <img src="images/rims-logo.png" alt="Logo"> -->
 						<h3>LOGO</h3>
 					</a>
@@ -44,52 +44,54 @@
 						<ul>
 							@if (isset($category) && !empty($category))
 								@foreach($category as $cat)
-								<li><a href="javascript:void(0)">{{$cat->category}}</a>
-									<ul class="dropdown-on-hover animated fadeInUp">
-										<li>
-											<a href="digital-marketing.php">
-												<img src="{{URL::asset('assets/front/images/digital-marketing.png')}}" alt="">	
-												Digital Marketing
-											</a>
-										</li>			
-										
-										<li>
-											<a href="hosting-services.php">
-												<img src="{{URL::asset('assets/front/images/hosting-services.png')}}" alt="">
-												Hosting
-											</a>
-										</li>
-										<li>
-											<a href="website-desiging.php">
-												<img src="{{URL::asset('assets/front/images/graphic-desig.png')}}" alt="">
-												Website Desiging
-											</a>
-										</li>
-										<li>
-											<a href="crm.php">
-												<img src="{{URL::asset('assets/front/images/crm.png')}}" alt="">
-												CRM
-											</a>
-										</li>
-										<li>
-											<a href="data-server.php">
-												<img src="{{URL::asset('assets/front/images/data-server.png')}}" alt="">
-												Server
-											</a>
-										</li>
-										<li>
-											<a href="cloud-data.php">
-												<img src="{{URL::asset('assets/front/images/cloud-data.png')}}" alt="">Cloud
-											</a>
-										</li>
-										<li>
-											<a href="app-development.php">
-												<img src="{{URL::asset('assets/front/images/user-interface.png')}}" alt="">
-												App Development
-											</a>
-										</li>
-									</ul>
-								</li>
+									@if (isset($cat) && !empty($cat))
+									<li><a href="{{ route('product') }}">{{ $cat->category ?? '' }}</a>
+										<ul class="dropdown-on-hover animated fadeInUp">
+											<li>
+												<a href="digital-marketing.php">
+													<img src="{{URL::asset('assets/front/images/digital-marketing.png')}}" alt="">	
+													Digital Marketing
+												</a>
+											</li>			
+											
+											<li>
+												<a href="hosting-services.php">
+													<img src="{{URL::asset('assets/front/images/hosting-services.png')}}" alt="">
+													Hosting
+												</a>
+											</li>
+											<li>
+												<a href="website-desiging.php">
+													<img src="{{URL::asset('assets/front/images/graphic-desig.png')}}" alt="">
+													Website Desiging
+												</a>
+											</li>
+											<li>
+												<a href="crm.php">
+													<img src="{{URL::asset('assets/front/images/crm.png')}}" alt="">
+													CRM
+												</a>
+											</li>
+											<li>
+												<a href="data-server.php">
+													<img src="{{URL::asset('assets/front/images/data-server.png')}}" alt="">
+													Server
+												</a>
+											</li>
+											<li>
+												<a href="cloud-data.php">
+													<img src="{{URL::asset('assets/front/images/cloud-data.png')}}" alt="">Cloud
+												</a>
+											</li>
+											<li>
+												<a href="app-development.php">
+													<img src="{{URL::asset('assets/front/images/user-interface.png')}}" alt="">
+													App Development
+												</a>
+											</li>
+										</ul>
+									</li>
+									@endif	
 								@endforeach
 							@endif	
 							<!--<li class="animatedParent"><a href="javascript:void(0)">Personal Care</a></li>
@@ -99,7 +101,7 @@
 					</div>					
 				</div>
 				<div class="cart">
-					<a href="javascript:void(0)">
+					<a href="{{route('cart_item')}}">
 						<img src="{{URL::asset('assets/front/images/cart.png')}}" alt="">
 					</a>
 				</div>

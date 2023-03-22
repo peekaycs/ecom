@@ -15,4 +15,7 @@
         @include('front.common.footer')
     </body>
     @include('front.common.script')
+    <!-- script -->
+    @yield('script') 
+    <!-- end script -->
 </html>
