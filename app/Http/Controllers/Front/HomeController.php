@@ -100,6 +100,7 @@ class HomeController extends Controller
         //
         $data = [];
         $data['category'] = Category::All();
+        $data['popular_health'] = Product::All();
         return view('front.cart_item', $data);
     }
 }

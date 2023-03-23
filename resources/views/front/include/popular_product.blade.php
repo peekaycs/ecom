@@ -36,7 +36,7 @@
                                                 <a href="javascript:void(0)">{{ $best->subcategory->subcategory ?? '' }}</a>
                                             </div>
                                             <a href="javascript:void(0)">
-                                                <h5 class="product-name">{{ $best->product ?? '' }} – 10mL</h5>
+                                                <h5 class="product-name">{{ $best->product ?? '' }} – {{ (isset($best->productAttribute[0])) ? $best->productAttribute[0]->attribute->name : '' }}</h5>
                                             </a>
                                             <p class="item-price">     
                                                 <?php $price = $best->price - (($best->price * $best->discount) / 100); ?>                               
@@ -75,7 +75,7 @@
                                                 <a href="javascript:void(0)">{{ $top_rated->subcategory->subcategory ?? '' }}</a>
                                             </div>
                                             <a href="javascript:void(0)">
-                                                <h5 class="product-name">{{ $top_rated->product ?? '' }} – 10mL</h5>
+                                                <h5 class="product-name">{{ $top_rated->product ?? '' }} – {{ (isset($top_rated->productAttribute[0])) ? $top_rated->productAttribute[0]->attribute->name : '' }}</h5>
                                             </a>
                                             <p class="item-price">     
                                                 <?php $price = $top_rated->price - (($top_rated->price * $top_rated->discount) / 100); ?>                               
@@ -91,7 +91,7 @@
                                                 <li><small class="px-1">1 review(2)</small></li>
                                             </ul>
                                             <div class="add-to-cart">
-                                                <a href="javascript:void(0)" class="btn-sm btn-outlinr-danger">Add to Cart</a>
+                                                <a href="{{ route('product_detail',['slug' => $top_rated->slug]) }}" class="btn-sm btn-outlinr-danger">Add to Cart</a>
                                             </div>
                                         </div>
                                         @endif
@@ -107,14 +107,14 @@
                                         <div class="product-box">
                                             <span class="product-offer">-{{ $featured->discount ?? '' }}%</span>
                                             <a href="javascript:void(0)" class="text-center">
-                                                <img src="{{URL::asset($best->image)}}" alt="">
+                                                <img src="{{ URL::asset($featured->image) ?? '' }}" alt="">
                                             </a>
                                             <div class="categories-name">
                                                 <a href="javascript:void(0)">{{ $featured->category->category ?? '' }}</a>
                                                 <a href="javascript:void(0)">{{ $featured->subcategory->subcategory ?? '' }}</a>
                                             </div>
                                             <a href="javascript:void(0)">
-                                                <h5 class="product-name">{{ $featured->product ?? '' }} – 10mL</h5>
+                                                <h5 class="product-name">{{ $featured->product ?? '' }} – {{ (isset($featured->productAttribute[0])) ? $featured->productAttribute[0]->attribute->name : '' }}</h5>
                                             </a>
                                             <p class="item-price">     
                                                 <?php $price = $featured->price - (($featured->price * $featured->discount) / 100); ?>                               
@@ -130,7 +130,7 @@
                                                 <li><small class="px-1">1 review(2)</small></li>
                                             </ul>
                                             <div class="add-to-cart">
-                                                <a href="javascript:void(0)" class="btn-sm btn-outlinr-danger">Add to Cart</a>
+                                                <a href="{{ route('product_detail',['slug' => $featured->slug]) }}" class="btn-sm btn-outlinr-danger">Add to Cart</a>
                                             </div>
                                         </div>
                                         @endif
