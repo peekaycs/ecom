@@ -101,8 +101,9 @@
 					</div>					
 				</div>
 				<div class="cart">
-					<a href="{{route('cart_item')}}">
+					<a href="{{route('cart_list')}}">
 						<img src="{{URL::asset('assets/front/images/cart.png')}}" alt="">
+						<span class="badge bg-secondary">{{ $count ?? '' }}</span>
 					</a>
 				</div>
 				<div class="head-search">

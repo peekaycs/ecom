@@ -94,13 +94,4 @@ class HomeController extends Controller
     {
         //
     }
-
-    public function cart_item()
-    {
-        //
-        $data = [];
-        $data['category'] = Category::All();
-        $data['popular_health'] = Product::All();
-        return view('front.cart_item', $data);
-    }
 }
