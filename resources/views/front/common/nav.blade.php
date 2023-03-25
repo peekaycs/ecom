@@ -117,7 +117,7 @@
 	</div>		
 </div>
 <div class="menu">
-	<div class="d-md-block d-none header-sticky">
+	<!--<div class="d-md-block d-none header-sticky">
 		<ul class="nav navbar-nav">
 			<li>
 				<a href="digital-marketing.php" style="padding-left:10px">
@@ -154,5 +154,5 @@
 				</a>
 			</li>					
 		</ul>
-	</div>
+	</div>-->
 </div>
