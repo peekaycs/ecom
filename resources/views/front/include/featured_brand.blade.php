@@ -9,16 +9,16 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="featured-brand-slide">
                         @if (isset($featured) && !empty($featured))
-                            @foreach($featured as $banner)
+                            @foreach($featured->bannerImages as $banner)
                                 @if(isset($banner) && !empty($banner))
                                 <div class="product-box">
                                     <a href="javascript:void(0)" class="text-center">
                                         <span class="zoomimg">
-                                            <img src="{{ URL::asset($banner->bannerImages[0]->image) ?? '' }}" alt="" class="circle">
+                                            <img src="{{ URL::asset($banner->image) ?? '' }}" alt="" class="circle">
                                         </span>
                                     </a>
                                     <a href="javascript:void(0)" class="text-center">
-                                        <h5 class="product-name">{{ $banner->name ?? '' }}</h5>
+                                        <h5 class="product-name">{{ $featured->name ?? '' }}</h5>
                                         <span class="offer-btn">up to 50% off</span>
                                     </a>
                                 </div>

@@ -23,8 +23,9 @@ class HomeController extends Controller
         $data['category'] = Category::All();
         $data['best_selling'] = Product::All();
         $banners = Banner::where('status', '1')->with('bannerImages')->get();
+        //dd($banners);
         foreach($banners as $banner){
-            $data[$banner->type][] = $banner;
+            $data[$banner->type] = $banner;
         }
         return view('front.index', $data);
     }

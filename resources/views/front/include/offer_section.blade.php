@@ -2,7 +2,7 @@
         <div class="container">
             <div class="row">
                 @if(isset($popular) && !empty($popular))
-                    @foreach($popular as $banner)
+                    @foreach($popular->bannerImages as $banner)
                         @if(isset($banner) && !empty($banner))
                             @if( $loop->iteration == 2 )
                                 <?php $cls = 'col-lg-6 col-md-6 col-sm-6';?>
@@ -12,7 +12,7 @@
                             <div class="{{$cls}} col-12">
                                 <div class="offer-box">
                                     <a href="javascript:void(0)">
-                                        <img src="{{ URL::asset($banner->bannerImages[0]->image) ?? ''}}" alt="">
+                                        <img src="{{ URL::asset($banner->image) ?? ''}}" alt="">
                                     </a>
                                 </div>
                             </div>
