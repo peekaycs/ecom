@@ -225,12 +225,12 @@ div, p {
   margin: 0px;
 }
 .head .header-menu ul li {
-  display: inline-block;
-  position: relative;
-  padding: 0;
+  float: right;
+  list-style: none;
+  padding: 0px 0px;
 }
 .head .header-menu ul li a {
-  padding: 26px 15px;
+  padding: 30px 15px;
   display: block;
   text-decoration: none;
   text-transform: uppercase;
@@ -242,30 +242,40 @@ div, p {
   color: #f00;
 }
 .head .header-menu ul li .dropdown-on-hover {
+  width: 92%;
   display: none;
-  position: fixed;
-  max-width: 100%;
-  min-width: 100px;
-  box-shadow: 0px 4px 4px rgb(0, 0, 0);
+  border-top: 1px solid #ccc;
+  padding: 20px;
+  background-image: linear-gradient(to right, #f5f5f5, #f6f5f6);
+  min-height: 100px;
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  margin: 0px auto;
+  top: 81px !important;
   z-index: 99999;
-  background-color: rgb(255, 255, 255);
+}
+.head .header-menu ul li .dropdown-on-hover ul p {
+  text-align: left;
+  margin-bottom: 0px;
+  padding-left: 10px;
+}
+.head .header-menu ul li .dropdown-on-hover ul li {
+  display: block;
+  float: none;
   text-align: left;
 }
-.head .header-menu ul li .dropdown-on-hover li {
-  display: block;
-}
-.head .header-menu ul li .dropdown-on-hover li a {
+.head .header-menu ul li .dropdown-on-hover ul li a {
   padding: 5px 10px;
-  border-bottom: 1px solid #ccc;
   text-transform: inherit;
   font-size: 12px;
 }
-.head .header-menu ul li .dropdown-on-hover li a img {
+.head .header-menu ul li .dropdown-on-hover ul li a img {
   width: 20px;
   margin-right: 5px;
 }
 .head .header-menu ul li:hover .dropdown-on-hover {
-  display: none;
+  display: block;
 }
 .head .cart {
   position: absolute;
@@ -354,6 +364,7 @@ div, p {
     position: absolute;
     background-color: rgb(255, 255, 255);
     width: 100%;
+    height: 100vh;
     z-index: 9;
     left: -105%;
     transition: all 0.5s;
@@ -362,6 +373,7 @@ div, p {
     display: block;
     position: relative;
     padding: 0;
+    float: none;
   }
   .head .header-menu ul li a {
     padding: 12px 15px;
@@ -371,24 +383,29 @@ div, p {
   .head .header-menu ul li .dropdown-on-hover {
     display: none;
     position: relative;
-    max-width: 100%;
-    min-width: 100px;
+    width: 100%;
     box-shadow: 0px 0px 0px rgb(0, 0, 0);
     background-color: #ccc;
     transform: none;
     animation: none;
     opacity: 1;
+    top: 0px !important;
   }
-  .head .header-menu ul li .dropdown-on-hover li {
+  .head .header-menu ul li .dropdown-on-hover ul p {
+    text-align: left;
+    margin-bottom: 0px;
+    padding-left: 10px;
+  }
+  .head .header-menu ul li .dropdown-on-hover ul li {
     display: block;
   }
-  .head .header-menu ul li .dropdown-on-hover li a {
+  .head .header-menu ul li .dropdown-on-hover ul li a {
     padding: 5px 10px;
     border-bottom: 1px solid #ccc;
     text-transform: inherit;
     font-size: 12px;
   }
-  .head .header-menu ul li .dropdown-on-hover li a img {
+  .head .header-menu ul li .dropdown-on-hover ul li a img {
     width: 20px;
     margin-right: 5px;
   }
@@ -397,7 +414,8 @@ div, p {
   }
   .head .add-mob-menu {
     left: 0%;
-    position: relative;
+    position: absolute;
+    z-index: 99999;
   }
   .head .cart {
     top: 15px;
@@ -474,34 +492,43 @@ div, p {
     width: 25px;
   }
 }
-.slider {
+.slide {
   background-image: url(../images/banner.webp);
   background-repeat: no-repeat;
   background-size: 100% 100%;
   width: 100%;
-  height: 455px;
+  max-height: 365px;
 }
-.slider img {
+.slide img {
   width: 100%;
-  height: 440px;
+  height: 350px;
 }
-.slider .banner-text {
+.slide .banner-text {
   color: rgb(255, 255, 255);
   margin-top: 60px;
 }
-.slider .banner-text h1 {
+.slide .banner-text h1 {
   font-size: 48px;
   line-height: 58px;
   margin-bottom: 13px;
   animation: 1s ease-in-out 0.5s normal both 1 running fadeInDown;
 }
-.slider .banner-text p {
+.slide .banner-text p {
   line-height: 23px;
   margin-bottom: 35px;
   padding-right: 110px;
   animation: 1s ease-in-out 0.5s normal both 1 running rotateInUpLeft;
 }
 
+@media only screen and (max-width: 767px) {
+  .slide {
+    max-height: 135px;
+  }
+  .slide img {
+    width: 100%;
+    height: 130px;
+  }
+}
 .animation_images {
   animation-timing-function: cubic-bezier(0.54, 0.085, 0.5, 0.92);
   animation-name: animateUpDown;

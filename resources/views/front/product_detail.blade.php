@@ -4,7 +4,7 @@
 <section class="mt-4">
 	<div class="container">		
         <form action="{{route('AddToCart')}}" method="POST" >	
-            <input type="text" name="slug" value="{{ $product->slug ?? '' }}" >
+            <input type="hidden" name="slug" value="{{ $product->slug ?? '' }}" >
             @csrf
             <div class="row mb-3">
                 <div class="col-md-3 col-sm-3 col-12">

@@ -19,7 +19,7 @@
 						</a>
 					</li>
 					<li class="login">
-						<a href="#"> Login | Sign Up</a>
+						<a href="#" onclick="document.getElementById('login').style.display='block'"> Login | Sign Up</a>
 					</li>
 				</ul>
 			</div>
@@ -41,64 +41,137 @@
 				</div>	
 				<div class="col-md-9 col-sm-12 col-12">
 					<div class="header-menu">
-						<ul>
-							@if (isset($category) && !empty($category))
-								@foreach($category as $cat)
-									@if (isset($cat) && !empty($cat))
-									<li><a href="{{ route('product') }}">{{ $cat->category ?? '' }}</a>
-										<ul class="dropdown-on-hover animated fadeInUp">
+						<ul>	
+							<li><a href="#">Homeopathy</a>
+								<div class="dropdown-on-hover">
+									<div class="row">
+										@if (isset($category) && !empty($category))
+											@foreach($category as $cat)
+												@if (isset($cat) && !empty($cat))
+												<ul class="col-md-3 col-sm-3 col-12">
+													<p><strong>{{ $cat->category ?? '' }}</strong></p>
+													@if (isset($cat->subcategory) && !empty($cat->subcategory))
+														@foreach($cat->subcategory as $subcat)
+															@if (isset($subcat) && !empty($subcat))
+															<li>
+																<a href="{{ route('productBySubCategory',['slug' => str_replace(' ', '-', $subcat->slug)]) }}">{{ $subcat->subcategory ?? '' }}</a>
+															</li>
+															@endif	
+														@endforeach
+													@endif
+													<!--<li>
+														<a href="javascript:void(0)">
+															Dilutions 
+														</a>
+													</li>
+													<li>
+														<a href="javascript:void(0)">
+															Mother Tinctures 
+														</a>
+													</li>
+													<li>
+														<a href="javascript:void(0)">
+															Biochemic Tablets 
+														</a>
+													</li>
+													<li>
+														<a href="javascript:void(0)">
+															Homeopathic Trituration Tablets 
+														</a>
+													</li>-->
+												</ul>
+												@endif	
+											@endforeach
+										@endif
+										<!--<ul class="col-md-3 col-sm-3 col-12">
+											<p><strong>Medicines</strong></p>
 											<li>
-												<a href="digital-marketing.php">
-													<img src="{{URL::asset('assets/front/images/digital-marketing.png')}}" alt="">	
-													Digital Marketing
-												</a>
-											</li>			
-											
-											<li>
-												<a href="hosting-services.php">
-													<img src="{{URL::asset('assets/front/images/hosting-services.png')}}" alt="">
-													Hosting
+												<a href="javascript:void(0)">	
+													Medicines
 												</a>
 											</li>
 											<li>
-												<a href="website-desiging.php">
-													<img src="{{URL::asset('assets/front/images/graphic-desig.png')}}" alt="">
-													Website Desiging
+												<a href="javascript:void(0)">
+													Dilutions 
 												</a>
 											</li>
 											<li>
-												<a href="crm.php">
-													<img src="{{URL::asset('assets/front/images/crm.png')}}" alt="">
-													CRM
+												<a href="javascript:void(0)">
+													Mother Tinctures 
 												</a>
 											</li>
 											<li>
-												<a href="data-server.php">
-													<img src="{{URL::asset('assets/front/images/data-server.png')}}" alt="">
-													Server
+												<a href="javascript:void(0)">
+													Biochemic Tablets 
 												</a>
 											</li>
 											<li>
-												<a href="cloud-data.php">
-													<img src="{{URL::asset('assets/front/images/cloud-data.png')}}" alt="">Cloud
-												</a>
-											</li>
-											<li>
-												<a href="app-development.php">
-													<img src="{{URL::asset('assets/front/images/user-interface.png')}}" alt="">
-													App Development
+												<a href="javascript:void(0)">
+													Homeopathic Trituration Tablets 
 												</a>
 											</li>
 										</ul>
-									</li>
-									@endif	
-								@endforeach
-							@endif	
-							<!--<li class="animatedParent"><a href="javascript:void(0)">Personal Care</a></li>
-							<li><a href="javascript:void(0)">Diabetes</a></li>
-							<li><a href="javascript:void(0)">Baby Care</a></li>-->
+										<ul class="col-md-3 col-sm-3 col-12">
+											<p><strong>Medicines</strong></p>
+											<li>
+												<a href="javascript:void(0)">	
+													Medicines
+												</a>
+											</li>
+											<li>
+												<a href="javascript:void(0)">
+													Dilutions 
+												</a>
+											</li>
+											<li>
+												<a href="javascript:void(0)">
+													Mother Tinctures 
+												</a>
+											</li>
+											<li>
+												<a href="javascript:void(0)">
+													Biochemic Tablets 
+												</a>
+											</li>
+											<li>
+												<a href="javascript:void(0)">
+													Homeopathic Trituration Tablets 
+												</a>
+											</li>
+										</ul>
+										<ul class="col-md-3 col-sm-3 col-12">
+											<p><strong>Medicines</strong></p>
+											<li>
+												<a href="javascript:void(0)">	
+													Medicines
+												</a>
+											</li>
+											<li>
+												<a href="javascript:void(0)">
+													Dilutions 
+												</a>
+											</li>
+											<li>
+												<a href="javascript:void(0)">
+													Mother Tinctures 
+												</a>
+											</li>
+											<li>
+												<a href="javascript:void(0)">
+													Biochemic Tablets 
+												</a>
+											</li>
+											<li>
+												<a href="javascript:void(0)">
+													Homeopathic Trituration Tablets 
+												</a>
+											</li>
+										</ul>-->
+									</div>								
+								</div>								
+							</li>
 						</ul>
-					</div>					
+					</div>
 				</div>
 				<div class="cart">
 					<a href="{{route('cart_list')}}">

@@ -99,6 +99,37 @@
 	<img width="40px" data-src="{{URL::asset('assets/front/images/to_top_icon.png')}}" class="lazyload" alt="">
 </div>
 
+<div id="login" class="login-modal">  
+  	<form class="modal-content animate" action="/action_page.php">
+	    <div class="imgcontainer">
+	      	<span onclick="document.getElementById('login').style.display='none'" class="close" title="Close Modal">&times;</span>
+	     	 <img src="images/login_icon.png" alt="Avatar" class="avatar">
+	    </div>
+	    <div class="container">
+	    	<div class="col-md-12 col-sm-12 col-xs-12">
+	      		<label for="uname"><b>Username</b></label>
+	      		<input type="text" placeholder="Enter Username" name="uname" required>
+	      	</div>
+	      	<div class="col-md-12 col-sm-12 col-xs-12">
+	      		<label for="psw"><b>Password</b></label>
+	      		<input type="password" placeholder="Enter Password" name="psw" required>
+		    </div>
+		    <div class="col-md-12 col-sm-12 col-xs-12">   
+	      		<div class="login-btn">
+	      			<button type="submit">Login</button>
+	      		</div>
+	      	</div>
+	      	<div class="col-md-12 col-sm-12 col-xs-12">
+	      		<label><input type="checkbox" checked="checked" name="remember"> Remember me</label>
+	      	</div>
+	    </div>
+
+    	<div class="container" style="background-color:#f1f1f1">
+      		<span class="psw"><a href="signup.php">Signup</a></span>
+    	</div>
+  	</form>
+</div>
+
 
 
 
