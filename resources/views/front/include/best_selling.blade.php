@@ -13,7 +13,7 @@
                             @foreach($best_selling as $best) 
                                 @if(isset($best) && !empty($best))
                                 <div class="best-selling-box">
-                                    <a href="javascript:void(0)">
+                                    <a href="{{ route('product_detail',['slug' => $best->slug]) }}">
                                         <img src="{{ URL::asset($best->image) ?? '' }}" alt="">
                                     </a>
                                 </div>

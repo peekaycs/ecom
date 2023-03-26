@@ -18,13 +18,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        //
         $data = [];
         $data['category'] = Category::All();
         $data['best_selling'] = Product::All();
         $banners = Banner::where('status', '1')->with('bannerImages')->get();
         foreach($banners as $banner){
-            $data[$banner->type][] = $banner;
+            $data[$banner->type] = $banner;
         }
         return view('front.index', $data);
     }
@@ -93,14 +92,5 @@ class HomeController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function cart_item()
-    {
-        //
-        $data = [];
-        $data['category'] = Category::All();
-        $data['popular_health'] = Product::All();
-        return view('front.cart_item', $data);
     }
 }

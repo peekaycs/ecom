@@ -101,8 +101,9 @@
 					</div>					
 				</div>
 				<div class="cart">
-					<a href="{{route('cart_item')}}">
+					<a href="{{route('cart_list')}}">
 						<img src="{{URL::asset('assets/front/images/cart.png')}}" alt="">
+						<span class="badge bg-secondary">{{ $count ?? '' }}</span>
 					</a>
 				</div>
 				<div class="head-search">
@@ -116,7 +117,7 @@
 	</div>		
 </div>
 <div class="menu">
-	<div class="d-md-block d-none header-sticky">
+	<!--<div class="d-md-block d-none header-sticky">
 		<ul class="nav navbar-nav">
 			<li>
 				<a href="digital-marketing.php" style="padding-left:10px">
@@ -153,5 +154,5 @@
 				</a>
 			</li>					
 		</ul>
-	</div>
+	</div>-->
 </div>

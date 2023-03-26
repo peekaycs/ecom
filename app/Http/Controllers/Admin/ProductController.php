@@ -18,6 +18,10 @@ use App\Models\Brand;
 use Image;
 use File;
 use DB;
+
+use Cart;
+use Darryldecode\Cart\Facades\CartFacade;
+
 class ProductController extends Controller
 {
     /**
@@ -324,7 +328,14 @@ class ProductController extends Controller
         $data['category'] = Category::All();
         $data['product'] = Product::WHERE('slug',$slug)->first();
         $data['popular_health'] = Product::All();
-        //dd($data['product']->productAttribute[0]->attributeGroup);
+
+        $userId = 100; // or any string represents user identifier
+        Cart::session($userId);
+        $cartCollection = Cart::getContent();
+        // count carts contents
+        $data['count'] = $cartCollection->count();
+        //$data['count'] = getTotalQuantity();
+
         return view('front.product_detail', $data);
     }
 

@@ -7,21 +7,23 @@
             </div>
             <div class="row mt-3">
                 @if (isset($bottom) && !empty($bottom))
-                    @foreach($bottom as $banner)
+                    @foreach($bottom->bannerImages as $banner)
                         @if(isset($banner) && !empty($banner))
+                        @if( $loop->iteration <= 4 )
                         <div class="col-lg-3 col-md-3 col-sm-3 col-12">
                             <div class="product-cat-box">
                                 <div class="product-cat-image">
                                     <a href="javascript:void(0)">
-                                        <img src="{{ URL::asset($banner->bannerImages[0]->image) ?? '' }}" alt="">
+                                        <img src="{{ URL::asset($banner->image) ?? '' }}" alt="">
                                     </a>
                                 </div>
                                 <div class="product-cat-details">
-                                    <h4><a href="javascript:void(0)">{{ $banner->name ?? ''}}</a></h4>
+                                    <h4><a href="javascript:void(0)">{{ $bottom->name ?? ''}}</a></h4>
                                     <a href="javascript:void(0)" class="shop-now">shop now</a>                        
                                 </div>                    
                             </div>
                         </div>
+                        @endif
                         @endif
                     @endforeach
                 @endif    

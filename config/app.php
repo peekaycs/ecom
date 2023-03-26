@@ -161,6 +161,8 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        // cart
+        Darryldecode\Cart\CartServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -234,6 +236,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         // Image Service provider 
         'Image'  =>  Intervention\Image\ImageServiceProvider::class,
+        //Cart alias
+        'Cart' => Darryldecode\Cart\Facades\CartFacade::class,
 
     ],
 
