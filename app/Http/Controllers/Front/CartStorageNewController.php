@@ -9,6 +9,13 @@ use Cart;
 use Darryldecode\Cart\Facades\CartFacade;
 use Darryldecode\Cart\CartCondition;
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use App\Models\Brand;
+use Image;
+use File;
+use DB;
+
 use App\Models\Product;
 use App\Models\Banner;
 use App\Models\Category;
@@ -39,46 +46,49 @@ class CartStorageNewController extends Controller
         }*/
         $data['subTotal'] = Cart::getSubTotal();
         $data['total'] = Cart::getTotal();
-        //dd($data['cart_list']);
+        //dd($data['total']);
         return view('front.cart_list', $data);
     }
 
     public function AddToCart(Request $request)
     {
-        //
-        $slug = str_replace(' ','-',$request->slug);
-        // add multiple items at one time
+        $slug = str_replace('-',' ',$request->slug);
+        $product_id = Str::uuid();
+        //$user_id = Auth::user()->uuid;
         $userId = 100; // or any string represents user identifier
         Cart::session($userId);
+
         // lets create first our condition instance
         $saleCondition = new \Darryldecode\Cart\CartCondition(array(
-            'name' => 'SALE 15%',
-            'type' => 'price',
-            'value' => '-15%',
+            'name' => "SALE $request->discount %",
+            'type' => "price",
+            'value' => "-$request->discount%",
         ));
-        $condition = new \Darryldecode\Cart\CartCondition(array(
-            'name' => 'Express Shipping ₹15',
-            'type' => 'shipping',
-            'target' => 'subtotal', // this condition will be applied to cart's subtotal when getSubTotal() is called.
-            'value' => '+15',
-            'order' => 1
-        ));
-        Cart::condition($condition);
 
         Cart::add(
             array(
                 'id' => 101,
-                'name' => 'Sample Item 1',
-                'price' => 100,
-                'quantity' => 1,
+                'name' => $request->name,
+                'price' => $request->price,
+                'quantity' => $request->quantity,
                 'attributes' => array(
                     'size' => 'L',
                     'color' => 'blue'
                 ),
                 'conditions' => $saleCondition,
-                'associatedModel' => 'product'
+                'associatedModel' => 'products'
             )
         );
+        $conditionName = 'Express Shipping ₹10';
+        Cart::removeCartCondition($conditionName);
+        $condition = new \Darryldecode\Cart\CartCondition(array(
+            'name' => 'Express Shipping ₹10',
+            'type' => 'shipping',
+            'target' => 'subtotal', // this condition will be applied to cart's subtotal when getSubTotal() is called.
+            'value' => '+10',
+            'order' => 1
+        ));
+        Cart::condition($condition);
 
         return redirect()->route('product_detail', [$slug]);
     }

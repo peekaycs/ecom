@@ -13,7 +13,7 @@
                             @foreach($cart_list as $item_id => $item)
                             <div class="cart-price">
                                 <figure>
-                                    <img src="images/b1.jpg" alt="">
+                                    <img src="{{ URL::asset($item->image) ?? '' }}" alt="">
                                 </figure>
                                 <div class="cart-data">
                                     <p>{{ $item->name ?? '' }}</p>
@@ -26,8 +26,8 @@
                                     </p>
                                 </div>	
                                 <?php 
-                                $total_discount = ($total_discount + ($item->price - $item->getPriceWithConditions())) * $item->quantity;
-                                $total_price = ($total_price + ($item->price)) * $item->quantity;
+                                $total_discount = $total_discount + ($item->price - $item->getPriceWithConditions()) * $item->quantity;
+                                $total_price = $total_price + ($item->price * $item->quantity);
                                 ?>
                                 <div class="cart-data product-plus-minus">
                                     <p>{{ $item->getPriceWithConditions() ?? '' }} </p>

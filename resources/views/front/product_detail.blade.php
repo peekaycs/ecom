@@ -4,7 +4,10 @@
 <section class="mt-4">
 	<div class="container">		
         <form action="{{route('AddToCart')}}" method="POST" >	
-            <input type="hidden" name="slug" value="{{ $product->slug ?? '' }}" >
+            <input type="hidden" name="slug" value="{{ str_replace( ' ', '-' , $product->slug ) ?? '' }}" >
+            <input type="hidden" name="name" value="{{ $product->product ?? '' }}" >
+            <input type="hidden" name="price" value="{{ $product->price ?? '' }}" >
+            <input type="hidden" name="discount" value="{{ $product->discount ?? '0' }}" >
             @csrf
             <div class="row mb-3">
                 <div class="col-md-3 col-sm-3 col-12">
@@ -78,7 +81,7 @@
                 <div class="col-md-5 col-sm-5 col-12">
                     <div class="product-name">
                         @if( isset($product) && !empty($product) )
-                        <h4>{{ $product->product ?? '' }} ( {{ isset($product->productAttribute[0]) ? $product->productAttribute[0]->attribute->name : '' }} )</h4>
+                        <h4>{{ $product->product ?? '' }} {{ isset($product->productAttribute[0]) ? '('.$product->productAttribute[0]->attribute->name.')' : '' }} </h4>
                         <h5>{{ $product->short_description ?? '' }}</h5>
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <div class="additional-discount">
@@ -134,12 +137,12 @@
                         <h4>Rs <span class="priceAdd">{{ isset($product->price) ? $product->price - ($product->price * $product->discount)/100 : '' }} <span></h4>                    
                         <div class="quantity">
                             <span>
-                                <select>
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
+                                <select name="quantity" id="quantity" class="quantity">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
                                 </select>
                             </span>
                             <span class="sizeAdd"></span>                        
