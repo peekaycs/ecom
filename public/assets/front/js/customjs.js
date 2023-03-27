@@ -24,7 +24,7 @@ $(document).ready(function(){
         }                   
     })
 });
-//testimpnial slider on page
+
 $(document).ready(function () {
     $('.best-selling-products-slide').slick({
         centerMode: true,
@@ -39,7 +39,7 @@ $(document).ready(function () {
                 settings: {
                     arrows: false,
                     centerMode: true,
-                    centerPadding: '40px',
+                    centerPadding: '0px',
                     slidesToShow: 6,
                     slidesToScroll: 1,
                 }
@@ -49,8 +49,8 @@ $(document).ready(function () {
                 settings: {
                     arrows: false,
                     centerMode: true,
-                    centerPadding: '20px',
-                    slidesToShow: 3,
+                    centerPadding: '0px',
+                    slidesToShow: 5,
                     slidesToScroll: 1,
                 }
             }
@@ -91,67 +91,106 @@ $(document).ready(function () {
         });
     });
 
-    $(document).ready(function () {
-        $('.featured-brand-slide').slick({
-            centerMode: true,
-                centerPadding: '0px',
-                slidesToShow: 6,
-                slidesToScroll: 1,
-                autoplay: false,
-                speed: 1000,
-                responsive: [
-                {
-                    breakpoint: 768,
-                    settings: {
-                        arrows: false,
-                        centerMode: true,
-                        centerPadding: '40px',
-                        slidesToShow: 5,
-                        slidesToScroll: 1,
-                    }
-                },
-                {
-                    breakpoint: 480,
-                    settings: {
-                        arrows: false,
-                        centerMode: true,
-                        centerPadding: '40px',
-                        slidesToShow: 2,
-                        slidesToScroll: 1,
-                    }
-                }
-                ]
-            });
-        });
-
-    $(document).ready(function () {
-      $('.client-scroll').slick({
-          centerMode: true,
-            centerPadding: '50px',
-            slidesToShow: 4,
-            autoplay: true,
+$(document).ready(function () {
+    $('.featured-brand-slide').slick({
+        centerMode: true,
+            centerPadding: '0px',
+            slidesToShow: 6,
+            slidesToScroll: 1,
+            autoplay: false,
             speed: 1000,
             responsive: [
-              {
-                  breakpoint: 768,
-                  settings: {
-                      arrows: false,
-                      centerMode: true,
-                      centerPadding: '40px',
-                      slidesToShow: 1
-                  }
-              },
-              {
-                  breakpoint: 480,
-                  settings: {
-                      arrows: false,
-                      centerMode: true,
-                      centerPadding: '40px',
-                      slidesToShow: 1
-                  }
-              }
+            {
+                breakpoint: 768,
+                settings: {
+                    arrows: false,
+                    centerMode: true,
+                    centerPadding: '40px',
+                    slidesToShow: 5,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    arrows: false,
+                    centerMode: true,
+                    centerPadding: '40px',
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                }
+            }
             ]
-          });
-      });
+        });
+    });
 
+$(document).ready(function () {
+    $('.client-scroll').slick({
+        centerMode: true,
+        centerPadding: '50px',
+        slidesToShow: 4,
+        autoplay: true,
+        speed: 1000,
+        responsive: [
+            {
+                breakpoint: 768,
+                settings: {
+                    arrows: false,
+                    centerMode: true,
+                    centerPadding: '40px',
+                    slidesToShow: 1
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    arrows: false,
+                    centerMode: true,
+                    centerPadding: '40px',
+                    slidesToShow: 1
+                }
+            }
+        ]
+        });
+    });
+//testimpnial slider on page
+$(document).ready(function () {
+    $('.testimonial').slick({
+        centerMode: true,
+        centerPadding: '0px',
+        slidesToShow: 3,
+        autoplay: false,
+        speed: 1000,
+        responsive: [
+          {
+              breakpoint: 768,
+              settings: {
+                  arrows: false,
+                  centerMode: true,
+                  centerPadding: '0px',
+                  slidesToShow: 2
+              }
+          },
+          {
+              breakpoint: 480,
+              settings: {
+                  arrows: false,
+                  centerMode: true,
+                  centerPadding: '0px',
+                  slidesToShow: 1
+              }
+          }
+        ]
+    });
+});
 // vertical new scroll
+
+
+$(document).ready(function(){
+    $("#btn-add-new-address").click(function(){
+        $("#add-new-address").css({"display": "block"});
+    });
+    $(".btn-cancel").click(function(){
+        $("#add-new-address").css({"display": "none"});
+    });
+});

@@ -12,7 +12,9 @@ Route::get('/', function(){
 
 Route::get('/', [HomeController::class,'index'])->name('home');
 
-Route::get('/product', [ProductController::class,'product'])->name('product');
+Route::get('/product/{slug}', [ProductController::class,'productByCategory'])->name('productByCategory');
+Route::get('/product/{slug}', [ProductController::class,'productBySubCategory'])->name('productBySubCategory');
+
 Route::get('/product-detail/{slug}', [ProductController::class,'product_detail'])->name('product_detail');
 
 Route::get('/cart-list', [CartStorageNewController::class,'cart_list'])->name('cart_list');

@@ -41,7 +41,7 @@
                                     <li><small class="px-1">1 review(2)</small></li>
                                 </ul>
                                 <div class="add-to-cart">
-                                    <a href="{{ route('product_detail',['slug' => $popular->slug]) }}" class="btn-sm btn-outlinr-danger">Add to Cart</a>
+                                    <a href="{{ route('product_detail',['slug' => str_replace(' ', '-', $popular->slug)]) }}" class="btn-sm btn-outlinr-danger">Add to Cart</a>
                                 </div>
                             </div>
                             <!--<div class="product-box">

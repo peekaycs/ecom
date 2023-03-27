@@ -7,15 +7,22 @@
 			<div class="col-md-3 col-sm-3 col-12">
 				<div class="aside-filter">
 					<h3>FILTERS BY</h3>
-					<!-- <div class="cat-box">						
-						<h4>Homeopathy</h4>
+					<div class="cat-box">						
+						<h4>{{ $filter_categories->category ?? '' }}</h4>
 						<div class="search-icon">
 							<input type="type" name="search" class="form-control" placeholder="Search Medicine Name" autocomplete="off">
 						</div>
 						<div class="check-list">
-							<label class="chk">
-							  	<input type="checkbox"><span class="checkmark"></span>Unifarma Herbals</label>
-							<label class="chk">
+							@if (isset($filter_subcategories) && !empty($filter_subcategories))
+								@foreach($filter_subcategories as $filter_subcategory)
+									@if (isset($filter_subcategory) && !empty($filter_subcategory))
+									<label class="chk">
+										<input type="checkbox"><span class="checkmark1"></span><a href="{{ route('productBySubCategory',['slug' => str_replace(' ', '-', $filter_subcategory->slug)]) }}" style="text-decoration:none;color:grey">{{ $filter_subcategory->subcategory ?? ''}}</a>
+									</label>
+									@endif
+								@endforeach
+							@endif		
+							<!--<label class="chk">
 							  	<input type="checkbox"><span class="checkmark"></span>Vansaar</label>
 							<label class="chk">
 							  	<input type="checkbox"><span class="checkmark"></span>Vedame Herbals
@@ -31,21 +38,27 @@
 							</label>
 							<label class="chk">
 							  	<input type="checkbox"><span class="checkmark"></span>Zandu
-							</label>
+							</label>-->
 						</div>
-					</div> -->
-					<div class="cat-box">						
-						<h4>Brand</h4>
+					</div>
+					<div class="cat-box">	
+					<h4>Brand</h4>
 						<div class="search-icon">
 							<input type="type" name="search" class="form-control" placeholder="Search by Brand Name" autocomplete="off">
 						</div>
 						<div class="check-list">
-							<label class="chk">
-							  	<input type="checkbox">
-							  	<span class="checkmark"></span>
-							  	Family Care
-							</label>
-							<label class="chk">
+							@if (isset($brands) && !empty($brands))
+								@foreach($brands as $brand)
+									@if (isset($brand) && !empty($brand))					
+									<label class="chk">
+										<input type="checkbox">
+										<span class="checkmark"></span>
+										{{ $brand->brand ?? ''}}
+									</label>
+									@endif
+								@endforeach
+							@endif		
+							<!--<label class="chk">
 							  	<input type="checkbox">
 							  	<span class="checkmark"></span>
 							  	Fitness & Wellness
@@ -74,7 +87,7 @@
 							  	<input type="checkbox">
 							  	<span class="checkmark"></span>
 							  	Baby care
-							</label>
+							</label>-->
 						</div>
 					</div>
 					<!-- <div class="cat-box">						
@@ -134,8 +147,8 @@
 			<div class="col-md-9 col-sm-9 col-12 mb-3">
 				<div class="row mt-2 mb-3 px-1">
 					<div class="col-md-7 col-sm-7 col-12">
-						<h1 class="page-title">Diabetes
-							<span>(Showing 1 – 24 products of 383 products)</span>
+						<h1 class="page-title">{{ $filter_categories->category ?? ''}} - {{ $subcategories->subcategory ?? ''}}
+							<span>(Showing {{ ((($products->currentPage()-1)*$products->perPage())+1) ?? '' }} – {{ $products->count() ?? '' }} products of total {{ $products->total() ?? '' }} products)</span>
 						</h1>
 					</div>
 					<div class="col-md-5 col-sm-5 col-12">
@@ -149,7 +162,44 @@
 					</div>
 				</div>
 				<div class="row g-2">
-					<div class="col-md-3 col-sm-3 col-6">
+					@if (isset($products) && !empty($products))
+						@foreach($products as $product)
+							@if (isset($product) && !empty($product))					
+							<div class="col-md-3 col-sm-3 col-6">
+								<div class="category-product-box">
+									<span class="product-offer">-{{ $top_rated->discount ?? '' }}%</span>
+									<a href="productdetails.php" class="text-center">
+										<img src="images/b1.jpg" alt="">
+									</a>
+									<div class="categories-name">
+										<a href="javascript:void(0)">{{ $product->category->category ?? ''}}</a>
+										<a href="javascript:void(0)">{{ $product->subcategory->subcategory ?? ''}}</a>
+									</div>
+									<a href="javascript:void(0)">
+										<h5 class="productdetails.php">{{ $product->product ?? ''}} {{ (isset($c->productAttribute[0])) ? ' - '.$product->productAttribute[0]->attribute->name : '' }}</h5>
+									</a>
+									<p class="item-price">  
+										<?php $price = $product->price - (($product->price * $product->discount) / 100); ?>                                  
+										<ins>{{ $price ?? ''}}</ins>
+										<del>{{ $product->price ?? ''}}</del>
+									</p>
+									<ul class="star-rating">
+										<li class="str-color"><i class="fas fa-star"></i></li>
+										<li class="str-color"><i class="fas fa-star"></i></li>
+										<li class="str-color"><i class="fas fa-star"></i></li>
+										<li class="str-color"><i class="fas fa-star"></i></li>
+										<li class="str-color"><i class="fas fa-star-half-alt"></i></li>
+										<li><small class="px-1">1 review(2)</small></li>
+									</ul>
+									<div class="add-to-cart">
+										<a href="{{ route('product_detail',['slug' => str_replace(' ', '-', $product->slug)]) }}" class="btn-sm btn-outlinr-danger">Add to Cart</a>
+									</div>
+								</div>
+							</div>
+							@endif
+						@endforeach
+					@endif
+					<!--<div class="col-md-3 col-sm-3 col-6">
 						<div class="category-product-box">
 							<span class="product-offer">-16%</span>
 							<a href="productdetails.php" class="text-center">
@@ -508,7 +558,7 @@
 								<a href="javascript:void(0)" class="btn-sm btn-outlinr-danger">Add to Cart</a>
 							</div>
 						</div>
-					</div>
+					</div>-->
 				</div>
 			</div>	
 		</div>

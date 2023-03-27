@@ -14,6 +14,19 @@
         }
     }
 }
+@media only screen and (max-width: 767px)
+{
+    .best-selling-products-section{padding: 10px 0px;
+        .best-selling-box{
+            a{ 
+                img{border: 1px solid $color-gray;
+                    height: 60px;
+                    display: inline-block;
+                }
+            }
+        }
+    }
+}
 /*******************--offer section--*****************************/
 .offer-section{ padding: 30px 0px;
     .offer-box{ 
@@ -23,7 +36,7 @@
         a{
             @include a-tag;
             img{
-                @include img-tag;
+                width: 100%;
                 height: 250px;
             }
             h5{
@@ -31,6 +44,22 @@
             }
         }
     }
+}
+@media only screen and (max-width: 767px)
+{
+    .offer-section{ padding: 5px 0px;
+        .offer-box{ 
+            height: 155px;
+            a{
+                img{
+                    height: 150px;
+                }
+                h5{
+                    span{font-size: 14px;}
+                }
+            }
+        }
+    } 
 }
 /*******************--offer section end--*****************************/
 .slide-section{
@@ -634,7 +663,9 @@
         }
         .cart-data{padding: 0px; width: 70%;
             p{ font-size: 14px; margin-bottom: 4px;
-                a{margin: 10px 0px; display: block; color: rgb(134, 130, 130);
+                a{margin: 10px 0px; display: block;
+                    text-decoration: none;
+                    color: $color-gray;
                     &:hover{color: $color-red;}
                 }
                 small{width: 100%; color: rgb(133, 130, 130);
@@ -654,6 +685,13 @@
         p{margin-bottom: 5px;
             span{float: right}
         }
+        .coupons-apply{
+            input{ padding: 3px 10px;
+                &:focus-visible {
+                    outline: -webkit-focus-ring-color auto 0px;
+                }
+            }
+        }        
     }    
 }
 @media only screen and (max-width: 1024px){
@@ -670,3 +708,543 @@
 }
 @media only screen and (max-width: 767px){
 }
+
+// address page
+.add-edit-address{border: 1px solid $color-gray; padding: 15px;
+    h4{padding: 0px 10px;}
+    h5{padding:0px 10px 15px 0px; font-size: 16px;}    
+}
+#add-new-address{display: none;}
+.cart-section{
+    h5{padding: 15px 10px; font-size: 14px;}    
+    .check-out{border: 1px dashed $color-gray; padding: 10px; font-size: 14px;        
+        p{margin-bottom: 5px;
+            span{float: right}
+        }
+    }    
+}
+
+// login/signup page
+.login-section{background-color: aquamarine;    
+    .login {
+        display: block;
+        position: fixed;
+        z-index: 99999;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: #bcd0be;
+        padding-top: 0px;
+
+        .login-content {
+            background-color: #fefefe;
+            margin: 5% auto 10% auto;
+            // border: 1px solid #888;
+            width: 40%;
+            figure{text-align: center;padding: 20px 0px 0px;
+                img{width: 100px;}
+            }
+            .signup-heading{background-color: #72bc7a;
+                padding: 15px 15px;
+                font-size: 23px;
+                font-weight: 600;}
+            .login-container {padding: 16px;
+                .submit {
+                    background-color: #04AA6D;
+                    color: $color-white;
+                    padding: 6px 20px;
+                    margin: 8px 0;
+                    border: none;
+                    cursor: pointer;
+                    width: 100%;
+                    text-align: center;
+                    font-size: 16px;
+                    text-decoration: none;
+                    text-transform: uppercase;
+                }                      
+                .submit:hover {opacity: 0.8;}
+                .psw{float: right; 
+                    a{padding-top: 16px; text-decoration: none;}
+                }                       
+            }
+        }
+        .signup-content {
+            background-color: #fefefe;
+            margin: 2% auto 0% auto;
+        }
+        input[type=text], input[type=password] {
+            width: 100%;
+            padding: 8px 10px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid $color-gray;
+            box-sizing: border-box;
+        }
+    }
+}
+
+.animate { animation: animatezoom 0.6s}
+
+@-webkit-keyframes animatezoom {
+    from {-webkit-transform: scale(0)} 
+    to {-webkit-transform: scale(1)}
+}
+
+@keyframes animatezoom {
+    from {transform: scale(0)} 
+    to {transform: scale(1)}
+}
+
+
+@media screen and (max-width: 300px) {
+    .psw {display: block; float: none; }
+    .cancelbtn {width: 100%;}
+    
+}
+
+@media only screen and (max-width: 1180px) and ( min-width: 641px){
+    .login-section{ 
+        .login {
+            .login-content {
+            margin: 10% auto 0% auto;
+            width: 80%;}
+        }
+    }
+}
+@media only screen and (max-width: 640px) and ( min-width: 320px){
+    .login-section{ 
+        .login {
+            .login-content {
+            margin: 10% auto 0% auto;
+            width: 100%;}
+        }
+    }
+}
+/*################### checkout Page ###################*/
+.checkout-section{display: none;
+    .tab-section{
+        ul{
+            @include ul-tag;
+            width: 30%;
+            float: left; 
+            li{width: 100%; height: auto;
+                a{
+                    display: block;
+                    @include a-tag;
+                    border-bottom: 1px solid $color-gray;
+                    padding: 10px;
+                }
+            }
+            .active{
+                background-color: $color-gray;
+                color: $color-black;
+                border-left: 5px solid $color-blue;
+            }
+        }
+        .tab-content{
+            width: 70%;
+            float: left;  
+            padding: 15px 20px;
+            border: 1px solid $color-gray;
+            min-height: 167px;
+            .form-group{margin-bottom: 10px;
+                label{width: 100%; padding-bottom: 5px;}
+            }
+            .card-icon{width: 200px; float: right;}
+            .card-group{width: 100%; position: relative; height: 40px;
+                .card-field{
+                    position: absolute;
+                    z-index: 99; 
+                    width: 100%; 
+                    top: 5px;                    
+                    .text-cardno{width: 23.7%;
+                        height: 34px;
+                        padding: 5px;
+                        border: none; 
+                        box-shadow: 0px 0px 1px #999;
+                        background-color:#fff;
+                        color:#000; 
+                        margin-right: 5px;
+                        &:last-child{margin-right: 0px;} 
+                    }
+                    .text-exp{
+                        width: 48%; 
+                        height: 34px;  
+                        padding: 5px;
+                        border: none; 
+                        box-shadow: 0px 0px 1px #999;
+                        background-color:$color-white;
+                        color:$color-black; 
+                        margin-right: 10px;
+                        &:last-child{margin-right: 0px;}
+                    }
+                }
+                span{
+                    width:96%;
+                    height: 2px;
+                    box-shadow: 0px 0px 1px #999;
+                    display: block; 
+                    margin-top: 18px;
+                }                  
+            } 
+        }
+    }
+}
+// .checkout-section2{
+  .payment-method{
+    border:1px solid $color-gray;
+    padding: 15px;
+    margin-bottom: 10px;
+    .cod{text-align: center; margin-bottom: 10px; font-size: 16px; font-weight: 600;}
+    figure{
+        img{height: 20px;}
+    }
+}  
+// }
+/*******************--about us page--*****************************/
+.about-us-banner{
+    background-image: url(../images/about-banner.jpg);
+    min-height: 300px;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-color: #efece9;
+    width: 100%;
+    margin-top: 0px;
+    .about-us-banner-text{color: $color-white; padding: 10% 0% 20px;
+        h1{color: $color-white; font-size: 26px;}
+        p{font-size: 16px; color: $color-white;}
+    }
+}
+
+.aboutus{padding:30px 0px; 
+    margin-bottom: 40px; 
+    box-shadow: 0px 0px 4px $color-gray;
+    h2{color: $color-blue; font-weight: 700;
+        font-size: 30px; 
+        color: $color-red; 
+        margin-bottom: 20px;
+    }
+    p{font-size: 14px;}
+    figure{margin-bottom: 0px;
+        img{
+            width: 100%;
+        }
+    }
+    a{background-color: $color-red; color: $color-white; width: 150px;
+        img{width: 20px;}
+    }
+}
+@media only screen and (max-width: 767px){
+    .aboutus{padding:25px 0px;
+        h2{font-size: 22px; color: $color-blue; margin-bottom: 10px;}
+        p{font-size: 14px;}
+        
+    }
+}
+
+.how-it-work-section{ 
+    margin-top: 30px;
+    padding: 30px 7%;
+    position: relative;
+    background-color: $color-light-gray; 
+    background-image: url(../images/how-it-work-bg.png);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    h3{text-align: center; margin-bottom: 60px; color:$color-black;
+        span{border-bottom: 2px solid  $color-black;}
+    }
+    .hiw-content {
+        position: relative; height: auto;
+        .icon-box{position: relative; width: 100%; height: 100px; text-align: center;
+            span{width: 80px; height: 80px;
+                 display: inline-block; padding-top: 4%;
+                border-radius: 50%;
+                i{font-size: 30px; color: $color-black; }
+                img{width: 80px;}
+            }
+        }
+        .hiw-text {position: relative; height: 100px; font-size: 14px;
+            color: $color-black;; text-align: center;
+            h4{ font-size: 18px;}
+        }
+    }
+    .inner-hiw{position: relative;
+        .line{width: 100%; height: 6px; border-radius: 10px; background-color: $color-black;;
+        position: absolute; top: 48%}
+    }
+    .circle{width: 100%; display: block; text-align: center; padding: 25px 0px;
+        span{height: 30px; width: 30px; border-radius: 50%; text-align: center;
+        background-color: $color-black;; display: inline-block;}
+    }
+}
+
+
+@media only screen and (max-width: 767px)
+{
+    .how-it-work-section{ padding: 20px 0px 20px;
+        position: relative; margin-top: 21px;
+        h3{font-size: 24px; text-align: center; margin-bottom: 30px;} 
+        .hiw-content {
+            position: relative; height: auto; display: block;
+            .icon-box{ 
+                position: relative;  width: 40px; 
+                height: 40px;
+                float: left; 
+                left: -6px; 
+                top: 8px;
+                span{
+                    width: 40px; 
+                    height: 40px;
+                    padding-top: 16%; 
+                    background-color: #975d5d;
+                    i{
+                        font-size: 18px; color: #f00;
+                    }
+                    img{width: 25px;}
+                }
+            }
+            .hiw-text {
+                position: relative; 
+                height: 100px; 
+                font-size: 14px; 
+                font-weight: 500;
+                text-align: left;
+                margin-top: 10px;        
+                h4{ font-size: 16px; font-weight: 600;padding-left: 15%;}
+                p{ font-size: 13px;padding-left: 15%;}
+            }
+        }
+
+        .inner-hiw{
+            position: relative;
+            .col{
+                display: contents;
+            }
+            .line{
+                width: 5px; height: 100%; border-radius: 10px;
+                position: absolute; top: 0%; left: 23px;
+                padding: 3px;
+            }
+        }
+
+        .circle{ display: none;
+            /*width: 11%;
+            display: inline-flex;
+            text-align: left;
+            padding: 0px 0px;
+            position: absolute;
+            top: 20px;
+            left: -12px;*/
+        
+        .circle span{height: 30px;
+            width: 30px;
+            border-radius: 50%;
+            text-align: center;
+            background-color: #118da0;
+            display: inline-block;}
+        }
+        .icon-float{margin-top: -100px;}
+        .text-float{padding-left: 0%; }
+    }
+}
+
+.testimonial-section{padding: 40px 0px;   
+    p{text-align: center; margin-bottom: 0px;}
+    h4{color: $color-black; padding: 10px 0px;}
+    .testimonial-box{position: relative;  text-align: center;
+        min-height: 150px;
+        border-radius: 0px;
+        padding: 20px 15px;
+        margin: 5px;
+        margin-bottom: 5px;
+        box-shadow: 0px 0px 0px $color-white;
+        .fdb-cont{width: 100%; min-height: 140px; background-color: $color-red;
+            padding: 10px;
+            border-radius: 15px;
+            position: relative;
+            box-shadow: 2px 2px 0px $color-gray;
+            &:before {
+                content: "";
+                background-image: url(../images/comma.png);
+                background-size: 30px;
+                bottom: 10px;
+                right: 10px;
+                position: absolute;
+                width: 30px;
+                height: 30px;
+            }
+            &:after{
+                content: '';
+                position: absolute;
+                left: 10%;
+                bottom: -15px;
+                width: 0;
+                height: 0;
+                border-left: 15px solid transparent;
+                border-right: 15px solid transparent;
+                border-top: 15px solid $color-red;
+                clear: both;
+            }
+            h4{margin:0px;padding-top: 7px;
+                a{color:$color-white;  font-size: 18px;}
+            }
+            h5{margin:0px;
+                a{color:$color-white; font-size: 14px;}
+            }
+            p{padding: 10px 0px; color:$color-white; }
+        }
+        .fdb-icon{width: 100%; display: flex; margin-top: 20px; padding-left: 6%;
+            img{ 
+                width: 50px; 
+                height: 50px; 
+                border-radius: 50%; 
+                margin-right: 10px;
+                border: 1px dashed $color-red;
+                padding: 4px;
+            }
+            .c-name{
+                h6{padding-left:0px;margin: 0px;
+                    a{text-decoration: none; color: $color-black;}
+                }
+                p{font-size: 12px; text-align: left;}
+                ul{padding: 0px;
+                    li{ display: inline; margin: 2px; color: $color-yellow;}
+                }
+            }            
+        }
+    }
+    .testimonial{
+        .slick-next {display: none !important;}
+        .slick-prev {display: none !important;}
+        &:hover{
+            .slick-next {display: none !important;}
+            .slick-prev {display: none !important;}
+        }
+    }
+}
+
+
+@media only screen and (max-width: 767px){    
+  // .testimonial-section .slick-prev, .testimonial-section .slick-next {display: none !important;;}
+}
+.top-footer-section{ 
+    background-image: url(../images/top-footer-bg.jpg);
+    background-size: 100% 100%;
+    padding:40px 0px;
+    color: $color-white;
+    text-align: center;
+    p{margin: 5px;}
+    h4{margin: 5px;
+        img{width: 30px;}
+    }
+    .app-download{margin-top: 15px;
+        a{text-decoration: none; margin: 5px;
+            img{width: 120px;}
+        }
+    }
+}
+
+@media only screen and (max-width: 767px){
+    .top-footer-section{ 
+        padding:40px 0px;
+        p{margin: 5px;}
+        h4{font-size: 20px;
+            img{width: 30px;}
+        }
+        .app-download{margin-top: 15px;
+            a{text-decoration: none; margin: 5px;
+                img{width: 120px;}
+            }
+        }
+    }
+}
+/*******************--about us page end--*****************************/
+/*################### contact us Page ###################*/
+.contact-us-section{
+    background-image: url(../images/contact-us-banner.png);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    width: 100%;
+    height: 300px;
+}
+@media only screen and (max-width: 767px){
+    .contact-us-section{
+        height: 100px;
+    }
+}
+.contact-us{
+    padding: 40px 0px;
+    h2{margin-bottom: 10px;}
+    address{ padding-right: 20%;
+        ul{@include ul-tag;
+            li{
+                width: 100%;
+                font-size: 14px;
+                padding: 8px 0px;
+                font-weight: 600;
+                color: $color-black;
+                display: inline-flex;
+            }
+        }
+        i{font-size: 22px;
+            color: $color-blue;
+            float: left;
+            margin: 2px 12px;}
+    }
+    // form{border: 1px solid $color-gray; padding: 10px;}    
+}
+
+.map-section{     
+    width: 100%;
+    height: 300px;
+    iframe{height: 300px;}   
+}
+@media only screen and (max-width: 767px){
+    .map-section{     
+        width: 100%;
+        height: auto;
+        iframe{height: auto;}   
+    } 
+}
+.news-section{ 
+    background-color: $color-light-gray; 
+    text-align: center;
+    padding: 40px 0px;
+    button{border-radius: 0px 5px 5px 0px;}
+}
+@media only screen and (max-width: 767px){
+    .news-section{ 
+        h3{font-size: 20px;}
+        padding: 10px 0px;
+    }
+}
+
+/*################### contact us Page end ###################*/
+/*################---privacy-policy page--################*/
+.privacy-policy-banner{
+    background-image: url(../images/privacy-policy-banner.jpg);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    width: 100%;
+    height: 290px;
+    .about-us-banner-text{color: $color-white; padding: 10% 0% 20px;
+        h1{color: $color-white; font-size: 26px;}
+        p{font-size: 16px; color: $color-white;}
+    }
+}
+/*******************--privacy-policy page end--*********/
+/*################---terms-condition page--################*/
+.terms-condition-banner{
+    background-image: url(../images/termcondition-banner.jpg);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    width: 100%;
+    height: 290px;
+    .about-us-banner-text{color: $color-white; padding: 10% 0% 20px;
+        h1{color: $color-white; font-size: 26px;}
+        p{font-size: 16px; color: $color-white;}
+    }
+}
+/*******************--terms-conditionpage end--***************/

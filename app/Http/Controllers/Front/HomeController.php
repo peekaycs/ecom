@@ -20,6 +20,7 @@ class HomeController extends Controller
     {
         $data = [];
         $data['category'] = Category::All();
+        //dd($data['category'][0]->subcategory);
         $data['best_selling'] = Product::All();
         $banners = Banner::where('status', '1')->with('bannerImages')->get();
         foreach($banners as $banner){

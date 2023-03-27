@@ -313,17 +313,50 @@ class ProductController extends Controller
         }
     }
 
-    public function product()
+    public function productByCategory($slug)
     {
-        //
+        //DB::enableQueryLog(); // Enable query log
+        $slug = str_replace('-',' ',$slug);
         $data = [];
-        $data['category'] = Category::All();
+        $data['category'] = $category =Category::All();
+        $data['categories'] = $categories = Category::WHERE('slug', $slug)->first();
+        
+        $data['products'] = $products = Product::WHERE('category_id', $categories->uuid)->with(['brand'])->orderBy('updated_at','desc')->paginate(env('PER_PAGE'))->withQueryString();
+        foreach($products as $product){
+            $data['brands'][$product->brand->brand]  = $product->brand;
+        }
+
+        $data['filter_categories'] = $filter_categories = $categories;
+        $data['filter_subcategories'] = $filter_subcategories = SubCategory::WHERE('category_id', $categories->uuid)->get();
+        //dd(DB::getQueryLog()); // Show results of log
+        //dd($products);
+        return view('front.product', $data);
+    }
+
+    public function productBySubCategory($slug)
+    {
+        //DB::enableQueryLog(); // Enable query log
+        $slug = str_replace('-',' ',$slug);
+        $data = [];
+        $data['category'] = $category =Category::All();
+        $data['subcategories'] = $subcategories = SubCategory::WHERE('slug', $slug)->first();
+
+        $data['products'] = $products = Product::WHERE('subcategory_id', $subcategories->uuid)->with(['brand'])->orderBy('updated_at','desc')->paginate(env('PER_PAGE'))->withQueryString();
+        foreach($products as $product){
+            $data['brands'][$product->brand->brand]  = $product->brand;
+        }
+        
+        $data['filter_categories'] = $filter_categories = $subcategories->category;
+        $data['filter_subcategories'] = $filter_subcategories = SubCategory::WHERE('category_id', $subcategories->category->uuid)->get();
+        //dd(DB::getQueryLog()); // Show results of log
+        //dd($products->currentPage());
         return view('front.product', $data);
     }
 
     public function product_detail($slug)
     {
         //
+        $slug = str_replace('-',' ',$slug);
         $data = [];
         $data['category'] = Category::All();
         $data['product'] = Product::WHERE('slug',$slug)->first();

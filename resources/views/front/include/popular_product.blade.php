@@ -52,7 +52,7 @@
                                                 <li><small class="px-1">1 review(2)</small></li>
                                             </ul>
                                             <div class="add-to-cart">
-                                                <a href="{{ route('product_detail',['slug' => $best->slug]) }}" class="btn-sm btn-outlinr-danger">Add to Cart</a>
+                                                <a href="{{ route('product_detail',['slug' => str_replace(' ', '-', $best->slug)]) }}" class="btn-sm btn-outlinr-danger">Add to Cart</a>
                                             </div>
                                         </div>
                                         @endif
@@ -75,7 +75,7 @@
                                                 <a href="javascript:void(0)">{{ $top_rated->subcategory->subcategory ?? '' }}</a>
                                             </div>
                                             <a href="javascript:void(0)">
-                                                <h5 class="product-name">{{ $top_rated->product ?? '' }} – {{ (isset($top_rated->productAttribute[0])) ? $top_rated->productAttribute[0]->attribute->name : '' }}</h5>
+                                                <h5 class="product-name">{{ $top_rated->product ?? '' }} {{ (isset($top_rated->productAttribute[0])) ? ' - '.$top_rated->productAttribute[0]->attribute->name : '' }}</h5>
                                             </a>
                                             <p class="item-price">     
                                                 <?php $price = $top_rated->price - (($top_rated->price * $top_rated->discount) / 100); ?>                               
@@ -91,7 +91,7 @@
                                                 <li><small class="px-1">1 review(2)</small></li>
                                             </ul>
                                             <div class="add-to-cart">
-                                                <a href="{{ route('product_detail',['slug' => $top_rated->slug]) }}" class="btn-sm btn-outlinr-danger">Add to Cart</a>
+                                                <a href="{{ route('product_detail',['slug' => str_replace(' ', '-', $top_rated->slug)]) }}" class="btn-sm btn-outlinr-danger">Add to Cart</a>
                                             </div>
                                         </div>
                                         @endif
@@ -130,7 +130,7 @@
                                                 <li><small class="px-1">1 review(2)</small></li>
                                             </ul>
                                             <div class="add-to-cart">
-                                                <a href="{{ route('product_detail',['slug' => $featured->slug]) }}" class="btn-sm btn-outlinr-danger">Add to Cart</a>
+                                                <a href="{{ route('product_detail',['slug' => str_replace(' ', '-', $featured->slug)]) }}" class="btn-sm btn-outlinr-danger">Add to Cart</a>
                                             </div>
                                         </div>
                                         @endif

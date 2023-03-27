@@ -23,7 +23,7 @@ class SubCategory extends Model
     protected $fillable = array('uuid','category_id', 'subcategory','slug','description','status','order','visibility');
 
     public function category(){
-        return $this->hasMany(Category::class, 'uuid','category_id');
+        return $this->belongsTo(Category::class, 'category_id','uuid');
     }
 
     public function product()  

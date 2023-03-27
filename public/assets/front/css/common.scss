@@ -108,27 +108,38 @@ div, p{font-size: 14px;}
     .head-search{position: absolute; top: 24px; width: 30%; left: 22%;}     
     .header-menu{ text-align: right; padding-right: 10%;
         ul{list-style: none; padding: 0px; margin: 0px;
-            li{display: inline-block; position: relative; padding: 0;
-                a{padding:26px 15px; display: block; text-decoration: none;
+            li{float: right; list-style: none; padding: 0px 0px;
+                a{padding:30px 15px; display: block; text-decoration: none;
                     text-transform: uppercase;
                     font-weight: 500;
                     font-size: 14px;
                     color: $color-black;
                     &:hover{color: $color-red;}  
                 }
-                .dropdown-on-hover{display: none; position: fixed; 
-                    max-width: 100%; 
-                    min-width: 100px;
-                    box-shadow: 0px 4px 4px $color-black;
-                    z-index: 99999; background-color: $color-white; text-align: left;
-                    li{display: block;
-                        a{padding:5px 10px; border-bottom: 1px solid $color-gray;
-                            text-transform: inherit; font-size: 12px;
-                            img{width: 20px; margin-right: 5px;}
-                        }
-                    }                    
+                .dropdown-on-hover{
+                    width: 92%; 
+                    display: none;
+                    border-top: 1px solid $color-gray;
+                    padding: 20px; 
+                    background-image: linear-gradient(to right, #f5f5f5, #f6f5f6); 
+                    min-height: 100px; 
+                    position: absolute;
+                    left: 0px;
+                    right: 0px;
+                    margin: 0px auto; 
+                    top: 81px !important;
+                    z-index: 99999;
+                    ul{ 
+                        p{text-align: left; margin-bottom: 0px; padding-left: 10px;}                   
+                        li{display: block; float: none; text-align: left;
+                            a{padding:5px 10px;
+                                text-transform: inherit; font-size: 12px;
+                                img{width: 20px; margin-right: 5px;}
+                            }
+                        }  
+                    }                  
                 }
-                &:hover .dropdown-on-hover{display: none; }
+                &:hover .dropdown-on-hover{display: block; }
             }
         }
     }
@@ -172,13 +183,13 @@ div, p{font-size: 14px;}
             position: absolute;
             background-color: $color-white;
             width: 100%;
-            // height: 100vh;
+            height: 100vh;
             z-index: 9;
             left: -105%;
             // margin-left: -100%;
             transition:all 0.5s;
             ul{
-                li{display: block; position: relative; padding: 0;
+                li{display: block; position: relative; padding: 0; float: none;
                     a{padding:12px 15px;
                         font-size: 14px;
                         border-bottom: 1px solid $color-gray;                        
@@ -187,17 +198,20 @@ div, p{font-size: 14px;}
                     .dropdown-on-hover{
                         display: none; 
                         position: relative; 
-                        max-width: 100%; 
-                        min-width: 100px;
+                        width: 100%;
                         box-shadow: 0px 0px 0px $color-black;
                         background-color: $color-gray;
                         transform: none;
                         animation: none;
                         opacity: 1;
-                        li{display: block;
-                            a{padding:5px 10px; border-bottom: 1px solid $color-gray;
-                                text-transform: inherit; font-size: 12px;
-                                img{width: 20px; margin-right: 5px;}
+                        top: 0px !important;
+                        ul{ 
+                            p{text-align: left; margin-bottom: 0px; padding-left: 10px;} 
+                            li{display: block;
+                                a{padding:5px 10px; border-bottom: 1px solid $color-gray;
+                                    text-transform: inherit; font-size: 12px;
+                                    img{width: 20px; margin-right: 5px;}
+                                }
                             }
                         }                    
                     }
@@ -207,7 +221,7 @@ div, p{font-size: 14px;}
                 }
             }
         }
-        .add-mob-menu{left: 0%; position: relative;}
+        .add-mob-menu{left: 0%; position: absolute; z-index: 99999;}
         .cart {top: 15px; width: 50px; right: 3%;
             a{
                 img{width: 22px;}
@@ -277,12 +291,12 @@ div, p{font-size: 14px;}
 
 
 
-.slider{ background-image: url(../images/banner.webp);
+.slide{ background-image: url(../images/banner.webp);
     background-repeat: no-repeat;
     background-size: 100% 100%;
     width: 100%;
-    height: 455px;
-    img{width: 100%; height: 440px;}
+    max-height: 365px;
+    img{width: 100%; height: 350px;}
 
     .banner-text{color: $color-white; margin-top: 60px;
         h1 {
@@ -299,7 +313,14 @@ div, p{font-size: 14px;}
         }
     }    
 }
-
+@media only screen and (max-width: 767px)
+{
+    .slide{ 
+        // background-image: url(../images/banner.webp);
+        max-height: 135px;
+        img{width: 100%; height: 130px;}
+    }
+}
 .animation_images {
     animation-timing-function: cubic-bezier(0.54, 0.085, 0.5, 0.92);
     animation-name: animateUpDown;
