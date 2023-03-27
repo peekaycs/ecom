@@ -168,8 +168,8 @@
 							<div class="col-md-3 col-sm-3 col-6">
 								<div class="category-product-box">
 									<span class="product-offer">-{{ $top_rated->discount ?? '' }}%</span>
-									<a href="productdetails.php" class="text-center">
-										<img src="images/b1.jpg" alt="">
+									<a href="javascript:void(0)" class="text-center">
+										<img src="{{ URL::asset($product->image) ?? '' }}" alt="">
 									</a>
 									<div class="categories-name">
 										<a href="javascript:void(0)">{{ $product->category->category ?? ''}}</a>
