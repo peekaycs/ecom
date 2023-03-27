@@ -23,7 +23,7 @@
                     <tr>
                         <td>{{$loop->iteration}}</td>
                         <td>{{ $attribute->name }}</td>
-                        <td>{{ $attribute->attributeGroup[0]->name }}</td>
+                        <td>{{ $attribute->attributeGroup->name ?? '' }}</td>
                         <td><a href="{{route('edit-attribute',$attribute->id) }}" title="view"><i class="far fa-eye"></i></a></td>
                     </tr>
                     @endforeach
