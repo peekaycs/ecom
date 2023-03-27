@@ -94,4 +94,8 @@ class HomeController extends Controller
     {
         //
     }
+
+    public function signup(Request $request){
+        return view('front.signup');
+    }
 }

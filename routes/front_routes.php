@@ -19,3 +19,7 @@ Route::get('/product-detail/{slug}', [ProductController::class,'product_detail']
 
 Route::get('/cart-list', [CartStorageNewController::class,'cart_list'])->name('cart_list');
 Route::post('/add-to-cart', [CartStorageNewController::class,'AddToCart'])->name('AddToCart');
+
+// signup form
+Route::get('/signup', [HomeController::class,'signup'])->name('front.signup');
+
