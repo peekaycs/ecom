@@ -4,10 +4,6 @@
 <section class="mt-4">
 	<div class="container">		
         <form action="{{route('AddToCart')}}" method="POST" >	
-            <input type="hidden" name="slug" value="{{ str_replace( ' ', '-' , $product->slug ) ?? '' }}" >
-            <input type="hidden" name="name" value="{{ $product->product ?? '' }}" >
-            <input type="hidden" name="price" value="{{ $product->price ?? '' }}" >
-            <input type="hidden" name="discount" value="{{ $product->discount ?? '0' }}" >
             @csrf
             <div class="row mb-3">
                 <div class="col-md-3 col-sm-3 col-12">
@@ -93,14 +89,22 @@
                                     </h6>
                                 </div>
                             </div>
+                            
+                            <input type="hidden" name="id" value="{{ $product->id ?? '0' }}" class="id" id="id">
+                            <input type="hidden" name="variant_id" value="" class="variant_id" id="variant_id">
+                            <input type="hidden" name="slug" value="{{ str_replace( ' ', '-' , $product->slug ) ?? '' }}" class="slug" id="slug">
+                            <input type="hidden" name="name" value="{{ $product->product ?? '' }}" class="name" id="name">
+                            <input type="hidden" name="price" value="{{ $product->price ?? '' }}" class="price" id="price">
+                            <input type="hidden" name="discount" value="{{ $product->discount ?? '0' }}" class="discount" id="discount">
+
                             <div class="size">
                                 <p>{{ isset($product->productAttribute[0]) ? ' Select from available '. $product->productAttribute[0]->attributeGroup->name .':' : '' }} </p>
                                 <div class="size-group">
                                     @if( isset($product->productAttribute) && !empty($product->productAttribute) )
                                         @foreach($product->productAttribute as $productAttribute)
                                         <a href="javascript:void(0)" onClick="selectVariant(this,{{ $loop->iteration }})" class=" variant {{ ($loop->iteration == 1) ? 'active' : '' }} variant_{{ $loop->iteration }}">
-                                            <span class="variant_name_{{ $loop->iteration }}" data-name="{{ $productAttribute->attribute->name ?? '' }}">{{ $productAttribute->attribute->name ?? '' }}</span>
-                                            <small class="variant_price_{{ $loop->iteration }}" data-price="{{ $productAttribute->price ?? ''}}">Rs {{ $productAttribute->price ?? ''}}</small>
+                                            <span class="variant_name_{{ $loop->iteration }}" data-name="{{ $productAttribute->attribute->name ?? '' }}" data-id="{{ $productAttribute->attribute_id ?? '' }}">{{ $productAttribute->attribute->name ?? '' }}</span>
+                                            <small class="variant_price_{{ $loop->iteration }}" data-price="{{ $productAttribute->price ?? ''}}" data-discount="{{ $productAttribute->discount ?? '' }}">Rs {{ $productAttribute->price ?? ''}}</small>
                                         </a>
                                         @endforeach
                                     @endif
@@ -138,11 +142,16 @@
                         <div class="quantity">
                             <span>
                                 <select name="quantity" id="quantity" class="quantity">
-                                    <option value="1">1</option>
+                                    <?php
+                                    for($i = 1; $i <= 10; $i++){
+                                        echo '<option value=" '.$i.' "> '.$i.' </option>';
+                                    }
+                                    ?>
+                                    <!--<option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
                                     <option value="4">4</option>
-                                    <option value="5">5</option>
+                                    <option value="5">5</option>-->
                                 </select>
                             </span>
                             <span class="sizeAdd"></span>                        
@@ -274,9 +283,15 @@
         $(".variant_" + iteration).css('border','2px solid black');
     
         var name = $(".variant_name_" + iteration).data("name");
+        var id = $(".variant_name_" + iteration).data("id");
         var price = $(".variant_price_" + iteration).data("price");
+        var discount = $(".variant_price_" + iteration).data("discount");
+
         $(".priceAdd").html(price);
         $(".sizeAdd").html('of ' + name);
+        $(".variant_id").val(id);
+        $(".price").val(price);
+        $(".discount").val(discount);
     }
 </script>
 @endsection	
