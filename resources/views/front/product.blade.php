@@ -9,15 +9,19 @@
 					<h3>FILTERS BY</h3>
 					<div class="cat-box">						
 						<h4>{{ $filter_categories->category ?? '' }}</h4>
-						<div class="search-icon">
+						<!--<div class="search-icon">
 							<input type="type" name="search" class="form-control" placeholder="Search Medicine Name" autocomplete="off">
-						</div>
+						</div>-->
 						<div class="check-list">
 							@if (isset($filter_subcategories) && !empty($filter_subcategories))
 								@foreach($filter_subcategories as $filter_subcategory)
 									@if (isset($filter_subcategory) && !empty($filter_subcategory))
-									<label class="chk">
-										<input type="checkbox"><span class="checkmark1"></span><a href="{{ route('productBySubCategory',['slug' => str_replace(' ', '-', $filter_subcategory->slug)]) }}" style="text-decoration:none;color:grey">{{ $filter_subcategory->subcategory ?? ''}}</a>
+									<label class="chk ">
+										<input type="checkbox" name="subcategory" class="" value="{{ str_replace(' ', '-', $filter_subcategory->slug) }}">
+										<span class="checkmark1"></span>
+										<a class="subcategory {{ request()->is('product/'.str_replace(' ', '-', $filter_subcategory->slug)) ? 'active' : '' }}" href="{{ route('productBySubCategory',['slug' => str_replace(' ', '-', $filter_subcategory->slug)]) }}" style="text-decoration:none;color:grey" data-subcategory="{{ str_replace(' ', '-', $filter_subcategory->slug) }}" >
+											{{ $filter_subcategory->subcategory ?? ''}}
+										</a>
 									</label>
 									@endif
 								@endforeach
@@ -43,9 +47,9 @@
 					</div>
 					<div class="cat-box">	
 					<h4>Brand</h4>
-						<div class="search-icon">
+						<!--<div class="search-icon">
 							<input type="type" name="search" class="form-control" placeholder="Search by Brand Name" autocomplete="off">
-						</div>
+						</div>-->
 						<div class="check-list">
 							@if (isset($brands) && !empty($brands))
 								@foreach($brands as $brand)

@@ -9,6 +9,9 @@ use App\Models\Product;
 use App\Models\Banner;
 use App\Models\Category;
 
+use Cart;
+use Darryldecode\Cart\Facades\CartFacade;
+
 class HomeController extends Controller
 {
     /**
@@ -26,6 +29,14 @@ class HomeController extends Controller
         foreach($banners as $banner){
             $data[$banner->type] = $banner;
         }
+
+        $userId = 100; // or any string represents user identifier
+        Cart::session($userId);
+        $cartCollection = Cart::getContent();
+        // count carts contents
+        $data['count'] = $cartCollection->count();
+        //$data['count'] = getTotalQuantity();
+
         return view('front.index', $data);
     }
 

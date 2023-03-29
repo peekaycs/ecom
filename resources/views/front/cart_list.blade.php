@@ -8,7 +8,7 @@
                 <div class="cart-section">
                     <h5>Items NOT Requiring Prescription (1)</h5>
                     <div class="col-md-12 col-sm-12 col-12">
-                        <?php $total_discount = $total_price = 0;?>
+                        <?php $total_discount = $total_price = $shipping = 0;?>
                         @if( isset($cart_list) && !empty($cart_list) )
                             @foreach($cart_list as $item_id => $item)
                             <div class="cart-price">
@@ -19,13 +19,16 @@
                                     <p>{{ $item->name ?? '' }}</p>
                                     <p><small>jar of 500 gm Paste</small></p>
                                     <p>
-                                        <a href="javascript:void(0)"> 
-                                        <i class="fa fa-trash" aria-hidden="true"></i>                                
-                                            Remove
+                                        <a href="javascript:void(0)" class="removeItem" data-product_id={{ $item->id ?? '' }}> 
+                                            <i class="fa fa-trash" aria-hidden="true"></i>Remove
                                         </a>
                                     </p>
                                 </div>	
                                 <?php 
+                                foreach($item->conditions as $condition){
+                                    if($condition->getType() == 'shipping')
+                                        $shipping = $shipping + $condition->getValue();
+                                }
                                 $total_discount = $total_discount + ($item->price - $item->getPriceWithConditions()) * $item->quantity;
                                 $total_price = $total_price + ($item->price * $item->quantity);
                                 ?>
@@ -33,9 +36,9 @@
                                     <p>{{ $item->getPriceWithConditions() ?? '' }} </p>
                                     <p><small>MRP <span class="mrp">{{ $item->price ?? '' }}</span></small></p>
                                     <p>
-                                        <i class="fa fa-minus-circle" aria-hidden="true"></i>
-                                        <span>{{ $item->quantity ?? '' }}</span>
-                                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                        <i class="fa fa-minus-circle changeQty minus" aria-hidden="true" data-quantity={{ $item->quantity ?? '' }} data-product_id={{ $item->id ?? '' }}></i>
+                                        <span class="quantity">{{ $item->quantity ?? '' }}</span>
+                                        <i class="fa fa-plus-circle changeQty plus" aria-hidden="true" data-quantity={{ $item->quantity ?? '' }} data-product_id={{ $item->id ?? '' }}></i>
                                     </p>
                                 </div>
                             </div>
@@ -82,14 +85,10 @@
                             {{ isset($total_discount) ? 'Price Discount' : ''}}
                             <span>{{ isset($total_discount) ? '-₹'. $total_discount : '0'}}</span>
                         </p>
-                        @if( isset($conditions) && !empty($conditions) )
-                            @foreach($conditions as $condition)
-                            <p>
-                                {{ $condition->getName() ? $condition->getName().' Charges' : '' }} 
-                                <span>{{ $condition->getValue() ? $condition->getValue() : '' }}</span>
-                            </p>
-                            @endforeach
-                        @endif    
+                        <p>
+                            {{ 'Shipping Charges' }} 
+                            <span>{{ '+₹'.$shipping ?? '+₹0' }}</span>
+                        </p>
                         <hr>
                         <p>
                             <strong>To be paid</strong>
@@ -284,4 +283,47 @@
     </div>
 </section>-->
 @include('front.include.popular_health_product') 
+@endsection	
+
+@section('script')	
+<script>
+
+    $('.changeQty').click(function(e){ 
+        var qty = $(this).data('quantity');
+        var product_id = $(this).data("product_id");
+        if($(this).hasClass('minus') == true){
+            if( qty > 1){
+                qty = qty-1;
+            }else{
+                alert('Minimum quantity is 1.')
+            }
+        }else{
+            qty = qty+1;
+        }
+        $('.changeQty').data('quantity', qty);
+        $('.quantity').html(qty);
+
+        $.ajax({
+            type: 'POST',
+            url: "{{ url('update-cart') }}",
+            data: { "_token": "{{ csrf_token() }}", 'quantity' : qty, 'product_id' : product_id },
+            success: function(response) { 
+                alert("Quantity Increased.") 
+            }
+        });
+    });
+
+    $('.removeItem').click(function(e){ 
+        var product_id = $(this).data("product_id");
+        $.ajax({
+            type: 'POST',
+            url: "{{ url('remove-from-cart') }}",
+            data: { "_token": "{{ csrf_token() }}", 'product_id' : product_id },
+            success: function(response) { 
+                alert("Item Removed.") 
+            }
+        });
+    });
+
+</script>
 @endsection	
