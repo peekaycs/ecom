@@ -36,9 +36,9 @@
                                     <p>{{ $item->getPriceWithConditions() ?? '' }} </p>
                                     <p><small>MRP <span class="mrp">{{ $item->price ?? '' }}</span></small></p>
                                     <p>
-                                        <i class="fa fa-minus-circle changeQty minus" aria-hidden="true" data-quantity={{ $item->quantity ?? '' }} data-product_id={{ $item->id ?? '' }}></i>
-                                        <span class="quantity">{{ $item->quantity ?? '' }}</span>
-                                        <i class="fa fa-plus-circle changeQty plus" aria-hidden="true" data-quantity={{ $item->quantity ?? '' }} data-product_id={{ $item->id ?? '' }}></i>
+                                        <i class="fa fa-minus-circle changeQty changeQty_{{ $item->id ?? '' }} minus" aria-hidden="true" data-quantity_{{ $item->id ?? '' }}={{ $item->quantity ?? '' }} data-product_id={{ $item->id ?? '' }}></i>
+                                        <span class="quantity quantity_{{ $item->id ?? '' }}">{{ $item->quantity ?? '' }}</span>
+                                        <i class="fa fa-plus-circle changeQty changeQty_{{ $item->id ?? '' }} plus" aria-hidden="true" data-quantity_{{ $item->id ?? '' }}={{ $item->quantity ?? '' }} data-product_id={{ $item->id ?? '' }}></i>
                                     </p>
                                 </div>
                             </div>
@@ -289,26 +289,34 @@
 <script>
 
     $('.changeQty').click(function(e){ 
-        var qty = $(this).data('quantity');
+        var msg = '';
+        var quantity = 0;
+        
         var product_id = $(this).data("product_id");
+        var qty = $(this).data('quantity_' + product_id);
         if($(this).hasClass('minus') == true){
             if( qty > 1){
                 qty = qty-1;
+                quantity = -1;
+                msg = 'Quantity Removed.';
             }else{
                 alert('Minimum quantity is 1.')
+                exit;
             }
         }else{
             qty = qty+1;
+            quantity = 1;
+            msg ='Quantity Increased.';
         }
-        $('.changeQty').data('quantity', qty);
-        $('.quantity').html(qty);
-
+        $('.changeQty_' + product_id).data('quantity', qty);
+        $('.quantity_' + product_id).html(qty);
         $.ajax({
             type: 'POST',
             url: "{{ url('update-cart') }}",
-            data: { "_token": "{{ csrf_token() }}", 'quantity' : qty, 'product_id' : product_id },
+            data: { _token: "{{ csrf_token() }}", quantity : quantity, product_id : product_id },
             success: function(response) { 
-                alert("Quantity Increased.") 
+                alert(msg);
+                location.reload(); 
             }
         });
     });
@@ -318,9 +326,10 @@
         $.ajax({
             type: 'POST',
             url: "{{ url('remove-from-cart') }}",
-            data: { "_token": "{{ csrf_token() }}", 'product_id' : product_id },
+            data: { _token: "{{ csrf_token() }}", product_id : product_id },
             success: function(response) { 
                 alert("Item Removed.") 
+                location.reload();
             }
         });
     });

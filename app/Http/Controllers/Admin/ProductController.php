@@ -335,6 +335,7 @@ class ProductController extends Controller
 
     public function productBySubCategory($slug)
     {
+        //echo '<pre>';print_r($request);
         //DB::enableQueryLog(); // Enable query log
         $slug = str_replace('-',' ',$slug);
         $data = [];
@@ -351,6 +352,36 @@ class ProductController extends Controller
         //dd(DB::getQueryLog()); // Show results of log
         //dd($products->currentPage());
         return view('front.product', $data);
+    }
+
+    public function productByBrand(Request $request)
+    {
+        $slug = $request->slug;
+        $brand = $request->brand;
+        //die;
+        //DB::enableQueryLog(); // Enable query log
+        $slug = str_replace('-',' ',$slug);
+        //$data = [];
+        //$data['category'] = $category = Category::All();
+        $subcategories = SubCategory::WHERE('slug', $slug)->first();
+
+        $products = Product::WHERE('subcategory_id', $subcategories->uuid)
+                                                ->WHERE('brand_id', $brand)
+                                                ->with(['category'])
+                                                ->with(['subcategory'])
+                                                ->with(['attribute'])
+                                                ->orderBy('updated_at','desc')
+                                                ->paginate(env('PER_PAGE'))
+                                                ->withQueryString();
+        //foreach($products as $product){
+           // $data['brands'][$product->brand->brand]  = $product->brand;
+        //}
+        
+        //$data['filter_categories'] = $filter_categories = $subcategories->category;
+        //$data['filter_subcategories'] = $filter_subcategories = SubCategory::WHERE('category_id', $subcategories->category->uuid)->get();
+        //dd(DB::getQueryLog()); // Show results of log
+        //dd($products->currentPage());
+        echo json_encode($products);
     }
 
     public function product_detail($slug)

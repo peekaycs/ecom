@@ -119,18 +119,15 @@ class CartStorageNewController extends Controller
 
     public function RemoveFromCart(Request $request)
     {
-        dd($request);
         $product_id = $request->product_id;
         //$user_id = Auth::user()->uuid;
         $userId = 100; // or any string represents user identifier
         Cart::session($userId);
         Cart::remove($product_id);
-        return redirect()->route('cart_list');
     }
 
     public function updateCart(Request $request)
     {
-        dd($request);
         $qty = $request->quantity;
         $product_id = $request->product_id;
         //$user_id = Auth::user()->uuid;
