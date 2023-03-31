@@ -18,7 +18,7 @@ class Attribute extends Model
 
     public function attributeGroup()
     {
-        return $this->belongsTo(AttributeGroup::class);
+        return $this->belongsTo(AttributeGroup::class,'group_id','id');
     }
 
     public function productAttribute()
