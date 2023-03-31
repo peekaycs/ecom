@@ -26,8 +26,10 @@
                                 </div>	
                                 <?php 
                                 foreach($item->conditions as $condition){
-                                    if($condition->getType() == 'shipping')
-                                        $shipping = $shipping + $condition->getValue();
+                                    if(isset($condition) && !empty($condition)){
+                                        if($condition->getType() == 'shipping')
+                                            $shipping = $shipping + $condition->getValue();
+                                    }        
                                 }
                                 $total_discount = $total_discount + ($item->price - $item->getPriceWithConditions()) * $item->quantity;
                                 $total_price = $total_price + ($item->price * $item->quantity);
