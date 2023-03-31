@@ -96,6 +96,7 @@
                             <input type="hidden" name="name" value="{{ $product->product ?? '' }}" class="name" id="name">
                             <input type="hidden" name="price" value="{{ $product->price ?? '' }}" class="price" id="price">
                             <input type="hidden" name="discount" value="{{ $product->discount ?? '0' }}" class="discount" id="discount">
+                            <input type="hidden" name="shipping" value="{{ $product->shipping_cost ?? '0' }}" class="discount" id="discount">
 
                             <div class="size">
                                 <p>{{ isset($product->productAttribute[0]) ? ' Select from available '. $product->productAttribute[0]->attributeGroup->name .':' : '' }} </p>
@@ -264,18 +265,6 @@
 
 @section('script')	
 <script>
-    $( document ).ready(function() {
-        /*$(".variant").each(function(i, obj){
-            var has_class = $(obj).hasClass('active');
-            if(has_class == true){
-                var k = i+1;
-                var name = $(".variant_name_" + k ).data("name");
-                var price = $(".variant_price_" + k ).data("price");
-                $(".priceAdd").html(price);
-                $(".sizeAdd").html(name);
-            }
-        });*/
-    });
     function selectVariant(thiss,iteration){
         $(".variant").removeClass('active');
         $(".variant").css('border','none');
