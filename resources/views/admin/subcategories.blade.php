@@ -26,7 +26,7 @@
                     <tr>
                         <td>{{$loop->iteration}}</td>
                         <td>{{ $subCategory->subcategory }}</td>
-                        <td>{{ $subCategory->category[0]->category }}</td>
+                        <td>{{ $subCategory->category->category }}</td>
                         <td>{{ $subCategory->slug }}</td>
                         <td>{{ Str::limit($subCategory->description, 50) }}</td>
                         <td>{{ $subCategory->status ? "Enabled" : "Disabled" }}</td>
