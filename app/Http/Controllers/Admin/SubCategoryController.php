@@ -18,8 +18,7 @@ class SubCategoryController extends Controller
     public function index()
     {
         //
-        $subCategories = SubCategory::with('category')->paginate(env('PER_PAGE'));
-        // dd($subCategories);
+        $subCategories = SubCategory::paginate(env('PER_PAGE'));
         return view('admin.subcategories',array('subCategories' => $subCategories));
     }
 
