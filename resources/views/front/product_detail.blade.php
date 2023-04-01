@@ -174,7 +174,7 @@
                 @if( isset($product) && !empty($product) )
                 <h5>Description</h5>
                 <div class="product-overview">  
-                    {{ $product->description ?? 'N/A' }}                  
+                    {!! $product->productDetail->description ?? 'N/A' !!}                  
                     <!--<h6>Also known as</h6>
 					<p>Syzygium jamb</p>
 					<h6>Properties</h6>					

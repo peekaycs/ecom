@@ -7,7 +7,7 @@
 				<div class="footer-contant">
 					<h3>About Us</h3>
 					<ul class="col-md-6 col-sm-6 col-6 px-0">
-						<li><a href="aboutus.php">About Us</a></li>
+						<li><a href="">About Us</a></li>
 						<li><a href="contactus.php">Contact us</a></li>
 						<!-- <li><a href="blog.php">Blog</a></li> -->
 						<li><a href="news.php">FAQ</a></li>
@@ -100,19 +100,20 @@
 </div>
 
 <div id="login" class="login-modal">  
-  	<form class="modal-content animate" action="/action_page.php">
+  	<form class="modal-content animate" action="login" method="post">
 	    <div class="imgcontainer">
 	      	<span onclick="document.getElementById('login').style.display='none'" class="close" title="Close Modal">&times;</span>
-	     	 <img src="images/login_icon.png" alt="Avatar" class="avatar">
+	     	 <img src="{{URL::asset('assets/front/images/login_icon.png')}}" alt="Avatar" class="avatar">
 	    </div>
+		@csrf
 	    <div class="container">
 	    	<div class="col-md-12 col-sm-12 col-xs-12">
-	      		<label for="uname"><b>Username</b></label>
-	      		<input type="text" placeholder="Enter Username" name="uname" required>
+	      		<label for="uname"><b>Email Address</b></label>
+	      		<input type="email" placeholder="Email Address" name="email" required>
 	      	</div>
 	      	<div class="col-md-12 col-sm-12 col-xs-12">
 	      		<label for="psw"><b>Password</b></label>
-	      		<input type="password" placeholder="Enter Password" name="psw" required>
+	      		<input type="password" placeholder="Enter Password" name="password" required>
 		    </div>
 		    <div class="col-md-12 col-sm-12 col-xs-12">   
 	      		<div class="login-btn">

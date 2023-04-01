@@ -122,6 +122,22 @@
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <div class="form-group form-floating-label @error('content') has-error @enderror">
+                                <label for="inputFloatingLabel" >Description</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-floating-label @error('short_description') has-error @enderror">
+                        <textarea  class="form-control input-border-bottom" name="description" id="description" required>
+                        {{old('description') ?? $product->productDetail->description}}
+                        </textarea>
+                        <!-- <label for="selectFloatingLabel" class="placeholder">Description</label> -->
+                        @error('description')
+                        <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
                     <div class="form-group form-floating-label @error('featured') has-error @enderror">
                     <select class="form-control input-border-bottom" name="featured" id="featured" required>
                             <option value="1">Yes</option>
@@ -259,5 +275,18 @@
         </form>
     </div>
 </div>
+<script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
+<script>
+    ClassicEditor
+        .create( document.querySelector( '#description' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
+<style>
+.ck-editor__editable_inline {
+    min-height: 400px;
+}
+</style>
 <script src="{{URL::asset('assets/admin/js/product.js')}}"></script>
 @endsection

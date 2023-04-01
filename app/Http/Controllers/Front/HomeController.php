@@ -8,11 +8,11 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Banner;
 use App\Models\Category;
-
+use App\Http\Classes\EcomController;
 use Cart;
-use Darryldecode\Cart\Facades\CartFacade;
+// use Darryldecode\Cart\Facades\CartFacade;
 
-class HomeController extends Controller
+class HomeController extends EcomController
 {
     /**
      * Display a listing of the resource.
@@ -22,22 +22,17 @@ class HomeController extends Controller
     public function index()
     {
         $data = [];
-        $data['category'] = Category::All();
-        //dd($data['category'][0]->subcategory);
+        
         $data['best_selling'] = Product::All();
         $banners = Banner::where('status', '1')->with('bannerImages')->get();
         foreach($banners as $banner){
             $data[$banner->type] = $banner;
         }
-
-        $userId = 100; // or any string represents user identifier
-        Cart::session($userId);
-        $cartCollection = Cart::getContent();
-        // count carts contents
-        $data['count'] = $cartCollection->count();
+        
+        
         //$data['count'] = getTotalQuantity();
-
-        return view('front.index', $data);
+        return $this->createView('front.index', $data);
+        // return view('front.index', $data);
     }
 
     /**

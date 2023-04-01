@@ -2,7 +2,8 @@
 
 @section('content')			
 <section class="mt-4">
-	<div class="container">			
+	<div class="container">	
+        @if(isset($cart_list) && count($cart_list))		
 		<div class="row mb-3">
             <div class="col-md-8 col-sm-8 col-12">
                 <div class="cart-section">
@@ -109,6 +110,11 @@
                 </div>                
             </div> 
         </div>
+        @else
+        <div class="row mb-3">
+            <h2>Your cart is empty.</h2>
+        </div>
+        @endif
 	</div>
 </section>
 <!--<section class="slide-section mt-2 mb-4">

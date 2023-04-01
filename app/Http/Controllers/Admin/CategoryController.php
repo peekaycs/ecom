@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Rules\AlphaNumSpace;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
+
 class CategoryController extends Controller
 {
     /**
@@ -42,7 +45,9 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         //
-       
+        $request->validate([
+            'slug' => ['required', new AlphaNumSpace, Rule::unique('categories')]
+        ]);
         $this->validateCategory($request);
         $category = Category::create(
             [
@@ -97,6 +102,9 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category, $id)
     {
         //
+        $request->validate([
+            'slug' => ['required',new AlphaNumSpace, Rule::unique('categories')->ignore($id)]
+        ]);
         $this->validateCategory($request);
 
         $category = Category::whereUuid($id)->first();

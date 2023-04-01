@@ -9,6 +9,8 @@ use App\Models\BannerImage;
 use Illuminate\Support\Str;
 use Image;
 use File;
+use Illuminate\Validation\Rule;
+
 class BannerController extends Controller
 {
     /**
@@ -47,7 +49,7 @@ class BannerController extends Controller
 
         $request->validate([
             'name' => 'required|string',
-            'type' => 'required|string',
+            'type' => ['required','string',Rule::unique('banners')],
             'status' => 'required|boolean',
         ]);
         $inputData = $request->all();
@@ -112,8 +114,7 @@ class BannerController extends Controller
         $request->validate(
             [
             'name' => 'required|string',
-            'type' => 'required|string',
-            'status' => 'required|boolean',
+            'type' => ['required','string',Rule::unique('banners')->ignore($id)],           'status' => 'required|boolean',
             ]
         );
         $banner = Banner::find($id);

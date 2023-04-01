@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\SubCategory;
 use App\Models\Category;
+use App\Rules\AlphaNumSpace;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class SubCategoryController extends Controller
 {
@@ -44,6 +46,9 @@ class SubCategoryController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'slug' => ['required', new AlphaNumSpace ,Rule::unique('categories')]
+        ]);
         $this->validateSubCategory($request);
         // echo $request->category_id;die;
         $subCategory = SubCategory::create([
@@ -107,6 +112,9 @@ class SubCategoryController extends Controller
     public function update(Request $request, SubCategory $subCategory, $id)
     {
         //
+        $request->validate([
+            'slug' => ['required', new AlphaNumSpace ,Rule::unique('categories')->ignore($id)]
+        ]);
         $this->validateSubCategory($request);
 
         $subCategory = SubCategory::whereUuid($id)->first();

@@ -49,4 +49,7 @@ class Product extends Model
         return $this->hasMany(ProductAttribute::class);
     }
     
+    public function productDetail(){
+        return $this->hasOne(ProductDetail::class);
+    }
 }
