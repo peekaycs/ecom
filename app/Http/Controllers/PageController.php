@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Helper;
 use Illuminate\Http\Request;
 use App\Models\Page;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use App\Rules\AlphaNumSpace;
+use App\Http\Classes\EcomController;
 
-class PageController extends Controller
+class PageController extends EcomController
 {
     /**
      * Display a listing of the resource.
@@ -43,8 +46,8 @@ class PageController extends Controller
         //
 
         $request->validate([
-            'name' => ['required','string','min:3','max:255',Rule::unique('coupons')],
-            'slug' => ['required','string','min:3','max:255'],
+            'name' => ['required','string','min:3','max:255',Rule::unique('pages')],
+            'slug' => ['required','string', new AlphaNumSpace, 'min:3','max:255',Rule::unique('pages')],
             'title' => ['required','string','min:3','max:255'],
             'content' => ['required','string','min:3'],
             'published' => ['required','boolean']
@@ -63,9 +66,17 @@ class PageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $slug)
     {
         //
+        $slug = Helper::destructSlug($slug);
+        $page = Page::where('slug',$slug)->get()->take(1);
+        if(isset($page[0])){
+            return $this->createView('front.page', array('pageContent' => $page[0]));
+        }
+        return redirect()->back();
+        
+
     }
 
     /**
@@ -93,8 +104,8 @@ class PageController extends Controller
     {
         //
         $request->validate([
-            'name' => ['required','string','min:3','max:255',Rule::unique('coupons')->ignore($id)],
-            'slug' => ['required','string','min:3','max:255'],
+            'name' => ['required','string','min:3','max:255',Rule::unique('pages')->ignore($id)],
+            'slug' => ['required','string','min:3','max:255',new AlphaNumSpace,Rule::unique('pages')->ignore($id)],
             'title' => ['required','string','min:3','max:255'],
             'content' => ['required','string','min:3'],
             'published' => ['required','boolean']
