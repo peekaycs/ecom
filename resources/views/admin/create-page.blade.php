@@ -1,7 +1,7 @@
 @extends('admin.layouts.app',['page_title' => 'Pages','action_title' => 'Pages','page_action' => route('pages')])
 
 @section('content')
-<script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
+
 <div class="col-md-12">
     <div class="card">
     <form class="form-horizontal" id="" method="post" action="{{route('store-page')}}">
@@ -76,6 +76,7 @@
         </form>
     </div>
 </div>
+<script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
 <script>
     ClassicEditor
         .create( document.querySelector( '#content' ) )

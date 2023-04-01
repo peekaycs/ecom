@@ -11,6 +11,7 @@ use Darryldecode\Cart\CartCondition;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use App\Http\Classes\EcomController;
 use App\Models\Brand;
 use Image;
 use File;
@@ -20,13 +21,13 @@ use App\Models\Product;
 use App\Models\Banner;
 use App\Models\Category;
 
-class CartStorageNewController extends Controller
+class CartStorageNewController extends EcomController
 {
     public function cart_list()
     {
         //
         $data = [];
-        $data['category'] = Category::All();
+        
         $data['popular_health'] = Product::All();
         
         //$user_id = Auth::user()->uuid;
@@ -34,7 +35,7 @@ class CartStorageNewController extends Controller
         Cart::session($userId);
 
         $data['cart_list'] = $cartCollection = Cart::getContent();
-        $data['count'] = $cartCollection->count();   //$data['count'] = getTotalQuantity();
+        // $data['count'] = $cartCollection->count();   //$data['count'] = getTotalQuantity();
         $data['subTotal'] = Cart::getSubTotal();
         $data['total'] = Cart::getTotal();
         //dd($cartCollection);
@@ -65,7 +66,7 @@ class CartStorageNewController extends Controller
             Cart::removeCartCondition($conditionName);
         }*/
         
-        return view('front.cart_list', $data);
+        return $this->createView('front.cart_list', $data);
     }
 
     public function AddToCart(Request $request)

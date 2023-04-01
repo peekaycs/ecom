@@ -15,12 +15,16 @@ use App\Models\ProductImage;
 use App\Models\ProductAttributeImage;
 use App\Models\Attribute;
 use App\Models\Brand;
+use App\Models\ProductDetail;
+use App\Rules\AlphaNumSpace;
+use App\Helpers\Helper;
 use Image;
 use File;
 use DB;
 
 use Cart;
 use Darryldecode\Cart\Facades\CartFacade;
+use Illuminate\Validation\Rule;
 
 class ProductController extends Controller
 {
@@ -62,6 +66,12 @@ class ProductController extends Controller
     {
         //
         // $this->validateProduct($request);
+        $request->validate(
+            [
+                'product' => 'required',
+                'slug'  => ['required',new AlphaNumSpace,Rule::unique('products')]
+            ]
+        );
         $product_id = Str::uuid();
         $user_id = Auth::user()->uuid;
         // Product Image
@@ -91,6 +101,8 @@ class ProductController extends Controller
             ]
         );
 
+        // product details
+        ProductDetail::create(array_merge($request->all(),['id' => Str::uuid(),'product_id' => $product_id]));
         // product image
 
         $productImage = ProductImage::create(
@@ -161,10 +173,10 @@ class ProductController extends Controller
     {
         //
         
-        $product = Product::find($id); 
-        
+        $product = Product::with('productDetail')->find($id); 
+        // dd($product);
         // all attributes
-        $productAttributes = ProductAttribute::with('productAttributeImage')->where('product_id',$product->id)->get();
+        $productAttributes = ProductAttribute::with(['productAttributeImage'])->where('product_id',$product->id)->get();
         $categories = Category::all();
         $subCategories = SubCategory::where('category_id',$product->category_id)->get();
         $attributeGroups = AttributeGroup::all();
@@ -184,8 +196,14 @@ class ProductController extends Controller
     public function update(Request $request, Product $product, $id)
     {
         //
+        $request->validate(
+            [
+                'product' => 'required',
+                'slug'  => ['required',new AlphaNumSpace,Rule::unique('products')->ignore($id)]
+            ]
+        );
         $product = Product::find($id);
-
+        
         // update product
         $product->product = $request->product;
         $product->brand_id = $request->brand_id;
@@ -279,6 +297,7 @@ class ProductController extends Controller
         $request->validate(
             [
                 'product' => 'required',
+                'slug'  => ['required','alpanumeric',Rule::unique('product')]
             ]
         );
     }
@@ -313,10 +332,10 @@ class ProductController extends Controller
         }
     }
 
-    public function productByCategory($slug)
+    public function productByCategory(Request $request, $slug)
     {
         //DB::enableQueryLog(); // Enable query log
-        $slug = str_replace('-',' ',$slug);
+        $slug = Helper::destructSlug($slug);
         $data = [];
         $data['category'] = $category =Category::All();
         $data['categories'] = $categories = Category::WHERE('slug', $slug)->first();
@@ -333,11 +352,11 @@ class ProductController extends Controller
         return view('front.product', $data);
     }
 
-    public function productBySubCategory($slug)
+    public function productBySubCategory(Request $request, $slug)
     {
         //echo '<pre>';print_r($request);
         //DB::enableQueryLog(); // Enable query log
-        $slug = str_replace('-',' ',$slug);
+        $slug = Helper::destructSlug($slug);
         $data = [];
         $data['category'] = $category =Category::All();
         $data['subcategories'] = $subcategories = SubCategory::WHERE('slug', $slug)->first();
@@ -360,7 +379,7 @@ class ProductController extends Controller
         $brand = explode(',',$request->brand);
         $order = '';//$request->order;
 
-        $slug = str_replace('-',' ',$slug);
+        $slug = Helper::destructSlug($slug);
         $data = [];
 
         $subcategories = SubCategory::WHERE('slug', $slug)->first();
@@ -377,10 +396,10 @@ class ProductController extends Controller
         echo view('front.tpl.brand-wise-product', $data);
     }
 
-    public function product_detail($slug)
+    public function productDetail(Request $request, $slug)
     {
         //
-        $slug = str_replace('-',' ',$slug);
+        $slug = Helper::destructSlug($slug);
         $data = [];
         $data['category'] = Category::All();
         $data['product'] = Product::WHERE('slug',$slug)->first();

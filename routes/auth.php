@@ -11,6 +11,10 @@ use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
+    // front signup form
+    Route::get('signup', [RegisteredUserController::class, 'create'])
+                ->name('signup');
+
     Route::get('register', [RegisteredUserController::class, 'create'])
                 ->name('register');
 

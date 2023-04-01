@@ -68,51 +68,67 @@
                     </div>
                     <!-- End of Sub category -->
                     <div class="form-group form-floating-label @error('sku') has-error @enderror">
-                        <input type="text" class="form-control input-border-bottom" name="sku" id="sku" required>
+                        <input type="text" class="form-control input-border-bottom" name="sku" id="sku" value="{{old('sku')}}" required>
                         <label for="selectFloatingLabel" class="placeholder">SKU</label>
                         @error('sku')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
                     <div class="form-group form-floating-label @error('quantity') has-error @enderror">
-                        <input type="number" class="form-control input-border-bottom" name="quantity" id="quantity" step=1 required>
+                        <input type="number" class="form-control input-border-bottom" name="quantity" value="{{old('quantity')}}" id="quantity" step=1 required>
                         <label for="selectFloatingLabel" class="placeholder">Quantity</label>
                         @error('quantity')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
                     <div class="form-group form-floating-label @error('price') has-error @enderror">
-                        <input type="number" class="form-control input-border-bottom" name="price" id="price" min=0 step=0.01 required>
+                        <input type="number" class="form-control input-border-bottom" name="price" value="{{old('price')}}" id="price" min=0 step=0.01 required>
                         <label for="selectFloatingLabel" class="placeholder">Unit Price</label>
                         @error('price')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
                     <div class="form-group form-floating-label @error('discount') has-error @enderror">
-                        <input type="number" class="form-control input-border-bottom" name="discount" min=0 id="discount" step=0.01 >
+                        <input type="number" class="form-control input-border-bottom" value="{{old('discount')}}" name="discount" min=0 id="discount" step=0.01 >
                         <label for="selectFloatingLabel" class="placeholder">Discount</label>
                         @error('discount')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
                     <div class="form-group form-floating-label @error('comission') has-error @enderror">
-                        <input type="number" class="form-control input-border-bottom" name="comission" min=0 id="comission" step=0.01 >
+                        <input type="number" class="form-control input-border-bottom" name="comission" value="{{old('comission')}}" min=0 id="comission" step=0.01 >
                         <label for="selectFloatingLabel" class="placeholder">Commission</label>
                         @error('comission')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
                     <div class="form-group form-floating-label @error('shipping_cost') has-error @enderror">
-                        <input type="number" class="form-control input-border-bottom" name="shipping_cost" min=0 id="shipping_cost" step=0.01 >
+                        <input type="number" class="form-control input-border-bottom" value="{{old('shipping_cost')}}" name="shipping_cost" min=0 id="shipping_cost" step=0.01 >
                         <label for="selectFloatingLabel" class="placeholder">Shipping Cost</label>
                         @error('shipping_cost')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
                     <div class="form-group form-floating-label @error('short_description') has-error @enderror">
-                        <input type="text" class="form-control input-border-bottom" name="short_description" id="short_description" required>
+                        <input type="text" class="form-control input-border-bottom" name="short_description" value="{{old('short_description')}}"id="short_description" required>
                         <label for="selectFloatingLabel" class="placeholder">Short Description</label>
                         @error('short_description')
+                        <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <div class="form-group form-floating-label @error('content') has-error @enderror">
+                                <label for="inputFloatingLabel" >Description</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-floating-label @error('short_description') has-error @enderror">
+                        <textarea  class="form-control input-border-bottom" name="description" id="description" required>
+                        {{old('description')}}
+                        </textarea>
+                        <!-- <label for="selectFloatingLabel" class="placeholder">Description</label> -->
+                        @error('description')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
@@ -122,12 +138,12 @@
                             <option value="0">No</option>
                         </select>
                         <label for="selectFloatingLabel" class="placeholder">Featured</label>
-                        @error('featured')
+                        @error('featured')value="{{old('short_description')}}"
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
                     <div class="form-group form-floating-label @error('order') has-error @enderror">
-                        <input type="number" class="form-control input-border-bottom" name="order" min=0 step=1 id="order" required>
+                        <input type="number" class="form-control input-border-bottom" value="{{old('order')}}" name="order" min=0 step=1 id="order" required>
                         <label for="selectFloatingLabel" class="placeholder">Order</label>
                         @error('order')
                         <p class="text-danger">{{ $message }}</p>
@@ -173,5 +189,18 @@
         </form>
     </div>
 </div>
+<script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
+<script>
+    ClassicEditor
+        .create( document.querySelector( '#description' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
+<style>
+.ck-editor__editable_inline {
+    min-height: 400px;
+}
+</style>
 <script src="{{URL::asset('assets/admin/js/product.js')}}"></script>
 @endsection

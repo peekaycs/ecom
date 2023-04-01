@@ -19,7 +19,19 @@
 						</a>
 					</li>
 					<li class="login">
-						<a href="#" onclick="document.getElementById('login').style.display='block'"> Login | Sign Up</a>
+						@if(Auth::check())
+						<form method="POST" action="{{ route('logout') }}">
+											@csrf
+
+											<x-dropdown-link :href="route('logout')"
+													onclick="event.preventDefault();
+																this.closest('form').submit();">
+												{{ __('Log Out') }}
+											</x-dropdown-link>
+										</form>
+						@else
+						<a href="#" onclick="document.getElementById('login').style.display='block'"> Login</a>
+						@endif
 					</li>
 				</ul>
 			</div>
