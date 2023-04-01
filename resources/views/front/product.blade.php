@@ -157,14 +157,14 @@
 					<div class="col-md-5 col-sm-5 col-12">
 						<div class="sort-by">
 							<label>Sort By </label>
-							<select class="form-select-sm rounded-0">
+							<select class="form-select-sm rounded-0 order" >
 								<option>Price Low to High</option>
 								<option>Price High to Low</option>
 							</select>
 						</div>
 					</div>
 				</div>
-				<div class="row g-2" class="add_item">
+				<div class="row g-2" class="add_item" id="add_item">
 					@if (isset($products) && !empty($products))
 						@foreach($products as $product)
 							@if (isset($product) && !empty($product))					
@@ -231,65 +231,53 @@
 				brand = brand+','+data
 			}
 		});
+		brand = brand.replace(/(^,)|(,$)/g, "");
 
 		var subcat = '';
 		$(".subcategory").each(function() {
 			var cls = $(this).hasClass('actv');
 			if(cls == true){
 				var subcategory = $(this).data('subcategory');
-				var subcat = $('.' + subcategory).val();
-				$.ajax({
-					type: 'GET',
-					url: "{{ url('productByBrand') }}",
-					data: { slug : subcat, brand : brand.replace(/(^,)|(,$)/g, "") },
-					success: function(response) { 
-						console.log(response); 
-						var item = '';
-						response = JSON.parse(response);
-						$.each( response, function( key, value ) {
-							console.log(value);
-							//alert( key + ": " + value );
-						});
-
-						/*item += '
-						<div class="col-md-3 col-sm-3 col-6">
-							<div class="category-product-box">
-								<span class="product-offer">-{{ $top_rated->discount ?? '' }}%</span>
-								<a href="javascript:void(0)" class="text-center">
-									<img src="{{ URL::asset($product->image) ?? '' }}" alt="">
-								</a>
-								<div class="categories-name">
-									<a href="javascript:void(0)">{{ $product->category->category ?? ''}}</a>
-									<a href="javascript:void(0)">{{ $product->subcategory->subcategory ?? ''}}</a>
-								</div>
-								<a href="javascript:void(0)">
-									<h5 class="productdetails.php">{{ $product->product ?? ''}} {{ (isset($c->productAttribute[0])) ? ' - '.$product->productAttribute[0]->attribute->name : '' }}</h5>
-								</a>
-								<p class="item-price">  
-									<?php //$price = $product->price - (($product->price * $product->discount) / 100); ?>                                  
-									<ins>{{ $price ?? ''}}</ins>
-									<del>{{ $product->price ?? ''}}</del>
-								</p>
-								<ul class="star-rating">
-									<li class="str-color"><i class="fas fa-star"></i></li>
-									<li class="str-color"><i class="fas fa-star"></i></li>
-									<li class="str-color"><i class="fas fa-star"></i></li>
-									<li class="str-color"><i class="fas fa-star"></i></li>
-									<li class="str-color"><i class="fas fa-star-half-alt"></i></li>
-									<li><small class="px-1">1 review(2)</small></li>
-								</ul>
-								<div class="add-to-cart">
-									<a href="{{ route('product_detail',['slug' => str_replace(' ', '-', $product->slug)]) }}" class="btn-sm btn-outlinr-danger">Add to Cart</a>
-								</div>
-							</div>
-						</div>
-						';*/
-					}
-				});
+				subcat = $('.' + subcategory).val();
 			}
 		});
+		var order = '';
+
+		/*user = { 
+            "brand": brand, 
+            "slug": subcat 
+        }
+        // Options to be given as parameter in fetch for making requests other then GET
+        let options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 
+                    'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(user)
+        }*/
+        // Fake api for making post requests
+        fetch( "{{ url('productByBrand') }}/" +subcat+ '/' +brand)
+		.then(res => res.text())
+		.then(html => {
+			//console.log(html);
+			document.getElementById("add_item").innerHTML = html
+		})
+		//.catch(error => {console.log(error)});
     });
 
+
+
+	/*$.ajax({
+		type: 'GET',
+		url: "{{ url('productByBrand') }}",
+		data: { slug : subcat, brand : brand },
+		success: function(response) { 
+			console.log(response); 
+			//response = JSON.parse(response);
+			//alert( key + ": " + value );
+		}
+	});*/
 </script>
 @endsection	
 

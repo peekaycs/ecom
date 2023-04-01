@@ -357,31 +357,24 @@ class ProductController extends Controller
     public function productByBrand(Request $request)
     {
         $slug = $request->slug;
-        $brand = $request->brand;
-        //die;
-        //DB::enableQueryLog(); // Enable query log
-        $slug = str_replace('-',' ',$slug);
-        //$data = [];
-        //$data['category'] = $category = Category::All();
-        $subcategories = SubCategory::WHERE('slug', $slug)->first();
+        $brand = explode(',',$request->brand);
+        $order = '';//$request->order;
 
-        $products = Product::WHERE('subcategory_id', $subcategories->uuid)
-                                                ->WHERE('brand_id', $brand)
-                                                ->with(['category'])
-                                                ->with(['subcategory'])
-                                                ->with(['attribute'])
-                                                ->orderBy('updated_at','desc')
-                                                ->paginate(env('PER_PAGE'))
-                                                ->withQueryString();
-        //foreach($products as $product){
-           // $data['brands'][$product->brand->brand]  = $product->brand;
-        //}
-        
-        //$data['filter_categories'] = $filter_categories = $subcategories->category;
-        //$data['filter_subcategories'] = $filter_subcategories = SubCategory::WHERE('category_id', $subcategories->category->uuid)->get();
-        //dd(DB::getQueryLog()); // Show results of log
-        //dd($products->currentPage());
-        echo json_encode($products);
+        $slug = str_replace('-',' ',$slug);
+        $data = [];
+
+        $subcategories = SubCategory::WHERE('slug', $slug)->first();
+        if(!empty($brand) && !empty($order)){
+            $data['products'] = Product::WHERE('subcategory_id', $subcategories->uuid)->whereIn('brand_id', $brand)->orderBy('price', $order)->paginate(env('PER_PAGE'))->withQueryString();
+        }elseif(!empty($brand)){
+            $data['products'] = Product::WHERE('subcategory_id', $subcategories->uuid)->whereIn('brand_id', $brand)->orderBy('updated_at', 'DESC')->paginate(env('PER_PAGE'))->withQueryString();
+        }elseif(!empty($order)){
+            $data['products'] = Product::WHERE('subcategory_id', $subcategories->uuid)->orderBy('price', $order)->paginate(env('PER_PAGE'))->withQueryString();
+        }else{
+            $data['products'] = Product::WHERE('subcategory_id', $subcategories->uuid)->orderBy('updated_at', 'DESC')->paginate(env('PER_PAGE'))->withQueryString();
+        }    
+
+        echo view('front.tpl.brand-wise-product', $data);
     }
 
     public function product_detail($slug)
