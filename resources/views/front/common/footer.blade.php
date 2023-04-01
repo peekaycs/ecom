@@ -6,13 +6,11 @@
 			<div class="col-md-2 col-sm-2 col-12">
 				<div class="footer-contant">
 					<h3>About Us</h3>
+					
 					<ul class="col-md-6 col-sm-6 col-6 px-0">
-						<li><a href="">About Us</a></li>
-						<li><a href="contactus.php">Contact us</a></li>
-						<!-- <li><a href="blog.php">Blog</a></li> -->
-						<li><a href="news.php">FAQ</a></li>
-						<li><a href="#">Career</a></li>						
-						<!-- <li><a href="buy-lead.php">Buy leads</a></li> -->
+						@foreach($pages as $page)
+							<li><a href="{{route('front.pages',App\Helpers\Helper::constructSlug($page->slug))}}">{{$page->name}}</a></li>
+						@endforeach
 					</ul>
 				</div>
 			</div>

@@ -5,8 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Front\CartStorageNewController;
-
-
+use App\Http\Controllers\PageController;
 
 Route::get('/', [HomeController::class,'index'])->name('home');
 
@@ -25,4 +24,8 @@ Route::post('/update-cart', [CartStorageNewController::class,'updateCart'])->nam
 
 //signup form
 Route::get('/signup', [HomeController::class,'signup'])->name('front.signup');
+
+// static pages
+
+Route::get('/page/{slug}', [PageController::class,'show'])->name('front.pages');
 

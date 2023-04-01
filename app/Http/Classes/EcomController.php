@@ -15,12 +15,12 @@ class EcomController extends Controller{
     }
 
     public function createView($page, $data = array()) {
-        // echo '<pre>';
-        // print_r($data['main']);die;
+        
         // categories
         $category = Category::All();
         // dynamic pages
         $pages = Page::where('published', true)->get();
+        // dd($pages->take(1));
         // Cart Items
         $userId = 100; // or any string represents user identifier
         Cart::session($userId);
@@ -31,5 +31,7 @@ class EcomController extends Controller{
         $data['pages'] = $pages;
         return view($page, $data);
     }
+
+
 
 }
