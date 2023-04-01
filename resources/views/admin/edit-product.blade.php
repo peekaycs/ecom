@@ -131,7 +131,7 @@
                     </div>
                     <div class="form-group form-floating-label @error('short_description') has-error @enderror">
                         <textarea  class="form-control input-border-bottom" name="description" id="description" required>
-                        {{old('description') ?? $product->productDetail->description}}
+                        {{old('description') ?? $product->productDetail->description ?? ''}}
                         </textarea>
                         <!-- <label for="selectFloatingLabel" class="placeholder">Description</label> -->
                         @error('description')
