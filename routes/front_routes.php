@@ -34,7 +34,7 @@ Route::post('/apply-coupon', [CartStorageNewController::class,'applyCoupon'])->n
 Route::post('/remove-coupon', [CartStorageNewController::class,'removeCoupon'])->name('removeCoupon');
 
 //signup form
-Route::get('/signup', [HomeController::class,'signup'])->name('front.signup');
+Route::get('/signup', [HomeController::class,'signup'])->name('signup');
 
 // static pages
 
