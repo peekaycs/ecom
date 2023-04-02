@@ -40,4 +40,5 @@ Route::get('/signup', [HomeController::class,'signup'])->name('signup');
 // static pages
 
 Route::get('/page/{slug}', [PageController::class,'show'])->name('front.pages');
+Route::get('/disclaimer', [PageController::class,'disclaimer'])->name('front.disclaimer');
 

@@ -92,7 +92,7 @@
 			</div>
 		</div>
 		<hr>
-		<p>Disclaimer - - You are kindly advised to check the genuineness of all companies listed above on your own behalf prior to signing a contract with them. We are in no way responsible for any loss. <a href="disclaimer.php"> Read Complete Disclaimer</a></p>
+		<p>Disclaimer - - You are kindly advised to check the genuineness of all companies listed above on your own behalf prior to signing a contract with them. We are in no way responsible for any loss. <a href="{{route('front.disclaimer')}}"> Read Complete Disclaimer</a></p>
 	</div> 
 </footer>
 
