@@ -153,4 +153,9 @@ class VendorController extends Controller
     {
         //
     }
+
+    public function delete(Request $request, $id){
+        User::find($id)->delete();
+        return redirect()->back()->with('success','Vendor deleted successfully');
+    }
 }

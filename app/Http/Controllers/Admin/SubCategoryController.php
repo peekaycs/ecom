@@ -157,4 +157,9 @@ class SubCategoryController extends Controller
             ]
         );
     }
+
+    public function delete(Request $request, $id){
+        SubCategory::where('uuid',$id)->delete();
+        return redirect()->back()->with('success','Subcategory deleted successfully');
+   }
 }

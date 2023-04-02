@@ -123,7 +123,6 @@ class BannerController extends Controller
         $banner->status = $request->status;
         $isSaved = $banner->save();
         $inputData = $request->all();
-        // echo '<pre>';print_r($inputData);die;
         if($isSaved){
             $titles = $request->title ?? [];
             if($titles){
@@ -206,4 +205,9 @@ class BannerController extends Controller
 
         }
     }
+
+    public function delete(Request $request, $id){
+        Banner::find($id)->delete();
+        return redirect()->back()->with('success','Banner deleted successfully');
+   }
 }

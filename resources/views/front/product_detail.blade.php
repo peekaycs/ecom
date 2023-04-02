@@ -77,7 +77,7 @@
                 <div class="col-md-5 col-sm-5 col-12">
                     <div class="product-name">
                         @if( isset($product) && !empty($product) )
-                        <h4>{{ $product->product ?? '' }} {{ isset($product->productAttribute[0]) ? '('.$product->productAttribute[0]->attribute->name.')' : '' }} </h4>
+                        <h4>{{ $product->product ?? '' }} {{ isset($product->productAttribute[0]->attribute->name) ? '('.$product->productAttribute[0]->attribute->name.')' : '' }} </h4>
                         <h5>{{ $product->short_description ?? '' }}</h5>
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <div class="additional-discount">

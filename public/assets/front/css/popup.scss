@@ -55,6 +55,14 @@
   border: 1px solid #ccc;
   box-sizing: border-box;
 }
+.login-modal input[type=text],input[type=email],input[type=number] input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 0px 0 10px 0px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
 .animate {
   -webkit-animation: animatezoom 0.6s;
   animation: animatezoom 0.6s

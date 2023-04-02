@@ -144,4 +144,9 @@ class CategoryController extends Controller
             ]
         );
     }
+
+    public function delete(Request $request, $id){
+        Category::where('uuid',$id)->delete();
+        return redirect()->back()->with('success','Category deleted successfully');
+   }
 }

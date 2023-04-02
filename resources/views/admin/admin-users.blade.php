@@ -26,7 +26,16 @@
                         <td>{{ $user->full_name }}</td>
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->mobile }}</td>
-                        <td><a href="{{route('edit-admin-user',$user->id) }}" title="view"><i class="far fa-eye"></i></a></td>
+                        <td>
+                            <a href="{{route('edit-admin-user',$user->id) }}" title="view"><i class="far fa-eye"></i></a>
+                            <form class="delete-form" method="post" action="{{route('delete-admin-user',$user->id)}}" onsubmit="return confirm('Do you want to delete?')" >
+                                @csrf
+                                @method('delete')
+                                <input type="hidden" name="id" value="{{$user->id}}" />
+                                <button type="submit" name="delete" class="delete-button" value="" ><i class="fa- fa-trash fa-trash-alt far m-3"></i></button>
+                            </form>
+                        </td>
+
                     </tr>
                     @endforeach
                     

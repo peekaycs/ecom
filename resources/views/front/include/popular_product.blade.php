@@ -36,7 +36,7 @@
                                                 <a href="javascript:void(0)">{{ $best->subcategory->subcategory ?? '' }}</a>
                                             </div>
                                             <a href="javascript:void(0)">
-                                                <h5 class="product-name">{{ $best->product ?? '' }} – {{ (isset($best->productAttribute[0])) ? $best->productAttribute[0]->attribute->name : '' }}</h5>
+                                                <h5 class="product-name">{{ $best->product ?? '' }} – {{ (isset($best->productAttribute[0]->attribute->name)) ? $best->productAttribute[0]->attribute->name : '' }}</h5>
                                             </a>
                                             <p class="item-price">     
                                                 <?php $price = $best->price - (($best->price * $best->discount) / 100); ?>                               
@@ -75,7 +75,7 @@
                                                 <a href="javascript:void(0)">{{ $top_rated->subcategory->subcategory ?? '' }}</a>
                                             </div>
                                             <a href="javascript:void(0)">
-                                                <h5 class="product-name">{{ $top_rated->product ?? '' }} {{ (isset($top_rated->productAttribute[0])) ? ' - '.$top_rated->productAttribute[0]->attribute->name : '' }}</h5>
+                                                <h5 class="product-name">{{ $top_rated->product ?? '' }} {{ (isset($top_rated->productAttribute[0]->attribute->name)) ? ' - '.$top_rated->productAttribute[0]->attribute->name : '' }}</h5>
                                             </a>
                                             <p class="item-price">     
                                                 <?php $price = $top_rated->price - (($top_rated->price * $top_rated->discount) / 100); ?>                               
@@ -114,7 +114,7 @@
                                                 <a href="javascript:void(0)">{{ $featured->subcategory->subcategory ?? '' }}</a>
                                             </div>
                                             <a href="javascript:void(0)">
-                                                <h5 class="product-name">{{ $featured->product ?? '' }} – {{ (isset($featured->productAttribute[0])) ? $featured->productAttribute[0]->attribute->name : '' }}</h5>
+                                                <h5 class="product-name">{{ $featured->product ?? '' }} – {{ (isset($featured->productAttribute[0]->attribute->name)) ? $featured->productAttribute[0]->attribute->name : '' }}</h5>
                                             </a>
                                             <p class="item-price">     
                                                 <?php $price = $featured->price - (($featured->price * $featured->discount) / 100); ?>                               
