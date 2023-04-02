@@ -127,7 +127,7 @@
 	    </div>
 
     	<div class="container" style="background-color:#f1f1f1">
-      		<span class="psw"><a href="{{route('front.signup')}}">Signup</a></span>
+      		<span class="psw"><a href="{{route('signup')}}">Signup</a></span>
     	</div>
   	</form>
 </div>
