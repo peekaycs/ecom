@@ -9,6 +9,7 @@ use App\Http\Controllers\PageController;
 
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CouponController;
+use App\Http\Controllers\AddressController;
 
 Route::get('/', [HomeController::class,'index'])->name('home');
 
