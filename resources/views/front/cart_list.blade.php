@@ -128,7 +128,11 @@
                     <div class="alert alert-success">
                         <span>Total Savings: <strong>{{ isset($total_discount) ? '₹'. $total_discount : '0'}}</strong></span>
                         <!-- <button type="button" class="btn btn-sm btn-success float-end">CHECKOUT</button> -->
-                        <a href="checkout.php" type="button" class="btn btn-sm btn-success float-end">CHECKOUT</a>
+                        @if(Auth::check())
+                        <a href="{{route('checkout')}}" type="button" class="btn btn-sm btn-success float-end">CHECKOUT</a>
+                        @else
+                        <a href="#" onclick="document.getElementById('login').style.display='block'" type="button" class="btn btn-sm btn-success float-end">CHECKOUT</a>
+                        @endif
                     </div>
                 </div>                
             </div> 
