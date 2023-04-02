@@ -47,8 +47,8 @@
 			<div class="row">
 				<div class="col-md-3 col-sm-6 col-12">
 					<a class="logo zoomimg" id="flip" href="{{ route('home') }}">
-						<!-- <img src="images/rims-logo.png" alt="Logo"> -->
-						<h3>LOGO</h3>
+						<img src="{{URL::asset('assets/front/images/logo.png')}}" alt="Logo">
+						<h3></h3>
 					</a>
 				</div>	
 				<div class="col-md-9 col-sm-12 col-12">
@@ -188,7 +188,7 @@
 				<div class="cart">
 					<a href="{{route('cart_list')}}">
 						<img src="{{URL::asset('assets/front/images/cart.png')}}" alt="">
-						<span class="badge bg-secondary">{{ $count ?? '' }}</span>
+						<span class="badge bg-success">{{ $count ?? '' }}</span>
 					</a>
 				</div>
 				<div class="head-search">
