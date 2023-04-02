@@ -122,7 +122,7 @@
 	      		</div>
 	      	</div>
 	      	<div class="col-md-12 col-sm-12 col-xs-12">
-	      		<label><input type="checkbox" checked="checked" name="remember"> Remember me</label>
+	      		<!-- <label><input type="checkbox" checked="checked" name="remember"> Remember me</label> -->
 	      	</div>
 	    </div>
 

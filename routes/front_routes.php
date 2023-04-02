@@ -6,6 +6,8 @@ use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Front\CartStorageNewController;
 use App\Http\Controllers\PageController;
+
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CouponController;
 
 Route::get('/', [HomeController::class,'index'])->name('home');
@@ -25,6 +27,8 @@ Route::get('/cart-list', [CartStorageNewController::class,'cart_list'])->name('c
 Route::post('/add-to-cart', [CartStorageNewController::class,'AddToCart'])->name('AddToCart');
 Route::post('/remove-from-cart', [CartStorageNewController::class,'RemoveFromCart'])->name('RemoveFromCart');
 Route::post('/update-cart', [CartStorageNewController::class,'updateCart'])->name('updateCart');
+Route::get('/checkout', [CheckoutController::class,'index'])->name('checkout');
+Route::get('/address', [AddressController::class,'index'])->name('address');
 
 Route::post('/apply-coupon', [CartStorageNewController::class,'applyCoupon'])->name('applyCoupon');
 Route::post('/remove-coupon', [CartStorageNewController::class,'removeCoupon'])->name('removeCoupon');
