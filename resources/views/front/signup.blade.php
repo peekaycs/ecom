@@ -5,6 +5,7 @@
         <div class="row"> 
             <div class="login">  
                 <form class="login-content signup-content animate" action="{{route('register')}}" method="post">
+                    <input type="hidden" name="user_type" value="1">
                     <div class="signup-heading">Sign-Up</div>
                     @csrf
                     <div class="login-container">

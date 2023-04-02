@@ -414,8 +414,15 @@ class ProductController extends Controller
         $data['product'] = Product::WHERE('slug',$slug)->first();
         $data['popular_health'] = Product::All();
 
-        $userId = 100; // or any string represents user identifier
-        Cart::session($userId);
+        //$userId = 100; // or any string represents user identifier
+        if (Auth::check()) {
+            $userId = Auth::user()->uuid;
+            Cart::session($userId);
+            $data['cart_list'] = $cartCollection = Cart::getContent();
+            // count carts contents
+            $data['count'] = $cartCollection->count();
+        }
+        //Cart::session($userId);
         $cartCollection = Cart::getContent();
         // count carts contents
         $data['count'] = $cartCollection->count();
