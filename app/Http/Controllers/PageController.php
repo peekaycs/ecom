@@ -133,4 +133,10 @@ class PageController extends EcomController
         Page::find($id)->delete();
         return redirect()->back()->with('success','Page deleted successfully');
     }
+
+    public function disclaimer(Request $request){
+        return $this->createView('front.privacy-policy');
+    }
+
+    
 }
