@@ -55,42 +55,12 @@
 								@foreach($brands as $brand)
 									@if (isset($brand) && !empty($brand))					
 									<label class="chk">
-										<input type="checkbox" name="brand[]" class="brand {{ $brand->id ?? ''}}" data-brand="{{ $brand->id ?? ''}}">
+										<input type="checkbox" name="brand[]" class="brand {{ $brand->id ? 'brand_'.$brand->id : '' }}" data-brand="{{ $brand->id ?? ''}}" onclick="getProduct( this,'brand', '{{ $brand->id }}')">
 										<span class="checkmark"></span>{{ $brand->brand ?? ''}}
 									</label>
 									@endif
 								@endforeach
 							@endif		
-							<!--<label class="chk">
-							  	<input type="checkbox">
-							  	<span class="checkmark"></span>
-							  	Fitness & Wellness
-							</label>
-							<label class="chk">
-							  	<input type="checkbox">
-							  	<span class="checkmark"></span>
-							  	Skin care
-							</label>
-							<label class="chk">
-							  	<input type="checkbox">
-							  	<span class="checkmark"></span>
-							  	Lip Care
-							</label>
-							<label class="chk">
-							  	<input type="checkbox">
-							  	<span class="checkmark"></span>
-							  	Sexual wellness
-							</label>
-							<label class="chk">
-							  	<input type="checkbox">
-							  	<span class="checkmark"></span>
-							  	Women's Care
-							</label>
-							<label class="chk">
-							  	<input type="checkbox">
-							  	<span class="checkmark"></span>
-							  	Baby care
-							</label>-->
 						</div>
 					</div>
 					<!-- <div class="cat-box">						
@@ -157,9 +127,10 @@
 					<div class="col-md-5 col-sm-5 col-12">
 						<div class="sort-by">
 							<label>Sort By </label>
-							<select class="form-select-sm rounded-0 order" >
-								<option>Price Low to High</option>
-								<option>Price High to Low</option>
+							<select class="form-select-sm rounded-0 order" onChange="getProduct( this,'order' )">
+								<option value = "">--Select Option--</option>
+								<option value = "ASC">Price Low to High</option>
+								<option value = "DESC">Price High to Low</option>
 							</select>
 						</div>
 					</div>
@@ -183,16 +154,16 @@
 									</a>
 									<p class="item-price">  
 										<?php $price = $product->price - (($product->price * $product->discount) / 100); ?>                                  
-										<ins>{{ $price ?? ''}}</ins>
+										<ins>Rs. {{ $price ?? ''}}</ins>
 										<del>{{ $product->price ?? ''}}</del>
 									</p>
-									<ul class="star-rating">
+									<!--<ul class="star-rating">
 										<li class="str-color"><i class="fas fa-star"></i></li>
 										<li class="str-color"><i class="fas fa-star"></i></li>
 										<li class="str-color"><i class="fas fa-star"></i></li>
 										<li class="str-color"><i class="fas fa-star"></i></li>
 										<li class="str-color"><i class="fas fa-star-half-alt"></i></li>
-										<li><small class="px-1">1 review(2)</small></li>
+										<li><small class="px-1">1 review(2)</small></li>-->
 									</ul>
 									<div class="add-to-cart">
 										<a href="{{ route('product_detail',['slug' => str_replace(' ', '-', $product->slug)]) }}" class="btn-sm btn-outlinr-danger">Add to Cart</a>
@@ -214,16 +185,21 @@
 
 @section('script')	
 <script>
-
-    $('.brand').click(function(e){ 
-		var brand = '';
-		var attr = $(this).attr('checked');
-		if (typeof attr !== 'undefined' && attr !== false) {
-			$(this).removeAttr('checked')
-		}else{
-			$(this).attr('checked','checked')
+	function getProduct(thiss, label, idd="ASC"){
+    	//$('.brand').click(function(e){ 
+		var brand = order = '';	
+		if(label == 'brand'){	
+			var attr = $(thiss).attr('checked');
+			if (typeof attr !== 'undefined' && attr !== false) {
+				$(thiss).removeAttr('checked')
+			}else{
+				$(thiss).attr('checked','checked')
+			}
 		}
-		
+		if(label == 'order'){	
+			order = $(thiss).val()
+		}	
+
 		$(".brand").each(function() {
 			var attr = $(this).attr('checked');
 			if (typeof attr !== 'undefined' && attr !== false) {
@@ -232,7 +208,9 @@
 			}
 		});
 		brand = brand.replace(/(^,)|(,$)/g, "");
-
+		if(brand != ''){
+			brand = brand +'/';
+		}
 		var subcat = '';
 		$(".subcategory").each(function() {
 			var cls = $(this).hasClass('actv');
@@ -241,7 +219,6 @@
 				subcat = $('.' + subcategory).val();
 			}
 		});
-		var order = '';
 
 		/*user = { 
             "brand": brand, 
@@ -257,14 +234,14 @@
             body: JSON.stringify(user)
         }*/
         // Fake api for making post requests
-        fetch( "{{ url('productByBrand') }}/" +subcat+ '/' +brand)
+        fetch( "{{ url('productByBrand') }}/" +subcat+ '/' + brand + order) 
 		.then(res => res.text())
 		.then(html => {
 			//console.log(html);
 			document.getElementById("add_item").innerHTML = html
 		})
 		//.catch(error => {console.log(error)});
-    });
+    }
 
 
 

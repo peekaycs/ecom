@@ -12,9 +12,14 @@
                         <?php $total_discount = $total_price = $shipping = 0;?>
                         @if( isset($cart_list) && !empty($cart_list) )
                             @foreach($cart_list as $item_id => $item)
+                            <?php 
+                            $ids = explode('_', $item_id);
+                            $product_id = $ids[0];
+                            $attribute_id = $ids[1] ?? '';
+                            ?>
                             <div class="cart-price">
                                 <figure>
-                                    <img src="{{ URL::asset($item->image) ?? '' }}" alt="">
+                                    <img src="{{ URL::asset($product[$product_id]['image']) ?? '' }}" alt="">
                                 </figure>
                                 <div class="cart-data">
                                     <p>{{ $item->name ?? '' }}</p>
@@ -91,6 +96,24 @@
                         <p>
                             {{ 'Shipping Charges' }} 
                             <span>{{ '+₹'.$shipping ?? '+₹0' }}</span>
+                        </p>
+                        <hr>
+                        @if( isset($conditions) && !empty($conditions) )
+                            @foreach($conditions as $key => $condition)
+                            <p>
+                                <strong>{{ $condition->getType() != null ? ucwords($condition->getType()) . ' Discount' : '' }} 
+                                    <small style="color:red"><a href="javascript:void(0)" onclick="removeCoupon(this, '{{ $condition->getName() ?? ''}}')">Remove</a></small>
+                                </strong>
+                                <span><strong>Rs {{ $condition->getValue() ?? ''}}</strong></span>
+                            </p>
+                            @endforeach
+                        @endif    
+                        <p>
+                            <strong>
+                                <input type="text" name="coupon" class="coupon" id="coupon" placeholder="Coupon Code eg. 12345">
+                                <strong class="btn btn-success" onclick="applyCoupon(this)" data-apply="1">Apply</strong>
+                            </strong>
+                            <span><strong></strong></span>
                         </p>
                         <hr>
                         <p>
@@ -341,6 +364,54 @@
             }
         });
     });
+
+    function applyCoupon(thiss){
+        var code = $(".coupon").val();
+        if(code != '' && code != 'undefined' && code != null){
+            alert(code);
+            $.ajax({
+                type: 'POST',
+                url: "{{ url('apply-coupon') }}",
+                data: { _token: "{{ csrf_token() }}", code : code },
+                success: function(response) { 
+                    console.log(response);
+                    if(response == 1){
+                        alert("Coupon Applied."); 
+                        //$(".couponPara").show();
+                        location.reload();
+                    }else if(response == 2){
+                        alert("You can not apply two coupon.");
+                    }else{
+                        alert("Invalid Coupon Code."); 
+                    }
+                }
+            });
+        }else{
+            alert("Invalid Coupon Code.") 
+        }    
+    }
+    function removeCoupon(thiss, name){
+        if(name != '' && name != 'undefined' && name != null){
+            $.ajax({
+                type: 'POST',
+                url: "{{ url('remove-coupon') }}",
+                data: { _token: "{{ csrf_token() }}", couponName : name },
+                success: function(response) { 
+                    console.log(response);
+                    if(response == 1){
+                        alert("Coupon Removed."); 
+                        //$(".couponPara").hide();
+                        location.reload();
+                    }else{
+                        alert(123);
+                        alert("Invalid Coupon Code.");
+                    }
+                }
+            });
+        }else{
+            alert("Invalid Coupon Code.") 
+        }    
+    }
 
 </script>
 @endsection	

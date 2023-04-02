@@ -8,9 +8,11 @@
 					<h3>About Us</h3>
 					@if(!empty($pages))
 					<ul class="col-md-6 col-sm-6 col-6 px-0">
-						@foreach($pages as $page)
-							<li><a href="{{route('front.pages',App\Helpers\Helper::constructSlug($page->slug))}}">{{$page->name}}</a></li>
-						@endforeach
+						@if(isset($pages) && !empty($pages))
+							@foreach($pages as $page)
+								<li><a href="{{ route('front.pages', App\Helpers\Helper::constructSlug($page->slug)) }}">{{$page->name}}</a></li>
+							@endforeach
+						@endif
 					</ul>
 					@endif
 				</div>
