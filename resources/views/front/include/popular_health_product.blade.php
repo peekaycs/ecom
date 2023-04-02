@@ -23,7 +23,7 @@
                                 <a href="javascript:void(0)">
                                     <h5 class="product-name">
                                         {{ $popular->product ?? '' }} 
-                                        {{ (isset($popular->productAttribute[0])) ? ' - '.$popular->productAttribute[0]->attribute->name : '' }}
+                                        {{ (isset($popular->productAttribute[0]->attribute->name)) ? ' - '.$popular->productAttribute[0]->attribute->name : '' }}
                                     </h5>
                                 </a>
                                 <?php //dd($popular->productAttribute[0]->attribute->name);?> 

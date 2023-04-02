@@ -79,4 +79,10 @@ class AttributeController extends Controller
             $saved = $attribute->save();
        return $saved ? redirect(route('edit-attribute',$id))->with('success', 'Attribute updated successfully') : redirect(route('edit-attribute',$id))->with('error', 'Can\'t update attribute'); 
     }
+
+    public function delete(Request $request, $id){
+        Attribute::find($id)->delete();
+        return redirect()->back()->with('success','Attribute deleted successfully');
+
+   }
 }

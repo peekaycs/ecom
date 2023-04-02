@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\AttributeGroup;
+use App\Models\Attribute;
+use App\Models\ProductAttribute;
+use App\Models\Product;
 
 class AttributeGroupController extends Controller
 {
@@ -54,5 +57,11 @@ class AttributeGroupController extends Controller
         return redirect(route('edit-attribute-group',$id))->with('success','Attribute group updated successfully');
        }
        return redirect(route('edit-attribute-group',$id))->with('error','Can\'t create attribute group');
+    }
+
+    public function delete(Request $request, $id){
+         AttributeGroup::find($id)->delete();
+         return redirect()->back()->with('success','Attribute group deleted successfully');
+
     }
 }

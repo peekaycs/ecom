@@ -6,7 +6,7 @@
 			<div class="col-md-2 col-sm-2 col-12">
 				<div class="footer-contant">
 					<h3>About Us</h3>
-					
+					@if(!empty($pages))
 					<ul class="col-md-6 col-sm-6 col-6 px-0">
 						@if(isset($pages) && !empty($pages))
 							@foreach($pages as $page)
@@ -14,6 +14,7 @@
 							@endforeach
 						@endif
 					</ul>
+					@endif
 				</div>
 			</div>
 			<div class="col-md-3 col-sm-3 col-12">

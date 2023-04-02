@@ -24,7 +24,15 @@
                         <td>{{$loop->iteration}}</td>
                         <td>{{ $attribute->name }}</td>
                         <td>{{ $attribute->attributeGroup->name ?? '' }}</td>
-                        <td><a href="{{route('edit-attribute',$attribute->id) }}" title="view"><i class="far fa-eye"></i></a></td>
+                        <td>
+                            <a href="{{route('edit-attribute',$attribute->id) }}" title="view"><i class="far fa-eye"></i></a>
+                            <form class="delete-form" method="post" action="{{route('delete-attribute',$attribute->id)}}" onsubmit="return confirm('Do you want to delete?')" >
+                                @csrf
+                                @method('delete')
+                                <input type="hidden" name="id" value="{{$attribute->id}}" />
+                                <button type="submit" name="delete" class="delete-button" value="" ><i class="fa- fa-trash fa-trash-alt far m-3"></i></button>
+                            </form>
+                        </td>
                     </tr>
                     @endforeach
                     

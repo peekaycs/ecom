@@ -128,4 +128,9 @@ class PageController extends EcomController
     {
         //
     }
+
+    public function delete(Request $request, $id){
+        Page::find($id)->delete();
+        return redirect()->back()->with('success','Page deleted successfully');
+    }
 }
