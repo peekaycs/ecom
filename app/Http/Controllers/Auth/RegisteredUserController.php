@@ -59,7 +59,12 @@ class RegisteredUserController extends Controller
             'user_id' => $user_id,
         ]);
         Auth::login($user);
-        return redirect(url()->previous());
+        if( isset( $request->user_type ) && !empty( $request->user_type )){
+            return redirect(url()->previous()->previous());
+        }else{
+            return redirect(url()->previous());
+        }
+        
 
         // return redirect(RouteServiceProvider::HOME);
     }

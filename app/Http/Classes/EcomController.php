@@ -3,6 +3,7 @@
 namespace App\Http\Classes;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 use App\Models\Page;
 use App\Models\Category;
@@ -22,11 +23,15 @@ class EcomController extends Controller{
         $pages = Page::where('published', true)->get();
         // dd($pages->take(1));
         // Cart Items
-        $userId = 100; // or any string represents user identifier
-        Cart::session($userId);
-        $cartCollection = Cart::getContent();
-        // count carts contents
-        $data['count'] = $cartCollection->count();
+        //$userId = 100; // or any string represents user identifier
+        if (Auth::check()) {
+            $userId = Auth::user()->uuid;
+            Cart::session($userId);
+            $cartCollection = Cart::getContent();
+            // count carts contents
+            $data['count'] = $cartCollection->count();
+        }
+        
         $data['category'] = $category;
         $data['pages'] = $pages;
         return view($page, $data);
