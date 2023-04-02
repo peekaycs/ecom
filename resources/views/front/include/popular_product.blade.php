@@ -43,14 +43,14 @@
                                                 <ins>{{ $price ?? '' }}</ins>
                                                 <del>{{ $best->price ?? '' }}</del>
                                             </p>
-                                            <ul class="star-rating">
+                                            <!-- <ul class="star-rating">
                                                 <li class="str-color"><i class="fas fa-star"></i></li>
                                                 <li class="str-color"><i class="fas fa-star"></i></li>
                                                 <li class="str-color"><i class="fas fa-star"></i></li>
                                                 <li class="str-color"><i class="fas fa-star"></i></li>
                                                 <li class="str-color"><i class="fas fa-star-half-alt"></i></li>
                                                 <li><small class="px-1">1 review(2)</small></li>
-                                            </ul>
+                                            </ul> -->
                                             <div class="add-to-cart">
                                                 <a href="{{ route('product_detail',['slug' => str_replace(' ', '-', $best->slug)]) }}" class="btn-sm btn-outlinr-danger">Add to Cart</a>
                                             </div>
@@ -82,14 +82,14 @@
                                                 <ins>{{ $price ?? '' }}</ins>
                                                 <del>{{ $top_rated->price ?? '' }}</del>
                                             </p>
-                                            <ul class="star-rating">
+                                            <!-- <ul class="star-rating">
                                                 <li class="str-color"><i class="fas fa-star"></i></li>
                                                 <li class="str-color"><i class="fas fa-star"></i></li>
                                                 <li class="str-color"><i class="fas fa-star"></i></li>
                                                 <li class="str-color"><i class="fas fa-star"></i></li>
                                                 <li class="str-color"><i class="fas fa-star-half-alt"></i></li>
                                                 <li><small class="px-1">1 review(2)</small></li>
-                                            </ul>
+                                            </ul> -->
                                             <div class="add-to-cart">
                                                 <a href="{{ route('product_detail',['slug' => str_replace(' ', '-', $top_rated->slug)]) }}" class="btn-sm btn-outlinr-danger">Add to Cart</a>
                                             </div>
@@ -121,14 +121,14 @@
                                                 <ins>{{ $price ?? '' }}</ins>
                                                 <del>{{ $featured->price ?? '' }}</del>
                                             </p>
-                                            <ul class="star-rating">
+                                            <!-- <ul class="star-rating">
                                                 <li class="str-color"><i class="fas fa-star"></i></li>
                                                 <li class="str-color"><i class="fas fa-star"></i></li>
                                                 <li class="str-color"><i class="fas fa-star"></i></li>
                                                 <li class="str-color"><i class="fas fa-star"></i></li>
                                                 <li class="str-color"><i class="fas fa-star-half-alt"></i></li>
                                                 <li><small class="px-1">1 review(2)</small></li>
-                                            </ul>
+                                            </ul> -->
                                             <div class="add-to-cart">
                                                 <a href="{{ route('product_detail',['slug' => str_replace(' ', '-', $featured->slug)]) }}" class="btn-sm btn-outlinr-danger">Add to Cart</a>
                                             </div>
