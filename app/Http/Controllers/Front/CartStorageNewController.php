@@ -20,13 +20,13 @@ use DB;
 use App\Models\Product;
 use App\Models\Banner;
 use App\Models\Category;
-
+use App\Models\ProductAttribute;
 class CartStorageNewController extends EcomController
 {
     public function cart_list()
     {
         //
-        $data = [];
+        $data = $product_ids = $attribute_ids = [];
         
         $data['popular_health'] = Product::All();
         
@@ -35,13 +35,34 @@ class CartStorageNewController extends EcomController
         Cart::session($userId);
 
         $data['cart_list'] = $cartCollection = Cart::getContent();
+        if( isset($cartCollection) && !empty($cartCollection) ){
+            foreach($cartCollection as $item_id => $item){
+                $ids = explode('_', $item->id);
+                $product_ids[$item->id] = $ids[0];
+                $attribute_ids[$item->id] = $ids[1] ?? '';
+            }
+        }
+        $products = Product::whereIn('id', $product_ids)->get()->toArray();
+        foreach($products as $k => $val){
+            $product[$val['id']] = $val;
+        }
+        $data['product'] = $product;
+
+        $attributes = ProductAttribute::whereIn('attribute_id', $attribute_ids)->get()->toArray();
+        foreach($attributes as $k => $val){
+            $attribute[$val['product_id']] = $val;
+        }
+        $data['attribute'] = $attribute;
+        //dd($data['attribute']);    
+
         // $data['count'] = $cartCollection->count();   //$data['count'] = getTotalQuantity();
         $data['subTotal'] = Cart::getSubTotal();
         $data['total'] = Cart::getTotal();
         //dd($cartCollection);
-        /*
+        
         $data['conditions'] = $conditions = Cart::getConditions();
-        foreach($conditions as $condition){
+        //dd($conditions);
+        /*foreach($conditions as $condition){
             $data['target'] = $condition->getTarget(); // the target of which the condition was applied
             $data['name'] = $condition->getName(); // the name of the condition
             $data['type'] = $condition->getType(); // the type
@@ -89,7 +110,7 @@ class CartStorageNewController extends EcomController
         $discount = new \Darryldecode\Cart\CartCondition(array(
             'name' => "SALE $request->discount %",
             'type' => "price",
-            'value' => "-$request->discount"
+            'value' => "-$request->discount%"
         ));
         // shipping on item wise
         $name = "Shipping ₹$request->shipping";
@@ -97,7 +118,7 @@ class CartStorageNewController extends EcomController
         $shipping = new \Darryldecode\Cart\CartCondition(array(
             'name' => $name,
             'type' => "shipping",
-            'value' => "-$request->shipping"
+            'value' => "+$request->shipping"
         ));
 
         Cart::add(
@@ -139,5 +160,76 @@ class CartStorageNewController extends EcomController
                 'quantity' => $qty, // so if the current product has a quantity of 4, it will subtract 1 and will result to 3
             )
         );
+    }
+
+    public function applyCoupon(Request $request)
+    {
+        //
+        $flag = true;
+        if($request->code == 12345){
+            $value = -20;
+        }elseif($request->code == 12345678){
+            $value = -10;
+        }else{
+            $flag = false;
+        }
+        $res = 0;
+        if($flag == true){
+            //$user_id = Auth::user()->uuid;
+            $userId = 100; // or any string represents user identifier
+            Cart::session($userId);
+            
+            $conditions = Cart::getConditions();
+            $data['type'] = [];
+            if(isset($conditions) && !empty($conditions)){
+                foreach($conditions as $condition){
+                    $data['type'][$condition->getType()] = $condition->getType(); // the type
+                }
+            }    
+            if( !in_array('coupon', $data['type']) ){
+                $condition = new \Darryldecode\Cart\CartCondition(array(
+                    'name' => 'COUPON CODE',
+                    'type' => 'coupon',
+                    'target' => 'subtotal', // this condition will be applied to cart's subtotal when getSubTotal() is called.
+                    'value' => $value,
+                ));
+                Cart::condition($condition);
+                $res = 1;
+            }else{
+                $res = 2;
+            }
+        }  
+        echo $res;  
+    }
+
+    public function removeCoupon(Request $request)
+    {
+        //
+        $flag = true;
+        /*if($request->couponName == 12345){
+            $value = -20;
+        }elseif($request->couponName == 12345678){
+            $value = -10;
+        }else{
+            $flag = false;
+        }*/
+        $res = 0;
+        $couponName = $request->couponName;
+        if($flag == true){
+            //$user_id = Auth::user()->uuid;
+            $userId = 100; // or any string represents user identifier
+            Cart::session($userId);
+            
+            $conditions = Cart::getConditions();
+            foreach($conditions as $condition){
+                $data['type'][$condition->getType()] = $condition->getType(); // the type
+            }
+           
+            if( in_array('coupon', $data['type']) ){
+                Cart::removeCartCondition($couponName);
+                $res = 1;
+            }
+        }  
+        echo $res;  
     }
 }

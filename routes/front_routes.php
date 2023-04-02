@@ -6,7 +6,9 @@ use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Front\CartStorageNewController;
 use App\Http\Controllers\PageController;
+
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\CouponController;
 
 Route::get('/', [HomeController::class,'index'])->name('home');
 
@@ -15,6 +17,9 @@ Route::get('/product/{slug}', [ProductController::class,'productByCategory'])->n
 Route::get('/product/{slug}', [ProductController::class,'productBySubCategory'])->name('productBySubCategory');
 Route::get('/productByBrand/{slug}/', [ProductController::class,'productByBrand'])->name('productByBrand');
 Route::get('/productByBrand/{slug}/{brand}', [ProductController::class,'productByBrand'])->name('productByBrand');
+Route::get('/productByBrand/{slug}/{brand}/{order}', [ProductController::class,'productByBrand'])->name('productByBrand');
+
+
 Route::get('/product-detail/{slug}', [ProductController::class,'productDetail'])->name('product_detail');
 
 //cart
@@ -24,6 +29,9 @@ Route::post('/remove-from-cart', [CartStorageNewController::class,'RemoveFromCar
 Route::post('/update-cart', [CartStorageNewController::class,'updateCart'])->name('updateCart');
 Route::get('/checkout', [CheckoutController::class,'index'])->name('checkout');
 Route::get('/address', [AddressController::class,'index'])->name('address');
+
+Route::post('/apply-coupon', [CartStorageNewController::class,'applyCoupon'])->name('applyCoupon');
+Route::post('/remove-coupon', [CartStorageNewController::class,'removeCoupon'])->name('removeCoupon');
 
 //signup form
 Route::get('/signup', [HomeController::class,'signup'])->name('front.signup');
