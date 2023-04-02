@@ -26,9 +26,9 @@ class CartStorageNewController extends EcomController
     public function cart_list()
     {
         //
-        $data = $product_ids = $attribute_ids = [];
+        $product_ids = $attribute_ids = [];
         
-        $data['popular_health'] = Product::All();
+        $data['popular_health'] = Product::orderby('order','ASC')->get();
         
         //$user_id = Auth::user()->uuid;
         //$userId = 100; // or any string represents user identifier

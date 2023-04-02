@@ -23,7 +23,7 @@ class HomeController extends EcomController
     {
         $data = [];
         
-        $data['best_selling'] = Product::All();
+        $data['best_selling'] = Product::orderBy('order','ASC')->get();
         $banners = Banner::where('status', '1')->with('bannerImages')->get();
         foreach($banners as $banner){
             $data[$banner->type] = $banner;
