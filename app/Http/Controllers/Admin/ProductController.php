@@ -376,13 +376,23 @@ class ProductController extends Controller
     public function productByBrand(Request $request)
     {
         $slug = $request->slug;
-        $brand = explode(',',$request->brand);
-        $order = '';//$request->order;
-
         $slug = Helper::destructSlug($slug);
-        $data = [];
 
+        $brand = $order = '';
+        if( isset( $request->brand ) && !empty( $request->brand ) ){
+            if( $request->brand == 'ASC' || $request->brand == 'DESC' ){
+                $order = $request->brand;
+            }else{
+                $brand = explode( ',', $request->brand );
+            }
+         }
+            
+        if( isset( $request->order ) && !empty( $request->order ) ){
+            $order = $request->order;
+        }
+        $data = [];
         $subcategories = SubCategory::WHERE('slug', $slug)->first();
+
         if(!empty($brand) && !empty($order)){
             $data['products'] = Product::WHERE('subcategory_id', $subcategories->uuid)->whereIn('brand_id', $brand)->orderBy('price', $order)->paginate(env('PER_PAGE'))->withQueryString();
         }elseif(!empty($brand)){
@@ -392,7 +402,6 @@ class ProductController extends Controller
         }else{
             $data['products'] = Product::WHERE('subcategory_id', $subcategories->uuid)->orderBy('updated_at', 'DESC')->paginate(env('PER_PAGE'))->withQueryString();
         }    
-
         echo view('front.tpl.brand-wise-product', $data);
     }
 
