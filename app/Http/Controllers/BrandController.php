@@ -106,4 +106,10 @@ class BrandController extends Controller
     {
         //
     }
+
+    public function delete(Request $request, $id){
+        Brand::find($id)->delete();
+        return redirect()->back()->with('success','Attribute group deleted successfully');
+
+   }
 }

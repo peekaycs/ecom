@@ -6,3 +6,14 @@
 #custom-logo{
     width: 95px;
 }
+
+.delete-form{
+    display: inline-block;
+}
+
+.delete-button{
+    display: inline;
+    border: none !important;
+    background: none !important;
+    cursor: pointer;
+}

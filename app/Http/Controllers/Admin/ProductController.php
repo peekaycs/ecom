@@ -415,4 +415,9 @@ class ProductController extends Controller
         return view('front.product_detail', $data);
     }
 
+    public function delete(Request $request, $id){
+        Product::find($id)->delete();
+        return redirect()->back()->with('success','Product deleted successfully');
+   }
+
 }

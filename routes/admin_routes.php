@@ -34,18 +34,21 @@ Route::group(['prefix'=>'admin','middleware' => ['auth','isAdmin']], function(){
     Route::post('/attribute-groups/store', [AttributeGroupController::class,'store'])->name('store-attribute-group');
     Route::get('/attribute-groups/edit/{id}', [AttributeGroupController::class,'edit'])->name('edit-attribute-group');
     Route::put('/attribute-groups/update/{id}', [AttributeGroupController::class,'update'])->name('update-attribute-group');
+    Route::delete('/attribute-groups/delete/{id}', [AttributeGroupController::class,'delete'])->name('delete-attribute-group');
     // attributes
     Route::get('/attributes', [AttributeController::class,'index'])->name('attributes');
     Route::get('/attributes/create', [AttributeController::class,'create'])->name('create-attribute');
     Route::post('/attributes/store', [AttributeController::class,'store'])->name('store-attribute');
     Route::get('/attributes/edit/{id}', [AttributeController::class,'edit'])->name('edit-attribute');
     Route::put('/attributes/update/{id}', [AttributeController::class,'update'])->name('update-attribute');
+    Route::delete('/attribute/delete/{id}', [AttributeController::class,'delete'])->name('delete-attribute');
     // category 
     Route::get('/categories', [CategoryController::class,'index'])->name('categories');
     Route::get('/categories/create', [CategoryController::class,'create'])->name('create-category');
     Route::post('/categories/store', [CategoryController::class,'store'])->name('store-category');
     Route::get('/categories/edit/{id}', [CategoryController::class,'edit'])->name('edit-category');
     Route::put('/categories/update/{id}', [CategoryController::class,'update'])->name('update-category');
+    Route::delete('/categories/delete/{id}', [CategoryController::class,'delete'])->name('delete-category');
     // subcategory
     Route::get('/subcategories', [SubCategoryController::class,'index'])->name('subcategories');
     Route::get('/subcategories/create', [SubCategoryController::class,'create'])->name('create-subcategory');
@@ -53,12 +56,14 @@ Route::group(['prefix'=>'admin','middleware' => ['auth','isAdmin']], function(){
     Route::get('/subcategories/edit/{id}', [SubCategoryController::class,'edit'])->name('edit-subcategory');
     Route::put('/subcategories/update/{id}', [SubCategoryController::class,'update'])->name('update-subcategory');
     Route::get('/subcategory/get-options/{id}', [SubCategoryController::class,'getSubcategoryOption'])->name('get-subcategory-option');
+    Route::delete('/subcategory/delete/{id}', [SubCategoryController::class,'delete'])->name('delete-subcategory');
     // Product
     Route::get('/products', [ProductController::class,'index'])->name('products');
     Route::get('/products/create', [ProductController::class,'create'])->name('create-product');
     Route::post('/products/store', [ProductController::class,'store'])->name('store-product');
     Route::get('/products/edit/{id}', [ProductController::class,'edit'])->name('edit-product');
     Route::put('/products/update/{id}', [ProductController::class,'update'])->name('update-product');
+    Route::delete('/products/delete/{id}', [ProductController::class,'delete'])->name('delete-product');
 
     // Brnads 
 
@@ -67,6 +72,7 @@ Route::group(['prefix'=>'admin','middleware' => ['auth','isAdmin']], function(){
     Route::post('/brands/store',[BrandController::class,'store'])->name('store-brand');
     Route::get('/brands/edit/{id}',[BrandController::class,'edit'])->name('edit-brand');
     Route::put('/brands/update/{id}',[BrandController::class,'update'])->name('update-brand');
+    Route::delete('/brand/delete/{id}', [BrandController::class,'delete'])->name('delete-brand');
 
     // auxiliary routes
     Route::get('/attributes/form',[AttributeController::class,'form'])->name('get-attribute-form');
@@ -90,6 +96,7 @@ Route::group(['prefix'=>'admin','middleware' => ['auth','isAdmin']], function(){
     Route::post('admin-user/store',[AdminUserController::class,'store'])->name('store-admin-user');
     Route::put('admin-user/update/{id}',[AdminUserController::class,'update'])->name('update-admin-user');
     Route::get('/admin-user/edit/{id}',[AdminUserController::class,'edit'])->name('edit-admin-user');
+    Route::delete('/admin-user/delete/{id}',[AdminUserController::class,'delete'])->name('delete-admin-user');
 
     // Banner routes
     Route::get('/banners',[BannerController::class,'index'])->name('banners');
@@ -97,6 +104,7 @@ Route::group(['prefix'=>'admin','middleware' => ['auth','isAdmin']], function(){
     Route::post('banner/store',[BannerController::class,'store'])->name('store-banner');
     Route::put('banner/update/{id}',[BannerController::class,'update'])->name('update-banner');
     Route::get('banner/edit/{id}',[BannerController::class,'edit'])->name('edit-banner');
+    Route::delete('/banner/delete/{id}', [BannerController::class,'delete'])->name('delete-banner');
     Route::get('get-banner-image-form',[BannerController::class,'getBannerImageForm'])->name('get-banner-image-form');
 
     // Coupons
@@ -105,13 +113,14 @@ Route::group(['prefix'=>'admin','middleware' => ['auth','isAdmin']], function(){
     Route::post('coupon/store',[CouponController::class,'store'])->name('store-coupon');
     Route::get('coupon/edit/{id}',[CouponController::class,'edit'])->name('edit-coupon');
     Route::put('coupon/update/{id}',[CouponController::class,'update'])->name('update-coupon');
-
+    Route::delete('/coupon/delete/{id}', [CouponController::class,'delete'])->name('delete-coupon');
     // Pages
     Route::get('pages',[PageController::class,'index'])->name('pages');
     Route::get('page/create',[PageController::class,'create'])->name('create-page');
     Route::post('page/store',[PageController::class,'store'])->name('store-page');
     Route::get('page/edit/{id}',[PageController::class,'edit'])->name('edit-page');
     Route::put('page/update/{id}',[PageController::class,'update'])->name('update-page');
+    Route::delete('/page/delete/{id}', [PageController::class,'delete'])->name('delete-page');
 
     // Vendors
      Route::get('/vendors',[VendorController::class,'index'])->name('vendors');
@@ -119,4 +128,5 @@ Route::group(['prefix'=>'admin','middleware' => ['auth','isAdmin']], function(){
      Route::post('vendor/store',[VendorController::class,'store'])->name('store-vendor-user');
      Route::put('vendor/update/{id}',[VendorController::class,'update'])->name('update-vendor-user');
      Route::get('/vendor/edit/{id}',[VendorController::class,'edit'])->name('edit-vendor-user');
+     Route::delete('/vendor/delete/{id}', [VendorController::class,'delete'])->name('delete-vendor');
 });

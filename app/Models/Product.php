@@ -11,10 +11,12 @@ use App\Models\ProductAttributeImage;
 use App\Models\Category;
 use App\Models\SubCategory;
 use App\Models\ProductImage;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     protected $fillable = ['id','user_id','product','category_id','subcategory_id','slug','sku','price','discount','comission','shipping_cost','quantity','published','short_description','image','featured','status','order','brand_id'];
     public $primaryKey = 'id';

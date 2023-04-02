@@ -24,6 +24,12 @@
                             <a href="{{route('edit-attribute-group',$attributeGroup->id)}}" title="view">
                                 <i class="far fa-eye"></i>
                             </a>
+                            <form class="delete-form" method="post" action="{{route('delete-attribute-group',$attributeGroup->id)}}" onsubmit="return confirm('Do you want to delete?')" >
+                                @csrf
+                                @method('delete')
+                                <input type="hidden" name="id" value="{{$attributeGroup->id}}" />
+                                <button type="submit" name="delete" class="delete-button" value="" ><i class="fa- fa-trash fa-trash-alt far m-3"></i></button>
+                            </form>
                         </td>
                     </tr>
                     @endforeach

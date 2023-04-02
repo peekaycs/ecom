@@ -125,4 +125,9 @@ class CouponController extends Controller
     {
         //
     }
+
+    public function delete(Request $request, $id){
+        Coupon::find($id)->delete();
+        return redirect()->back()->with('success','Coupon deleted successfully');
+    }
 }

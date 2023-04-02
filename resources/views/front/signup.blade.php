@@ -11,32 +11,32 @@
                         <label for="Name"><b>First Name</b></label>
                         <input type="text" name="first_name" placeholder="First Name"  value="{{old('first_name')}}" required>
                         @error('first_name')
-                            {{ $message }}
+                            <p class="text-danger">{{ $message }}</p>
                         @enderror
                         <label for="Name"><b>Last Name</b></label>
                         <input type="text" name="last_name" placeholder="Last Name" value="{{old('last_name')}}" required>
                         @error('last_name')
-                            {{ $message }}
+                        <p class="text-danger">{{ $message }}</p>
                         @enderror
                         <label for="mobile-number"><b>Mobile Number</b></label>
                         <input type="number" placeholder="Mobile Number" name="mobile" value="{{old('mobile')}}" required>
                         @error('mobile')
-                            {{ $message }}
+                        <p class="text-danger">{{ $message }}</p>
                         @enderror
                         <label for="email id"><b>Email Id</b></label>
                         <input type="email" placeholder="Email Address" name="email" value="{{old('email')}}" required>
                         @error('email')
-                            {{ $message }}
+                        <p class="text-danger">{{ $message }}</p>
                         @enderror
                         <label for="psw"><b>Password</b></label>
                         <input type="password" placeholder="Enter Password" name="password" required>
                         @error('password')
-                            {{ $message }}
+                        <p class="text-danger">{{ $message }}</p>
                         @enderror
                         <label for="psw"><b>Confirm Password</b></label>
                         <input type="password" placeholder="Enter Confirm Password" name="password_confirmation" required>
                         @error('password_confirmation')
-                            {{ $message }}
+                        <p class="text-danger">{{ $message }}</p>
                         @enderror
                         <div class="col-12 mt-2 text-center">
                             <input type="submit" name="submit" value="Submit" class="btn btn-success">
