@@ -101,7 +101,7 @@
 </div>
 
 <div id="login" class="login-modal">  
-  	<form class="modal-content animate" action="login" method="post">
+  	<form class="modal-content animate" action="{{route('login')}}" method="post">
 	    <div class="imgcontainer">
 	      	<span onclick="document.getElementById('login').style.display='none'" class="close" title="Close Modal">&times;</span>
 	     	 <img src="{{URL::asset('assets/front/images/login_icon.png')}}" alt="Avatar" class="avatar">
