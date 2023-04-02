@@ -1,5 +1,6 @@
 @extends('front.layouts.app')
-@section('conent')
+
+@section('content')	
 <section class="mt-4">
 	<div class="container">			
         <div class="row">            
@@ -148,7 +149,7 @@
                     <div class="alert alert-success">
                         <span>Total Savings: <strong>Rs 70</strong></span>
                         <!-- <button type="button" class="btn btn-sm btn-success float-end">CHECKOUT</button> -->
-                        <a href="checkout.php" class="btn btn-sm btn-success float-end">CHECKOUT</a>
+                        <a href="#" class="btn btn-sm btn-success float-end">Payment</a>
                     </div>
                 </div>                
             </div>            
