@@ -63,6 +63,16 @@ div, p {
   margin: 0px;
 }
 
+@media only screen and (max-width: 1024px) {
+  .heading {
+    font-size: 18px;
+  }
+}
+@media only screen and (max-width: 767px) {
+  .heading {
+    font-size: 16px;
+  }
+}
 .top-head {
   background-color: #139fae;
   height: 40px;
@@ -195,7 +205,7 @@ div, p {
   text-decoration: none;
 }
 .head .logo img {
-  width: 100%;
+  width: 66px;
 }
 .head .logo h3 {
   margin-top: 10px;
@@ -239,7 +249,7 @@ div, p {
   color: rgb(0, 0, 0);
 }
 .head .header-menu ul li a:hover {
-  color: #f00;
+  color: rgb(0, 0, 0);
 }
 .head .header-menu ul li .dropdown-on-hover {
   width: 92%;
@@ -283,6 +293,14 @@ div, p {
   width: 5%;
   right: 3%;
 }
+.head .cart a {
+  position: relative;
+}
+.head .cart a span {
+  position: absolute;
+  top: -12px;
+  right: -16px;
+}
 
 @media screen and (max-width: 1024px) {
   .head .logo {
@@ -294,7 +312,7 @@ div, p {
     text-decoration: none;
   }
   .head .logo img {
-    width: 100%;
+    width: 60px;
   }
   .head .logo h3 {
     margin-top: 0px;
@@ -305,9 +323,9 @@ div, p {
     display: none;
   }
   .head .head-search {
-    position: relative;
-    top: 0px;
-    width: 75%;
+    position: absolute;
+    top: 31px;
+    width: 70%;
     left: 22%;
     margin-bottom: 10px;
   }
@@ -337,32 +355,33 @@ div, p {
   }
   .head .logo {
     width: 120px;
-    margin-left: 30px;
+    margin-left: 20px;
     padding: 5px 0px 5px;
     margin-top: 7px;
   }
   .head .logo img {
-    width: 100%;
+    width: 30px;
   }
   .head #sideNav {
     display: block;
     position: absolute;
     left: 12px;
-    top: 12px;
-    font-size: 20px;
+    top: 17px;
+    font-size: 15px;
     z-index: 9;
   }
   .head .head-search {
-    top: 0px;
-    width: 100%;
-    left: 0%;
+    top: 6px;
+    width: 70%;
+    left: 17%;
     margin-bottom: 10px;
+    position: absolute;
   }
   .head .header-menu {
     text-align: left;
     padding-right: 0px;
     position: absolute;
-    background-color: rgb(255, 255, 255);
+    background-color: #139fae;
     width: 100%;
     height: 100vh;
     z-index: 9;
@@ -379,17 +398,21 @@ div, p {
     padding: 12px 15px;
     font-size: 14px;
     border-bottom: 1px solid #ccc;
+    color: rgb(255, 255, 255);
   }
   .head .header-menu ul li .dropdown-on-hover {
     display: none;
     position: relative;
     width: 100%;
+    padding: 10px;
     box-shadow: 0px 0px 0px rgb(0, 0, 0);
     background-color: #ccc;
     transform: none;
     animation: none;
     opacity: 1;
     top: 0px !important;
+    max-height: 100%;
+    overflow-y: scroll;
   }
   .head .header-menu ul li .dropdown-on-hover ul p {
     text-align: left;
@@ -404,6 +427,7 @@ div, p {
     border-bottom: 1px solid #ccc;
     text-transform: inherit;
     font-size: 12px;
+    color: rgb(0, 0, 0);
   }
   .head .header-menu ul li .dropdown-on-hover ul li a img {
     width: 20px;
@@ -497,11 +521,9 @@ div, p {
   background-repeat: no-repeat;
   background-size: 100% 100%;
   width: 100%;
-  max-height: 365px;
 }
 .slide img {
   width: 100%;
-  height: 350px;
 }
 .slide .banner-text {
   color: rgb(255, 255, 255);
@@ -669,6 +691,44 @@ footer .all-right .accept-card a img {
   border: 1px solid #ccc;
 }
 
+@media only screen and (max-width: 767px) {
+  footer {
+    padding: 30px 0px 0px;
+  }
+  footer .container-fluid {
+    width: 100%;
+  }
+  footer .container-fluid .footer-contant {
+    padding: 10px 5px;
+  }
+  footer .container-fluid .footer-contant h3 {
+    padding: 0px 0px 15px;
+    font-size: 12px;
+  }
+  footer .container-fluid .footer-contant ul {
+    padding: 0px;
+    list-style: none;
+  }
+  footer .container-fluid .footer-contant ul li a {
+    font-size: 12px;
+  }
+  footer .all-right {
+    padding: 20px 0px;
+    min-height: 50px;
+  }
+  footer .all-right .accept-card h5 {
+    margin: 0;
+    padding: 0px 0px 10px 0%;
+    font-size: 18px;
+  }
+  footer .all-right .accept-card a {
+    height: 30px;
+    margin: 2px;
+  }
+  footer .all-right .accept-card a img {
+    height: 30px;
+  }
+}
 .get-qt-side {
   position: fixed;
   z-index: 998;
@@ -698,4 +758,15 @@ footer .all-right .accept-card a img {
 
 .form-control:focus {
   box-shadow: 0 0 0 0rem rgba(13, 110, 253, 0.25);
+}
+
+@media only screen and (max-width: 767px) {
+  .scroll {
+    width: 100%;
+    overflow-x: scroll;
+  }
+  .scroll .scroll-max-width {
+    width: -moz-max-content;
+    width: max-content;
+  }
 }/*# sourceMappingURL=common.css.map */

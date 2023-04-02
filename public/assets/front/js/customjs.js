@@ -68,12 +68,12 @@ $(document).ready(function () {
             speed: 1000,
             responsive: [
             {
-                breakpoint: 768,
+                breakpoint: 769,
                 settings: {
                     arrows: false,
                     centerMode: true,
-                    centerPadding: '40px',
-                    slidesToShow: 5,
+                    centerPadding: '0px',
+                    slidesToShow: 4,
                     slidesToScroll: 1,
                 }
             },
@@ -82,7 +82,7 @@ $(document).ready(function () {
                 settings: {
                     arrows: false,
                     centerMode: true,
-                    centerPadding: '40px',
+                    centerPadding: '0px',
                     slidesToShow: 2,
                     slidesToScroll: 1,
                 }
@@ -101,11 +101,11 @@ $(document).ready(function () {
             speed: 1000,
             responsive: [
             {
-                breakpoint: 768,
+                breakpoint: 769,
                 settings: {
                     arrows: false,
                     centerMode: true,
-                    centerPadding: '40px',
+                    centerPadding: '0px',
                     slidesToShow: 5,
                     slidesToScroll: 1,
                 }
@@ -115,7 +115,7 @@ $(document).ready(function () {
                 settings: {
                     arrows: false,
                     centerMode: true,
-                    centerPadding: '40px',
+                    centerPadding: '0px',
                     slidesToShow: 2,
                     slidesToScroll: 1,
                 }
@@ -192,5 +192,26 @@ $(document).ready(function(){
     });
     $(".btn-cancel").click(function(){
         $("#add-new-address").css({"display": "none"});
+    });
+});
+
+
+// mobile service filter
+$(document).ready(function(){
+    // $(".filter-box").click(function(){
+    //     if($(this).hasClass('tab-toggle')){
+    //         $(".m-service-filter-data-show").addClass("add-m-data-show");
+    //         $(this).removeClass('tab-toggle');
+    //     } else{
+    //         $(".m-service-filter-data-show").removeClass("add-m-data-show");
+    //         $(this).addClass('tab-toggle');
+    //     }                   
+    // });
+
+    $("#service_type").click(function(){
+        $(".aside-mobile-filter").addClass("add-m-data-show");
+    });
+    $(".m-filter-close").click(function() {
+        $(".aside-mobile-filter").removeClass("add-m-data-show");
     });
 });

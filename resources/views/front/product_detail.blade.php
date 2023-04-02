@@ -159,8 +159,15 @@
                         </div>
                         <!--<a href="{{-- route('cart_list') --}}" class="btn btn-sm btn-primary">Buy Now</a>-->
                         <br>
+                        @if(Auth::check())
+                        <!--<a href="{{route('checkout')}}" type="button" class="btn btn-sm btn-success float-end">CHECKOUT</a>-->
                         <button type="submit" name="submit" class="btn btn-sm btn-success">Buy Now</button>
                         <button type="submit" name="submit" class="btn btn-sm btn-success">Add to cart</button>
+                        @else
+                        <!--<a href="#" onclick="document.getElementById('login').style.display='block'" type="button" class="btn btn-sm btn-success float-end">CHECKOUT</a>-->
+                        <button type="button" name="submit" class="btn btn-sm btn-success" onclick="document.getElementById('login').style.display='block'">Buy Now</button>
+                        <button type="button" name="submit" class="btn btn-sm btn-success" onclick="document.getElementById('login').style.display='block'">Add to cart</button>
+                        @endif
                     </div>                
                 </div>
             </div>
