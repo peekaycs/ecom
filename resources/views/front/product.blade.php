@@ -7,43 +7,32 @@
 			<div class="col-md-3 col-sm-3 col-12">
 				<div class="aside-filter">
 					<h3>FILTERS BY</h3>
-					<div class="cat-box">						
-						<h4>{{ $filter_categories->category ?? '' }}</h4>
-						<!--<div class="search-icon">
-							<input type="type" name="search" class="form-control" placeholder="Search Medicine Name" autocomplete="off">
-						</div>-->
-						<div class="check-list">
-							@if (isset($filter_subcategories) && !empty($filter_subcategories))
-								@foreach($filter_subcategories as $filter_subcategory)
-									@if (isset($filter_subcategory) && !empty($filter_subcategory))
-									<label class="chk ">
-										<input type="radio" name="subcategory" class=" {{ str_replace(' ', '-', $filter_subcategory->slug) }} " value="{{ str_replace(' ', '-', $filter_subcategory->slug) }}" {{ request()->is('product/'.str_replace(' ', '-', $filter_subcategory->slug)) ? 'checked' : '' }}>
-										<span class="checkmark1"></span>
-										<a class="subcategory {{ request()->is('product/'.str_replace(' ', '-', $filter_subcategory->slug)) ? 'actv' : '' }}" href="{{ route('productBySubCategory',['slug' => str_replace(' ', '-', $filter_subcategory->slug)]) }}" style="text-decoration:none;color:grey" data-subcategory="{{ str_replace(' ', '-', $filter_subcategory->slug) }}" data-subcategory="{{ str_replace(' ', '-', $filter_subcategory->slug) }}" >
-											{{ $filter_subcategory->subcategory ?? ''}}
-										</a>
-									</label>
-									@endif
-								@endforeach
-							@endif		
-							<!--<label class="chk">
-							  	<input type="checkbox"><span class="checkmark"></span>Vansaar</label>
-							<label class="chk">
-							  	<input type="checkbox"><span class="checkmark"></span>Vedame Herbals
-							</label>
-							<label class="chk">
-							  	<input type="checkbox"><span class="checkmark"></span>Wisdom Natural
-							</label>
-							<label class="chk">
-							  	<input type="checkbox"><span class="checkmark"></span>YC Care
-							</label>
-							<label class="chk">
-							  	<input type="checkbox"><span class="checkmark"></span>Yours
-							</label>
-							<label class="chk">
-							  	<input type="checkbox"><span class="checkmark"></span>Zandu
-							</label>-->
-						</div>
+					<div class="cat-box">		
+						@if (isset($category) && !empty($category))
+							@foreach($category as $categories)
+								@if (isset($categories) && !empty($categories))				
+								<h4>{{ $categories->category ?? '' }}</h4>
+								<!--<div class="search-icon">
+									<input type="type" name="search" class="form-control" placeholder="Search Medicine Name" autocomplete="off">
+								</div>-->
+								<div class="check-list">
+									@if (isset($categories->subcategory) && !empty($categories->subcategory))
+										@foreach($categories->subcategory as $categories->subcategories)
+											@if (isset($categories->subcategories) && !empty($categories->subcategories))
+											<label class="chk ">
+												<input type="radio" name="subcategory" class=" {{ str_replace(' ', '-', $categories->subcategories->slug) }} " value="{{ str_replace(' ', '-', $categories->subcategories->slug) }}" {{ request()->is('product/'.str_replace(' ', '-', $categories->subcategories->slug)) ? 'checked' : '' }}>
+												<span class="checkmark1"></span>
+												<a class="subcategory {{ request()->is('product/'.str_replace(' ', '-', $categories->subcategories->slug)) ? 'actv' : '' }}" href="{{ route('productBySubCategory',['slug' => str_replace(' ', '-', $categories->subcategories->slug)]) }}" style="text-decoration:none;color:grey" data-subcategory="{{ str_replace(' ', '-', $categories->subcategories->slug) }}" data-subcategory="{{ str_replace(' ', '-', $categories->subcategories->slug) }}" >
+													{{ $categories->subcategories->subcategory ?? ''}}
+												</a>
+											</label>
+											@endif
+										@endforeach
+									@endif		
+								</div>
+								@endif
+							@endforeach
+						@endif	
 					</div>
 					<div class="cat-box">	
 					<h4>Brand</h4>

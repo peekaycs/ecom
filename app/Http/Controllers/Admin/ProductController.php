@@ -18,6 +18,7 @@ use App\Models\Brand;
 use App\Models\ProductDetail;
 use App\Rules\AlphaNumSpace;
 use App\Helpers\Helper;
+use App\Http\Classes\EcomController;
 use Image;
 use File;
 use DB;
@@ -26,7 +27,7 @@ use Cart;
 use Darryldecode\Cart\Facades\CartFacade;
 use Illuminate\Validation\Rule;
 
-class ProductController extends Controller
+class ProductController extends EcomController
 {
     /**
      * Display a listing of the resource.
@@ -337,19 +338,19 @@ class ProductController extends Controller
         //DB::enableQueryLog(); // Enable query log
         $slug = Helper::destructSlug($slug);
         $data = [];
-        $data['category'] = $category =Category::All();
+        //$data['category'] = $category =Category::All();
         $data['categories'] = $categories = Category::WHERE('slug', $slug)->first();
         
-        $data['products'] = $products = Product::WHERE('category_id', $categories->uuid)->with(['brand'])->orderBy('updated_at','desc')->paginate(env('PER_PAGE'))->withQueryString();
+        $data['products'] = $products = Product::WHERE('category_id', $categories->uuid)->with(['brand'])->orderBy('order','ASC')->orderBy('updated_at','desc')->paginate(env('PER_PAGE'))->withQueryString();
         foreach($products as $product){
             $data['brands'][$product->brand->brand]  = $product->brand;
         }
 
         $data['filter_categories'] = $filter_categories = $categories;
-        $data['filter_subcategories'] = $filter_subcategories = SubCategory::WHERE('category_id', $categories->uuid)->get();
+        //$data['filter_subcategories'] = $filter_subcategories = SubCategory::WHERE('category_id', $categories->uuid)->get();
         //dd(DB::getQueryLog()); // Show results of log
         //dd($products);
-        return view('front.product', $data);
+        return $this->createView('front.product', $data);
     }
 
     public function productBySubCategory(Request $request, $slug)
@@ -357,20 +358,19 @@ class ProductController extends Controller
         //echo '<pre>';print_r($request);
         //DB::enableQueryLog(); // Enable query log
         $slug = Helper::destructSlug($slug);
-        $data = [];
-        $data['category'] = $category =Category::All();
+        //$data['category'] = $category =Category::All();
         $data['subcategories'] = $subcategories = SubCategory::WHERE('slug', $slug)->first();
 
-        $data['products'] = $products = Product::WHERE('subcategory_id', $subcategories->uuid)->with(['brand'])->orderBy('updated_at','desc')->paginate(env('PER_PAGE'))->withQueryString();
+        $data['products'] = $products = Product::WHERE('subcategory_id', $subcategories->uuid)->with(['brand'])->orderBy('order','ASC')->orderBy('updated_at','DESC')->paginate(env('PER_PAGE'))->withQueryString();
         foreach($products as $product){
             $data['brands'][$product->brand->brand]  = $product->brand;
         }
         
         $data['filter_categories'] = $filter_categories = $subcategories->category;
-        $data['filter_subcategories'] = $filter_subcategories = SubCategory::WHERE('category_id', $subcategories->category->uuid)->get();
+        //$data['filter_subcategories'] = $filter_subcategories = SubCategory::WHERE('category_id', $subcategories->category->uuid)->get();
         //dd(DB::getQueryLog()); // Show results of log
         //dd($products->currentPage());
-        return view('front.product', $data);
+        return $this->createView('front.product', $data);
     }
 
     public function productByBrand(Request $request)
@@ -391,16 +391,16 @@ class ProductController extends Controller
             $order = $request->order;
         }
         $data = [];
-        $subcategories = SubCategory::WHERE('slug', $slug)->first();
+        $subcategories = SubCategory::WHERE('slug', $slug)->orderBy('order','ASC')->first();
 
         if(!empty($brand) && !empty($order)){
-            $data['products'] = Product::WHERE('subcategory_id', $subcategories->uuid)->whereIn('brand_id', $brand)->orderBy('price', $order)->paginate(env('PER_PAGE'))->withQueryString();
+            $data['products'] = Product::WHERE('subcategory_id', $subcategories->uuid)->whereIn('brand_id', $brand)->orderBy('order','ASC')->orderBy('price', $order)->paginate(env('PER_PAGE'))->withQueryString();
         }elseif(!empty($brand)){
-            $data['products'] = Product::WHERE('subcategory_id', $subcategories->uuid)->whereIn('brand_id', $brand)->orderBy('updated_at', 'DESC')->paginate(env('PER_PAGE'))->withQueryString();
+            $data['products'] = Product::WHERE('subcategory_id', $subcategories->uuid)->whereIn('brand_id', $brand)->orderBy('order','ASC')->orderBy('updated_at', 'DESC')->paginate(env('PER_PAGE'))->withQueryString();
         }elseif(!empty($order)){
-            $data['products'] = Product::WHERE('subcategory_id', $subcategories->uuid)->orderBy('price', $order)->paginate(env('PER_PAGE'))->withQueryString();
+            $data['products'] = Product::WHERE('subcategory_id', $subcategories->uuid)->orderBy('price', $order)->orderBy('order','ASC')->paginate(env('PER_PAGE'))->withQueryString();
         }else{
-            $data['products'] = Product::WHERE('subcategory_id', $subcategories->uuid)->orderBy('updated_at', 'DESC')->paginate(env('PER_PAGE'))->withQueryString();
+            $data['products'] = Product::WHERE('subcategory_id', $subcategories->uuid)->orderBy('updated_at', 'DESC')->orderBy('order','ASC')->paginate(env('PER_PAGE'))->withQueryString();
         }    
         echo view('front.tpl.brand-wise-product', $data);
     }
@@ -409,26 +409,25 @@ class ProductController extends Controller
     {
         //
         $slug = Helper::destructSlug($slug);
-        $data = [];
-        $data['category'] = Category::All();
+        //$data['category'] = Category::All();
         $data['product'] = Product::WHERE('slug',$slug)->first();
-        $data['popular_health'] = Product::All();
+        $data['popular_health'] = Product::orderBy('order','ASC')->get();
 
         //$userId = 100; // or any string represents user identifier
-        if (Auth::check()) {
+        /*if (Auth::check()) {
             $userId = Auth::user()->uuid;
             Cart::session($userId);
             $data['cart_list'] = $cartCollection = Cart::getContent();
             // count carts contents
             $data['count'] = $cartCollection->count();
-        }
+        }*/
         //Cart::session($userId);
-        $cartCollection = Cart::getContent();
+        //$cartCollection = Cart::getContent();
         // count carts contents
-        $data['count'] = $cartCollection->count();
+        //$data['count'] = $cartCollection->count();
         //$data['count'] = getTotalQuantity();
 
-        return view('front.product_detail', $data);
+        return $this->createView('front.product_detail', $data);
     }
 
     public function delete(Request $request, $id){

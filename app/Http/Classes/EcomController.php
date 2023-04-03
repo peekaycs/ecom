@@ -8,17 +8,17 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Page;
 use App\Models\Category;
 use Cart;
-class EcomController extends Controller{
-
-   
+class EcomController extends Controller
+{
     
     public function __construct(){
+        
     }
 
     public function createView($page, $data = array()) {
         
         // categories
-        $category = Category::All();
+        $category = Category::orderBy('order','ASC')->get();
         // dynamic pages
         $pages = Page::where('published', true)->get();
         // dd($pages->take(1));
@@ -27,7 +27,7 @@ class EcomController extends Controller{
         if (Auth::check()) {
             $userId = Auth::user()->uuid;
             Cart::session($userId);
-            $cartCollection = Cart::getContent();
+            $data['cart_list'] = $cartCollection = Cart::getContent();
             // count carts contents
             $data['count'] = $cartCollection->count();
         }
