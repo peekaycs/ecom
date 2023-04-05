@@ -20,6 +20,11 @@ class CreateAddressesTable extends Migration
             $table->uuid('uuid')->primary()->index();
             $table->uuid('user_id')->index();
             $table->foreign('user_id')->references('uuid')->on('users');
+            $table->string('name')->nullable();
+            $table->string('contact')->nullable();
+            $table->string('email')->nullable();
+            $table->enum('address_type',['home','office','other'])->default('home');
+            $table->integer('default_address')->default(0);
             $table->string('address')->nullable();
             $table->string('landmark')->nullable();
             $table->string('district')->nullable();

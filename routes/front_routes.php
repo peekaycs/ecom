@@ -28,8 +28,11 @@ Route::get('/cart-list', [CartStorageNewController::class,'cart_list'])->name('c
 Route::post('/add-to-cart', [CartStorageNewController::class,'AddToCart'])->name('AddToCart');
 Route::post('/remove-from-cart', [CartStorageNewController::class,'RemoveFromCart'])->name('RemoveFromCart');
 Route::post('/update-cart', [CartStorageNewController::class,'updateCart'])->name('updateCart');
+
 Route::get('/checkout', [CheckoutController::class,'index'])->name('checkout');
+
 Route::get('/address', [AddressController::class,'index'])->name('address');
+Route::post('/address/store', [AddressController::class,'store'])->name('store');
 
 Route::post('/apply-coupon', [CartStorageNewController::class,'applyCoupon'])->name('applyCoupon');
 Route::post('/remove-coupon', [CartStorageNewController::class,'removeCoupon'])->name('removeCoupon');

@@ -8,22 +8,27 @@
                 <div class="add-edit-address">
                     <form action="">
                         <div class="row">
-                            <div class="col-md-12 col-sm-12 col-12">
-                                <div class="mb-2">
-                                    <span class="form-check float-start">
-                                        <input type="radio" class="form-check-input" id="radio1" name="optradio" value="home" checked>
-                                    </span>
-                                    <div>
-                                        <strong>OFFICE</strong>
-                                        <span class="float-end"><i class="fas fa-ellipsis-v"></i></span>
+                            @if(isset($addresses) && !empty($addresses))
+                                @foreach($addresses as $address)
+                                    @if(isset($address) && !empty($address))
+                                    <div class="col-md-12 col-sm-12 col-12">
+                                        <div class="mb-2">
+                                            <span class="form-check float-start">
+                                                <input type="radio" class="form-check-input" id="radio1" name="optradio" value="home" {{ (isset($address->default_address) && $address->default_address == 1) ? 'checked' : '' }}>
+                                            </span>
+                                            <div>
+                                                <strong>{{ ucWords($address->address_type) ?? ''}}</strong>
+                                                <span class="float-end"><i class="fas fa-ellipsis-v"></i></span>
+                                            </div>
+                                            <div class="px-4">{{ ucFirst($address->name) ?? ''}}<br>{{ $address->contact ?? ''}} <br>
+                                            {{ isset($address->address) ? $address->address.',' : ''}} {{ isset($address->landmark) ? $address->landmark.',' : ''}} {{ isset($address->city) ? $address->city.',' : ''}}<br>{{ isset($address->state) ? $address->state.'-' : ''}} {{ isset($address->zip) ? $address->zip : ''}} <br> {{ isset($address->email) ? 'Email : '.$address->email : '' }}
+                                            </div>
+                                        </div>				
                                     </div>
-                                    <div class="px-4">Ram kumar<br>8802855555 <br>
-                                        Vipul Agora Building, near sahara mall, MG Road, Gurgaon,<br>
-                                        Gurgaon, Haryana - 122002
-                                    </div>
-                                </div>				
-                            </div>
-                            <div class="col-md-12 col-sm-12 col-12">
+                                    @endif
+                                @endforeach
+                            @endif        
+                            <!--<div class="col-md-12 col-sm-12 col-12">
                                 <div class="mb-2">
                                     <span class="form-check float-start">
                                         <input type="radio" class="form-check-input" id="radio1" name="optradio" value="home" checked>
@@ -37,7 +42,7 @@
                                         Gurgaon, Haryana - 122002
                                     </div>
                                 </div>				
-                            </div>
+                            </div>-->
                         </div>
                         <div class="row">
                             <div class="col-md-12 col-sm-12 col-6 text-center mb-2 mt-md-4 mt-sm-0">
@@ -51,41 +56,47 @@
                 </div>
                 <div id="add-new-address" class="add-edit-address">
                     <h5>Add Address/Edit Address</h5>
-                    <form action="">
+                    <form action="{{route('store')}}" method="POST" >
+                        @csrf
                         <div class="row">
                             <div class="col-md-6 col-sm-6 col-12">
                        			<div class="mb-2">
-                                    <input type="text" class="form-control rounded-0" placeholder="Enter Your Name">
+                                    <input type="text" name="name" class="form-control rounded-0" placeholder="Enter Your Name">
                                 </div>				
                             </div>
                             <div class="col-md-6 col-sm-6 col-12">
                                 <div class="mb-2">
-                                 <input type="text" class="form-control rounded-0" placeholder="Contact Number">
-                                </div>				
-                            </div>
-                            <div class="col-md-12 col-sm-12 col-12">
-                                <div class="mb-2">
-                                    <input type="text" class="form-control rounded-0" placeholder="Enter address">
+                                 <input type="text" name="contact" class="form-control rounded-0" placeholder="Contact Number">
                                 </div>				
                             </div>
                             <div class="col-md-6 col-sm-6 col-12">
                                 <div class="mb-2">
-                                    <input type="text" class="form-control rounded-0" placeholder="Landmark (optional)">
+                                 <input type="text" name="email" class="form-control rounded-0" placeholder="Email">
                                 </div>				
                             </div>
                             <div class="col-md-6 col-sm-6 col-12">
                                 <div class="mb-2">
-                                    <input type="text" class="form-control rounded-0" placeholder="Pin Number">
+                                    <input type="text" name="address" class="form-control rounded-0" placeholder="Enter address">
                                 </div>				
                             </div>
                             <div class="col-md-6 col-sm-6 col-12">
                                 <div class="mb-2">
-                                    <input type="text" class="form-control rounded-0" placeholder="City">
+                                    <input type="text" name="landmark" class="form-control rounded-0" placeholder="Landmark (optional)">
                                 </div>				
                             </div>
                             <div class="col-md-6 col-sm-6 col-12">
                                 <div class="mb-2">
-                                    <input type="text" class="form-control rounded-0" placeholder="State">
+                                    <input type="text" name="zip" class="form-control rounded-0" placeholder="Pin Number">
+                                </div>				
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-12">
+                                <div class="mb-2">
+                                    <input type="text" name="city" class="form-control rounded-0" placeholder="City">
+                                </div>				
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-12">
+                                <div class="mb-2">
+                                    <input type="text" name="state" class="form-control rounded-0" placeholder="State">
                                 </div>				
                             </div>
                             <div class="col-md-3 col-sm-3 col-4">
@@ -118,7 +129,7 @@
                                 <button type="button" class="btn btn-outline-danger rounded-0 btn-cancel">cancel</button>
                             </div>
                             <div class="col">
-                                <button type="button" class="btn btn-success rounded-0">Save</button>
+                                <button type="submit" name="submit" class="btn btn-success rounded-0">Save</button>
                             </div>
                         </div>
                     </form>
