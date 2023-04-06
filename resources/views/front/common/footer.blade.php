@@ -7,7 +7,7 @@
 				<div class="footer-contant">
 					<h3>About Us</h3>
 					@if(!empty($pages))
-					<ul class="col-md-6 col-sm-6 col-6 px-0">
+					<ul>
 						@if(isset($pages) && !empty($pages))
 							@foreach($pages as $page)
 								<li><a href="{{ route('front.pages', App\Helpers\Helper::constructSlug($page->slug)) }}">{{$page->name}}</a></li>
@@ -17,7 +17,7 @@
 					@endif
 				</div>
 			</div>
-			<div class="col-md-3 col-sm-3 col-12">
+			<div class="col-md-3 col-sm-3 col-6">
 				<div class="footer-contant">
 					<h3>Quick Links</h3>
 					<ul>
@@ -30,7 +30,7 @@
 					</ul>
 				</div>
 			</div>
-			<div class="col-md-2 col-sm-2 col-12">
+			<div class="col-md-2 col-sm-2 col-6">
 				<div class="footer-contant">
 					<h3>Top Products</h3>
 					<ul>
@@ -41,7 +41,7 @@
 					</ul>
 				</div>
 			</div>
-			<div class="col-md-2 col-sm-2 col-12">
+			<div class="col-md-2 col-sm-2 col-6">
 				<div class="footer-contant">
 					<h3>More</h3>
 					<ul>
@@ -70,7 +70,7 @@
 	</div>
 	<div class="all-right">
 		<div class="row">
-			<div class="col">
+			<div class="col-md-6 col-sm-6 col-12">
 				<div class="social mb-2 text-start">
 					<h5>Follow US </h5>
 					<a href="#"><img src="{{URL::asset('assets/front/images/fb.png')}}"></a>
@@ -78,7 +78,7 @@
 					<a href="#"><img src="{{URL::asset('assets/front/images/tweeter.png')}}"></a>
 				</div>
 			</div>
-			<div class="col">
+			<div class="col-md-6 col-sm-6 col-12">
 				<div class="accept-card mb-2 text-end">
 					<h5 class="text-start">We Accept </h5>
 					<a href="#"><img src="{{URL::asset('assets/front/images/jbc.png')}}"></a>

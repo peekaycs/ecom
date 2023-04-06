@@ -1,7 +1,7 @@
 <section class="trustBarWrap-section">
         <div class="container">
-            <div class="row y-3">			
-                <div class="col-md-3 col-sm-3 col-12">
+            <div class="row gy-3">			
+                <div class="col-md-3 col-sm-3 col-6">
                     <div class="trust-box">
                         <div class="trust-img">
                             <img src="{{URL::asset('assets/front/images/free-delivery.png')}}" alt="">
@@ -12,7 +12,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3 col-sm-3 col-12">
+                <div class="col-md-3 col-sm-3 col-6">
                     <div class="trust-box">
                         <div class="trust-img">
                             <img src="{{URL::asset('assets/front/images/treat.png')}}" alt="">
@@ -23,7 +23,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3 col-sm-3 col-12">
+                <div class="col-md-3 col-sm-3 col-6">
                     <div class="trust-box">
                         <div class="trust-img">
                             <img src="{{URL::asset('assets/front/images/credit-card.png')}}" alt="">
@@ -34,7 +34,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3 col-sm-3 col-12">
+                <div class="col-md-3 col-sm-3 col-6">
                     <div class="trust-box">
                         <div class="trust-img">
                             <img src="{{URL::asset('assets/front/images/online-chat.png')}}" alt="">
