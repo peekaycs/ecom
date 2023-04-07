@@ -1,6 +1,6 @@
 <section class="offer-section">
         <div class="container">
-            <div class="row">
+            <div class="row g-2">
                 @if(isset($popular) && !empty($popular))
                     @foreach($popular->bannerImages as $banner)
                         @if(isset($banner) && !empty($banner))

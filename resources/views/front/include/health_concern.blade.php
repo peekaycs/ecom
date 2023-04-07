@@ -5,7 +5,7 @@
                     <h4 class="heading">Shop by Health Concerns</h4>
                 </div>
             </div>
-            <div class="row mt-3">
+            <div class="row mt-3 g-2">
                 @if (isset($bottom) && !empty($bottom))
                     @foreach($bottom->bannerImages as $banner)
                         @if(isset($banner) && !empty($banner))

@@ -1,4 +1,4 @@
-<section class="slide-section mt-5">
+<section class="slide-section">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-12">
