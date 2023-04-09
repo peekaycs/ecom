@@ -33,6 +33,20 @@
 						<a href="#" onclick="document.getElementById('login').style.display='block'"> Login</a>
 						@endif
 					</li>
+					<li class="profile-icon">
+						<a href="#">
+							<i class="fas fa-user-tie"></i>
+							<span class="d-display">Profile</span>
+							<!-- <i class="fas fa-caret-down"></i> -->
+						</a>
+					</li>
+					<div class="profile-ddp">
+						<ul>
+							<li><a href="#"><i class="fa fa-user-circle"></i> Profile</a></li>
+							<li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
+							<li><a href="#"><i class="fa fa-sign-out"></i> Logout</a></li>
+						</ul>
+					</div>
 				</ul>
 			</div>
 		</div>
@@ -48,13 +62,12 @@
 				<div class="col-md-3 col-sm-6 col-12">
 					<a class="logo zoomimg" id="flip" href="{{ route('home') }}">
 						<img src="{{URL::asset('assets/front/images/logo.png')}}" alt="Logo">
-						<h3></h3>
 					</a>
 				</div>	
 				<div class="col-md-9 col-sm-12 col-12">
 					<div class="header-menu">
 						<ul>	
-							<li><a href="#">Homeopathy</a>
+							<li><a href="#">Homeopathy <i class="fas fa-caret-down"></i></a>
 								<div class="dropdown-on-hover">
 									<div class="row">
 										@if (isset($category) && !empty($category))
@@ -194,7 +207,10 @@
 				<div class="head-search">
 					<div class="input-group">
 						<input type="text" class="form-control" placeholder="Search">
-						<button class="btn" type="submit">Search</button>
+						<button class="btn" type="submit">
+							<span>Search</span>	
+							<i class="fas fa-search"></i>
+						</button>
 					</div>
 				</div>
 			</div>				

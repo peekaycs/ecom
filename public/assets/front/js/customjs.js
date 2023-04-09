@@ -25,6 +25,13 @@ $(document).ready(function(){
     })
 });
 
+$(document).ready(function(){
+    $(".profile-icon").click(function(){
+         {
+             $(".profile-ddp").slideToggle("slow");
+         }     	     	        
+     });
+ });
 $(document).ready(function () {
     $('.best-selling-products-slide').slick({
         centerMode: true,

@@ -117,6 +117,48 @@ div, p {
   font-size: 14px;
   margin: 8px 10px 0px 0px;
 }
+.top-head ul .profile-icon a {
+  float: left;
+  color: rgb(255, 255, 255);
+  margin: 8px 10px 0px 0px;
+}
+.top-head ul .profile-icon a i {
+  text-align: left;
+}
+.top-head ul .profile-icon a span {
+  text-align: left;
+  padding: 0px 4px;
+}
+.top-head ul .profile-ddp {
+  min-width: 200px;
+  height: auto;
+  padding: 0px 0 0;
+  background-color: #139fae;
+  right: 4%;
+  position: absolute;
+  top: 40px;
+  display: none;
+  z-index: 99991;
+}
+.top-head ul .profile-ddp ul {
+  list-style: none;
+  padding: 0px;
+  margin: 0;
+  width: 100%;
+}
+.top-head ul .profile-ddp ul li {
+  display: block;
+  float: none;
+  padding-right: 0px;
+}
+.top-head ul .profile-ddp ul li a {
+  display: block;
+  text-decoration: none;
+  padding: 10px 10px;
+  display: block;
+  border-bottom: 1px solid #ccc;
+  color: rgb(255, 255, 255);
+}
 .top-head .top-head-left {
   padding: 8px 5px 8px 7%;
   display: inline-block;
@@ -129,10 +171,11 @@ div, p {
     list-style: none;
     float: right;
     width: 100%;
+    padding: 0px;
   }
   .top-head ul li {
     float: left;
-    padding-right: 0px;
+    padding-right: 10px;
   }
   .top-head ul li a {
     text-decoration: none;
@@ -145,6 +188,9 @@ div, p {
   }
   .top-head ul .app-download {
     display: none;
+  }
+  .top-head ul .toll-free {
+    padding-right: 0px;
   }
   .top-head ul .toll-free .call {
     width: 23px;
@@ -169,6 +215,9 @@ div, p {
   .top-head ul {
     padding: 0px;
   }
+  .top-head ul li {
+    padding-right: 0px;
+  }
   .top-head ul .app-download {
     display: none;
   }
@@ -186,6 +235,17 @@ div, p {
     padding-left: 5px;
     font-size: 13px;
     margin: 8px 0px 0px 0px;
+  }
+  .top-head ul .profile-icon {
+    float: right;
+  }
+  .top-head ul .profile-ddp {
+    min-width: 200px;
+    right: 0%;
+    top: 40px;
+  }
+  .top-head ul .profile-ddp ul li a {
+    padding: 10px 10px;
   }
   .top-head .top-head-left {
     display: none;
@@ -225,6 +285,9 @@ div, p {
   width: 30%;
   left: 22%;
 }
+.head .head-search .btn i {
+  display: none;
+}
 .head .header-menu {
   text-align: right;
   padding-right: 10%;
@@ -237,16 +300,19 @@ div, p {
 .head .header-menu ul li {
   float: right;
   list-style: none;
-  padding: 0px 0px;
+  padding: 22px 0px;
+  margin-right: 10%;
 }
 .head .header-menu ul li a {
-  padding: 30px 15px;
+  padding: 10px 15px;
   display: block;
   text-decoration: none;
   text-transform: uppercase;
   font-weight: 500;
   font-size: 14px;
-  color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
+  background-color: #104e51;
+  border-radius: 40px;
 }
 .head .header-menu ul li a:hover {
   color: rgb(0, 0, 0);
@@ -262,7 +328,7 @@ div, p {
   left: 0px;
   right: 0px;
   margin: 0px auto;
-  top: 81px !important;
+  top: 85px !important;
   z-index: 99999;
 }
 .head .header-menu ul li .dropdown-on-hover ul p {
@@ -312,7 +378,7 @@ div, p {
     text-decoration: none;
   }
   .head .logo img {
-    width: 60px;
+    width: 50px;
   }
   .head .logo h3 {
     margin-top: 0px;
@@ -324,13 +390,16 @@ div, p {
   }
   .head .head-search {
     position: absolute;
-    top: 31px;
-    width: 70%;
+    top: 15px;
+    width: 45%;
     left: 22%;
     margin-bottom: 10px;
   }
   .head .header-menu {
     padding-right: 12%;
+  }
+  .head .header-menu ul li {
+    padding: 15px 0px;
   }
   .head .header-menu ul li a {
     padding: 10px 8px;
@@ -341,10 +410,13 @@ div, p {
     width: 25px;
   }
   .head .header-menu ul li .dropdown-on-hover {
+    top: 70px !important;
+  }
+  .head .header-menu ul li .dropdown-on-hover {
     display: none;
   }
   .head .cart {
-    top: 6px;
+    top: 18px;
     width: 50px;
     right: 3%;
   }
@@ -377,6 +449,12 @@ div, p {
     margin-bottom: 10px;
     position: absolute;
   }
+  .head .head-search .btn i {
+    display: block;
+  }
+  .head .head-search .btn span {
+    display: none;
+  }
   .head .header-menu {
     text-align: left;
     padding-right: 0px;
@@ -391,6 +469,7 @@ div, p {
   .head .header-menu ul li {
     display: block;
     position: relative;
+    margin-right: 0px;
     padding: 0;
     float: none;
   }
@@ -399,6 +478,12 @@ div, p {
     font-size: 14px;
     border-bottom: 1px solid #ccc;
     color: rgb(255, 255, 255);
+    background-color: inherit;
+    border-radius: 0px;
+  }
+  .head .header-menu ul li a i {
+    float: right;
+    margin-top: 5px;
   }
   .head .header-menu ul li .dropdown-on-hover {
     display: none;
