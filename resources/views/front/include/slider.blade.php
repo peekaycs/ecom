@@ -1,10 +1,10 @@
 <!-- Carousel -->
 <div id="slider" class="carousel slide" data-bs-ride="carousel">
 	<!-- Indicators/dots -->
-	<div class="carousel-indicators">
+	<!-- <div class="carousel-indicators">
 		<button type="button" data-bs-target="#slider" data-bs-slide-to="0" class="active"></button>
 		<button type="button" data-bs-target="#slider" data-bs-slide-to="1"></button>
-	</div>
+	</div> -->
 
     <!-- The slideshow/carousel -->
   	<div class="carousel-inner">
