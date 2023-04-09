@@ -58,20 +58,51 @@ div, p{font-size: 14px;}
             a{ float: right; text-decoration: none; color: $color-white; 
                 font-size: 14px; margin: 8px 10px 0px 0px;}
         }
+        .profile-icon{
+            a{float: left; 
+                color: $color-white;
+                margin: 8px 10px 0px 0px;
+                i{ text-align: left;}
+                span{ text-align: left; padding: 0px 4px;}
+            }
+        } 
+        .profile-ddp{
+            min-width: 200px;
+            height: auto; 
+            padding: 0px 0 0; 
+            background-color: #139fae;
+            right: 4%; 
+            position: absolute; 
+            top: 40px; 
+            display: none; 
+            z-index: 99991;
+            ul{
+                @include ul-tag; width: 100%;
+                li{ display: block; float: none; padding-right: 0px;
+                    a{
+                        @include a-tag;
+                        padding: 10px 10px; 
+                        display: block; 
+                        border-bottom: 1px solid #ccc;
+                        color:$color-white;
+                    }
+                }
+            }
+        }
     }
     .top-head-left{padding:8px 5px 8px 7%; display: inline-block; color: $color-white;cursor: pointer;}
 }
 
 @media screen and (max-width: 1024px) {
     .top-head{
-        ul{list-style: none; float: right; width: 100%;
-            li{float: left; padding-right: 0px;
+        ul{list-style: none; float: right; width: 100%; padding: 0px;
+            li{float: left; padding-right: 10px;
                 a{ text-decoration: none;
                     span{padding:8px 5px; display: inline-block; color: $color-white;cursor: pointer;}                                
                 }            
             }
             .app-download{display: none;}
-            .toll-free{
+            .toll-free{padding-right: 0px;
                 .call{width: 23px; margin: 9px 3px;float: left;}
                 span{font-size: 14px;}
             }
@@ -87,6 +118,7 @@ div, p{font-size: 14px;}
 {
     .top-head{
         ul{ padding: 0px;
+            li{padding-right: 0px;}
             .app-download{display: none;}
             .toll-free{
                 .call{width: 18px; margin: 9px 0px;}
@@ -95,6 +127,19 @@ div, p{font-size: 14px;}
             .login{ float: right;
                 a{padding-left: 5px; font-size: 13px;  margin: 8px 0px 0px 0px;}
             }
+            .profile-icon{float: right;}
+            .profile-ddp{
+                min-width: 200px;
+                right: 0%; 
+                top: 40px; 
+                ul{
+                    li{
+                        a{
+                            padding: 10px 10px; 
+                        }
+                    }
+                }
+            } 
         }
         .top-head-left{display: none;}
     }
@@ -110,15 +155,22 @@ div, p{font-size: 14px;}
         } 
     .btn{background-color: $btn-color; color: $color-white;}
     #sideNav{display: none;} 
-    .head-search{position: absolute; top: 24px; width: 30%; left: 22%;}     
+    .head-search{position: absolute; top: 24px; width: 30%; left: 22%;
+        .btn{
+            i{display: none;}
+        }
+    }     
     .header-menu{ text-align: right; padding-right: 10%;
         ul{list-style: none; padding: 0px; margin: 0px;
-            li{float: right; list-style: none; padding: 0px 0px;
-                a{padding:30px 15px; display: block; text-decoration: none;
+            li{float: right; list-style: none; padding: 22px 0px; margin-right: 10%;
+                a{padding:10px 15px; display: block; text-decoration: none;
                     text-transform: uppercase;
                     font-weight: 500;
                     font-size: 14px;
-                    color: $color-black;
+                    // color: $color-black;
+                    color: rgb(255 255 255);
+                    background-color: #104e51;
+                    border-radius: 40px;
                     &:hover{color: $color-black;}  
                 }
                 .dropdown-on-hover{
@@ -132,7 +184,7 @@ div, p{font-size: 14px;}
                     left: 0px;
                     right: 0px;
                     margin: 0px auto; 
-                    top: 81px !important;
+                    top: 85px !important;
                     z-index: 99999;
                     ul{ 
                         p{text-align: left; margin-bottom: 0px; padding-left: 10px;}                   
@@ -148,7 +200,7 @@ div, p{font-size: 14px;}
             }
         }
     }
-    .cart{position: absolute; top: 20px; width: 5%; right: 3%;
+    .cart{position: absolute; top: 24px; width: 5%; right: 3%;
         a{position: relative;
             span{position: absolute; top: -12px; right: -16px;}
         }
@@ -158,28 +210,31 @@ div, p{font-size: 14px;}
     .head{
         .logo{ width:185px; margin-left: 30px; padding: 5px 15px 5px; margin-top: 5px; 
                 display: inline-block; text-decoration: none;
-                img{width: 60px;}
+                img{width: 50px;}
                 h3{margin-top: 0px; font-size: 22px; color: $color-blue;}
             } 
         #sideNav{display: none;}   
         .head-search{position: absolute;
-            top: 31px;
-            width: 70%;
+            top: 15px;
+            width: 45%;
             left: 22%;
             margin-bottom: 10px;}         
         .header-menu{padding-right: 12%;
             ul{
-                li{
+                li{padding: 15px 0px;
                     a{padding:10px 8px;
                         font-size: 13px;
                         text-transform: uppercase;
                         img{width: 25px;} 
                     }
+                    .dropdown-on-hover{
+                        top: 70px !important;
+                    }
                     .dropdown-on-hover{display: none;}
                 }
             }
         }
-        .cart {top: 6px; width: 50px; right: 3%;}
+        .cart {top: 18px; width: 50px; right: 3%;}
     }
 }
 @media only screen and (max-width: 767px)
@@ -194,7 +249,12 @@ div, p{font-size: 14px;}
             width: 70%;
             left: 17%;
             margin-bottom: 10px;
-            position: absolute;}     
+            position: absolute;
+            .btn{
+                i{display: block;}
+                span{display: none;}
+            }
+        }     
         .header-menu{ text-align: left;
             padding-right: 0px;
             position: absolute;
@@ -206,11 +266,14 @@ div, p{font-size: 14px;}
             // margin-left: -100%;
             transition:all 0.5s;
             ul{
-                li{display: block; position: relative; padding: 0; float: none;
+                li{display: block; position: relative; margin-right: 0px; padding: 0; float: none;
                     a{padding:12px 15px;
                         font-size: 14px;
                         border-bottom: 1px solid $color-gray; 
-                        color: $color-white;                       
+                        color: $color-white;
+                        background-color: inherit;
+                        border-radius: 0px;
+                        i{float: right; margin-top: 5px;}                       
                     }
                     
                     .dropdown-on-hover{
@@ -244,7 +307,7 @@ div, p{font-size: 14px;}
             }
         }
         .add-mob-menu{left: 0%; position: absolute; z-index: 99999;}
-        .cart {top: 15px; width: 50px; right: 3%;
+        .cart {top: 14px; width: 50px; right: 0%;
             a{
                 img{width: 22px;}
             }

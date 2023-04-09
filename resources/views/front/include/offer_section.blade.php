@@ -9,7 +9,7 @@
                             @else
                                 <?php $cls = 'col-lg-3 col-md-3 col-sm-3';?>
                             @endif
-                            <div class="{{$cls}} col-12">
+                            <div class="{{$cls}} col-md-3 col-md-3 col-6">
                                 <div class="offer-box">
                                     <a href="javascript:void(0)">
                                         <img src="{{ URL::asset($banner->image) ?? ''}}" alt="">

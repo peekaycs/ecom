@@ -1,5 +1,5 @@
 .best-selling-products-section {
-  padding: 20px 0px;
+  padding: 20px 0px 10px;
 }
 .best-selling-products-section .best-selling-box a {
   display: block;
@@ -34,7 +34,7 @@
 }
 /*******************--offer section--*****************************/
 .offer-section {
-  padding: 30px 0px;
+  padding: 20px 0px;
 }
 .offer-section .offer-box {
   width: 100%;
