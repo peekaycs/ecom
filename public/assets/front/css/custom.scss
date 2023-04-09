@@ -1,7 +1,7 @@
 @import 'color';
 @import 'mixins';
 
-.best-selling-products-section{padding: 20px 0px;    
+.best-selling-products-section{padding: 20px 0px 10px;    
     .best-selling-box{
         a{
             @include a-tag;
@@ -32,7 +32,7 @@
     }
 }
 /*******************--offer section--*****************************/
-.offer-section{ padding: 30px 0px;
+.offer-section{ padding: 20px 0px;
     .offer-box{ 
         width: 100%; 
         height: 300px;
