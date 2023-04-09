@@ -29,6 +29,7 @@
 												{{ __('Log Out') }}
 											</x-dropdown-link>
 										</form>
+							<a href="{{ route('user-profile') }}" >Profile</a>
 						@else
 						<a href="#" onclick="document.getElementById('login').style.display='block'"> Login</a>
 						@endif

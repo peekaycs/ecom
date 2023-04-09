@@ -5,11 +5,17 @@
 		<div class="row">
 			<div class="col-md-2 col-sm-2 col-12">
 				<div class="footer-contant">
-					<h3>About Us</h3>
+					<!-- <h3>About Us</h3> -->
 					@if(!empty($pages))
 					<ul>
 						@if(isset($pages) && !empty($pages))
 							@foreach($pages as $page)
+								@if($loop->iteration >= 4)
+								@php
+									$pages->shift(3);
+								@endphp
+									@break
+								@endif
 								<li><a href="{{ route('front.pages', App\Helpers\Helper::constructSlug($page->slug)) }}">{{$page->name}}</a></li>
 							@endforeach
 						@endif
@@ -20,14 +26,21 @@
 			<div class="col-md-3 col-sm-3 col-6">
 				<div class="footer-contant">
 					<h3>Quick Links</h3>
+					@if(!empty($pages))
 					<ul>
-						<li><a href="javascript:void(0)">Homeopathy Medicines</a></li>
-						<li><a href="javascript:void(0)">Homeopathy Cosmetics</a></li>
-						<li><a href="javascript:void(0)">Allopathy Medicines</a></li>
-						<li><a href="javascript:void(0)">Homeopathy Clinic</a></li>								
-						<li><a href="javascript:void(0)">Bio Combinations</a></li>								
-						<li><a href="javascript:void(0)">Mother Tinctures</a></li>								
+						@if(isset($pages) && !empty($pages))
+							@foreach($pages as $page)
+								@if($loop->iteration >= 4)
+									@php
+									$pages->shift(3);
+									@endphp
+									@break
+								@endif
+								<li><a href="{{ route('front.pages', App\Helpers\Helper::constructSlug($page->slug)) }}">{{$page->name}}</a></li>
+							@endforeach
+						@endif
 					</ul>
+					@endif
 				</div>
 			</div>
 			<div class="col-md-2 col-sm-2 col-6">

@@ -7,13 +7,13 @@ use Illuminate\Http\Request;
 use App\Models\UserProfile;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Str;
+use App\Http\Classes\EcomController;
 use Image;
 use App\Models\Address;
 use File;
 
-class ProfileController extends Controller
+class ProfileController extends EcomController
 {
     //
 
@@ -103,6 +103,11 @@ class ProfileController extends Controller
             return redirect(route('admin-profile-edit'))->with('success','Profile updated successfully');
         }
         return redirect(route('admin-profile-edit'))->with('error','Can\'t update profile');
+    }
+
+    public function customerProfile(Request $request){
+        $user = User::with('userProfile','userAddress')->find(Auth::user()->id);
+        return view('front.profile', array('user' => $user));
     }
 
 }

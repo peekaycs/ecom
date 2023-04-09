@@ -13,6 +13,7 @@ use Spatie\Permission\Traits\HasRoles;
 use App\Models\ModelHasRole;
 use App\Models\ModelHasPermission;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use DB;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles, SoftDeletes;
@@ -71,4 +72,6 @@ class User extends Authenticatable
     public function userPermissions(){
         return $this->hasMany(ModelHasPermission::class,'permission_id','model_id');
     }
+
+    
 }

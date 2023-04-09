@@ -17,15 +17,13 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
+        // print_r(Auth::user()->roles);
         if(Auth::check()){
             if(Auth::user()->user_type == 'admin'){
                 return $next($request);
-            }else{
-                redirect('/')->with('status','Access Denied.');
-            }
-        }else{
-            redirect('/')->with('status','Please login.');
+            }   
+            return abort(401);
         }
-        return $next($request);
+        return abort(404);
     }
 }
