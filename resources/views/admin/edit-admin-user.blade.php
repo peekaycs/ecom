@@ -1,4 +1,4 @@
-@extends('admin.layouts.app',['page_title' => 'Admin User','action_title' => 'Permissions','page_action' => route('permissions'),'manage'=>'Roles','manage_action' => route('roles')])
+@extends('admin.layouts.app',['page_title' => 'Admin User'])
 
 @section('content')
 
@@ -95,13 +95,13 @@
                 <div class="selectgroup selectgroup-pills">
                     @foreach($roles as $role)
                         <label class="selectgroup-item pl-5">
-                            <input type="checkbox" name="roles[]" value="{{$role->name}}" class="selectgroup-input" {{$roles->contains('name',$role->name) ? 'checked' : ''}} >
+                            <input type="checkbox" name="roles[]" value="{{$role->name}}" class="selectgroup-input" {{ $user->roles->contains('name',$role->name) ? 'checked' : ''}} >
                             <span class="selectgroup-button">{{$role->name}}</span>
                         </label>
                     @endforeach
                 </div>
             </div>
-            <div class="form-group"><hr></div>
+            <!-- <div class="form-group"><hr></div>
             <div class="form-group">
                 <label class="form-label">Select Permissions</label>
                 <div class="selectgroup selectgroup-pills">
@@ -112,7 +112,7 @@
                         </label>
                     @endforeach
                 </div>
-            </div>
+            </div> -->
         </div>
         <div class="card-action text-right">
             <button type="submit" class="btn btn-success">Submit</button>

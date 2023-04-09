@@ -45,6 +45,7 @@
 							</span>
 							<h4 class="text-section">Menu</h4>
 						</li>
+						@if(Auth::user()->hasRole(['Admin','Product Manager']))
 						<li class="nav-item">
 							<a data-toggle="collapse" href="#base">
 								<i class="fas fa-layer-group"></i>
@@ -82,6 +83,8 @@
 								</ul>
 							</div>
 						</li>
+						@endif
+						@if(Auth::user()->hasRole(['Admin']))
 						<li class="nav-item">
 							<a data-toggle="collapse" href="#banners">
 								<i class="fas fa-ticket-alt"></i>
@@ -99,6 +102,8 @@
 								</ul>
 							</div>
 						</li>
+						@endif
+						@if(Auth::user()->hasRole(['Admin']))
 						<li class="nav-item">
 							<a data-toggle="collapse" href="#coupons">
 								<i class="fas fa-box-open"></i>
@@ -120,6 +125,8 @@
 								</ul>
 							</div>
 						</li>
+						@endif
+						@if(Auth::user()->hasRole(['Admin']))
 						<li class="nav-item">
 							<a data-toggle="collapse" href="#pages">
 								<i class="far fa-newspaper"></i>
@@ -141,6 +148,8 @@
 								</ul>
 							</div>
 						</li>
+						@endif
+						@if(Auth::user()->hasRole(['Admin']))
 						 <li class="nav-item">
 							<a data-toggle="collapse" href="#sidebarLayouts">
 								<i class="fas fa-user"></i>
@@ -149,16 +158,16 @@
 							</a>
 							<div class="collapse" id="sidebarLayouts">
 								<ul class="nav nav-collapse">
-									<li>
+									<!-- <li>
 										<a href="{{route('roles')}}">
 											<span class="sub-item">Roles</span>
 										</a>
-									</li>
-									<li>
+									</li> -->
+									<!-- <li>
 										<a href="{{route('permissions')}}">
 											<span class="sub-item">Permissions</span>
 										</a>
-									</li>
+									</li> -->
 									<li>
 										<a href="{{route('admin-users')}}">
 											<span class="sub-item">Admin Users</span>
@@ -168,6 +177,8 @@
 								</ul>
 							</div>
 						</li>
+						@endif
+						@if(Auth::user()->hasRole(['Admin']))
 						<li class="nav-item">
 							<a data-toggle="collapse" href="#vendors">
 								<i class="fas fa-user-friends"></i>
@@ -189,7 +200,30 @@
 								</ul>
 							</div>
 						</li>
-						
+						@endif
+						@if(Auth::user()->hasRole(['Admin','Order Manager']))
+						<li class="nav-item">
+							<a data-toggle="collapse" href="#orders">
+								<i class="fas fa-store"></i>
+								<p>Order Management</p>
+								<span class="caret"></span>
+							</a>
+							<div class="collapse" id="orders">
+								<ul class="nav nav-collapse">
+									<li>
+										<a href="{{route('vendors')}}">
+											<span class="sub-item">Orders</span>
+										</a>
+									</li>
+									<li>
+										<!-- <a href="{{route('create-vendor-user')}}"> -->
+											<!-- <span class="sub-item">Create Cendor</span> -->
+										<!-- </a> -->
+									</li>
+								</ul>
+							</div>
+						</li>
+						@endif
 					<!--	<li class="nav-item">
 							<a data-toggle="collapse" href="#forms">
 								<i class="fas fa-pen-square"></i>

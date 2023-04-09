@@ -19,7 +19,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\VendorController;
 
 Route::get('/admin', function(){
-    return view('auth.login');
+    return view('admin.login');
 });
 Route::group(['prefix'=>'admin','middleware' => ['auth','isAdmin']], function(){
     Route::get('/dashboard', [DashboardController::class,'index'])->name('admin-dashboard');

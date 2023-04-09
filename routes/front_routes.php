@@ -10,6 +10,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\Admin\ProfileController;
 
 Route::get('/', [HomeController::class,'index'])->name('home');
 
@@ -24,19 +25,21 @@ Route::get('/productByBrand/{slug}/{brand}/{order}', [ProductController::class,'
 Route::get('/product-detail/{slug}', [ProductController::class,'productDetail'])->name('product_detail');
 
 //cart
-Route::get('/cart-list', [CartStorageNewController::class,'cart_list'])->name('cart_list');
-Route::post('/add-to-cart', [CartStorageNewController::class,'AddToCart'])->name('AddToCart');
-Route::post('/remove-from-cart', [CartStorageNewController::class,'RemoveFromCart'])->name('RemoveFromCart');
-Route::post('/update-cart', [CartStorageNewController::class,'updateCart'])->name('updateCart');
+Route::group(['middleware' => ['auth']], function(){
+    Route::get('/cart-list', [CartStorageNewController::class,'cart_list'])->name('cart_list');
+    Route::post('/add-to-cart', [CartStorageNewController::class,'AddToCart'])->name('AddToCart');
+    Route::post('/remove-from-cart', [CartStorageNewController::class,'RemoveFromCart'])->name('RemoveFromCart');
+    Route::post('/update-cart', [CartStorageNewController::class,'updateCart'])->name('updateCart');
 
-Route::get('/checkout', [CheckoutController::class,'index'])->name('checkout');
+    Route::get('/checkout', [CheckoutController::class,'index'])->name('checkout');
 
-Route::get('/address', [AddressController::class,'index'])->name('address');
-Route::post('/address/store', [AddressController::class,'store'])->name('store');
+    Route::get('/address', [AddressController::class,'index'])->name('address');
+    Route::post('/address/store', [AddressController::class,'store'])->name('store');
 
-Route::post('/apply-coupon', [CartStorageNewController::class,'applyCoupon'])->name('applyCoupon');
-Route::post('/remove-coupon', [CartStorageNewController::class,'removeCoupon'])->name('removeCoupon');
-
+    Route::post('/apply-coupon', [CartStorageNewController::class,'applyCoupon'])->name('applyCoupon');
+    Route::post('/remove-coupon', [CartStorageNewController::class,'removeCoupon'])->name('removeCoupon');
+    Route::get('/profile', [ProfileController::class,''])->name('user-profile');
+});
 //signup form
 Route::get('/signup', [HomeController::class,'signup'])->name('signup');
 

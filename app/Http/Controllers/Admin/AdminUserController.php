@@ -103,11 +103,12 @@ class AdminUserController extends Controller
     public function edit($id)
     {
         //
-
-        $user = User::with(['userProfile','userPermissions','userRoles'])->find($id);
+        
+        $user = User::with(['userProfile','userPermissions','roles'])->find($id);
+        // $user->roles = $user->getRoleNames() ?? array();
+        // dd($user->roles);
         $roles = Role::all();
         $permissions = Permission::all();
-        // dd($user);
         return view('admin.edit-admin-user', array('user' => $user, 'roles' => $roles, 'permissions' => $permissions));
     }
 
@@ -139,11 +140,18 @@ class AdminUserController extends Controller
         $user->mobile = $request->mobile;
         $user->is_active =   $request->is_active;
         $saved = $user->save();
+
         if($saved){
             $userProfile = UserProfile::find($user->userProfile->id);
             $userProfile->age = $request->age;
             $userProfile->gender = $request->gender;
             $userProfile->save();
+             // create permissions
+            $roles = $request->roles;
+            $permissions = $request->permissions;
+            // sync roles
+            $user->syncRoles($roles);
+            // $user->syncPermissions($permissions);
         }
         // dd($user);        
         
