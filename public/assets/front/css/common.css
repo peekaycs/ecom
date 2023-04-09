@@ -355,7 +355,7 @@ div, p {
 }
 .head .cart {
   position: absolute;
-  top: 20px;
+  top: 24px;
   width: 5%;
   right: 3%;
 }
@@ -527,9 +527,9 @@ div, p {
     z-index: 99999;
   }
   .head .cart {
-    top: 15px;
+    top: 14px;
     width: 50px;
-    right: 3%;
+    right: 0%;
   }
   .head .cart a img {
     width: 22px;
