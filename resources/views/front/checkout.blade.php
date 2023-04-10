@@ -152,6 +152,26 @@
 						</div>					
 					</div>
 				</div>
+				<?php $total_discount = $total_price = $shipping = 0;?>
+				@if( isset($cart_list) && !empty($cart_list) )
+					@foreach($cart_list as $item_id => $item)
+						@foreach($item->conditions as $condition)
+							@if(isset($condition) && !empty($condition))
+								@if($condition->getType() == 'shipping')
+									<?php $shipping = $shipping + $condition->getValue(); ?>
+								@endif    
+							@endif        
+						@endforeach
+						<?php
+						$total_discount = $total_discount + ($item->price - $item->getPriceWithConditions()) * $item->quantity;
+						$total_price = $total_price + ($item->price * $item->quantity);
+						?>
+					@endforeach
+				@endif 
+				<?php 
+				$ids = explode('_', $item_id);
+				$product_id = $ids[0];
+				$attribute_id = $ids[1] ?? '';?>
 				<div class="checkout-section2">
 					<h6>Select Payment Method</h6>
 					<hr>
@@ -162,7 +182,7 @@
 									<div class="form-check">
 										<input type="radio" class="form-check-input" id="DCU" name="payment-method" checked>
 										<label class="form-check-label" for="DCU">
-											<strong>Debit Card / Credit Card / UPI</strong>
+											<strong>Check</strong>
 										</label>
 										<p>Visa, MasterCard, Maestro Card, American Express</p>
 										<figure>
@@ -174,7 +194,7 @@
 								</div>
 								<div class="col-md-3 col-sm-3 col-4 text-end">
 									<a href="javascript:void(0)" class="btn btn-info d-block">
-										Pay Rs. 400
+										Pay Rs. {{ $subTotal ?? '' }}
 									</a>
 								</div>
 							</div>
@@ -185,7 +205,7 @@
 									<div class="form-check">
 										<input type="radio" class="form-check-input" id="Netbanking" name="payment-method">
 										<label class="form-check-label" for="Netbanking">
-											<strong>Netbanking / Wallets</strong>
+											<strong>Demand Draft (DD)</strong>
 										</label>
 										<p>PhonePe, Freecharge, Payzapp, Ola Money, Jio Money, Airtel Money</p>
 										<figure>
@@ -195,7 +215,7 @@
 								</div>
 								<div class="col-md-3 col-sm-3 col-4 text-end">
 									<a href="javascript:void(0)" class="btn btn-info d-block">
-										Pay Rs. 400
+										Pay Rs. {{ $subTotal ?? '' }}
 									</a>
 								</div>
 							</div>
@@ -205,7 +225,7 @@
 								<div class="col-md-9 col-sm-9 col-8">
 									<div class="form-check">
 										<input type="radio" class="form-check-input" id="Paytm" name="payment-method">
-										<label class="form-check-label" for="Paytm"><strong>Paytm Wallet</strong></label>
+										<label class="form-check-label" for="Paytm"><strong>Online</strong></label>
 										<p>Pay with Paytm</p>
 										<figure>
 											<img src="images/paytm-wallet.png" alt="">
@@ -214,7 +234,7 @@
 								</div>
 								<div class="col-md-3 col-sm-3 col-4 text-end">
 									<a href="javascript:void(0)" class="btn btn-info d-block">
-										Pay Rs. 400
+										Pay Rs. {{ $subTotal ?? '' }}
 									</a>
 								</div>
 							</div>
@@ -226,15 +246,15 @@
 										<input type="radio" class="form-check-input" id="COD" name="payment-method">
 										<label class="form-check-label" for="COD"><strong>Cash On Delivery (COD)</strong></label>
 										<p>Now avail Cash on Delivery, and pay when you get delivery</p>
-										<p><strong class="text-danger">COD charge 50 extra</strong></p>
+										<p><strong class="text-danger">COD charge 20 extra</strong></p>
 									</div>
 								</div>
 								<div class="col-md-3 col-sm-3 col-4 text-end">
 									<div class="cod">
-										<span>Total Price (<i class="fa fa-rupee-sign fa-xs"></i>) 400</span> + <span>50</span>
+										<span>Total Price (<i class="fa fa-rupee-sign fa-xs"></i>) {{ $subTotal ?? '' }}</span> + <span>20</span>
 									</div>
 									<a href="javascript:void(0)" class="btn btn-info d-block">
-										Pay Rs. 450
+										Pay Rs. {{ $subTotal ? $subTotal+20 : '' }}
 									</a>
 								</div>
 							</div>
@@ -244,29 +264,39 @@
 			</div>
 			<div class="col-md-3 col-sm-3 col-12 m-padding-lr">
                 <div class="cart-section">
-                    <h5 class="alert alert-info">Order Summary (3 Items)</h5>
+                    <h5 class="alert alert-info">Order Summary ( {{$count ?? '0'}} Items)</h5>
                     <div class="check-out">
                         <p>
                             MRP Total
-                            <span>Rs 360</span>
+                            <span>Rs {{ $total_price ?? '' }}</span>
                         </p>									
                         <p>
-                            Price Discount
-                            <span>- ₹ 50</span>
+							{{ isset($total_discount) ? 'Price Discount' : ''}}
+                            <span>{{ isset($total_discount) ? '-₹'. $total_discount : '0'}}</span>
                         </p>
                         <p>
-                            Shipping Charges
-                            <span>40</span>
+							{{ 'Shipping Charges' }} 
+                            <span>{{ '+₹'.$shipping ?? '+₹0' }}</span>
                         </p>
                         <hr>
+						@if( isset($conditions) && !empty($conditions) )
+                            @foreach($conditions as $key => $condition)
+                            <p>
+                                <strong>{{ $condition->getType() != null ? ucwords($condition->getType()) . ' Discount' : '' }} 
+                                    <small style="color:red"><a href="javascript:void(0)" onclick="removeCoupon(this, '{{ $condition->getName() ?? ''}}')">Remove</a></small>
+                                </strong>
+                                <span><strong>Rs {{ $condition->getValue() ?? ''}}</strong></span>
+                            </p>
+                            @endforeach
+                        @endif
                         <p>
-                            <strong>To be paid</strong>
-                            <span><strong>Rs 400</strong></span>
+							<strong>To be paid</strong>
+                            <span><strong>Rs {{ $subTotal ?? '' }}</strong></span>
                         </p>
                         <hr>
                     </div>                    
                     <div class="alert alert-success">
-                        <span>Total Savings: <strong>Rs 50</strong></span>
+						<span>Total Savings: <strong>{{ isset($total_discount) ? '₹'. $total_discount : '0'}}</strong></span>
                         <!-- <button type="button" class="btn btn-sm btn-success float-end">CHECKOUT</button> -->
                         <!-- <a href="address.php" type="button" class="btn btn-sm btn-success float-end">Proceed</a> -->
                     </div>
