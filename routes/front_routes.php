@@ -32,6 +32,8 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/update-cart', [CartStorageNewController::class,'updateCart'])->name('updateCart');
 
     Route::get('/checkout', [CheckoutController::class,'index'])->name('checkout');
+    Route::post('/pay', [CheckoutController::class,'pay'])->name('pay');
+    Route::get('/thankyou', [CheckoutController::class,'thankyou'])->name('thankyou');
 
     Route::get('/address', [AddressController::class,'index'])->name('address');
     Route::post('/address/store', [AddressController::class,'store'])->name('store');

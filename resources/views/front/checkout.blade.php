@@ -193,9 +193,58 @@
 									</div>
 								</div>
 								<div class="col-md-3 col-sm-3 col-4 text-end">
-									<a href="javascript:void(0)" class="btn btn-info d-block">
+									<a data-bs-toggle="tab" href="#check" class="btn btn-info d-block">
 										Pay Rs. {{ $subTotal ?? '' }}
 									</a>
+								</div>
+							</div>
+							
+							<div class="row tab-pane " id="check">
+								<div class="col-md-6 col-sm-12 col-12">
+									<form action="{{ route('pay') }}" method="POST">
+										@csrf
+										<input type="hidden" name="mode" value="DD">
+										<input type="hidden" name="order_id" value="{{ $order_id ?? '' }}">
+										<div class="col-md-12 col-sm-12 col-12">
+											<label>Cheque Number :</label>
+											<input type="text" name="cheque_number" class="form-control rounded-0 border-end-1 @error('cheque_number') has-error @enderror" placeholder="Enter cheque number">
+											@error('cheque_number')
+											<p class="text-danger">{{ $message }}</p>
+											@enderror
+										</div>
+										<div class="col-md-12 col-sm-12 col-12">
+											<label>Bank Name :</label>
+											<input type="text" name="bank_name" class="form-control rounded-0 border-end-1 @error('bank_name') has-error @enderror" placeholder="Enter Bank name">
+											@error('bank_name')
+											<p class="text-danger">{{ $message }}</p>
+											@enderror
+										</div>
+										<div class="col-md-12 col-sm-12 col-12">
+											<label>Account Number :</label>
+											<input type="text" name="account_number" class="form-control rounded-0 border-end-1 @error('account_number') has-error @enderror" placeholder="Enter account number">
+											@error('account_number')
+											<p class="text-danger">{{ $message }}</p>
+											@enderror
+										</div>
+										<div class="col-md-12 col-sm-12 col-12">
+											<label>IFSC Code :</label>
+											<input type="text" name="ifsc" class="form-control rounded-0 border-end-1 @error('ifsc') has-error @enderror" placeholder="Enter ifsc code">
+											@error('ifsc')
+											<p class="text-danger">{{ $message }}</p>
+											@enderror
+										</div>
+										<div class="col-md-12 col-sm-12 col-12">
+											<label>Amount</label>
+											<input type="text" name="amount" class="form-control rounded-0 border-end-1 @error('amount') has-error @enderror" placeholder="Enter Check Amount">
+											@error('amount')
+											<p class="text-danger">{{ $message }}</p>
+											@enderror
+										</div>
+										<div class="col-md-12 col-sm-12 col-12 text-center mt-3">
+											<!--<a href="#" class="btn btn-primary">Pay Now</a>-->
+											<button type="submit" name="submit" class="btn btn-primary">Pay Now</button>
+										</div>
+									</form>	
 								</div>
 							</div>
 						</div>
