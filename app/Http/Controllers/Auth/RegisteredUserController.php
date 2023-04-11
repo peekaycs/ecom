@@ -60,12 +60,15 @@ class RegisteredUserController extends Controller
         ]);
         Auth::login($user);
         if( isset( $request->user_type ) && !empty( $request->user_type )){
-            return redirect(url()->previous()->previous());
+            if(isset($request->last_url)){
+                return redirect( $request->last_url);
+            }
+            return redirect(url()->previous());
         }else{
             return redirect(url()->previous());
         }
         
 
-        // return redirect(RouteServiceProvider::HOME);
+        return redirect(RouteServiceProvider::HOME);
     }
 }

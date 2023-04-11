@@ -72,8 +72,11 @@ class PageController extends EcomController
         $slug = Helper::destructSlug($slug);
         $page = Page::where('slug',$slug)->get()->take(1);
         if(isset($page[0])){
-            return $this->createView('front.page', array('pageContent' => $page[0]));
+            $pageContent = $page[0];
+            $this->pageTitle = $pageContent->title;
+            return $this->createView('front.page', array('pageContent' => $pageContent));
         }
+        
         return redirect()->back();
         
 

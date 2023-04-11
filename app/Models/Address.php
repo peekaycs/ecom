@@ -11,5 +11,5 @@ class Address extends Model
 
     protected $primaryKey = 'uuid';
     public $incrementing = false;
-    protected $fillable = ['uuid','user_id','address','ladmark','district','city','state','country','zip'];
+    protected $fillable = ['uuid','user_id','address','ladmark','district','city','state','country','zip','name','contact','email','address_type','default_address'];
 }

@@ -10,7 +10,7 @@ use App\Models\Category;
 use Cart;
 class EcomController extends Controller
 {
-    
+    public $pageTitle = '';
     public function __construct(){
         
     }
@@ -21,9 +21,7 @@ class EcomController extends Controller
         $category = Category::orderBy('order','ASC')->get();
         // dynamic pages
         $pages = Page::where('published', true)->get();
-        // dd($pages->take(1));
         // Cart Items
-        //$userId = 100; // or any string represents user identifier
         if (Auth::check()) {
             $userId = Auth::user()->uuid;
             Cart::session($userId);
@@ -34,6 +32,7 @@ class EcomController extends Controller
         
         $data['category'] = $category;
         $data['pages'] = $pages;
+        $data['pageTitle'] = $this->pageTitle;
         return view($page, $data);
     }
 

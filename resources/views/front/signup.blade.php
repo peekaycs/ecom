@@ -8,6 +8,7 @@
                     <input type="hidden" name="user_type" value="1">
                     <div class="signup-heading">Sign-Up</div>
                     @csrf
+                    <input type="hidden" name="last_url" value="{{url()->previous()}}">
                     <div class="login-container">
                         <label for="Name"><b>First Name</b></label>
                         <input type="text" name="first_name" placeholder="First Name"  value="{{old('first_name')}}" required>
@@ -20,12 +21,12 @@
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
                         <label for="mobile-number"><b>Mobile Number</b></label>
-                        <input type="number" placeholder="Mobile Number" name="mobile" value="{{old('mobile')}}" required>
+                        <input type="number" placeholder="Mobile Number" name="mobile" value="{{old('mobile')}}" maxlength="10" minlength="10" required>
                         @error('mobile')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
                         <label for="email id"><b>Email Id</b></label>
-                        <input type="email" placeholder="Email Address" name="email" value="{{old('email')}}" required>
+                        <input type="email" placeholder="Email Address" name="email" value="{{old('email')}}" maxlength="256" minlength="4" required>
                         @error('email')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror

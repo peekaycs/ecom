@@ -41,7 +41,7 @@ class AuthenticatedSessionController extends Controller
                 return redirect()->intended(RouteServiceProvider::ADMIN_HOME);
                 exit;
             }
-            if(url()->previous() != route('signup')){
+            if(url()->previous() == route('signup')){
                 return redirect(url()->previous());
             }else{
                 return redirect()->intended(RouteServiceProvider::HOME);
