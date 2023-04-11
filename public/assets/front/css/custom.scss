@@ -373,7 +373,7 @@
 @media only screen and (max-width: 1024px){}
 @media only screen and (max-width: 767px){}
 
-// ##################--category page--###############
+// ##################--category page start--###############
 
 .aside-filter{ 
     width: 100%; 
@@ -476,16 +476,16 @@
 @media only screen and (max-width: 1024px){}
 @media only screen and (max-width: 767px){
     .aside-filter{ 
-        width: 40%; 
+        width: 100%; 
         min-height: auto; 
         margin-top: 5px;
         padding: 0px;
         background-color: inherit;
-        position: absolute;// thise line is remove when you want to scroll more than one tab
-        top: 147px;// thise line is remove when you want to scroll more than one tab
+        // position: absolute;// thise line is remove when you want to scroll more than one tab
+        // top: 147px;// thise line is remove when you want to scroll more than one tab
         .aside-desk-filter{display: none;}
         .mobile-filter-tab{
-            display: block;
+            display: block;padding: 5px 0px;
             span{border: 1px solid $color-gray;
                 padding: 3px 15px;
                 font-size: 12px;
@@ -766,6 +766,13 @@
     .product-name{margin-top: 10px;
         h4{ font-size: 18px;}
         h5{font-size: 14px;}
+        .additional-discount{
+            .ad-price{
+                h5{font-size: 16px;}
+                h6{margin-bottom: 15px; font-size: 14px;
+                }
+            }        
+        }
     }
 }
 
@@ -972,7 +979,7 @@
             background-color: #fefefe;
             margin: 2% auto 0% auto;
         }
-        input[type=text], input[type=password] {
+        input[type=text], input[type=password],input[type=email],input[type=number]  {
             width: 100%;
             padding: 8px 10px;
             margin: 8px 0;

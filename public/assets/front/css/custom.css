@@ -524,19 +524,18 @@
 
 @media only screen and (max-width: 767px) {
   .aside-filter {
-    width: 40%;
+    width: 100%;
     min-height: auto;
     margin-top: 5px;
     padding: 0px;
     background-color: inherit;
-    position: absolute;
-    top: 147px;
   }
   .aside-filter .aside-desk-filter {
     display: none;
   }
   .aside-filter .mobile-filter-tab {
     display: block;
+    padding: 5px 0px;
   }
   .aside-filter .mobile-filter-tab span {
     border: 1px solid #ccc;
@@ -916,6 +915,13 @@
   .product-name h5 {
     font-size: 14px;
   }
+  .product-name .additional-discount .ad-price h5 {
+    font-size: 16px;
+  }
+  .product-name .additional-discount .ad-price h6 {
+    margin-bottom: 15px;
+    font-size: 14px;
+  }
 }
 .product-price {
   padding: 10px;
@@ -1244,7 +1250,7 @@
   background-color: #fefefe;
   margin: 2% auto 0% auto;
 }
-.login-section .login input[type=text], .login-section .login input[type=password] {
+.login-section .login input[type=text], .login-section .login input[type=password], .login-section .login input[type=email], .login-section .login input[type=number] {
   width: 100%;
   padding: 8px 10px;
   margin: 8px 0;
