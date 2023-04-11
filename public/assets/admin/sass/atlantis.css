@@ -4246,7 +4246,6 @@ label {
 }
 .form-group-default label {
   opacity: 1;
-  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   margin: 0;
   display: block;
@@ -8391,7 +8390,6 @@ label.error {
   }
 }
 .animated.flip {
-  -webkit-backface-visibility: visible;
   backface-visibility: visible;
   animation-name: flip;
 }
@@ -8417,7 +8415,6 @@ label.error {
   }
 }
 .flipInX {
-  -webkit-backface-visibility: visible !important;
   backface-visibility: visible !important;
   animation-name: flipInX;
 }
@@ -8443,7 +8440,6 @@ label.error {
   }
 }
 .flipInY {
-  -webkit-backface-visibility: visible !important;
   backface-visibility: visible !important;
   animation-name: flipInY;
 }
@@ -8463,7 +8459,6 @@ label.error {
 .flipOutX {
   animation-duration: 0.75s;
   animation-name: flipOutX;
-  -webkit-backface-visibility: visible !important;
   backface-visibility: visible !important;
 }
 @keyframes flipOutY {
@@ -8481,7 +8476,6 @@ label.error {
 }
 .flipOutY {
   animation-duration: 0.75s;
-  -webkit-backface-visibility: visible !important;
   backface-visibility: visible !important;
   animation-name: flipOutY;
 }
