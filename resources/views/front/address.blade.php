@@ -49,7 +49,9 @@
                                 <a href="javascript:void(0)" id="btn-add-new-address" class="btn btn-sm btn-outline-danger rounded-0 d-block">ADD NEW ADDRESS</a>
                             </div>
                             <div class="col-md-12 col-sm-12 col-6 text-center">
-                                <a href="javascript:void(0)" class="btn btn-sm btn-success rounded-0 d-block">CONTINUE</a>
+                                @if(isset($addresses) && $addresses->count() > 0)
+                                    <a href="{{route('checkout')}}" class="btn btn-sm btn-success rounded-0 d-block">CONTINUE</a>
+                                @endif
                             </div>
                         </div>
                     </form>
@@ -135,32 +137,63 @@
                     </form>
                 </div>
             </div>
+            <?php $total_discount = $total_price = $shipping = 0;?>
+            @if( isset($cart_list) && !empty($cart_list) )
+                @foreach($cart_list as $item_id => $item)
+                    @foreach($item->conditions as $condition)
+                        @if(isset($condition) && !empty($condition))
+                            @if($condition->getType() == 'shipping')
+                                <?php $shipping = $shipping + $condition->getValue(); ?>
+                            @endif    
+                        @endif        
+                    @endforeach
+                    <?php
+                    $total_discount = $total_discount + ($item->price - $item->getPriceWithConditions()) * $item->quantity;
+                    $total_price = $total_price + ($item->price * $item->quantity);
+                    ?>
+                @endforeach
+            @endif 
+            <?php 
+            $ids = explode('_', $item_id);
+            $product_id = $ids[0];
+            $attribute_id = $ids[1] ?? '';?>
+
             <div class="col-md-4 col-sm-4 col-12 m-padding-lr">
                 <div class="cart-section">
                     <h5 class="alert alert-info">Combo packs for this product</h5>
                     <div class="check-out">
                         <p>
                             MRP Total
-                            <span>Rs 165</span>
+                            <span>{{ $total_price ?? '' }}</span>
                         </p>									
                         <p>
-                            Price Discount
-                            <span>- ₹74</span>
+                            {{ isset($total_discount) ? 'Price Discount' : ''}}
+                            <span>{{ isset($total_discount) ? '-₹'. $total_discount : '0'}}</span>
                         </p>
                         <p>
-                            Shipping Charges
-                            <span>As per delivery address</span>
+                            {{ 'Shipping Charges' }} 
+                            <span>{{ '+₹'.$shipping ?? '+₹0' }}</span>
                         </p>
                         <hr>
+                        @if( isset($conditions) && !empty($conditions) )
+                            @foreach($conditions as $key => $condition)
+                            <p>
+                                <strong>{{ $condition->getType() != null ? ucwords($condition->getType()) . ' Discount' : '' }} 
+                                    <small style="color:red"><a href="javascript:void(0)" onclick="removeCoupon(this, '{{ $condition->getName() ?? ''}}')">Remove</a></small>
+                                </strong>
+                                <span><strong>Rs {{ $condition->getValue() ?? ''}}</strong></span>
+                            </p>
+                            @endforeach
+                        @endif
                         <p>
                             <strong>To be paid</strong>
-                            <span><strong>Rs 421</strong></span>
+                            <span><strong>Rs {{ $subTotal ?? '' }}</strong></span>
                         </p>
                     </div>
                     <div class="alert alert-success">
-                        <span>Total Savings: <strong>Rs 70</strong></span>
+                        <span>Total Savings: <strong>{{ isset($total_discount) ? '₹'. $total_discount : '0'}}</strong></span>
                         <!-- <button type="button" class="btn btn-sm btn-success float-end">CHECKOUT</button> -->
-                        <a href="#" class="btn btn-sm btn-success float-end">Payment</a>
+                        <a href="{{route('checkout')}}" class="btn btn-sm btn-success float-end">Payment</a>
                     </div>
                 </div>                
             </div>            
