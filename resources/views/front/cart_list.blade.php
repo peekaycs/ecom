@@ -125,15 +125,25 @@
                         <p>Apply Coupon</p>
                         <input type="text" class="form-control-sm">
                     </div> -->
-                    <div class="alert alert-success">
-                        <span>Total Savings: <strong>{{ isset($total_discount) ? '₹'. $total_discount : '0'}}</strong></span>
-                        <!-- <button type="button" class="btn btn-sm btn-success float-end">CHECKOUT</button> -->
-                        @if(Auth::check())
-                        <a href="{{route('address')}}" type="button" class="btn btn-sm btn-success float-end">CHECKOUT</a>
-                        @else
-                        <a href="#" onclick="document.getElementById('login').style.display='block'" type="button" class="btn btn-sm btn-success float-end">CHECKOUT</a>
-                        @endif
-                    </div>
+                    <form action="{{route('order')}}" method="POST" >	
+                        @csrf
+                        <input type="hidden" name="applied_coupon" value="12345" class="name" id="name">
+                        <input type="hidden" name="total" value="{{ $total_price ?? '' }}" class="price" id="price">
+                        <input type="hidden" name="discount" value="{{ $total_discount ?? '0' }}" class="discount" id="discount">
+                    
+                        <div class="alert alert-success">
+                            <span>Total Savings: <strong>{{ isset($total_discount) ? '₹'. $total_discount : '0'}}</strong></span>
+                            <!-- <button type="button" class="btn btn-sm btn-success float-end">CHECKOUT</button> -->
+                            <button type="submit" name="submit" class="btn btn-sm btn-success float-end">CHECKOUT</button>
+                            <!--
+                            @if(Auth::check())
+                            <a href="{{route('address')}}" type="button" class="btn btn-sm btn-success float-end">CHECKOUT</a>
+                            @else
+                            <a href="#" onclick="document.getElementById('login').style.display='block'" type="button" class="btn btn-sm btn-success float-end">CHECKOUT</a>
+                            @endif
+                            -->
+                        </div>
+                    </form>
                 </div>                
             </div> 
         </div>

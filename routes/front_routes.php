@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Front\CartStorageNewController;
 use App\Http\Controllers\PageController;
 
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\AddressController;
@@ -34,6 +35,8 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/checkout', [CheckoutController::class,'index'])->name('checkout');
     Route::post('/pay', [CheckoutController::class,'pay'])->name('pay');
     Route::get('/thankyou', [CheckoutController::class,'thankyou'])->name('thankyou');
+
+    Route::post('/order', [OrderController::class,'store'])->name('order');
 
     Route::get('/address', [AddressController::class,'index'])->name('address');
     Route::post('/address/store', [AddressController::class,'store'])->name('store');
