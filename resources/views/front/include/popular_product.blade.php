@@ -22,8 +22,8 @@
 		</div>
 		<div class="row mt-3">
 			<div class="col-lg-12 col-md-12 col-sm-12 col-12">                
-				<div class="tab-content">
-					<div id="Latest_Products" class="tab-pane active">
+				<div class="">
+					<div id="Latest_Products" class="tab-pane active slide-popular">
 						<div class="product-slide">
 							@if (isset($best_selling) && !empty($best_selling))
 								@foreach($best_selling as $best) 
@@ -62,7 +62,7 @@
 							@endif    
 						</div>
 					</div>
-					<div id="Top_Rating_Products" class="tab-pane fade">
+					<div id="Top_Rating_Products" class="tab-pane slide-popular" style="height: 0px;">
 						<div class="product-slide">
 							@if (isset($best_selling) && !empty($best_selling))
 								@foreach($best_selling as $top_rated) 
@@ -101,7 +101,7 @@
 							@endif    
 						</div>
 					</div>
-					<div id="Featured_Products" class="tab-pane fade">
+					<div id="Featured_Products" class="tab-pane slide-popular" style="height:0px">
 						<div class="product-slide">
 							@if (isset($best_selling) && !empty($best_selling))
 								@foreach($best_selling as $featured) 
