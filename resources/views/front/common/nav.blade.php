@@ -18,36 +18,39 @@
 							<span>Download App</span>
 						</a>
 					</li>
-					<li class="login">
-						@if(Auth::check())
-						<form method="POST" action="{{ route('logout') }}">
+					@if(Auth::check())
+					<li class="profile-icon">
+						<a href="#">
+							<i class="fas fa-user-tie"></i>
+							<span class="d-display">Hi, {{Auth::user()->first_name}}</span>
+							<!-- <i class="fas fa-caret-down"></i> -->
+						</a>
+					</li>
+					<div class="profile-ddp">
+						<ul>
+							<li><a href="{{ route('user-profile') }}"><i class="fa fa-user-circle"></i> Profile</a></li>
+							<li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
+							<li>
+								<i class="fa fa-sign-out">
+								@if(Auth::check())
+										<form method="POST" action="{{ route('logout') }}">
 											@csrf
-
 											<x-dropdown-link :href="route('logout')"
 													onclick="event.preventDefault();
 																this.closest('form').submit();">
 												{{ __('Log Out') }}
 											</x-dropdown-link>
 										</form>
-							<a href="{{ route('user-profile') }}" >Profile</a>
-						@else
-						<a href="#" onclick="document.getElementById('login').style.display='block'"> Login</a>
-						@endif
-					</li>
-					<li class="profile-icon">
-						<a href="#">
-							<i class="fas fa-user-tie"></i>
-							<span class="d-display">Profile</span>
-							<!-- <i class="fas fa-caret-down"></i> -->
-						</a>
-					</li>
-					<div class="profile-ddp">
-						<ul>
-							<li><a href="#"><i class="fa fa-user-circle"></i> Profile</a></li>
-							<li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
-							<li><a href="#"><i class="fa fa-sign-out"></i> Logout</a></li>
+										@endif
+								</i>
+							</li>
 						</ul>
 					</div>
+					@else
+					<li class="login">
+						<a href="#" onclick="document.getElementById('login').style.display='block'"> Login</a>
+					</li>
+					@endif
 				</ul>
 			</div>
 		</div>
