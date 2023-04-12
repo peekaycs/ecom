@@ -222,3 +222,14 @@ $(document).ready(function(){
         $(".aside-mobile-filter").removeClass("add-m-data-show");
     });
 });
+
+$(document).ready(function() {
+    $(".popular").on('click', function(){
+        let href = $(this).attr("href");
+        $(".slide-popular").hide();
+        $(".slide-popular").css('height','0px');
+        $(href).css('height','unset'); 
+        $(href).show();        
+    });
+})
+
