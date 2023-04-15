@@ -301,7 +301,7 @@ div, p {
   float: right;
   list-style: none;
   padding: 22px 0px;
-  margin-right: 10%;
+  margin-right: 23%;
 }
 .head .header-menu ul li a {
   padding: 10px 15px;
@@ -311,7 +311,7 @@ div, p {
   font-weight: 500;
   font-size: 14px;
   color: rgb(255, 255, 255);
-  background-color: #104e51;
+  background-color: #139fae;
   border-radius: 40px;
 }
 .head .header-menu ul li a:hover {
@@ -321,6 +321,7 @@ div, p {
   width: 92%;
   display: none;
   border-top: 1px solid #ccc;
+  box-shadow: 0px 2px 2px #c7c7c7;
   padding: 20px;
   background-image: linear-gradient(to right, #f5f5f5, #f6f5f6);
   min-height: 100px;
@@ -331,28 +332,45 @@ div, p {
   top: 85px !important;
   z-index: 99999;
 }
-.head .header-menu ul li .dropdown-on-hover ul p {
+.head .header-menu ul li .dropdown-on-hover .ddp-inner {
+  padding: 0 10px 10px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  max-height: 400px;
+  float: left;
+  width: auto;
+}
+.head .header-menu ul li .dropdown-on-hover .ddp-inner ul {
+  width: 200px;
+  padding-right: 15px;
+}
+.head .header-menu ul li .dropdown-on-hover .ddp-inner ul p {
   text-align: left;
-  margin-bottom: 0px;
+  margin: 10px 40px 0px 0px;
   padding-left: 0px;
   margin-right: 40px;
 }
-.head .header-menu ul li .dropdown-on-hover ul li {
+.head .header-menu ul li .dropdown-on-hover .ddp-inner ul li {
   display: block;
   float: none;
   text-align: left;
   padding: 0px;
+  margin-right: 0px;
 }
-.head .header-menu ul li .dropdown-on-hover ul li a {
-  padding: 5px 10px;
+.head .header-menu ul li .dropdown-on-hover .ddp-inner ul li a {
+  padding: 2px 0px;
   background-color: inherit;
   color: #000;
   text-transform: inherit;
   font-size: 12px;
 }
-.head .header-menu ul li .dropdown-on-hover ul li a img {
+.head .header-menu ul li .dropdown-on-hover .ddp-inner ul li a img {
   width: 20px;
   margin-right: 5px;
+}
+.head .header-menu ul li .dropdown-on-hover .ddp-inner ul li a:hover {
+  opacity: 0.5;
 }
 .head .header-menu ul li:hover .dropdown-on-hover {
   display: block;
@@ -361,7 +379,7 @@ div, p {
   position: absolute;
   top: 24px;
   width: 5%;
-  right: 3%;
+  right: 2%;
 }
 .head .cart a {
   position: relative;
@@ -400,7 +418,7 @@ div, p {
     margin-bottom: 10px;
   }
   .head .header-menu {
-    padding-right: 12%;
+    padding-right: 0%;
   }
   .head .header-menu ul li {
     padding: 15px 0px;
@@ -415,6 +433,7 @@ div, p {
   }
   .head .header-menu ul li .dropdown-on-hover {
     top: 70px !important;
+    overflow-x: scroll;
   }
   .head .header-menu ul li .dropdown-on-hover {
     display: none;
@@ -493,7 +512,7 @@ div, p {
     display: none;
     position: relative;
     width: 100%;
-    padding: 10px;
+    padding: 0px 0px;
     box-shadow: 0px 0px 0px rgb(0, 0, 0);
     background-color: #ccc;
     transform: none;
@@ -503,24 +522,36 @@ div, p {
     max-height: 100%;
     overflow-y: scroll;
   }
-  .head .header-menu ul li .dropdown-on-hover ul p {
+  .head .header-menu ul li .dropdown-on-hover .ddp-inner {
+    padding: 0 0px 10px;
+    display: block;
+    flex-wrap: wrap;
+    flex-direction: column;
+    max-height: 400px;
+    float: left;
+    width: 100%;
+  }
+  .head .header-menu ul li .dropdown-on-hover .ddp-inner ul {
+    width: 100%;
+    padding-right: 0px;
+  }
+  .head .header-menu ul li .dropdown-on-hover .ddp-inner ul p {
     text-align: left;
-    margin-bottom: 0px;
+    margin: 10px 0px 0px;
     padding-left: 10px;
     padding-bottom: 5px;
-    margin-right: 0px;
   }
-  .head .header-menu ul li .dropdown-on-hover ul li {
+  .head .header-menu ul li .dropdown-on-hover .ddp-inner ul li {
     display: block;
   }
-  .head .header-menu ul li .dropdown-on-hover ul li a {
-    padding: 5px 10px;
-    border-bottom: 1px solid #ccc;
+  .head .header-menu ul li .dropdown-on-hover .ddp-inner ul li a {
+    padding: 3px 10px;
+    border-bottom: 0px solid #ccc;
     text-transform: inherit;
     font-size: 12px;
     color: rgb(0, 0, 0);
   }
-  .head .header-menu ul li .dropdown-on-hover ul li a img {
+  .head .header-menu ul li .dropdown-on-hover .ddp-inner ul li a img {
     width: 20px;
     margin-right: 5px;
   }
