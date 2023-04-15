@@ -4,12 +4,14 @@
 <section class="mt-4">
 	<div class="container">		
         <form action="{{route('AddToCart')}}" method="POST" >	
+            <input type="hidden" name="id" value="{{ $product->id ?? '0' }}" class="id" id="id">
             @csrf
             <div class="row mb-3">
                 <div class="col-md-3 col-sm-3 col-12">
                     <div class="product-detail">
                         <div class="tab-section">                        
                             <div class="tab-content">
+                                
                                 @if( isset($product) && !empty($product) )
                                     @foreach( $product->productImage as $image)
                                         @if( isset($image) && !empty($image) )
@@ -19,18 +21,6 @@
                                         @endif
                                     @endforeach
                                 @endif        
-                                <!--<div id="img2" class="tab-pane fade">
-                                    <img src="images/b2.jpg" alt="">
-                                </div>
-                                <div id="img3" class="tab-pane fade">
-                                    <img src="images/b3.jpg" alt="">
-                                </div>
-                                <div id="img4" class="tab-pane fade">
-                                    <img src="images/b4.jpg" alt="">
-                                </div>
-                                <div id="img5" class="tab-pane fade">
-                                    <img src="images/b3.jpg" alt="">
-                                </div>-->
                             </div>
                             <ul class="nav nav-tabs">
                                 @if( isset($product) && !empty($product) )
@@ -44,31 +34,6 @@
                                         @endif
                                     @endforeach
                                 @endif
-                                <!--<li class="nav-item">
-                                    <a class="nav-link active" data-bs-toggle="tab" href="#img1">
-                                        <img src="images/b1.jpg" alt="">
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" data-bs-toggle="tab" href="#img2">
-                                        <img src="images/b2.jpg" alt="">
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" data-bs-toggle="tab" href="#img3">
-                                        <img src="images/b3.jpg" alt="">
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" data-bs-toggle="tab" href="#img4">
-                                        <img src="images/b4.jpg" alt="">
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" data-bs-toggle="tab" href="#img5">
-                                        <img src="images/b3.jpg" alt="">
-                                    </a>
-                                </li>-->
                             </ul>
                         </div>
                     </div>
@@ -89,35 +54,19 @@
                                     </h6>
                                 </div>
                             </div>
-                            
-                            <input type="hidden" name="id" value="{{ $product->id ?? '0' }}" class="id" id="id">
-                            <input type="hidden" name="variant_id" value="" class="variant_id" id="variant_id">
-                            <input type="hidden" name="slug" value="{{ str_replace( ' ', '-' , $product->slug ) ?? '' }}" class="slug" id="slug">
-                            <input type="hidden" name="name" value="{{ $product->product ?? '' }}" class="name" id="name">
-                            <input type="hidden" name="price" value="{{ $product->price ?? '' }}" class="price" id="price">
-                            <input type="hidden" name="discount" value="{{ $product->discount ?? '0' }}" class="discount" id="discount">
-                            <input type="hidden" name="shipping" value="{{ $product->shipping_cost ?? '0' }}" class="shipping" id="shipping">
 
                             <div class="size">
                                 <p>{{ isset($product->productAttribute[0]) ? ' Select from available '. $product->productAttribute[0]->attributeGroup->name .':' : '' }} </p>
                                 <div class="size-group">
                                     @if( isset($product->productAttribute) && !empty($product->productAttribute) )
+                                        <input type="hidden" name="variant_id" value="" class="variant_id" id="variant_id">
                                         @foreach($product->productAttribute as $productAttribute)
                                         <a href="javascript:void(0)" onClick="selectVariant(this,{{ $loop->iteration }})" class=" variant {{ ($loop->iteration == 1) ? 'active' : '' }} variant_{{ $loop->iteration }}">
-                                            <span class="variant_name_{{ $loop->iteration }}" data-name="{{ $productAttribute->attribute->name ?? '' }}" data-id="{{ $productAttribute->attribute_id ?? '' }}">{{ $productAttribute->attribute->name ?? '' }}</span>
+                                            <span class="variant_name_{{ $loop->iteration }}" data-name="{{ $productAttribute->attribute->name ?? '' }}" data-id="{{ $productAttribute->id ?? '' }}">{{ $productAttribute->attribute->name ?? '' }}</span>
                                             <small class="variant_price_{{ $loop->iteration }}" data-price="{{ $productAttribute->price ?? ''}}" data-discount="{{ $productAttribute->discount ?? '' }}">Rs {{ $productAttribute->price ?? ''}}</small>
                                         </a>
                                         @endforeach
                                     @endif
-                                    <!--<a href="javascript:void(0)">
-                                        3x30ml
-                                        <small>rs 885</small>
-                                    </a>
-                                    
-                                    <a href="javascript:void(0)">
-                                        5x30ml
-                                        <small>rs 14266</small>
-                                    </a>-->
                                 </div>
                             </div>
                             <!--<div class="delivery-pin">
@@ -136,7 +85,7 @@
                         @endif
                     </div>
                 </div>
-
+        
                 <div class="col-md-4 col-sm-4 col-12">
                     <div class="product-price">
                         <h4>Rs <span class="priceAdd">{{ isset($product->price) ? $product->price - ($product->price * $product->discount)/100 : '' }} <span></h4>                    
@@ -148,23 +97,15 @@
                                         echo '<option value=" '.$i.' "> '.$i.' </option>';
                                     }
                                     ?>
-                                    <!--<option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>-->
                                 </select>
                             </span>
                             <span class="sizeAdd"></span>                        
                         </div>
-                        <!--<a href="{{-- route('cart_list') --}}" class="btn btn-sm btn-primary">Buy Now</a>-->
                         <br>
                         @if(Auth::check())
-                        <!--<a href="{{route('checkout')}}" type="button" class="btn btn-sm btn-success float-end">CHECKOUT</a>-->
-                        <button type="submit" name="submit" class="btn btn-sm btn-success">Buy Now</button>
-                        <button type="submit" name="submit" class="btn btn-sm btn-success">Add to cart</button>
+                        <button type="submit" name="submit" value="buyNow" class="btn btn-sm btn-success">Buy Now</button>
+                        <button type="submit" name="submit" value="addToCart" class="btn btn-sm btn-success">Add to cart</button>
                         @else
-                        <!--<a href="#" onclick="document.getElementById('login').style.display='block'" type="button" class="btn btn-sm btn-success float-end">CHECKOUT</a>-->
                         <button type="button" name="submit" class="btn btn-sm btn-success" onclick="document.getElementById('login').style.display='block'">Buy Now</button>
                         <button type="button" name="submit" class="btn btn-sm btn-success" onclick="document.getElementById('login').style.display='block'">Add to cart</button>
                         @endif

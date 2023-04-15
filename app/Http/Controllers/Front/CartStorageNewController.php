@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use App\Http\Classes\EcomController;
 use App\Models\Brand;
+
+use App\Helpers\Helper;
+use App\Models\Coupon;
+
 use Image;
 use File;
 use DB;
@@ -30,8 +34,6 @@ class CartStorageNewController extends EcomController
         
         $data['popular_health'] = Product::orderby('order','ASC')->get();
         
-        //$user_id = Auth::user()->uuid;
-        //$userId = 100; // or any string represents user identifier
         if (Auth::check()) {
             $userId = Auth::user()->uuid;
             Cart::session($userId);
@@ -39,8 +41,7 @@ class CartStorageNewController extends EcomController
             // count carts contents
             $data['count'] = $cartCollection->count();
         }
-        //Cart::session($userId);
-        //$data['cart_list'] = $cartCollection = Cart::getContent();
+        
         if( isset($cartCollection) && !empty($cartCollection) ){
             foreach($cartCollection as $item_id => $item){
                 $ids = explode('_', $item->id);
@@ -57,7 +58,7 @@ class CartStorageNewController extends EcomController
             $data['product'] = $product;
         }
         if( isset($attribute_ids) && !empty($attribute_ids) ){
-            $attributes = ProductAttribute::whereIn('attribute_id', $attribute_ids)->get()->toArray();
+            $attributes = ProductAttribute::whereIn('id', $attribute_ids)->get();//->toArray();
             if( isset($attributes) && !empty($attributes) ){
                 foreach($attributes as $k => $val){
                     $attribute[$val['product_id']] = $val;
@@ -65,7 +66,7 @@ class CartStorageNewController extends EcomController
                 $data['attribute'] = $attribute;
             }    
         }
-
+        
         // $data['count'] = $cartCollection->count();   //$data['count'] = getTotalQuantity();
         $data['subTotal'] = Cart::getSubTotal();
         $data['total'] = Cart::getTotal();
@@ -104,17 +105,34 @@ class CartStorageNewController extends EcomController
     public function AddToCart(Request $request)
     {
         //dd($request);
-        $slug = str_replace('-',' ',$request->slug);
+        //$slug = Helper::destructSlug($slug);
         $id = $request->id;
         if(isset($request->variant_id) && !empty($request->variant_id)){
             $variant_id = $request->variant_id;
             $product_id = $id .'_'. $variant_id;
+            $variant = ProductAttribute::find($variant_id);
+            //$variant = ProductAttribute::with(['productAttributeImage'])->where('product_id',$product->id)->get();
+            $name = $variant->product->product;
+            $price = $variant->price;
+            $discount = $variant->discount;
+            $shipping = $variant->product->shipping_cost;
+            $slug = $variant->product->slug;
+            //dd($variant);
         }else{
             $product_id = $id;
+            $product = Product::with('productDetail')->find($id);
+            $name = $product->product;
+            $price = $product->price;
+            $discount = $product->discount;
+            $shipping = $product->shipping_cost;
+            $slug = $product->slug;
+            //dd($product);
         }
         
-        //$user_id = Auth::user()->uuid;
-        //$userId = 100; // or any string represents user identifier
+        $slug = Helper::constructSlug($slug);
+        $quantity = $request->quantity;
+        $submit = $request->submit;
+        //die();
         if (Auth::check()) {
             $userId = Auth::user()->uuid;
             Cart::session($userId);
@@ -122,46 +140,53 @@ class CartStorageNewController extends EcomController
             // count carts contents
             $data['count'] = $cartCollection->count();
         
-            //Cart::session($userId);
-
             // lets create first our condition instance
-            $discount = new \Darryldecode\Cart\CartCondition(array(
-                'name' => "SALE $request->discount %",
+            $discount_on = new \Darryldecode\Cart\CartCondition(array(
+                'name' => "SALE $discount%",
                 'type' => "price",
-                'value' => "-$request->discount%"
+                'value' => "-$discount%"
             ));
             // shipping on item wise
-            $name = "Shipping ₹$request->shipping";
-            Cart::removeItemCondition($product_id, $name);
-            $shipping = new \Darryldecode\Cart\CartCondition(array(
-                'name' => $name,
+            $shipping_name = "Shipping ₹$shipping";
+            //Cart::removeItemCondition($product_id, $shipping_name);
+            $shipping_on = new \Darryldecode\Cart\CartCondition(array(
+                'name' => $shipping_name,
                 'type' => "shipping",
-                'value' => "+$request->shipping"
+                'value' => "+$shipping"
             ));
 
             Cart::add(
                 array(
                     'id' => $product_id,
-                    'name' => $request->name,
-                    'price' => $request->price,
-                    'quantity' => $request->quantity,
+                    'name' => $name,
+                    'price' => $price,
+                    'quantity' => $quantity,
                     'attributes' => array(
                         'size' => 'L',
                         'color' => 'blue'
                     ),
-                    'conditions' =>[$discount, $shipping],
+                    'conditions' =>[$discount_on, $shipping_on],
                     'associatedModel' => 'products'
                 )
             );
-        }     
-        return redirect()->route('product_detail', [$slug]);
+        } 
+        /*if( isset( $submit ) && $submit == 'buyNow' ){
+            echo $data['subTotal'] = Cart::getSubTotal();
+            $total_discount = $total_discount + ($item->price - $item->getPriceWithConditions()) * $item->quantity;
+            $total_price = $total_price + ($item->price * $item->quantity);
+            die();
+            $applied_coupon = '';
+            $total = '';
+            $discount = '';
+            return redirect()->route('order');
+        } else {  */ 
+            return redirect()->route('product_detail', [$slug]);
+        //}
     }
 
     public function RemoveFromCart(Request $request)
     {
         $product_id = $request->product_id;
-        //$user_id = Auth::user()->uuid;
-        //$userId = 100; // or any string represents user identifier
         if (Auth::check()) {
             $userId = Auth::user()->uuid;
             Cart::session($userId);
@@ -169,7 +194,6 @@ class CartStorageNewController extends EcomController
             // count carts contents
             $data['count'] = $cartCollection->count();
         }
-        //Cart::session($userId);
         Cart::remove($product_id);
     }
 
@@ -177,8 +201,6 @@ class CartStorageNewController extends EcomController
     {
         $qty = $request->quantity;
         $product_id = $request->product_id;
-        //$user_id = Auth::user()->uuid;
-        //$userId = 100; // or any string represents user identifier
         if (Auth::check()) {
             $userId = Auth::user()->uuid;
             Cart::session($userId);
@@ -186,7 +208,6 @@ class CartStorageNewController extends EcomController
             // count carts contents
             $data['count'] = $cartCollection->count();
         }
-        //Cart::session($userId);
         Cart::update($product_id, 
             array(
                 'quantity' => $qty, // so if the current product has a quantity of 4, it will subtract 1 and will result to 3
@@ -196,28 +217,31 @@ class CartStorageNewController extends EcomController
 
     public function applyCoupon(Request $request)
     {
-        //
-        $flag = true;
-        if($request->code == 12345){
-            $value = -20;
-        }elseif($request->code == 12345678){
-            $value = -10;
-        }else{
-            $flag = false;
+        //dd($request);
+        $code = $request->code;
+        $today = date('Y-m-d H:i:s', time());
+        $coupon = Coupon::WHERE('code', $code)->WHERE('status', 1)->WHERE('quantity', '>' , 0)->WHERE('start_date', '<' , $today )->WHERE('end_date', '>' , $today)->first();
+        $flag = false;
+        if( isset( $coupon->code ) && !empty( $coupon->code ) ){
+            $name = $coupon->name;
+            $code = $coupon->code;
+            if( isset( $coupon->discount_type ) && strtolower($coupon->discount_type) == 'fixed' ){
+                $value = '-'.$coupon->amount;
+            }else{
+                $value = '-'.$coupon->amount.'%';
+            }
+            $flag = true;
         }
+        
         $res = 0;
         if($flag == true){
-            //$user_id = Auth::user()->uuid;
-            //$userId = 100; // or any string represents user identifier
             if (Auth::check()) {
                 $userId = Auth::user()->uuid;
                 Cart::session($userId);
                 $data['cart_list'] = $cartCollection = Cart::getContent();
                 // count carts contents
                 $data['count'] = $cartCollection->count();
-            }
-            //Cart::session($userId);
-            
+            }            
             $conditions = Cart::getConditions();
             $data['type'] = [];
             if(isset($conditions) && !empty($conditions)){
@@ -227,7 +251,7 @@ class CartStorageNewController extends EcomController
             }    
             if( !in_array('coupon', $data['type']) ){
                 $condition = new \Darryldecode\Cart\CartCondition(array(
-                    'name' => 'COUPON CODE',
+                    'name' => $code,
                     'type' => 'coupon',
                     'target' => 'subtotal', // this condition will be applied to cart's subtotal when getSubTotal() is called.
                     'value' => $value,
@@ -243,29 +267,21 @@ class CartStorageNewController extends EcomController
 
     public function removeCoupon(Request $request)
     {
-        //
-        $flag = true;
-        /*if($request->couponName == 12345){
-            $value = -20;
-        }elseif($request->couponName == 12345678){
-            $value = -10;
+        $couponName = $request->couponName;
+        $res = 0;
+        if(isset($couponName) && !empty($couponName)){
+            $flag = true;
         }else{
             $flag = false;
-        }*/
-        $res = 0;
-        $couponName = $request->couponName;
+        }
         if($flag == true){
-            //$user_id = Auth::user()->uuid;
-            //$userId = 100; // or any string represents user identifier
             if (Auth::check()) {
                 $userId = Auth::user()->uuid;
                 Cart::session($userId);
                 $data['cart_list'] = $cartCollection = Cart::getContent();
                 // count carts contents
                 $data['count'] = $cartCollection->count();
-            }
-            //Cart::session($userId);
-            
+            }            
             $conditions = Cart::getConditions();
             foreach($conditions as $condition){
                 $data['type'][$condition->getType()] = $condition->getType(); // the type

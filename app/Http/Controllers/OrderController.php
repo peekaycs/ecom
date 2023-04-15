@@ -37,8 +37,8 @@ class OrderController extends Controller
         //dd($request);
         $request->validate([
             'total' => 'integer',
-            'discount' => 'integer',
-            'applied_coupon' => 'integer',
+            'discount' => 'integer|nullable',
+            'applied_coupon' => 'integer|nullable',
         ]);
         
         $uuid = Str::uuid();

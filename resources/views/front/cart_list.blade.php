@@ -13,17 +13,28 @@
                         @if( isset($cart_list) && !empty($cart_list) )
                             @foreach($cart_list as $item_id => $item)
                             <?php 
+                            
                             $ids = explode('_', $item_id);
                             $product_id = $ids[0];
                             $attribute_id = $ids[1] ?? '';
+                            if(isset($attribute_id) && !empty($attribute_id)){
+                                $image = URL::asset($product[$product_id]['image']);
+                                foreach($attribute as $attr){
+                                    $attrs = $attr->attribute->name;
+                                }
+                            }else{
+                                $image = URL::asset($product[$product_id]['image']);
+                                $attrs = '';
+                            }
+                            
                             ?>
                             <div class="cart-price">
                                 <figure>
-                                    <img src="{{ URL::asset($product[$product_id]['image']) ?? '' }}" alt="">
+                                    <img src="{{ $image ?? '' }}" alt="">
                                 </figure>
                                 <div class="cart-data">
                                     <p>{{ $item->name ?? '' }}</p>
-                                    <p><small>jar of 500 gm Paste</small></p>
+                                    <p><small>{{ $attrs ?? '' }}</small></p>
                                     <p>
                                         <a href="javascript:void(0)" class="removeItem" data-product_id={{ $item->id ?? '' }}> 
                                             <i class="fa fa-trash" aria-hidden="true"></i>Remove
@@ -33,16 +44,23 @@
                                 <?php 
                                 foreach($item->conditions as $condition){
                                     if(isset($condition) && !empty($condition)){
-                                        if($condition->getType() == 'shipping')
-                                            $shipping = $shipping + $condition->getValue();
+                                        
+                                        if($condition->getType() == 'price'){
+                                            $discount = $condition->getValue();
+                                            $total_discount = $total_discount + ( ( $item->price * abs((int)rtrim($discount,'%')) ) / 100 ) * $item->quantity;
+                                        }
+                                        if($condition->getType() == 'shipping'){
+                                            $shipping_cost = $condition->getValue();
+                                            $shipping = $shipping + $condition->getValue() * $item->quantity;
+                                        }   
                                     }        
                                 }
-                                $total_discount = $total_discount + ($item->price - $item->getPriceWithConditions()) * $item->quantity;
                                 $total_price = $total_price + ($item->price * $item->quantity);
+                                $total_price_without_shipping = ($item->getPriceWithConditions() - $shipping_cost) * $item->quantity;
                                 ?>
                                 <div class="cart-data product-plus-minus">
-                                    <p>{{ $item->getPriceWithConditions() ?? '' }} </p>
-                                    <p><small>MRP <span class="mrp">{{ $item->price ?? '' }}</span></small></p>
+                                    <p>₹{{ $total_price_without_shipping ?? '0' }} </p>
+                                    <p><small>MRP <span class="mrp">₹{{ $item->price ?? '0' }}</span>{{ $discount }}</small></p>
                                     <p>
                                         <i class="fa fa-minus-circle changeQty changeQty_{{ $item->id ?? '' }} minus" aria-hidden="true" data-quantity_{{ $item->id ?? '' }}={{ $item->quantity ?? '' }} data-product_id={{ $item->id ?? '' }}></i>
                                         <span class="quantity quantity_{{ $item->id ?? '' }}">{{ $item->quantity ?? '' }}</span>
@@ -51,33 +69,7 @@
                                 </div>
                             </div>
                             @endforeach
-                        @endif        
-                        <!--<div class="cart-price">
-                            <figure>
-                                <img src="images/b2.jpg" alt="">
-                            </figure>
-                            <div class="cart-data">
-                                <p>Meghdoot Special Chyawanprash</p>
-                                <p><small>jar of 500 gm Paste</small></p>
-                                <p>
-                                    <a href="javascript:void(0)"> 
-                                    <i class="fa fa-trash" aria-hidden="true"></i>                                
-                                        Remove
-                                    </a>
-                                </p>
-                            </div>									
-                            <div class="cart-data product-plus-minus">
-                                <p>Rs 165</p>
-                                <p> 
-                                    <small>MRP <span class="mrp">180</span></small>
-                                </p>
-                                <p>
-                                    <i class="fa fa-minus-circle" aria-hidden="true"></i>
-                                    <span>2</span>
-                                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                                </p>
-                            </div>
-                        </div>-->							
+                        @endif        							
                     </div>
                 </div>
             </div>
@@ -91,11 +83,11 @@
                         </p>									
                         <p>
                             {{ isset($total_discount) ? 'Price Discount' : ''}}
-                            <span>{{ isset($total_discount) ? '-₹'. $total_discount : '0'}}</span>
+                            <span>{{ isset($total_discount) ? '-'. $total_discount : '-0'}}</span>
                         </p>
                         <p>
                             {{ 'Shipping Charges' }} 
-                            <span>{{ '+₹'.$shipping ?? '+₹0' }}</span>
+                            <span>{{ '+'.$shipping ?? '+0' }}</span>
                         </p>
                         <hr>
                         @if( isset($conditions) && !empty($conditions) )
@@ -104,7 +96,7 @@
                                 <strong>{{ $condition->getType() != null ? ucwords($condition->getType()) . ' Discount' : '' }} 
                                     <small style="color:red"><a href="javascript:void(0)" onclick="removeCoupon(this, '{{ $condition->getName() ?? ''}}')">Remove</a></small>
                                 </strong>
-                                <span><strong>Rs {{ $condition->getValue() ?? ''}}</strong></span>
+                                <span><strong>₹{{ $condition->getValue() ?? ''}}</strong></span>
                             </p>
                             @endforeach
                         @endif    
@@ -118,7 +110,7 @@
                         <hr>
                         <p>
                             <strong>To be paid</strong>
-                            <span><strong>Rs {{ $subTotal ?? '' }}</strong></span>
+                            <span><strong>₹{{ $subTotal ?? '' }}</strong></span>
                         </p>
                     </div>
                     <!-- <div class="coupons-apply">
@@ -132,7 +124,7 @@
                         <input type="hidden" name="discount" value="{{ $total_discount ?? '0' }}" class="discount" id="discount">
                     
                         <div class="alert alert-success">
-                            <span>Total Savings: <strong>{{ isset($total_discount) ? '₹'. $total_discount : '0'}}</strong></span>
+                            <span>Total Savings: <strong>{{ isset($total_discount) ? '₹'. abs($total_discount) : '0'}}</strong></span>
                             <!-- <button type="button" class="btn btn-sm btn-success float-end">CHECKOUT</button> -->
                             <button type="submit" name="submit" class="btn btn-sm btn-success float-end">CHECKOUT</button>
                             <!--
@@ -382,7 +374,6 @@
     function applyCoupon(thiss){
         var code = $(".coupon").val();
         if(code != '' && code != 'undefined' && code != null){
-            alert(code);
             $.ajax({
                 type: 'POST',
                 url: "{{ url('apply-coupon') }}",

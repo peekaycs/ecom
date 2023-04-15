@@ -27,8 +27,10 @@ Route::get('/product-detail/{slug}', [ProductController::class,'productDetail'])
 
 //cart
 Route::group(['middleware' => ['auth']], function(){
-    Route::get('/cart-list', [CartStorageNewController::class,'cart_list'])->name('cart_list');
+    
     Route::post('/add-to-cart', [CartStorageNewController::class,'AddToCart'])->name('AddToCart');
+    Route::get('/cart-list', [CartStorageNewController::class,'cart_list'])->name('cart_list');
+    
     Route::post('/remove-from-cart', [CartStorageNewController::class,'RemoveFromCart'])->name('RemoveFromCart');
     Route::post('/update-cart', [CartStorageNewController::class,'updateCart'])->name('updateCart');
 
