@@ -204,7 +204,7 @@
 									<form action="{{ route('pay') }}" method="POST">
 										@csrf
 										<input type="hidden" name="mode" value="DD">
-										<input type="hidden" name="order_id" value="{{ $order_id ?? '' }}">
+										<input type="hidden" name="order_id" value="{{ $order_id ?? '12' }}">
 										<div class="col-md-12 col-sm-12 col-12">
 											<label>Cheque Number :</label>
 											<input type="text" name="cheque_number" class="form-control rounded-0 border-end-1 @error('cheque_number') has-error @enderror" placeholder="Enter cheque number">
