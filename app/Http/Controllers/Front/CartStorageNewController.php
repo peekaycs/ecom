@@ -68,7 +68,7 @@ class CartStorageNewController extends EcomController
         }
         
         // $data['count'] = $cartCollection->count();   //$data['count'] = getTotalQuantity();
-        $data['subTotal'] = Cart::getSubTotal();
+        $data['subTotal'] = round( Cart::getSubTotal(), 2 );
         $data['total'] = Cart::getTotal();
         //dd($cartCollection);
         
@@ -257,6 +257,8 @@ class CartStorageNewController extends EcomController
                     'value' => $value,
                 ));
                 Cart::condition($condition);
+                $update_qty = ( $coupon->quantity ) - 1;
+                $saved = Coupon::updateOrCreate( [ 'id'=>$coupon->id ],[ 'quantity' => $update_qty ] );
                 $res = 1;
             }else{
                 $res = 2;
@@ -267,9 +269,10 @@ class CartStorageNewController extends EcomController
 
     public function removeCoupon(Request $request)
     {
-        $couponName = $request->couponName;
+        $couponName = $code = $request->couponName;
+        $coupon = Coupon::WHERE('code', $code)->first();
         $res = 0;
-        if(isset($couponName) && !empty($couponName)){
+        if(isset($coupon) && !empty($coupon)){
             $flag = true;
         }else{
             $flag = false;
@@ -289,6 +292,8 @@ class CartStorageNewController extends EcomController
            
             if( in_array('coupon', $data['type']) ){
                 Cart::removeCartCondition($couponName);
+                $update_qty = ( $coupon->quantity ) + 1;
+                $saved = Coupon::updateOrCreate( [ 'id'=>$coupon->id ], [ 'quantity' => $update_qty ] );
                 $res = 1;
             }
         }  
