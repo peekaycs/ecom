@@ -31,6 +31,8 @@ use DB;
 use Cart;
 use Darryldecode\Cart\Facades\CartFacade;
 
+use Session;
+
 class CheckoutController extends EcomController
 {
     /**
@@ -78,12 +80,15 @@ class CheckoutController extends EcomController
         $data['conditions'] = $conditions = Cart::getConditions();
         //end
         $address = Address::where('uuid', $uuid)->get();
-        foreach($address as $add){
-            //dd($add->name);
-            $address_comp = ucFirst($add->name)  .' \n '.$add->contact .' \n '. $add->address . ' , ' . $add->landmark .' , '. $add->city .' , \n ' . $add->state . ' - ' . $add->zip;
+        if(isset($address) && !empty($address)){
+            foreach($address as $add){
+                $address_comp = ucFirst($add->name)  .' \n '.$add->contact .' \n '. $add->address . ' , ' . $add->landmark .' , '. $add->city .' , \n ' . $add->state . ' - ' . $add->zip;
+            }
+            $data['order_id'] = $order_id = Session::get('order_id');
+            $address = DB::update('update orders set shipping_address = ? where id = ?',[$address_comp, $order_id ]);
+            //$address = Order::updateOrCreate( [ 'id'=>$order_id ], [ 'user_id' => $userId, 'shipping_address' => $address_comp ] );
         }
-        $address = Order::updateOrCreate( [ 'id'=>$order_id ], [ 'shipping_address' => $address_comp] );
-        dd($address);
+        
         return $this->createView('front.checkout',$data);
     }
 
@@ -91,13 +96,11 @@ class CheckoutController extends EcomController
     {
         //dd($request);
         $request->validate([
-            'cheque_number' => 'required|integer',
+            'cheque_dd_number' => 'required|string',
             'order_id' => 'required|string',
             'mode' => 'required|string',
             'bank_name' => 'string',
-            'account_number' => 'integer',
-            'ifsc' => 'string',
-            'amount' => 'required|integer',
+            'amount' => 'required|string',
         ]);
         
         $uuid = Str::uuid();
@@ -108,6 +111,8 @@ class CheckoutController extends EcomController
             'transaction_id' => $transaction_id,
             'order_id' => $request->order_id,
             'mode' => $request->mode,
+            'cheque_dd_number' => $request->cheque_dd_number,
+            'bank_name' => $request->bank_name,
             'amount' => $request->amount,
             'payment_status' => 'SUCCESS'
         ]);

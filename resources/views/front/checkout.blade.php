@@ -174,129 +174,86 @@
                     ?>
 					@endforeach
 				@endif 
-				<?php 
-				$ids = explode('_', $item_id);
-				$product_id = $ids[0];
-				$attribute_id = $ids[1] ?? '';?>
+				
 				<div class="checkout-section2">
 					<h6>Select Payment Method</h6>
 					<hr>
 					<div class="col-md-12 col-sm-12 col-12">
 						<div class="payment-method">
 							<div class="row">
-								<div class="col-md-9 col-sm-9 col-8">
+								<div class="col-md-10 col-sm-10 col-8">
 									<div class="form-check">
 										<input type="radio" class="form-check-input" id="DCU" name="payment-method" checked>
-										<label class="form-check-label" for="DCU">
-											<strong>Check</strong>
-										</label>
-										<p>Visa, MasterCard, Maestro Card, American Express</p>
-										<figure>
-											<img src="images/visa.png" alt="">
-											<img src="images/mastercard.png" alt="">
-											<img src="images/american-express.png" alt="">
-										</figure>
+										<label class="form-check-label" for="DCU"><strong>Cheque / Demand Draft (DD)</strong></label>
+										<p>Pay via Cheque or Demand draft (DD)</p>
 									</div>
 								</div>
-								<div class="col-md-3 col-sm-3 col-4 text-end">
+								<div class="col-md-2 col-sm-2 col-4 text-end">
 									<a data-bs-toggle="tab" href="#check" class="btn btn-info d-block">
 										Pay Rs. {{ $subTotal ?? '' }}
 									</a>
 								</div>
 							</div>
-							
 							<div class="row tab-pane " id="check">
-								<div class="col-md-6 col-sm-12 col-12">
+								<div class="col-md-9 col-sm-12 col-12">
 									<form action="{{ route('pay') }}" method="POST">
 										@csrf
-										<input type="hidden" name="mode" value="DD">
-										<input type="hidden" name="order_id" value="{{ $order_id ?? '12' }}">
-										<div class="col-md-12 col-sm-12 col-12">
-											<label>Cheque Number :</label>
-											<input type="text" name="cheque_number" class="form-control rounded-0 border-end-1 @error('cheque_number') has-error @enderror" placeholder="Enter cheque number">
-											@error('cheque_number')
-											<p class="text-danger">{{ $message }}</p>
-											@enderror
-										</div>
-										<div class="col-md-12 col-sm-12 col-12">
-											<label>Bank Name :</label>
-											<input type="text" name="bank_name" class="form-control rounded-0 border-end-1 @error('bank_name') has-error @enderror" placeholder="Enter Bank name">
-											@error('bank_name')
-											<p class="text-danger">{{ $message }}</p>
-											@enderror
-										</div>
-										<div class="col-md-12 col-sm-12 col-12">
-											<label>Account Number :</label>
-											<input type="text" name="account_number" class="form-control rounded-0 border-end-1 @error('account_number') has-error @enderror" placeholder="Enter account number">
-											@error('account_number')
-											<p class="text-danger">{{ $message }}</p>
-											@enderror
-										</div>
-										<div class="col-md-12 col-sm-12 col-12">
-											<label>IFSC Code :</label>
-											<input type="text" name="ifsc" class="form-control rounded-0 border-end-1 @error('ifsc') has-error @enderror" placeholder="Enter ifsc code">
-											@error('ifsc')
-											<p class="text-danger">{{ $message }}</p>
-											@enderror
-										</div>
-										<div class="col-md-12 col-sm-12 col-12">
-											<label>Amount</label>
-											<input type="text" name="amount" class="form-control rounded-0 border-end-1 @error('amount') has-error @enderror" placeholder="Enter Check Amount">
-											@error('amount')
-											<p class="text-danger">{{ $message }}</p>
-											@enderror
-										</div>
-										<div class="col-md-12 col-sm-12 col-12 text-center mt-3">
-											<!--<a href="#" class="btn btn-primary">Pay Now</a>-->
-											<button type="submit" name="submit" class="btn btn-primary">Pay Now</button>
-										</div>
+										<input type="hidden" name="mode" value="cheque">
+										<input type="hidden" name="order_id" value="{{ $order_id ?? '' }}">
+										<div class="row">
+											<div class="col-md-3 col-sm-12 col-12">
+												<input type="text" name="cheque_dd_number" class="form-control rounded-0 border-end-1 @error('cheque_number') has-error @enderror" placeholder="Cheque/DD number">
+												@error('cheque_number')
+												<p class="text-danger">{{ $message }}</p>
+												@enderror
+											</div>
+											<div class="col-md-3 col-sm-12 col-12">
+												<input type="text" name="bank_name" class="form-control rounded-0 border-end-1 @error('bank_name') has-error @enderror" placeholder="Bank name">
+												@error('bank_name')
+												<p class="text-danger">{{ $message }}</p>
+												@enderror
+											</div>
+											<div class="col-md-3 col-sm-12 col-12">
+												<input type="text" name="amount" class="form-control rounded-0 border-end-1 @error('amount') has-error @enderror" placeholder="Check Amount">
+												@error('amount')
+												<p class="text-danger">{{ $message }}</p>
+												@enderror
+											</div>
+											<div class="col-md-3 col-sm-12 col-12 text-center">
+												<button type="submit" name="submit" class="btn btn-primary">Pay Now</button>
+											</div>
+										</div>	
 									</form>	
 								</div>
 							</div>
 						</div>
+
 						<div class="payment-method">
 							<div class="row">
-								<div class="col-md-9 col-sm-9 col-8">
-									<div class="form-check">
-										<input type="radio" class="form-check-input" id="Netbanking" name="payment-method">
-										<label class="form-check-label" for="Netbanking">
-											<strong>Demand Draft (DD)</strong>
-										</label>
-										<p>PhonePe, Freecharge, Payzapp, Ola Money, Jio Money, Airtel Money</p>
-										<figure>
-											<img src="images/banklogo.png" alt="">											
-										</figure>
-									</div>
-								</div>
-								<div class="col-md-3 col-sm-3 col-4 text-end">
-									<a href="javascript:void(0)" class="btn btn-info d-block">
-										Pay Rs. {{ $subTotal ?? '' }}
-									</a>
-								</div>
-							</div>
-						</div>
-						<div class="payment-method">
-							<div class="row">
-								<div class="col-md-9 col-sm-9 col-8">
+								<div class="col-md-10 col-sm-10 col-8">
 									<div class="form-check">
 										<input type="radio" class="form-check-input" id="Paytm" name="payment-method">
 										<label class="form-check-label" for="Paytm"><strong>Online</strong></label>
 										<p>Pay with Paytm</p>
 										<figure>
-											<img src="images/paytm-wallet.png" alt="">
+											<img src="{{URL::asset('assets/front/images/paytm-wallet.png')}}" alt="">
+											<img src="{{URL::asset('assets/front/images/visa.png')}}" alt="">
+											<img src="{{URL::asset('assets/front/images/mastercard.png')}}" alt="">
+											<img src="{{URL::asset('assets/front/images/american-express.png')}}" alt="">
 										</figure>
 									</div>
 								</div>
-								<div class="col-md-3 col-sm-3 col-4 text-end">
+								<div class="col-md-2 col-sm-2 col-4 text-end">
 									<a href="javascript:void(0)" class="btn btn-info d-block">
 										Pay Rs. {{ $subTotal ?? '' }}
 									</a>
 								</div>
 							</div>
 						</div>
+
 						<div class="payment-method">
 							<div class="row">
-								<div class="col-md-9 col-sm-9 col-8">
+								<div class="col-md-10 col-sm-10 col-8">
 									<div class="form-check">
 										<input type="radio" class="form-check-input" id="COD" name="payment-method">
 										<label class="form-check-label" for="COD"><strong>Cash On Delivery (COD)</strong></label>
@@ -304,7 +261,7 @@
 										<p><strong class="text-danger">COD charge 20 extra</strong></p>
 									</div>
 								</div>
-								<div class="col-md-3 col-sm-3 col-4 text-end">
+								<div class="col-md-2 col-sm-2 col-4 text-end">
 									<div class="cod">
 										<span>Total Price (<i class="fa fa-rupee-sign fa-xs"></i>) {{ $subTotal ?? '' }}</span> + <span>20</span>
 									</div>
@@ -313,7 +270,8 @@
 									</a>
 								</div>
 							</div>
-						</div>					
+						</div>	
+
 					</div>
 				</div>
 			</div>
@@ -338,7 +296,7 @@
                             @foreach($conditions as $key => $condition)
                             <p>
                                 <strong>{{ $condition->getType() != null ? ucwords($condition->getType()) . ' Discount' : '' }} 
-                                    <small style="color:red"><a href="javascript:void(0)" onclick="removeCoupon(this, '{{ $condition->getName() ?? ''}}')">Remove</a></small>
+                                    <!--<small style="color:red"><a href="javascript:void(0)" onclick="removeCoupon(this, '{{ $condition->getName() ?? ''}}')">Remove</a></small>-->
                                 </strong>
                                 <span><strong>Rs {{ $condition->getValue() ?? ''}}</strong></span>
                             </p>

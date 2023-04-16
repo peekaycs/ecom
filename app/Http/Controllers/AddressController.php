@@ -35,9 +35,6 @@ class AddressController extends EcomController
 
         $data = [];
         
-        $data['order_id'] = $order_id = Session::get('order_id');
-        //dd($order_id);
-
         $data['addresses'] = $addresses = Address::all();
         //cart detail
         $product_ids = $attribute_ids = [];        
@@ -75,6 +72,10 @@ class AddressController extends EcomController
         $data['total'] = Cart::getTotal();        
         $data['conditions'] = $conditions = Cart::getConditions();
         //end
+        
+        $data['order_id'] = $order_id = Session::get('order_id');
+        //echo $order_id = $request->session()->get('order_id');
+        //echo $order_id = session('order_id');
     
         return $this->createView('front.address', $data);
     }
