@@ -34,14 +34,16 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/remove-from-cart', [CartStorageNewController::class,'RemoveFromCart'])->name('RemoveFromCart');
     Route::post('/update-cart', [CartStorageNewController::class,'updateCart'])->name('updateCart');
 
-    Route::get('/checkout', [CheckoutController::class,'index'])->name('checkout');
+    Route::get('/checkout/{uuid}', [CheckoutController::class,'index'])->name('checkout');
     Route::post('/pay', [CheckoutController::class,'pay'])->name('pay');
     Route::get('/thankyou', [CheckoutController::class,'thankyou'])->name('thankyou');
 
-    Route::post('/order', [OrderController::class,'store'])->name('order');
+    Route::match(['get', 'post'], '/order', [OrderController::class,'store'])->name('order');
 
     Route::get('/address', [AddressController::class,'index'])->name('address');
     Route::post('/address/store', [AddressController::class,'store'])->name('store');
+    Route::get('/address/make-default/{uuid}', [AddressController::class,'makeDefault'])->name('makeDefault');
+    Route::post('/address/update', [AddressController::class,'update'])->name('update');
 
     Route::post('/apply-coupon', [CartStorageNewController::class,'applyCoupon'])->name('applyCoupon');
     Route::post('/remove-coupon', [CartStorageNewController::class,'removeCoupon'])->name('removeCoupon');

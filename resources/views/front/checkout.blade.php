@@ -155,17 +155,23 @@
 				<?php $total_discount = $total_price = $shipping = 0;?>
 				@if( isset($cart_list) && !empty($cart_list) )
 					@foreach($cart_list as $item_id => $item)
-						@foreach($item->conditions as $condition)
-							@if(isset($condition) && !empty($condition))
-								@if($condition->getType() == 'shipping')
-									<?php $shipping = $shipping + $condition->getValue(); ?>
-								@endif    
-							@endif        
-						@endforeach
-						<?php
-						$total_discount = $total_discount + ($item->price - $item->getPriceWithConditions()) * $item->quantity;
+						<?php 
+						foreach($item->conditions as $condition){
+							if(isset($condition) && !empty($condition)){
+								
+								if($condition->getType() == 'price'){
+									$discount = $condition->getValue();
+									$total_discount = $total_discount + ( ( $item->price * abs((int)rtrim($discount,'%')) ) / 100 ) * $item->quantity;
+								}
+								if($condition->getType() == 'shipping'){
+									$shipping_cost = $condition->getValue();
+									$shipping = $shipping + $condition->getValue() * $item->quantity;
+								}   
+							}        
+						}
 						$total_price = $total_price + ($item->price * $item->quantity);
-						?>
+						$total_price_without_shipping = ($item->getPriceWithConditions() - $shipping_cost) * $item->quantity;
+                    ?>
 					@endforeach
 				@endif 
 				<?php 

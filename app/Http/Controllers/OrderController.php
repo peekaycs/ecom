@@ -30,6 +30,8 @@ use DB;
 use Cart;
 use Darryldecode\Cart\Facades\CartFacade;
 
+use Session;
+
 class OrderController extends Controller
 {
     //
@@ -45,6 +47,7 @@ class OrderController extends Controller
             // count carts contents
             $order_detail['cart_count'] = $data['count'] = $cartCollection->count();
         }
+        //dd($cartCollection);
         $discount = $total = $shipping = $payable_amount = 0;
         $qty = [];
         if( isset($cartCollection) && !empty($cartCollection) ){
@@ -127,22 +130,19 @@ class OrderController extends Controller
         }
         //dd($product);
         ############################################
-        
-        //dd($request);
-        
+                
         $order = Order::create($order_detail);
         if($order){
             foreach($product as $prod){
                 $prod['order_id'] = $order_id = $uuid;
                 $order = OrderDetail::create($prod);
             }
-            //here empty the cart    
         }
-
         
-        if($order)
-            return redirect(route('address'))->with('success','Product saved successfully');
-        else
+        if($order){
+            return redirect(route('address'))->with( 'order_id', $uuid );
+        }else{
             return redirect(route('address'))->with('error','Can\'t save product');
+        }    
     }
 }

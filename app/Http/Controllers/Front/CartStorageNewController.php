@@ -170,18 +170,11 @@ class CartStorageNewController extends EcomController
                 )
             );
         } 
-        /*if( isset( $submit ) && $submit == 'buyNow' ){
-            echo $data['subTotal'] = Cart::getSubTotal();
-            $total_discount = $total_discount + ($item->price - $item->getPriceWithConditions()) * $item->quantity;
-            $total_price = $total_price + ($item->price * $item->quantity);
-            die();
-            $applied_coupon = '';
-            $total = '';
-            $discount = '';
+        if( isset( $submit ) && $submit == 'buyNow' ){
             return redirect()->route('order');
-        } else {  */ 
+        } else {
             return redirect()->route('product_detail', [$slug]);
-        //}
+        }
     }
 
     public function RemoveFromCart(Request $request)
