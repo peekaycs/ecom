@@ -74,7 +74,7 @@
 							<li><a href="#">Homeopathy <i class="fas fa-caret-down"></i></a>
 								<div class="dropdown-on-hover">
 									<div class="ddp-inner">
-										<!-- @if (isset($category) && !empty($category))
+										@if (isset($category) && !empty($category))
 											@foreach($category as $cat)
 												@if (isset($cat) && !empty($cat))
 												<ul>
@@ -91,8 +91,8 @@
 												</ul>
 												@endif	
 											@endforeach
-										@endif -->
-										<ul>
+										@endif
+										<!--<ul>
 											<p><strong>Medicines</strong></p>
 											<li>
 												<a href="javascript:void(0)">	
@@ -377,7 +377,7 @@
 													Homeopathic Trituration Tablets 
 												</a>
 											</li>
-										</ul>
+										</ul>-->
 									</div>								
 								</div>								
 							</li>

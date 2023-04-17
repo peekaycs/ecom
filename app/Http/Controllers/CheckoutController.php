@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Classes\EcomController;
 
 use App\Models\Address;
+use App\Models\Order;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -37,7 +38,7 @@ class CheckoutController extends EcomController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request, $uuid)
     {
         //
         //cart detail
@@ -76,6 +77,13 @@ class CheckoutController extends EcomController
         $data['total'] = Cart::getTotal();        
         $data['conditions'] = $conditions = Cart::getConditions();
         //end
+        $address = Address::where('uuid', $uuid)->get();
+        foreach($address as $add){
+            //dd($add->name);
+            $address_comp = ucFirst($add->name)  .' \n '.$add->contact .' \n '. $add->address . ' , ' . $add->landmark .' , '. $add->city .' , \n ' . $add->state . ' - ' . $add->zip;
+        }
+        $address = Order::updateOrCreate( [ 'id'=>$order_id ], [ 'shipping_address' => $address_comp] );
+        dd($address);
         return $this->createView('front.checkout',$data);
     }
 
