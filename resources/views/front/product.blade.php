@@ -53,58 +53,6 @@
 								@endif		
 							</div>
 						</div>
-						<!-- <div class="cat-box">						
-							<h4>DISCOUNT</h4>
-							<input type="type" name="search" class="form-control" placeholder="Search medicine name" auto-fill="off">
-							<div class="check-list">
-								<label class="chk">
-									<input type="checkbox">
-									<span class="checkmark"></span>
-									Less than 10%
-								</label>
-								<label class="chk">
-									<input type="checkbox">
-									<span class="checkmark"></span>
-									10% and above
-								</label>
-								<label class="chk">
-									<input type="checkbox">
-									<span class="checkmark"></span>
-									20% and above
-								</label>
-								<label class="chk">
-									<input type="checkbox">
-									<span class="checkmark"></span>
-									30% and above
-								</label>
-							</div>
-						</div> -->
-						<!-- <div class="cat-box">						
-							<h4>TREATMENT</h4>
-							<input type="type" name="search" class="form-control" placeholder="Search medicine name" auto-fill="off">
-							<div class="check-list">
-								<label class="chk">
-									<input type="checkbox">
-									<span class="checkmark"></span>
-									Less than 10%
-								</label>
-								<label class="chk">
-									<input type="checkbox">
-									<span class="checkmark"></span>
-									10% and above
-								</label>
-								<label class="chk">
-									<input type="checkbox">
-									<span class="checkmark"></span>
-									20% and above
-								</label>
-								<label class="chk">
-									<input type="checkbox">
-									<span class="checkmark"></span>
-									30% and above
-								</label>
-							</div>
-						</div> -->
 					</div>
 					<div class="mobile-filter-tab"> 
 						<!-- <div class="scroll-max-width"> -->
@@ -117,85 +65,20 @@
 						<span class="m-filter-close">X</span>
 						<div class="cat-box">						
 							<h4>Brand</h4>
-							<div class="search-icon">
+							<!--<div class="search-icon">
 								<input type="type" name="search" class="form-control" placeholder="Search by Brand Name" autocomplete="off">
-							</div>
+							</div>-->
 							<div class="check-list">
-								<label class="chk">
-									<input type="checkbox">
-									<span class="checkmark"></span>
-									Family Care
-								</label>
-								<label class="chk">
-									<input type="checkbox">
-									<span class="checkmark"></span>
-									Fitness & Wellness
-								</label>
-								<label class="chk">
-									<input type="checkbox">
-									<span class="checkmark"></span>
-									Skin care
-								</label>
-								<label class="chk">
-									<input type="checkbox">
-									<span class="checkmark"></span>
-									Lip Care
-								</label>
-								<label class="chk">
-									<input type="checkbox">
-									<span class="checkmark"></span>
-									Sexual wellness
-								</label>
-								<label class="chk">
-									<input type="checkbox">
-									<span class="checkmark"></span>
-									Women's Care
-								</label>
-								<label class="chk">
-									<input type="checkbox">
-									<span class="checkmark"></span>
-									Baby care
-								</label>
-								<label class="chk">
-									<input type="checkbox">
-									<span class="checkmark"></span>
-									Women's Care
-								</label>
-								<label class="chk">
-									<input type="checkbox">
-									<span class="checkmark"></span>
-									Baby care
-								</label>
-								<label class="chk">
-									<input type="checkbox">
-									<span class="checkmark"></span>
-									Women's Care
-								</label>
-								<label class="chk">
-									<input type="checkbox">
-									<span class="checkmark"></span>
-									Baby care
-								</label>
-								<label class="chk">
-									<input type="checkbox">
-									<span class="checkmark"></span>
-									Women's Care
-								</label>
-								<label class="chk">
-									<input type="checkbox">
-									<span class="checkmark"></span>
-									Baby care
-								</label>
-								<label class="chk">
-									<input type="checkbox">
-									<span class="checkmark"></span>
-									Women's Care
-								</label>
-								<label class="chk">
-									<input type="checkbox">
-									<span class="checkmark"></span>
-									Baby care
-								</label>
+								@if (isset($brands) && !empty($brands))
+									@foreach($brands as $brand)
+										@if (isset($brand) && !empty($brand))					
+										<label class="chk">
+											<input type="checkbox" name="brand[]" class="brand {{ $brand->id ? 'brand_'.$brand->id : '' }}" data-brand="{{ $brand->id ?? ''}}" onclick="getProduct( this,'brand', '{{ $brand->id }}')">
+											<span class="checkmark"></span>{{ $brand->brand ?? ''}}
+										</label>
+										@endif
+									@endforeach
+								@endif	
 							</div>						
 						</div>
 					</div>

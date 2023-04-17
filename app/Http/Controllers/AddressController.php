@@ -26,14 +26,19 @@ use DB;
 
 use Cart;
 use Darryldecode\Cart\Facades\CartFacade;
+use Session;
 
 class AddressController extends EcomController
 {
     //
     public function index(Request $request){
+
         $data = [];
+        
+        $data['order_id'] = $order_id = Session::get('order_id');
+        //dd($order_id);
+
         $data['addresses'] = $addresses = Address::all();
-        //dd($addresses);
         //cart detail
         $product_ids = $attribute_ids = [];        
         if (Auth::check()) {
@@ -112,6 +117,56 @@ class AddressController extends EcomController
             'state' => $request->state
         ]);
         
+        
+        if($address)
+            return redirect(route('address'))->with('success','Product saved successfully');
+        else
+            return redirect(route('address'))->with('error','Can\'t save product');
+    }
+
+    public function update(Request $request)
+    {
+        //dd($request);
+        $request->validate([
+            'name' => 'string',
+            'contact' => 'string',
+            'landmark' => 'string',
+            'address' => 'string',
+            'optradio' => 'string',
+            'zip' => 'integer',
+            'city' => 'string',
+            'state' => 'string'
+        ]);
+        
+        $address = Address::updateOrCreate( 
+            [ 
+                'uuid'=>$request->uuid 
+            ],
+            [ 
+                'name' => $request->name,
+                'contact' => $request->contact,
+                'landmark' => $request->landmark,
+                'address' => $request->address,
+                'address_type' => $request->optradio,
+                'zip' => $request->zip,
+                'city' => $request->city,
+                'state' => $request->state 
+            ] 
+        );
+        
+        if($address)
+            return redirect(route('address'))->with('success','Product saved successfully');
+        else
+            return redirect(route('address'))->with('error','Can\'t save product');
+    }
+
+    public function makeDefault(Request $request, $uuid)
+    {
+        //dd($request);
+        $userId = Auth::user()->uuid;
+        DB::update('update addresses set default_address = ? where user_id = ?',[0, $userId ]);
+        //$address = Address::updateOrCreate( [ 'user_id'=>$userId ], [ 'default_address' => 0] );
+        $address = Address::updateOrCreate( [ 'uuid'=>$uuid ], [ 'default_address' => 1] );
         
         if($address)
             return redirect(route('address'))->with('success','Product saved successfully');
