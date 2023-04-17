@@ -64,7 +64,38 @@ $(document).ready(function () {
           ]
         });
     });
-
+$(document).ready(function () {
+    $('.offer-slide').slick({
+        centerMode: true,
+            centerPadding: '0px',
+            slidesToShow: 4,
+            slidesToScroll: 1,
+            autoplay: false,
+            speed: 1000,
+            responsive: [
+            {
+                breakpoint: 769,
+                settings: {
+                    arrows: false,
+                    centerMode: true,
+                    centerPadding: '0px',
+                    slidesToShow: 4,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    arrows: false,
+                    centerMode: true,
+                    centerPadding: '0px',
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                }
+            }
+            ]
+        });
+    });
 $(document).ready(function () {
     $('.product-slide').slick({
         centerMode: true,
