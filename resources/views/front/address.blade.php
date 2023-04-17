@@ -298,9 +298,7 @@
     });
 
     function addUrl(uuid){
-        "{{ url('checkout') }}/" + uuid 
         var href = "{{ url('checkout') }}/" + uuid; 
-        alert(href);
         $(".addHref").attr('href', href)
     }    
 

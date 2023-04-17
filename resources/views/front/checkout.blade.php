@@ -43,7 +43,7 @@
 												</div>
 												<div class="form-group">
 													<label>Card Number :
-														<img class="card-icon" src="images/visa-card.png">
+														<img class="card-icon" src="{{URL::asset('assets/front/images/visa-card.png')}}">
 													</label>
 													<div class="col-sm-12 col-12">
 														<div class="card-group">
@@ -183,13 +183,36 @@
 							<div class="row">
 								<div class="col-md-10 col-sm-10 col-8">
 									<div class="form-check">
-										<input type="radio" class="form-check-input" id="DCU" name="payment-method" checked>
+										<input type="radio" class="form-check-input pay_method" id="Paytm" name="payment-method" checked onclick="makeActive( this, 'online' )">
+										<label class="form-check-label" for="Paytm"><strong>Online</strong></label>
+										<p>Pay with Paytm</p>
+										<figure>
+											<img src="{{URL::asset('assets/front/images/paytm.svg')}}" alt="">
+											<img src="{{URL::asset('assets/front/images/visa.png')}}" alt="">
+											<img src="{{URL::asset('assets/front/images/mastercard.png')}}" alt="">
+											<img src="{{URL::asset('assets/front/images/american-express.png')}}" alt="">
+										</figure>
+									</div>
+								</div>
+								<div class="col-md-2 col-sm-2 col-4 text-end">
+									<a href="javascript:void(0)" class="btn btn-info d-block pay online">
+										Pay Rs. {{ $subTotal ?? '' }}
+									</a>
+								</div>
+							</div>
+						</div>
+
+						<div class="payment-method">
+							<div class="row">
+								<div class="col-md-10 col-sm-10 col-8">
+									<div class="form-check">
+										<input type="radio" class="form-check-input pay_method" id="DCU" name="payment-method" onclick="makeActive( this, 'cheque' )">
 										<label class="form-check-label" for="DCU"><strong>Cheque / Demand Draft (DD)</strong></label>
 										<p>Pay via Cheque or Demand draft (DD)</p>
 									</div>
 								</div>
 								<div class="col-md-2 col-sm-2 col-4 text-end">
-									<a data-bs-toggle="tab" href="#check" class="btn btn-info d-block">
+									<a data-bs-toggle="tab" href="#check" class="btn btn-info d-block pay cheque disabled">
 										Pay Rs. {{ $subTotal ?? '' }}
 									</a>
 								</div>
@@ -198,11 +221,12 @@
 								<div class="col-md-9 col-sm-12 col-12">
 									<form action="{{ route('pay') }}" method="POST">
 										@csrf
-										<input type="hidden" name="mode" value="cheque">
+										<input type="hidden" name="mode" value="CHEQUE">
 										<input type="hidden" name="order_id" value="{{ $order_id ?? '' }}">
+										<input type="hidden" name="amount" value="{{ $subTotal ?? '' }}">
 										<div class="row">
 											<div class="col-md-3 col-sm-12 col-12">
-												<input type="text" name="cheque_dd_number" class="form-control rounded-0 border-end-1 @error('cheque_number') has-error @enderror" placeholder="Cheque/DD number">
+												<input type="text" name="cheque_dd_number" class="form-control rounded-0 border-end-1 @error('cheque_number') has-error @enderror" placeholder="Cheque/DD number" required>
 												@error('cheque_number')
 												<p class="text-danger">{{ $message }}</p>
 												@enderror
@@ -214,13 +238,13 @@
 												@enderror
 											</div>
 											<div class="col-md-3 col-sm-12 col-12">
-												<input type="text" name="amount" class="form-control rounded-0 border-end-1 @error('amount') has-error @enderror" placeholder="Check Amount">
-												@error('amount')
+												<input type="text" name="fill_amount" class="form-control rounded-0 border-end-1 @error('amount') has-error @enderror" placeholder="Check Amount" required>
+												@error('fill_amount')
 												<p class="text-danger">{{ $message }}</p>
 												@enderror
 											</div>
 											<div class="col-md-3 col-sm-12 col-12 text-center">
-												<button type="submit" name="submit" class="btn btn-primary">Pay Now</button>
+												<button type="submit" name="submit" class="btn btn-primary pay cheque disabled">Pay Now</button>
 											</div>
 										</div>	
 									</form>	
@@ -230,48 +254,30 @@
 
 						<div class="payment-method">
 							<div class="row">
+								@csrf
 								<div class="col-md-10 col-sm-10 col-8">
 									<div class="form-check">
-										<input type="radio" class="form-check-input" id="Paytm" name="payment-method">
-										<label class="form-check-label" for="Paytm"><strong>Online</strong></label>
-										<p>Pay with Paytm</p>
-										<figure>
-											<img src="{{URL::asset('assets/front/images/paytm-wallet.png')}}" alt="">
-											<img src="{{URL::asset('assets/front/images/visa.png')}}" alt="">
-											<img src="{{URL::asset('assets/front/images/mastercard.png')}}" alt="">
-											<img src="{{URL::asset('assets/front/images/american-express.png')}}" alt="">
-										</figure>
-									</div>
-								</div>
-								<div class="col-md-2 col-sm-2 col-4 text-end">
-									<a href="javascript:void(0)" class="btn btn-info d-block">
-										Pay Rs. {{ $subTotal ?? '' }}
-									</a>
-								</div>
-							</div>
-						</div>
-
-						<div class="payment-method">
-							<div class="row">
-								<div class="col-md-10 col-sm-10 col-8">
-									<div class="form-check">
-										<input type="radio" class="form-check-input" id="COD" name="payment-method">
+										<input type="radio" class="form-check-input pay_method" id="COD" name="payment-method" onclick="makeActive( this, 'cod' )">
 										<label class="form-check-label" for="COD"><strong>Cash On Delivery (COD)</strong></label>
 										<p>Now avail Cash on Delivery, and pay when you get delivery</p>
 										<p><strong class="text-danger">COD charge 20 extra</strong></p>
 									</div>
 								</div>
+
 								<div class="col-md-2 col-sm-2 col-4 text-end">
-									<div class="cod">
-										<span>Total Price (<i class="fa fa-rupee-sign fa-xs"></i>) {{ $subTotal ?? '' }}</span> + <span>20</span>
-									</div>
-									<a href="javascript:void(0)" class="btn btn-info d-block">
-										Pay Rs. {{ $subTotal ? $subTotal+20 : '' }}
-									</a>
+									<form action="{{ route('pay') }}" method="POST">
+										@csrf
+										<input type="hidden" name="mode" value="COD">
+										<input type="hidden" name="order_id" value="{{ $order_id ?? '' }}">
+										<input type="hidden" name="amount" value="{{ $subTotal ? $subTotal+20 : '' }}">
+										<div class="cod">
+											<span>Total Price (<i class="fa fa-rupee-sign fa-xs"></i>) {{ $subTotal ?? '' }}</span> + <span>20</span>
+										</div>
+										<button type="submit" name="submit" class="btn btn-info d-block pay cod disabled">Pay Rs. {{ $subTotal ? $subTotal+20 : '' }}</button>
+									</form>
 								</div>
 							</div>
 						</div>	
-
 					</div>
 				</div>
 			</div>
@@ -320,3 +326,17 @@
 </div>
 <!---end header section-->
 @endsection
+
+@section('script')	
+<script>
+
+    function makeActive( thiss, cls ){
+        var hasClass = $( "." + cls ).hasClass('disabled');
+		if( hasClass){
+			$( ".pay" ).addClass('disabled');
+			$( "." + cls ).removeClass('disabled');
+		}
+    }    
+
+</script>
+@endsection	

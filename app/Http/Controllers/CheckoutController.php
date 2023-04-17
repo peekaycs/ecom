@@ -95,27 +95,50 @@ class CheckoutController extends EcomController
     public function pay(Request $request)
     {
         //dd($request);
-        $request->validate([
-            'cheque_dd_number' => 'required|string',
-            'order_id' => 'required|string',
-            'mode' => 'required|string',
-            'bank_name' => 'string',
-            'amount' => 'required|string',
-        ]);
+        if( isset( $request->mode ) && !empty( $request->mode ) && $request->mode == 'CHEQUE' ){
+            $request->validate([
+                'cheque_dd_number' => 'required|string',
+                'order_id' => 'required|string',
+                'mode' => 'required|string',
+                'bank_name' => 'string',
+                'amount' => 'required|integer',
+                'fill_amount' => 'required|integer',
+            ]);
+            
+            $uuid = Str::uuid();
+            $transaction_id = 'Ecom_'. Str::uuid();
+            $payments = 0;
+            $payments = Payment::create([
+                'id' => $uuid,
+                'transaction_id' => $transaction_id,
+                'order_id' => $request->order_id,
+                'mode' => $request->mode,
+                'cheque_dd_number' => $request->cheque_dd_number,
+                'bank_name' => $request->bank_name,
+                'amount' => $request->amount,
+                'payment_status' => 'SUCCESS'
+            ]);
+        } 
         
-        $uuid = Str::uuid();
-        $transaction_id = 'Ecom_'. Str::uuid();
-        $payments = 0;
-        $payments = Payment::create([
-            'id' => $uuid,
-            'transaction_id' => $transaction_id,
-            'order_id' => $request->order_id,
-            'mode' => $request->mode,
-            'cheque_dd_number' => $request->cheque_dd_number,
-            'bank_name' => $request->bank_name,
-            'amount' => $request->amount,
-            'payment_status' => 'SUCCESS'
-        ]);
+        if( isset( $request->mode ) && !empty( $request->mode ) && $request->mode == 'COD' ){
+            $request->validate([
+                'order_id' => 'required|string',
+                'mode' => 'required|string',
+                'amount' => 'required|string',
+            ]);
+            
+            $uuid = Str::uuid();
+            $transaction_id = 'Ecom_'. Str::uuid();
+            $payments = 0;
+            $payments = Payment::create([
+                'id' => $uuid,
+                'transaction_id' => $transaction_id,
+                'order_id' => $request->order_id,
+                'mode' => $request->mode,
+                'amount' => $request->amount,
+                'payment_status' => 'SUCCESS'
+            ]);
+        } 
         
         if($payments)
             return redirect(route('thankyou'))->with('success','Congratulations! Your Order Placed Successfully. Thank You');
