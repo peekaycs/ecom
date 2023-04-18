@@ -178,6 +178,9 @@
 				<div class="checkout-section2">
 					<h6>Select Payment Method</h6>
 					<hr>
+					@if(session('msg'))
+						<p class="alert {{ session('alert-class', 'alert-info') }}">{{ session('msg') }}</p>
+					@endif
 					<div class="col-md-12 col-sm-12 col-12">
 						<div class="payment-method">
 							<div class="row">
@@ -260,7 +263,7 @@
 										<input type="radio" class="form-check-input pay_method" id="COD" name="payment-method" onclick="makeActive( this, 'cod' )">
 										<label class="form-check-label" for="COD"><strong>Cash On Delivery (COD)</strong></label>
 										<p>Now avail Cash on Delivery, and pay when you get delivery</p>
-										<p><strong class="text-danger">COD charge 20 extra</strong></p>
+										<!--<p><strong class="text-danger">COD charge 20 extra</strong></p>-->
 									</div>
 								</div>
 
@@ -269,11 +272,11 @@
 										@csrf
 										<input type="hidden" name="mode" value="COD">
 										<input type="hidden" name="order_id" value="{{ $order_id ?? '' }}">
-										<input type="hidden" name="amount" value="{{ $subTotal ? $subTotal+20 : '' }}">
-										<div class="cod">
+										<input type="hidden" name="amount" value="{{ $subTotal ? $subTotal : '' }}">
+										<!--<div class="cod">
 											<span>Total Price (<i class="fa fa-rupee-sign fa-xs"></i>) {{ $subTotal ?? '' }}</span> + <span>20</span>
-										</div>
-										<button type="submit" name="submit" class="btn btn-info d-block pay cod disabled">Pay Rs. {{ $subTotal ? $subTotal+20 : '' }}</button>
+										</div>-->
+										<button type="submit" name="submit" class="btn btn-info d-block pay cod disabled">Pay Rs. {{ $subTotal ? $subTotal : '' }}</button>
 									</form>
 								</div>
 							</div>

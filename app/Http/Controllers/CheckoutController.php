@@ -95,6 +95,9 @@ class CheckoutController extends EcomController
     public function pay(Request $request)
     {
         //dd($request);
+        $order = Order::find($request->order_id);
+        $receiving_amount = $order->payable_amount;
+        $flag = false;
         if( isset( $request->mode ) && !empty( $request->mode ) && $request->mode == 'CHEQUE' ){
             $request->validate([
                 'cheque_dd_number' => 'required|string',
@@ -108,16 +111,19 @@ class CheckoutController extends EcomController
             $uuid = Str::uuid();
             $transaction_id = 'Ecom_'. Str::uuid();
             $payments = 0;
-            $payments = Payment::create([
-                'id' => $uuid,
-                'transaction_id' => $transaction_id,
-                'order_id' => $request->order_id,
-                'mode' => $request->mode,
-                'cheque_dd_number' => $request->cheque_dd_number,
-                'bank_name' => $request->bank_name,
-                'amount' => $request->amount,
-                'payment_status' => 'SUCCESS'
-            ]);
+            if( ( $request->amount <= $request->fill_amount ) && ( $receiving_amount <= $request->amount ) ){
+                $flag = true;
+                $payments = Payment::create([
+                    'id' => $uuid,
+                    'transaction_id' => $transaction_id,
+                    'order_id' => $request->order_id,
+                    'mode' => $request->mode,
+                    'cheque_dd_number' => $request->cheque_dd_number,
+                    'bank_name' => $request->bank_name,
+                    'amount' => $request->amount,
+                    'payment_status' => 'SUCCESS'
+                ]);
+            }   
         } 
         
         if( isset( $request->mode ) && !empty( $request->mode ) && $request->mode == 'COD' ){
@@ -130,20 +136,31 @@ class CheckoutController extends EcomController
             $uuid = Str::uuid();
             $transaction_id = 'Ecom_'. Str::uuid();
             $payments = 0;
-            $payments = Payment::create([
-                'id' => $uuid,
-                'transaction_id' => $transaction_id,
-                'order_id' => $request->order_id,
-                'mode' => $request->mode,
-                'amount' => $request->amount,
-                'payment_status' => 'SUCCESS'
-            ]);
+            if( $receiving_amount <= $request->amount ){
+                $flag = true;
+                $payments = Payment::create([
+                    'id' => $uuid,
+                    'transaction_id' => $transaction_id,
+                    'order_id' => $request->order_id,
+                    'mode' => $request->mode,
+                    'amount' => $request->amount,
+                    'payment_status' => 'SUCCESS'
+                ]);
+            }    
         } 
-        
-        if($payments)
+         
+        if($payments){
+            Session::flash('msg', 'Congratulations! Your Order Placed Successfully. Thank You'); 
             return redirect(route('thankyou'))->with('success','Congratulations! Your Order Placed Successfully. Thank You');
-        else
+        }elseif($flag == false){
+            Session::flash('msg', 'Amount is insufficiant!'); 
+            Session::flash('alert-class', 'alert-danger');
+            return redirect(route('checkout'))->with('error','Amount is insufficiant!');
+        }else{
+            Session::flash('msg', 'Can\'t proceed with this payment method'); 
+            Session::flash('alert-class', 'alert-danger');
             return redirect(route('checkout'))->with('error','Can\'t proceed with this payment method');
+        }    
     }
 
     public function thankyou(Request $request)
