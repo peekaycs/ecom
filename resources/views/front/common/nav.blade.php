@@ -74,7 +74,11 @@
 							<li><a href="#">Homeopathy <i class="fas fa-caret-down"></i></a>
 								<div class="dropdown-on-hover">
 									<div class="ddp-inner">
+<<<<<<< HEAD
+										<!-- @if (isset($category) && !empty($category))
+=======
 										@if (isset($category) && !empty($category))
+>>>>>>> aab0bba31099195b21e0074fb8289fc66892cbf3
 											@foreach($category as $cat)
 												@if (isset($cat) && !empty($cat))
 												<ul>
