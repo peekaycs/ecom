@@ -5,7 +5,7 @@
 		<div class="row">
 			<div class="col-md-2 col-sm-2 col-12">
 				<div class="footer-contant">
-					<!-- <h3>About Us</h3> -->
+					<h3>{{env('APP_NAME')}}</h3>
 					@if(!empty($pages))
 					<ul>
 						@if(isset($pages) && !empty($pages))
@@ -25,7 +25,7 @@
 			</div>
 			<div class="col-md-3 col-sm-3 col-6">
 				<div class="footer-contant">
-					<h3>Quick Links</h3>
+					<h3>Policies</h3>
 					@if(!empty($pages))
 					<ul>
 						@if(isset($pages) && !empty($pages))
@@ -56,7 +56,7 @@
 			</div>
 			<div class="col-md-2 col-sm-2 col-6">
 				<div class="footer-contant">
-					<h3>More</h3>
+					<h3>Address</h3>
 					<ul>
 						<li><a href="javascript:void(0)">Lorem ipsum dolor</a></li>
 						<li><a href="javascript:void(0)">Lorem ipsum dolor</a></li>
