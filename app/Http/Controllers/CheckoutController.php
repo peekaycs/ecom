@@ -7,6 +7,7 @@ use App\Http\Classes\EcomController;
 
 use App\Models\Address;
 use App\Models\Order;
+use App\Models\User;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -95,7 +96,9 @@ class CheckoutController extends EcomController
     public function pay(Request $request)
     {
         //dd($request);
-        $order = Order::find($request->order_id);
+        $userId = Auth::user()->uuid;
+        $data['user'] = User::find($userId);
+        $data['order'] = $order = Order::find($request->order_id);
         $receiving_amount = $order->payable_amount;
         $flag = false;
         if( isset( $request->mode ) && !empty( $request->mode ) && $request->mode == 'CHEQUE' ){
@@ -150,6 +153,9 @@ class CheckoutController extends EcomController
         } 
          
         if($payments){
+            Cart::session($userId)->clear();
+            Cart::clear();
+            $request->session()->put( 'order_id', $request->order_id );
             Session::flash('msg', 'Congratulations! Your Order Placed Successfully. Thank You'); 
             return redirect(route('thankyou'))->with('success','Congratulations! Your Order Placed Successfully. Thank You');
         }elseif($flag == false){
@@ -166,7 +172,12 @@ class CheckoutController extends EcomController
     public function thankyou(Request $request)
     {
         //dd($request);
-        return $this->createView('front.thankyou');
+        $userId = Auth::user()->uuid;
+        $data['user'] = User::find($userId);
+        $order_id = Session::get('order_id');
+        $data['order'] = Order::find($order_id);
+        
+        return $this->createView('front.thankyou',$data);
     }
 
     /**
