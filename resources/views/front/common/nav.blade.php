@@ -91,157 +91,8 @@
 												</ul>
 												@endif	
 											@endforeach
-<<<<<<< HEAD
-										@endif -->
-										<ul>
-=======
-										@endif
-										<!--<ul>
->>>>>>> aab0bba31099195b21e0074fb8289fc66892cbf3
-											<p><strong>Medicines</strong></p>
-											<li>
-												<a href="javascript:void(0)">	
-													Medicines
-												</a>
-											</li>
-											<li>
-												<a href="javascript:void(0)">
-													Dilutions 
-												</a>
-											</li>
-											<li>
-												<a href="javascript:void(0)">
-													Mother Tinctures 
-												</a>
-											</li>
-											<li>
-												<a href="javascript:void(0)">
-													Biochemic Tablets 
-												</a>
-											</li>
-											<li>
-												<a href="javascript:void(0)">
-													Homeopathic Trituration Tablets 
-												</a>
-											</li>
-										</ul>
-										<ul>
-											<p><strong>Medicines</strong></p>
-											<li>
-												<a href="javascript:void(0)">	
-													Medicines
-												</a>
-											</li>
-											<li>
-												<a href="javascript:void(0)">
-													Dilutions 
-												</a>
-											</li>
-											<li>
-												<a href="javascript:void(0)">
-													Mother Tinctures 
-												</a>
-											</li>
-											<li>
-												<a href="javascript:void(0)">
-													Biochemic Tablets 
-												</a>
-											</li>
-											<li>
-												<a href="javascript:void(0)">
-													Homeopathic Trituration Tablets 
-												</a>
-											</li>
-										</ul>
-										<ul>
-											<p><strong>Medicines</strong></p>
-											<li>
-												<a href="javascript:void(0)">	
-													Medicines
-												</a>
-											</li>
-											<li>
-												<a href="javascript:void(0)">
-													Homeopathic Trituration Tablets 
-												</a>
-											</li>
-										</ul>
-										<ul>
-<<<<<<< HEAD
-=======
-											<p><strong>Medicines</strong></p>
-											<li>
-												<a href="javascript:void(0)">	
-													Medicines
-												</a>
-											</li>
-											<li>
-												<a href="javascript:void(0)">
-													Dilutions 
-												</a>
-											</li>
-											<li>
-												<a href="javascript:void(0)">
-													Mother Tinctures 
-												</a>
-											</li>
-											<li>
-												<a href="javascript:void(0)">
-													Biochemic Tablets 
-												</a>
-											</li>
-											<li>
-												<a href="javascript:void(0)">
-													Homeopathic Trituration Tablets 
-												</a>
-											</li>
-										</ul>
-										<ul>
-											<p><strong>Medicines</strong></p>
-											<li>
-												<a href="javascript:void(0)">	
-													Medicines
-												</a>
-											</li>
-											<li>
-												<a href="javascript:void(0)">
-													Dilutions 
-												</a>
-											</li>
-											<li>
-												<a href="javascript:void(0)">
-													Homeopathic Trituration Tablets 
-												</a>
-											</li>
-										</ul>
-										<ul>
-											<p><strong>Medicines</strong></p>
-											<li>
-												<a href="javascript:void(0)">	
-													Medicines
-												</a>
-											</li>
-											<li>
-												<a href="javascript:void(0)">
-													Dilutions 
-												</a>
-											</li>
-											<li>
-												<a href="javascript:void(0)">
-													Mother Tinctures 
-												</a>
-											</li>
-											<li>
-												<a href="javascript:void(0)">
-													Biochemic Tablets 
-												</a>
-											</li>
-											<li>
-												<a href="javascript:void(0)">
-													Homeopathic Trituration Tablets 
-												</a>
-											</li>
-										</ul>
+										@endif 
+										<!--
 										<ul>
 											<p><strong>Medicines</strong></p>
 											<li>
@@ -312,53 +163,6 @@
 											</li>
 										</ul>
 										<ul>
-											<p><strong>Medicines</strong></p>
-											<li>
-												<a href="javascript:void(0)">	
-													Medicines
-												</a>
-											</li>
-											<li>
-												<a href="javascript:void(0)">
-													Dilutions 
-												</a>
-											</li>
-											<li>
-												<a href="javascript:void(0)">
-													Mother Tinctures 
-												</a>
-											</li>
-											<li>
-												<a href="javascript:void(0)">
-													Biochemic Tablets 
-												</a>
-											</li>
-											<li>
-												<a href="javascript:void(0)">
-													Homeopathic Trituration Tablets 
-												</a>
-											</li>
-										</ul>
-										<ul>
-											<p><strong>Medicines</strong></p>
-											<li>
-												<a href="javascript:void(0)">	
-													Medicines
-												</a>
-											</li>
-											<li>
-												<a href="javascript:void(0)">
-													Dilutions 
-												</a>
-											</li>
-											<li>
-												<a href="javascript:void(0)">
-													Homeopathic Trituration Tablets 
-												</a>
-											</li>
-										</ul>
-										<ul>
->>>>>>> aab0bba31099195b21e0074fb8289fc66892cbf3
 											<p><strong>Medicines</strong></p>
 											<li>
 												<a href="javascript:void(0)">	
@@ -575,6 +379,195 @@
 												</a>
 											</li>
 										</ul>
+										<ul>
+											<p><strong>Medicines</strong></p>
+											<li>
+												<a href="javascript:void(0)">	
+													Medicines
+												</a>
+											</li>
+											<li>
+												<a href="javascript:void(0)">
+													Dilutions 
+												</a>
+											</li>
+											<li>
+												<a href="javascript:void(0)">
+													Homeopathic Trituration Tablets 
+												</a>
+											</li>
+										</ul>
+										<ul>
+											<p><strong>Medicines</strong></p>
+											<li>
+												<a href="javascript:void(0)">	
+													Medicines
+												</a>
+											</li>
+											<li>
+												<a href="javascript:void(0)">
+													Dilutions 
+												</a>
+											</li>
+											<li>
+												<a href="javascript:void(0)">
+													Mother Tinctures 
+												</a>
+											</li>
+											<li>
+												<a href="javascript:void(0)">
+													Biochemic Tablets 
+												</a>
+											</li>
+											<li>
+												<a href="javascript:void(0)">
+													Homeopathic Trituration Tablets 
+												</a>
+											</li>
+										</ul>
+										<ul>
+											<p><strong>Medicines</strong></p>
+											<li>
+												<a href="javascript:void(0)">	
+													Medicines
+												</a>
+											</li>
+											<li>
+												<a href="javascript:void(0)">
+													Dilutions 
+												</a>
+											</li>
+											<li>
+												<a href="javascript:void(0)">
+													Mother Tinctures 
+												</a>
+											</li>
+											<li>
+												<a href="javascript:void(0)">
+													Biochemic Tablets 
+												</a>
+											</li>
+											<li>
+												<a href="javascript:void(0)">
+													Homeopathic Trituration Tablets 
+												</a>
+											</li>
+										</ul>
+										<ul>
+											<p><strong>Medicines</strong></p>
+											<li>
+												<a href="javascript:void(0)">	
+													Medicines
+												</a>
+											</li>
+											<li>
+												<a href="javascript:void(0)">
+													Dilutions 
+												</a>
+											</li>
+											<li>
+												<a href="javascript:void(0)">
+													Mother Tinctures 
+												</a>
+											</li>
+											<li>
+												<a href="javascript:void(0)">
+													Biochemic Tablets 
+												</a>
+											</li>
+											<li>
+												<a href="javascript:void(0)">
+													Homeopathic Trituration Tablets 
+												</a>
+											</li>
+										</ul>
+										<ul>
+											<p><strong>Medicines</strong></p>
+											<li>
+												<a href="javascript:void(0)">	
+													Medicines
+												</a>
+											</li>
+											<li>
+												<a href="javascript:void(0)">
+													Homeopathic Trituration Tablets 
+												</a>
+											</li>
+										</ul>
+										<ul>
+											<p><strong>Medicines</strong></p>
+											<li>
+												<a href="javascript:void(0)">	
+													Medicines
+												</a>
+											</li>
+											<li>
+												<a href="javascript:void(0)">
+													Dilutions 
+												</a>
+											</li>
+											<li>
+												<a href="javascript:void(0)">
+													Mother Tinctures 
+												</a>
+											</li>
+											<li>
+												<a href="javascript:void(0)">
+													Biochemic Tablets 
+												</a>
+											</li>
+											<li>
+												<a href="javascript:void(0)">
+													Homeopathic Trituration Tablets 
+												</a>
+											</li>
+										</ul>
+										<ul>
+											<p><strong>Medicines</strong></p>
+											<li>
+												<a href="javascript:void(0)">	
+													Medicines
+												</a>
+											</li>
+											<li>
+												<a href="javascript:void(0)">
+													Dilutions 
+												</a>
+											</li>
+											<li>
+												<a href="javascript:void(0)">
+													Homeopathic Trituration Tablets 
+												</a>
+											</li>
+										</ul>
+										<ul>
+											<p><strong>Medicines</strong></p>
+											<li>
+												<a href="javascript:void(0)">	
+													Medicines
+												</a>
+											</li>
+											<li>
+												<a href="javascript:void(0)">
+													Dilutions 
+												</a>
+											</li>
+											<li>
+												<a href="javascript:void(0)">
+													Mother Tinctures 
+												</a>
+											</li>
+											<li>
+												<a href="javascript:void(0)">
+													Biochemic Tablets 
+												</a>
+											</li>
+											<li>
+												<a href="javascript:void(0)">
+													Homeopathic Trituration Tablets 
+												</a>
+											</li>
+										</ul>-->
 									</div>								
 								</div>								
 							</li>
