@@ -140,9 +140,10 @@ class OrderController extends Controller
         }
         
         if($order){
-            return redirect(route('address'))->with( 'order_id', $uuid );
+            $request->session()->put( 'order_id', $uuid );
+            return redirect(route('address'))->with( 'success','Order saved successfully' );
         }else{
-            return redirect(route('address'))->with('error','Can\'t save product');
+            return redirect(route('address'))->with('error','Can\'t save Order');
         }    
     }
 }

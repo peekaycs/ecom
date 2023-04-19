@@ -7,15 +7,18 @@
             <div class="col-md-8 col-sm-10 col-12">
                 <div class="add-edit-address">
                     <div class="row">
-                        <?php $uuid = 0; ?>
                         @if(isset($addresses) && !empty($addresses))
                             @foreach($addresses as $address)
                                 @if(isset($address) && !empty($address))
-                                <?php $uuid = $address->uuid;?>
+                                <?php 
+                                if(isset($address->default_address) && $address->default_address == 1){
+                                    $uuid = $address->uuid;
+                                }
+                                ?>
                                 <div class="col-md-12 col-sm-12 col-12">
                                     <div class="mb-2">
                                         <span class="form-check float-start">
-                                            <input type="radio" class="form-check-input" name="optradio_address" value="{{ $address->address_type ?? ''}}" {{ (isset($address->default_address) && $address->default_address == 1) ? 'checked' : '' }}>
+                                            <input type="radio" class="form-check-input optradio_address" name="optradio_address optradio_address_{{ $address->uuid ?? '' }}" data-uuid="{{ $address->uuid ?? '' }}" value="{{ $address->address_type ?? ''}}" onclick="addUrl( '{{ $address->uuid }}' )" {{ (isset($address->default_address) && $address->default_address == 1) ? 'checked' : '' }} >
                                         </span>
                                         <div class="">
                                             <strong>{{ ucWords($address->address_type) ?? ''}}</strong>
@@ -112,21 +115,6 @@
                                 @endif
                             @endforeach
                         @endif        
-                        <!--<div class="col-md-12 col-sm-12 col-12">
-                            <div class="mb-2">
-                                <span class="form-check float-start">
-                                    <input type="radio" class="form-check-input" name="optradio" value="home" checked>
-                                </span>
-                                <div>
-                                    <strong>HOME</strong>
-                                    <span class="float-end"><i class="fas fa-ellipsis-v"></i></span>
-                                </div>
-                                <div class="px-4">Ram kumar<br>8804444996 <br>
-                                    2nd floor, Vipul Agora Building, near sahara mall, MG Road, Gurgaon,<br>
-                                    Gurgaon, Haryana - 122002
-                                </div>
-                            </div>				
-                        </div>-->
                     </div>
                     <div class="row">
                         <div class="col-md-12 col-sm-12 col-6 text-center mb-2 mt-md-4 mt-sm-0">
@@ -134,7 +122,7 @@
                         </div>
                         <div class="col-md-12 col-sm-12 col-6 text-center">
                             @if(isset($addresses) && $addresses->count() > 0)
-                                <a href="{{ route( 'checkout', [ 'uuid' => $uuid ] ) }}" class="btn btn-sm btn-success rounded-0 d-block">CONTINUE</a>
+                                <a href="{{ route( 'checkout', [ 'uuid' => $uuid ] ) }}" class="btn btn-sm btn-success rounded-0 d-block addHref">CONTINUE</a>
                             @endif
                         </div>
                     </div>
@@ -273,7 +261,7 @@
                     <div class="alert alert-success">
                         <span>Total Savings: <strong>{{ isset($total_discount) ? '₹'. $total_discount : '0'}}</strong></span>
                         <!-- <button type="button" class="btn btn-sm btn-success float-end">CHECKOUT</button> -->
-                        <a href="{{ route( 'checkout', [ 'uuid' => $uuid ] ) }}" class="btn btn-sm btn-success float-end">Payment</a>
+                        <a href="{{ route( 'checkout', [ 'uuid' => $uuid ] ) }}" class="btn btn-sm btn-success float-end addHref">Payment</a>
                     </div>
                 </div>                
             </div>            
@@ -308,6 +296,11 @@
         }
         
     });
+
+    function addUrl(uuid){
+        var href = "{{ url('checkout') }}/" + uuid; 
+        $(".addHref").attr('href', href)
+    }    
 
 </script>
 @endsection	
