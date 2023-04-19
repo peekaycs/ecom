@@ -21,7 +21,7 @@ class AddColumnToOrderDetail extends Migration
             $table->float('shipping',8,2)->default(0)->after('discount')->nullable();
             $table->integer('quantity')->after('shipping')->nullable();
             $table->float('total_price',8,2)->default(0)->after('quantity')->nullable();
-            $table->float('final_price',8,2)->default(0)->after('tatal_price')->nullable();
+            $table->float('final_price',8,2)->default(0)->after('total_price')->nullable();
             $table->float('comission',8,2)->default(0)->after('final_price')->nullable();
             $table->float('featured')->default(0)->after('comission')->nullable();
         });
