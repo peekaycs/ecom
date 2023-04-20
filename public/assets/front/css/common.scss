@@ -540,12 +540,11 @@ footer{position: relative; width: 100%; letter-spacing: 0.3px; min-height: 100px
 }
 .add-to-cart-success{
     position: absolute;
-    width: 400px;
+    width: 300px;
     max-width: 90%;
-    top: 100px;
+    top: 2px;
     margin: 0px auto;
-    left: 0px;
-    right: 0px;
+    right: 3%;
     z-index: 99999;
 }
 @media only screen and (max-width: 767px){ 
