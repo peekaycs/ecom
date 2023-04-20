@@ -100,10 +100,10 @@
                             </p>
                             @endforeach
                         @endif    
-                        <p>
+                        <p class="coupons-apply">
                             <strong>
                                 <input type="text" name="coupon" class="coupon" id="coupon" placeholder="Coupon Code eg. 12345">
-                                <strong class="btn btn-success" onclick="applyCoupon(this)" data-apply="1">Apply</strong>
+                                <strong class="btn btn-sm btn-success" onclick="applyCoupon(this)" data-apply="1">Apply</strong>
                             </strong>
                             <span><strong></strong></span>
                         </p>

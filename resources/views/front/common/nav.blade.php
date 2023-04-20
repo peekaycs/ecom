@@ -1,3 +1,7 @@
+<div class="alert alert-success alert-dismissible add-to-cart-success">
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+	Successfully add in Cart
+</div>
 <div class="top-head">
 	<div class="container-fluid">
 		<div class="row">
@@ -88,6 +92,26 @@
 															@endif	
 														@endforeach
 													@endif
+													<!--<li>
+														<a href="javascript:void(0)">
+															Dilutions 
+														</a>
+													</li>
+													<li>
+														<a href="javascript:void(0)">
+															Mother Tinctures 
+														</a>
+													</li>
+													<li>
+														<a href="javascript:void(0)">
+															Biochemic Tablets 
+														</a>
+													</li>
+													<li>
+														<a href="javascript:void(0)">
+															Homeopathic Trituration Tablets 
+														</a>
+													</li>-->
 												</ul>
 												@endif	
 											@endforeach

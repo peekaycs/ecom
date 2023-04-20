@@ -420,13 +420,13 @@
             background-color: inherit;
             font-size: 14px;
         }
-        .check-list { margin-top: 10px;
-            min-height: 100px; 
-            max-height: 200px;
+        .check-list { margin-bottom: 10px;
+            min-height: auto; 
+            max-height: 250px;
             overflow-y: scroll;
             .chk { display: block; 
                 position: relative; 
-                padding: 5px 5px 5px 25px; 
+                padding: 2px 5px 2px 25px; 
                 font-weight: normal; 
                 cursor: pointer; 
                 user-select: none;
@@ -477,6 +477,7 @@
 @media only screen and (max-width: 767px){
     .aside-filter{ 
         width: 100%; 
+        min-height: 200px;
         min-height: auto; 
         margin-top: 5px;
         padding: 0px;
@@ -630,7 +631,7 @@
 }
 @media only screen and (max-width: 1024px){}
 @media only screen and (max-width: 767px){
-    .page-title{font-size: 16px;
+    .page-title{font-size: 14px;
         span{font-size: 11px; display: block;}
     }
     .sort-by{ float: right;
@@ -645,7 +646,7 @@
                 height: 100px;
             }
             h5{
-                font-size: 13px;
+                font-size: 12px;
                 margin: 5px 0px; 
             }
         }
@@ -675,9 +676,8 @@
         li{
             a {margin-right: 2px; margin-bottom: 0px; padding: 0px;
                 @include  border-radius(0px);
-                img{
-                    @include img-tag;
-                    min-width: 47px; 
+                img{                    
+                    max-width: 40px; 
                     height: 50px;
                     border: 1px solid $color-gray;
                 }                
@@ -911,13 +911,68 @@
     }
 }
 @media only screen and (max-width: 767px){
+    .cart-section{
+        h4{padding: 0px 10px;}
+        h5{padding: 15px 10px; font-size: 14px;}
+        .cart-price{ padding: 5px; display: block;
+            figure{width: 23%;
+                img{
+                    @include img-tag;
+                    height: 50px;
+                    border: 1px solid $color-gray;
+                }
+            }
+            .cart-data{width: 100%;
+                p{ font-size: 14px; margin-bottom: 4px;
+                }            
+            }
+            .product-plus-minus{width: 100%; text-align: left; display: flex;
+                p { font-size: 13px;padding: 0px 5px; 
+                    i{color: rgb(12, 121, 194);}
+                    span{
+                        padding: 0px 10px;
+                    }                
+                }
+            }       
+        }
+        .check-out{border: 1px dashed $color-gray; padding: 10px; font-size: 14px;        
+            p{margin-bottom: 5px;
+                span{float: right}
+            }
+            .coupons-apply{
+                input{ padding: 3px 10px;
+                    &:focus-visible {
+                        outline: -webkit-focus-ring-color auto 0px;
+                    }
+                }
+            }        
+        }    
+    }
 }
 
 // address page
 .add-edit-address{border: 1px solid $color-gray; padding: 15px;
     h4{padding: 0px 10px;}
-    h5{padding:0px 10px 15px 0px; font-size: 16px;}    
+    h5{padding:0px 10px 15px 0px; font-size: 16px;}
+    h6{padding: 10px 0px; margin: 10px 0px 0px; color: #186f78;}    
 }
+.btn_update_address{
+    width: 110px;
+    position: relative;
+    top: 3px;
+    padding: 0px;
+    right: 15px;
+    z-index: 99999999 !important;
+    background-color: #60b9c3;
+    a{color: $color-white;
+        text-decoration: none;
+        background-color: #139faee6;
+        display: block;
+        padding: 3px;
+        font-size: 12px;
+    }
+}
+
 #add-new-address{display: none;}
 .cart-section{
     h5{padding: 15px 10px; font-size: 14px;}    
@@ -930,28 +985,29 @@
 @media only screen and (max-width: 1024px){}
 @media only screen and (max-width: 767px){}
 // login/signup page
-.login-section{background-color: aquamarine;    
+.login-section{
+    // background-color: aquamarine;    
     .login {
         display: block;
-        position: fixed;
-        z-index: 99999;
-        left: 0;
-        top: 0;
+        // position: fixed;
+        // z-index: 99999;
+        // left: 0;
+        // top: 0;
         width: 100%;
         height: 100%;
         overflow: auto;
-        background-color: #bcd0be;
+        // background-color: #bcd0be;
         padding-top: 0px;
 
         .login-content {
-            background-color: #fefefe;
+            background-color: #e1e8e2;
             margin: 5% auto 10% auto;
             // border: 1px solid #888;
             width: 40%;
             figure{text-align: center;padding: 20px 0px 0px;
                 img{width: 100px;}
             }
-            .signup-heading{background-color: #72bc7a;
+            .signup-heading{background-color: #c2d1c3;
                 padding: 15px 15px;
                 font-size: 23px;
                 font-weight: 600;}
@@ -976,8 +1032,8 @@
             }
         }
         .signup-content {
-            background-color: #fefefe;
-            margin: 2% auto 0% auto;
+            background-color: #e1e8e2;
+            margin: 2% auto 5% auto;
         }
         input[type=text], input[type=password],input[type=email],input[type=number]  {
             width: 100%;
@@ -1112,6 +1168,43 @@
 @media only screen and (max-width: 1024px){}
 @media only screen and (max-width: 767px){}
 // }
+
+/*******************--thankyou page page--*****************************/
+.thankyou{width: 60%;
+    margin: 15px auto 40px;
+    text-align: center;
+    border: 1px solid #eaeaea;
+    padding: 20px;
+    figure{
+        img{width: 80px;}
+    }
+    h4{color: #1d7c0a;
+        font-size: 40px;
+        font-family: initial;
+        font-style: italic;
+        font-weight: 600;}
+        p{font-style: italic;}
+        a{text-decoration: none; 
+            color: $color-white; 
+            background-color: #139fae; 
+            padding: 8px 20px;
+            border-radius: 20px;
+            transition: 0.5s;
+            &:hover{opacity: 0.5;}
+        }
+}
+
+@media only screen and (max-width: 767px){
+    .thankyou{width: 100%;border: 0px solid #eaeaea;
+        margin: 10px auto 20px;
+        padding: 10px 0px;
+        figure{
+            img{width: 60px;}
+        }
+        h4{font-size: 22px;}
+        a{padding: 5px 15px;}
+    }
+}
 
 /*******************--about us page--*****************************/
 .about-us-banner{

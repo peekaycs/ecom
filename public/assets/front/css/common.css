@@ -566,7 +566,7 @@ div, p {
   .head .cart {
     top: 14px;
     width: 50px;
-    right: 0%;
+    right: 2%;
   }
   .head .cart a img {
     width: 22px;
@@ -849,7 +849,7 @@ footer .all-right .accept-card a img {
     margin: 2px;
   }
   footer .all-right .accept-card a img {
-    height: 30px;
+    height: 28px;
   }
 }
 .get-qt-side {
@@ -881,6 +881,17 @@ footer .all-right .accept-card a img {
 
 .form-control:focus {
   box-shadow: 0 0 0 0rem rgba(13, 110, 253, 0.25);
+}
+
+.add-to-cart-success {
+  position: absolute;
+  width: 400px;
+  max-width: 90%;
+  top: 100px;
+  margin: 0px auto;
+  left: 0px;
+  right: 0px;
+  z-index: 99999;
 }
 
 @media only screen and (max-width: 767px) {
