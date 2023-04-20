@@ -261,7 +261,7 @@
                     <div class="alert alert-success">
                         <span>Total Savings: <strong>{{ isset($total_discount) ? '₹'. $total_discount : '0'}}</strong></span>
                         <!-- <button type="button" class="btn btn-sm btn-success float-end">CHECKOUT</button> -->
-                        <a href="{{ route( 'checkout', [ 'uuid' => $uuid ] ) }}" class="btn btn-sm btn-success float-end addHref">Payment</a>
+                        <a href="{{ route( 'checkout', [ 'uuid' => $uuid ?? 'ghgh' ] ) }}" class="btn btn-sm btn-success float-end addHref">Payment</a>
                     </div>
                 </div>                
             </div>            
