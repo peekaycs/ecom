@@ -9,7 +9,7 @@
 <link rel="stylesheet" type="text/css" href="{{URL::asset('assets/front/css/custom.css')}}">
 <link rel="stylesheet" type="text/css" href="{{URL::asset('assets/front/css/marq-style.css')}}">
 <link rel="stylesheet" type="text/css" href="{{URL::asset('assets/front/css/popup.css')}}">
-<!--<link rel="stylesheet" type="text/css" href="{{URL::asset('assets/front/css/account-details.css')}}">-->
+<link rel="stylesheet" type="text/css" href="{{URL::asset('assets/front/css/account-details.css')}}">
 
 <!---font css end-->
 <!--[if lt IE 9]>
