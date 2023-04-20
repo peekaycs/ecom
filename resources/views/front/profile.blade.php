@@ -3,10 +3,10 @@
 <div class="dashboard">			
 	<div class="account-aside">
 		<div class="aside-profile">
-			<span><img src="images/login.png" alt=""></span>
+			<span><img src="{{ URL::asset('assets/front/images/login.png') }}" alt=""></span>
 			<div class="persional-details">
-				<h6>Amit Kumar</h6>
-				<p>amit@gmail.com</p>
+				<h6>{{ $user->fullname ?? ''}}</h6>
+				<p>{{ $user->email ?? ''}}</p>
 			</div>
 		</div>
 		<nav>
@@ -38,7 +38,14 @@
 				</li>
 				<li class="nav-item">
 					<a href="index.php">
-						<i class="fas fa-tasks"></i>Logout
+						<i class="fas fa-tasks"></i>
+						@if(Auth::check())
+						<form method="POST" action="{{ route('logout') }}">
+							@csrf
+							<x-dropdown-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();"> {{ __('Log Out') }}
+							</x-dropdown-link>
+						</form>
+						@endif
 					</a>
 				</li>
 			</ul>
@@ -50,35 +57,39 @@
 				<div class="tab-content shadow p-3 border bg-white">
 					<div id="my-orders" class="tab-pane">
 						<h5>My Orders</h5>
-						<div class="old-orders p-2 mt-2">
-							<div class="row">
-								<div class="col-md-2 col-sm-2 col-3">
-									<div class="text-center">
-										<figure>
-											<img src="images/p1.jpg" alt="">
-										</figure>
+						@if( isset( $orders ) && !empty( $orders ) )
+							@foreach( $orders as $order )
+								@if( isset( $order ) && !empty( $order ) )
+								<div class="old-orders p-2 mt-2">
+									<div class="row">
+										<div class="col-md-2 col-sm-2 col-3">
+											<div class="text-center">
+												<figure><img src="images/p1.jpg" alt=""></figure>
+											</div>
+										</div>
+										<div class="col-md-6 col-sm-6 col-6">
+											<div class="product-title">
+												<strong>Essential Oil Blends – 10mL</strong>                        
+											</div>
+											<div class="item-price">
+												<p>                                    
+													<ins>Rs. 255,00</ins>
+													<del>Rs. 240,00</del>
+												</p>
+												<p class="purchage-date">order date - 15-03-2023</p>
+											</div>
+										</div>
+										<div class="col-md-4 col-sm-4 col-3 text-end">
+											<a href="javascript:void(0)" class="btn btn-sm py-1 px-3 btn-outline-primary rounded-0">
+												Buy Again
+											</a>
+										</div>
 									</div>
 								</div>
-								<div class="col-md-6 col-sm-6 col-6">
-									<div class="product-title">
-										<strong>Essential Oil Blends – 10mL</strong>                        
-									</div>
-									<div class="item-price">
-										<p>                                    
-											<ins>Rs. 255,00</ins>
-											<del>Rs. 240,00</del>
-										</p>
-										<p class="purchage-date">order date - 15-03-2023</p>
-									</div>
-								</div>
-								<div class="col-md-4 col-sm-4 col-3 text-end">
-									<a href="javascript:void(0)" class="btn btn-sm py-1 px-3 btn-outline-primary rounded-0">
-										Buy Again
-									</a>
-								</div>
-							</div>
-						</div>
-						<div class="old-orders p-2 mt-2">
+								@endif
+							@endforeach
+						@endif		
+						<!--<div class="old-orders p-2 mt-2">
 							<div class="row">
 								<div class="col-md-2 col-sm-2 col-3">
 									<div class="text-center">
@@ -149,41 +160,54 @@
 									</a>
 								</div>
 							</div>
-						</div>
+						</div>-->
 					</div>
 					<div id="Profile" class="tab-pane active">
 						<h5>My Profile</h5>
 						<hr>
-						<form action="">
+						<form action="{{ route('update') }}" method="POST">
+							@csrf;
 							<div class="row gy-2">
 								<div class="col-md-7 col-sm-7 col-12">
-									<div class="form-group">
-										<label for="name">Name</label>
-										<input type="text" class="form-control rounded-0">
+									<div class="row gy-2">
+										<div class="col-md-4 col-sm-4 col-12">
+											<div class="form-group">
+												<label for="name">First Name</label>
+												<input type="text" class="form-control rounded-0" value="{{ $user->first_name ?? ''}}" placeholder="First Name">
+											</div>
+										</div>	
+										<div class="col-md-4 col-sm-4 col-12">
+											<div class="form-group">
+												<label for="name">Middle Name</label>
+												<input type="text" class="form-control rounded-0" value="{{ $user->middle_name ?? ''}}" placeholder="Middle Name">
+											</div>
+										</div>
+										<div class="col-md-4 col-sm-4 col-12">
+											<div class="form-group">
+												<label for="name">Last Name</label>
+												<input type="text" class="form-control rounded-0" value="{{ $user->last_name ?? ''}}" placeholder="Last Name">
+											</div>
+										</div>	
 									</div>								
 								</div>
 								<div class="col-md-7 col-sm-7 col-12">
-									<div class="form-group">
-										<label for="Number">Contact Number</label>
-										<input type="text" class="form-control rounded-0">
-									</div>								
-								</div>
-								<div class="col-md-7 col-sm-7 col-12">
-									<div class="form-group">
-										<label for="email">Emai Id</label>
-										<input type="email" class="form-control rounded-0">
-									</div>								
-								</div>
-								<div class="col-md-7 col-sm-7 col-12">
-									<div class="form-group">
-										<label for="name">Nick Name</label>
-										<input type="name" class="form-control rounded-0">
-									</div>								
-								</div>
-								<div class="col-md-12 col-sm-12 col-12 text-center mt-md-4 mt-2">
-									<button type="button" name="submit" class="btn py-1 px-3 btn-primary rounded-0">
-										Submit
-									</button>
+									<div class="row gy-2">
+										<div class="col-md-6 col-sm-6 col-12">
+											<div class="form-group">
+												<label for="Number">Contact Number</label>
+												<input type="text" class="form-control rounded-0" value="{{ $user->mobile ?? ''}}" placeholder="Contact Number">
+											</div>								
+										</div>
+										<div class="col-md-6 col-sm-6 col-12">
+											<div class="form-group">
+												<label for="email">Emai Id</label>
+												<input type="email" class="form-control rounded-0" value="{{ $user->email ?? ''}}" placeholder="Email Id">
+											</div>								
+										</div>
+									</div>	
+								</div>	
+								<div class="col-md-7 col-sm-7 col-12 text-center mt-md-4 mt-2">
+									<button type="button" name="submit" class="btn py-1 px-3 btn-primary rounded-0">Submit</button>
 								</div>
 							</div>
 						</form>

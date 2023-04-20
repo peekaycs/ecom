@@ -11,7 +11,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\AddressController;
-use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\ProfileController;
 
 Route::get('/', [HomeController::class,'index'])->name('home');
 
@@ -47,7 +47,7 @@ Route::group(['middleware' => ['auth']], function(){
 
     Route::post('/apply-coupon', [CartStorageNewController::class,'applyCoupon'])->name('applyCoupon');
     Route::post('/remove-coupon', [CartStorageNewController::class,'removeCoupon'])->name('removeCoupon');
-    Route::get('/profile', [ProfileController::class,''])->name('user-profile');
+    Route::get('/profile', [ProfileController::class,'index'])->name('user-profile');
 });
 //signup form
 Route::get('/signup', [HomeController::class,'signup'])->name('signup');
