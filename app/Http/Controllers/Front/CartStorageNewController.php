@@ -57,9 +57,11 @@ class CartStorageNewController extends EcomController
             }
             $data['product'] = $product;
         }
+        
         if( isset($attribute_ids) && !empty($attribute_ids) ){
             $attributes = ProductAttribute::whereIn('id', $attribute_ids)->get();//->toArray();
             if( isset($attributes) && !empty($attributes) ){
+                $attribute = [];
                 foreach($attributes as $k => $val){
                     $attribute[$val['product_id']] = $val;
                 }
