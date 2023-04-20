@@ -10,12 +10,7 @@
                         @if(isset($addresses) && !empty($addresses))
                             @foreach($addresses as $address)
                                 @if(isset($address) && !empty($address))
-                                <?php 
-                                $uuid = '';
-                                if(isset($address->default_address) && $address->default_address == 1){
-                                    $uuid = $address->uuid;
-                                }
-                                ?>
+                                <?php $uuid = $address->uuid; ?>
                                 <div class="col-md-12 col-sm-12 col-12">
                                     <div class="mb-2">
                                         <span class="form-check float-start">
@@ -30,7 +25,7 @@
                                                     <a href="{{route('makeDefault', [ 'uuid' => $address->uuid ] ) }}" class="" > Make Default </a>
                                                 </div>
                                             </span>  
-                                            <div class="edit_address edit_address_{{ $address->uuid }} edit fade">
+                                            <div class="edit_address edit_address_{{ $address->uuid }} edit fade" style="display:none;">
                                                 <h5>Edit Address</h5>
                                                 <form action="{{route('update')}}" method="POST" >
                                                     @csrf
@@ -71,7 +66,7 @@
                                                                 <input type="text" name="state" class="form-control rounded-0" value="{{ $address->state ?? '' }}" placeholder="State">
                                                             </div>				
                                                         </div>
-                                                        <div class="col-md-3 col-sm-3 col-4">
+                                                        <div class="col-md-2 col-sm-4 col-4">
                                                             <div class="mb-2 mt-3">
                                                                 <div class="form-check">
                                                                     <input type="radio" class="form-check-input"  name="optradio" value="home" <?php if ( isset($address->address_type) && $address->address_type == 'home' ) { echo 'checked';}else {echo '';}?> >Home
@@ -79,7 +74,7 @@
                                                                 </div>
                                                             </div>				
                                                         </div>
-                                                        <div class="col-md-3 col-sm-6 col-4">
+                                                        <div class="col-md-2 col-sm-4 col-4">
                                                             <div class="mb-2 mt-3">
                                                                 <div class="form-check">
                                                                     <input type="radio" class="form-check-input" name="optradio" value="office" <?php if ( isset($address->address_type) && $address->address_type == 'office') { echo 'checked';}else {echo '';}?> >Office
@@ -87,7 +82,7 @@
                                                                 </div>
                                                             </div>				
                                                         </div>
-                                                        <div class="col-md-3 col-sm-6 col-4">
+                                                        <div class="col-md-2 col-sm-4 col-4">
                                                             <div class="mb-2 mt-3">
                                                                 <div class="form-check">
                                                                     <input type="radio" class="form-check-input" name="optradio" value="other" <?php if ( isset($address->address_type) && $address->address_type == 'other') { echo 'checked';}else {echo '';}?> >Other
@@ -168,7 +163,7 @@
                                     <input type="text" name="state" class="form-control rounded-0" placeholder="State">
                                 </div>				
                             </div>
-                            <div class="col-md-3 col-sm-3 col-4">
+                            <div class="col-md-2 col-sm-4 col-4">
                                 <div class="mb-2 mt-3">
                                     <div class="form-check">
                                         <input type="radio" class="form-check-input" name="optradio" value="home" checked>Home
@@ -176,7 +171,7 @@
                                     </div>
                                 </div>				
                             </div>
-                            <div class="col-md-3 col-sm-6 col-4">
+                            <div class="col-md-2 col-sm-4 col-4">
                                 <div class="mb-2 mt-3">
                                     <div class="form-check">
                                         <input type="radio" class="form-check-input" name="optradio" value="office">Office
@@ -184,7 +179,7 @@
                                     </div>
                                 </div>				
                             </div>
-                            <div class="col-md-3 col-sm-6 col-4">
+                            <div class="col-md-2 col-sm-4 col-4">
                                 <div class="mb-2 mt-3">
                                     <div class="form-check">
                                         <input type="radio" class="form-check-input" name="optradio" value="other">Other
@@ -293,9 +288,12 @@
         var hasClass = $(".edit_address_" + uuid).hasClass('fade');
         if(hasClass){
             $(".edit_address").addClass('fade');
+            $(".edit_address_" + uuid).hide();
             $(".edit_address_" + uuid).removeClass('fade');
+            $(".edit_address_" + uuid).show();
         }else{
             $(".edit_address_" + uuid).addClass('fade');
+            $(".edit_address_" + uuid).hide();
         }
         
     });
