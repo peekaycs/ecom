@@ -896,7 +896,10 @@
                 }
             }
         }        
-    }    
+    } 
+    .alert-success{
+        a{margin-top: -7px;}
+    }   
 }
 @media only screen and (max-width: 1024px){
     .cart-section{
@@ -946,7 +949,10 @@
                     }
                 }
             }        
-        }    
+        } 
+        .alert-success{
+            a{margin-top: -5px;}
+        }   
     }
 }
 
