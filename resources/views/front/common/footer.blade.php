@@ -3,7 +3,7 @@
 	<span class="footerplus f-toggle"><i class="fa fa-plus"></i> </span>
 	<div class="container-fluid m-footer">		
 		<div class="row">
-			<div class="col-md-2 col-sm-2 col-12">
+			<div class="col-md-2 col-sm-2 col-6">
 				<div class="footer-contant">
 					<h3>{{env('APP_NAME')}}</h3>
 					@if(!empty($pages))
@@ -92,7 +92,7 @@
 				</div>
 			</div>
 			<div class="col-md-6 col-sm-6 col-12">
-				<div class="accept-card mb-2 text-end">
+				<div class="accept-card mb-2 text-md-end text-start">
 					<h5 class="text-start">We Accept </h5>
 					<a href="#"><img src="{{URL::asset('assets/front/images/jbc.png')}}"></a>
 					<a href="#"><img src="{{URL::asset('assets/front/images/maestro.png')}}"></a>

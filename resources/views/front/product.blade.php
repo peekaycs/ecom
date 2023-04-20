@@ -20,7 +20,7 @@
 										@if (isset($categories->subcategory) && !empty($categories->subcategory))
 											@foreach($categories->subcategory as $categories->subcategories)
 												@if (isset($categories->subcategories) && !empty($categories->subcategories))
-												<label class="chk ">
+												<label class="chk px-0">
 													<input type="radio" name="subcategory" class=" {{ str_replace(' ', '-', $categories->subcategories->slug) }} " value="{{ str_replace(' ', '-', $categories->subcategories->slug) }}" {{ request()->is('product/'.str_replace(' ', '-', $categories->subcategories->slug)) ? 'checked' : '' }}>
 													<span class="checkmark1"></span>
 													<a class="subcategory {{ request()->is('product/'.str_replace(' ', '-', $categories->subcategories->slug)) ? 'actv' : '' }}" href="{{ route('productBySubCategory',['slug' => str_replace(' ', '-', $categories->subcategories->slug)]) }}" style="text-decoration:none;color:grey" data-subcategory="{{ str_replace(' ', '-', $categories->subcategories->slug) }}" data-subcategory="{{ str_replace(' ', '-', $categories->subcategories->slug) }}" >

@@ -329,7 +329,7 @@ div, p{font-size: 14px;}
             }
         }
         .add-mob-menu{left: 0%; position: absolute; z-index: 99999;}
-        .cart {top: 14px; width: 50px; right: 0%;
+        .cart {top: 14px; width: 50px; right: 2%;
             a{
                 img{width: 22px;}
             }
@@ -526,7 +526,7 @@ footer{position: relative; width: 100%; letter-spacing: 0.3px; min-height: 100px
             .accept-card{
                 h5{margin: 0; padding: 0px 0px 10px 0%; font-size: 18px;}
                 a{height: 30px; margin: 2px;
-                    img{height: 30px;}                
+                    img{height: 28px;}                
                 }
             }
         }
@@ -538,7 +538,16 @@ footer{position: relative; width: 100%; letter-spacing: 0.3px; min-height: 100px
 .form-control:focus {
     box-shadow: 0 0 0 0rem rgba(13,110,253,.25);
 }
-
+.add-to-cart-success{
+    position: absolute;
+    width: 400px;
+    max-width: 90%;
+    top: 100px;
+    margin: 0px auto;
+    left: 0px;
+    right: 0px;
+    z-index: 99999;
+}
 @media only screen and (max-width: 767px){ 
     .scroll {
         width: 100%;

@@ -1,3 +1,7 @@
+<div class="alert alert-success alert-dismissible add-to-cart-success">
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+	Successfully add in Cart
+</div>
 <div class="top-head">
 	<div class="container-fluid">
 		<div class="row">

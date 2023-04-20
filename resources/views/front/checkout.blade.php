@@ -227,27 +227,27 @@
 										<input type="hidden" name="mode" value="CHEQUE">
 										<input type="hidden" name="order_id" value="{{ $order_id ?? '' }}">
 										<input type="hidden" name="amount" value="{{ $subTotal ?? '' }}">
-										<div class="row">
-											<div class="col-md-3 col-sm-12 col-12">
-												<input type="text" name="cheque_dd_number" class="form-control rounded-0 border-end-1 @error('cheque_number') has-error @enderror" placeholder="Cheque/DD number" required>
+										<div class="row g-2">
+											<div class="col-md-4 col-sm-4 col-12">
+												<input type="text" name="cheque_dd_number" class="form-control-sm rounded-0 border-end-1 @error('cheque_number') has-error @enderror" placeholder="Cheque/DD number" required>
 												@error('cheque_number')
 												<p class="text-danger">{{ $message }}</p>
 												@enderror
 											</div>
-											<div class="col-md-3 col-sm-12 col-12">
-												<input type="text" name="bank_name" class="form-control rounded-0 border-end-1 @error('bank_name') has-error @enderror" placeholder="Bank name">
+											<div class="col-md-3 col-sm-3 col-12">
+												<input type="text" name="bank_name" class="form-control-sm rounded-0 border-end-1 @error('bank_name') has-error @enderror" placeholder="Bank name">
 												@error('bank_name')
 												<p class="text-danger">{{ $message }}</p>
 												@enderror
 											</div>
-											<div class="col-md-3 col-sm-12 col-12">
-												<input type="text" name="fill_amount" class="form-control rounded-0 border-end-1 @error('amount') has-error @enderror" placeholder="Check Amount" required>
+											<div class="col-md-3 col-sm-3 col-12">
+												<input type="text" name="fill_amount" class="form-control-sm rounded-0 border-end-1 @error('amount') has-error @enderror" placeholder="Check Amount" required>
 												@error('fill_amount')
 												<p class="text-danger">{{ $message }}</p>
 												@enderror
 											</div>
-											<div class="col-md-3 col-sm-12 col-12 text-center">
-												<button type="submit" name="submit" class="btn btn-primary pay cheque disabled">Pay Now</button>
+											<div class="col-md-2 col-sm-2 col-12 text-center">
+												<button type="submit" name="submit" class="btn btn-sm btn-primary pay cheque disabled">Pay Now</button>
 											</div>
 										</div>	
 									</form>	
