@@ -100,7 +100,7 @@
                                                         </div>
                                                     </div>
                                                 </form>
-                                            </div>   -->
+                                            </div>
                                         </div>
                                         <div class="px-md-4 mt-2">{{ ucFirst($address->name) ?? ''}}<br>{{ $address->contact ?? ''}} <br>
                                         {{ isset($address->address) ? $address->address.',' : ''}} {{ isset($address->landmark) ? $address->landmark.',' : ''}} {{ isset($address->city) ? $address->city.',' : ''}}<br>{{ isset($address->state) ? $address->state.'-' : ''}} {{ isset($address->zip) ? $address->zip : ''}}
