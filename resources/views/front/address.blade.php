@@ -100,91 +100,9 @@
                                                         </div>
                                                     </div>
                                                 </form>
-                                            </div>   -->
+                                            </div>
                                         </div>
                                         <div class="px-md-4 mt-2">{{ ucFirst($address->name) ?? ''}}<br>{{ $address->contact ?? ''}} <br>
-                                        {{ isset($address->address) ? $address->address.',' : ''}} {{ isset($address->landmark) ? $address->landmark.',' : ''}} {{ isset($address->city) ? $address->city.',' : ''}}<br>{{ isset($address->state) ? $address->state.'-' : ''}} {{ isset($address->zip) ? $address->zip : ''}}
-                                        </div>
-                                        <div class="">
-                                            <div class="edit_address edit_address_{{ $address->uuid }} edit fade">
-                                                <h5>Edit Address</h5>
-                                                <form action="{{route('update')}}" method="POST" >
-                                                    @csrf
-                                                    <input type="hidden" name="uuid" value="{{ $address->uuid ?? ''  }}">
-                                                    <div class="row">
-                                                        <div class="col-md-6 col-sm-6 col-12">
-                                                            <div class="mb-2">
-                                                                <input type="text" name="name" class="form-control rounded-0" value="{{ $address->name ?? '' }}" placeholder="Enter Your Name">
-                                                            </div>				
-                                                        </div>
-                                                        <div class="col-md-6 col-sm-6 col-12">
-                                                            <div class="mb-2">
-                                                            <input type="text" name="contact" class="form-control rounded-0" value="{{ $address->contact ?? '' }}" placeholder="Contact Number">
-                                                            </div>				
-                                                        </div>
-                                                        <div class="col-md-6 col-sm-6 col-12">
-                                                            <div class="mb-2">
-                                                                <input type="text" name="address" class="form-control rounded-0" value="{{ $address->address ?? '' }}" placeholder="Enter address">
-                                                            </div>				
-                                                        </div>
-                                                        <div class="col-md-6 col-sm-6 col-12">
-                                                            <div class="mb-2">
-                                                                <input type="text" name="landmark" class="form-control rounded-0" value="{{ $address->landmark ?? '' }}" placeholder="Landmark (optional)">
-                                                            </div>				
-                                                        </div>
-                                                        <div class="col-md-6 col-sm-6 col-12">
-                                                            <div class="mb-2">
-                                                                <input type="text" name="zip" class="form-control rounded-0" value="{{ $address->zip ?? '' }}" placeholder="Pin Number">
-                                                            </div>				
-                                                        </div>
-                                                        <div class="col-md-6 col-sm-6 col-12">
-                                                            <div class="mb-2">
-                                                                <input type="text" name="city" class="form-control rounded-0" value="{{ $address->city ?? '' }}" placeholder="City">
-                                                            </div>				
-                                                        </div>
-                                                        <div class="col-md-6 col-sm-6 col-12">
-                                                            <div class="mb-2">
-                                                                <input type="text" name="state" class="form-control rounded-0" value="{{ $address->state ?? '' }}" placeholder="State">
-                                                            </div>				
-                                                        </div>
-                                                        <div class="col-md-2 col-sm-4 col-4">
-                                                            <div class="mb-2 mt-3">
-                                                                <div class="form-check">
-                                                                    <input type="radio" class="form-check-input"  name="optradio" value="home" <?php if ( isset($address->address_type) && $address->address_type == 'home' ) { echo 'checked';}else {echo '';}?> >Home
-                                                                    <label class="form-check-label" for="radio1"></label>
-                                                                </div>
-                                                            </div>				
-                                                        </div>
-                                                        <div class="col-md-2 col-sm-4 col-4">
-                                                            <div class="mb-2 mt-3">
-                                                                <div class="form-check">
-                                                                    <input type="radio" class="form-check-input" name="optradio" value="office" <?php if ( isset($address->address_type) && $address->address_type == 'office') { echo 'checked';}else {echo '';}?> >Office
-                                                                    <label class="form-check-label" for="radio2"></label>
-                                                                </div>
-                                                            </div>				
-                                                        </div>
-                                                        <div class="col-md-2 col-sm-4 col-4">
-                                                            <div class="mb-2 mt-3">
-                                                                <div class="form-check">
-                                                                    <input type="radio" class="form-check-input" name="optradio" value="other" <?php if ( isset($address->address_type) && $address->address_type == 'other') { echo 'checked';}else {echo '';}?> >Other
-                                                                    <label class="form-check-label"></label>
-                                                                </div>
-                                                            </div>				
-                                                        </div>
-                                                    </div>
-                                                    <div class="row"><hr>
-                                                        <div class="col text-end">
-                                                            <button type="button" class="btn btn-sm btn-outline-danger rounded-0 btn-cancel">cancel</button>
-                                                        </div>
-                                                        <div class="col">
-                                                            <button type="submit" name="submit" class="btn btn-sm btn-success rounded-0">Save</button>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>  
-                                        </div>
-                                        
-                                        <div class="px-4">{{ ucFirst($address->name) ?? ''}}<br>{{ $address->contact ?? ''}} <br>
                                         {{ isset($address->address) ? $address->address.',' : ''}} {{ isset($address->landmark) ? $address->landmark.',' : ''}} {{ isset($address->city) ? $address->city.',' : ''}}<br>{{ isset($address->state) ? $address->state.'-' : ''}} {{ isset($address->zip) ? $address->zip : ''}}
                                         </div>
                                     </div>				
