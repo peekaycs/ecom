@@ -152,4 +152,20 @@ class OrderController extends Controller
             return redirect(route('address'))->with('error','Can\'t save Order');
         }    
     }
+
+    public function listOrders(Request $request){
+        $orders = Order::with(['user'])->paginate(env('PER_PAGE'))->withQueryString();
+        // dd($orders);
+        return view('admin.orders',array('orders'=>$orders));
+    }
+
+    public function orderDetail(Request $request, $id){
+        $order = Order::with(['user','payment','orderDetails'])->where('id',$id)->get();
+        $order = $order[0] ?? null;
+        if(empty($order)){
+            return redirect(back());
+        }
+        // dd($order);
+        return view('admin.order-detail',array('order'=>$order));
+    }
 }

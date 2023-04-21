@@ -211,7 +211,7 @@
 							<div class="collapse" id="orders">
 								<ul class="nav nav-collapse">
 									<li>
-										<a href="{{route('vendors')}}">
+										<a href="{{route('orders')}}">
 											<span class="sub-item">Orders</span>
 										</a>
 									</li>

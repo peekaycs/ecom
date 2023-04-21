@@ -75,7 +75,7 @@
             </div>
             <div class="col-md-4 col-sm-4 col-12 m-padding-lr">
                 <div class="cart-section">
-                    <h5 class="alert alert-info">Combo packs for this product</h5>
+                    <h5 class="alert-info">Combo packs for this product</h5>
                     <div class="check-out">
                         <p>
                             MRP Total
@@ -100,10 +100,10 @@
                             </p>
                             @endforeach
                         @endif    
-                        <p>
+                        <p class="coupons-apply">
                             <strong>
                                 <input type="text" name="coupon" class="coupon" id="coupon" placeholder="Coupon Code eg. 12345">
-                                <strong class="btn btn-success" onclick="applyCoupon(this)" data-apply="1">Apply</strong>
+                                <strong class="btn btn-sm btn-success" onclick="applyCoupon(this)" data-apply="1">Apply</strong>
                             </strong>
                             <span><strong></strong></span>
                         </p>
@@ -123,7 +123,7 @@
                         <input type="hidden" name="total" value="{{ $total_price ?? '' }}" class="price" id="price">
                         <input type="hidden" name="discount" value="{{ $total_discount ?? '0' }}" class="discount" id="discount">
                     
-                        <div class="alert alert-success">
+                        <div class="alert-success p-md-3 p-2">
                             <span>Total Savings: <strong>{{ isset($total_discount) ? '₹'. abs($total_discount) : '0'}}</strong></span>
                             <button type="submit" name="submit" class="btn btn-sm btn-success float-end">CHECKOUT</button>
                         </div>

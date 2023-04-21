@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\VendorController;
+use App\Http\Controllers\OrderController;
 
 Route::get('/admin', function(){
     return view('admin.login');
@@ -129,4 +130,9 @@ Route::group(['prefix'=>'admin','middleware' => ['auth','isAdmin']], function(){
      Route::put('vendor/update/{id}',[VendorController::class,'update'])->name('update-vendor-user');
      Route::get('/vendor/edit/{id}',[VendorController::class,'edit'])->name('edit-vendor-user');
      Route::delete('/vendor/delete/{id}', [VendorController::class,'delete'])->name('delete-vendor');
+     // Order
+
+     Route::get('/orders',[OrderController::class,'listOrders'])->name('orders');
+     Route::get('/order-detail/{id}',[OrderController::class,'orderDetail'])->name('order-detail');
+     Route::get('/order/update/{id}',[OrderController::class,'updateOrder'])->name('order-update');
 });
