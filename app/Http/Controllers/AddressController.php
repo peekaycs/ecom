@@ -34,12 +34,11 @@ class AddressController extends EcomController
     public function index(Request $request){
 
         $data = [];
-        
-        $data['addresses'] = $addresses = Address::all();
         //cart detail
         $product_ids = $attribute_ids = [];        
         if (Auth::check()) {
             $userId = Auth::user()->uuid;
+            $data['addresses'] = $addresses = Address::WHERE('user_id',$userId)->get();
             Cart::session($userId);
             $data['cart_list'] = $cartCollection = Cart::getContent();
             $data['count'] = $cartCollection->count();
@@ -97,7 +96,7 @@ class AddressController extends EcomController
         
         $uuid = Str::uuid();
         $user_id = Auth::user()->uuid;
-        $addresses = Address::all();
+        $addresses = Address::WHERE('user_id',$userId)->get();
         if(isset($addresses) && $addresses->count() > 0){
             $default_address = 0;
         }else{
