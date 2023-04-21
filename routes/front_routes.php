@@ -36,6 +36,8 @@ Route::group(['middleware' => ['auth']], function(){
 
     Route::get('/checkout/{uuid}', [CheckoutController::class,'index'])->name('checkout');
     Route::post('/pay', [CheckoutController::class,'pay'])->name('pay');
+    Route::post('/razor-pay-action', [CheckoutController::class,'razorPayAction'])->name('razorpay');
+    Route::post('/verify-payment', [CheckoutController::class,'veryfyRazorpayAction'])->name('verify-payment');
     Route::get('/thankyou', [CheckoutController::class,'thankyou'])->name('thankyou');
 
     Route::match(['get', 'post'], '/order', [OrderController::class,'store'])->name('order');

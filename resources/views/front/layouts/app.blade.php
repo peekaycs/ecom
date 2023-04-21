@@ -9,7 +9,9 @@
         @include('front.common.nav')
         
         <!-- main content -->
+        <div style="min-height: 600px;">
         @yield('content') 
+        </div>
         <!-- end main content -->
 
         @include('front.common.footer')
