@@ -53,10 +53,14 @@ class OrderController extends Controller
         if( isset($cartCollection) && !empty($cartCollection) ){
             foreach($cartCollection as $item_id => $item){
                 $ids = explode('_', $item->id);
-                $product_ids[$item->id] = $ids[0];
-                $attribute_ids[$item->id] = $ids[1] ?? '';
-                $qty[$ids[1] ?? $ids[0]] = $item->quantity;
-                
+                if( isset( $ids[1] ) && !empty( $ids[1]) ){
+                    $attribute_ids[$item->id] = $ids[1] ?? '';
+                    $qty[ $ids[1] ] = $item->quantity;
+                }else{
+                    $product_ids[$item->id] = $ids[0];
+                    $qty[ $ids[0] ] = $item->quantity;
+                }                
+                //dd($item);
                 foreach($item->conditions as $condition){
                     if(isset($condition) && !empty($condition)){
                         
@@ -95,6 +99,7 @@ class OrderController extends Controller
         $i = 0;
         if( isset($product_ids) && !empty($product_ids) ){
             $products = Product::whereIn('id', $product_ids)->get();
+            //dd($products);
             foreach($products as $k => $val){
                 $product[$i]['id'] = $id = Str::uuid();
                 $product[$i]['product_id'] = $product_id = $val->id;
@@ -125,6 +130,7 @@ class OrderController extends Controller
                     $product[$i]['featured'] = $featured = $val->product->featured;
                     $product[$i]['total_price'] = $total_price = $price * $quantity;
                     $product[$i]['final_price'] = $final_price = ( $price - $discount + $shipping ) * $quantity;
+                    $i++;
                 }
             }    
         }
@@ -140,7 +146,7 @@ class OrderController extends Controller
         }
         
         if($order){
-            $request->session()->put( 'order_id', $uuid );
+            Session::put( 'order_id', $uuid );
             return redirect(route('address'))->with( 'success','Order saved successfully' );
         }else{
             return redirect(route('address'))->with('error','Can\'t save Order');
