@@ -29,7 +29,7 @@
                                                 {{ isset($address->address) ? $address->address.',' : ''}} {{ isset($address->landmark) ? $address->landmark.',' : ''}} {{ isset($address->city) ? $address->city.',' : ''}}<br>{{ isset($address->state) ? $address->state.'-' : ''}} {{ isset($address->zip) ? $address->zip : ''}}
                                             </div> 
                                             <div class="edit_address edit_address_{{ $address->uuid }} edit fade" style="display:none;">
-                                                <h5>Edit Address</h5>
+                                                <h6>Edit Address</h6>
                                                 <form action="{{route('update')}}" method="POST" >
                                                     @csrf
                                                     <input type="hidden" name="uuid" value="{{ $address->uuid ?? ''  }}">
