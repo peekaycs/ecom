@@ -170,6 +170,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         // cart
         Darryldecode\Cart\CartServiceProvider::class,
+        // Razorpay\Api\Api::class,
 
         /*
          * Package Service Providers...
@@ -245,6 +246,7 @@ return [
         'Image'  =>  Intervention\Image\ImageServiceProvider::class,
         //Cart alias
         'Cart' => Darryldecode\Cart\Facades\CartFacade::class,
+        // 'Razor' => Razorpay\Api\Api::class,
 
     ],
 

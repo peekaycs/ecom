@@ -22,9 +22,10 @@ use App\Models\Attribute;
 use App\Models\ProductDetail;
 use App\Rules\AlphaNumSpace;
 use App\Helpers\Helper;
-
+use Razorpay\Api\Api;
+use Razorpay\Api\Errors\SignatureVerificationError;
 use App\Models\Payment;
-
+use URL;
 use Image;
 use File;
 use DB;
@@ -90,7 +91,59 @@ class CheckoutController extends EcomController
             //$address = Order::updateOrCreate( [ 'id'=>$order_id ], [ 'user_id' => $userId, 'shipping_address' => $address_comp ] );
         }
         
+       
         return $this->createView('front.checkout',$data);
+    }
+
+
+
+    public function createOrderRazorpay($inputData){
+
+            $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
+
+          
+            //
+            $orderData = [
+                'receipt'         => Session::get('order_id'),
+                'amount'          => Auth::user()->email == 'prmodcs123@gmail.com' ? 1*100 : $inputData['subTotal'] * 100, // 2000 rupees in paise
+                'currency'        => 'INR',
+                'payment_capture' => 0 // auto capture
+            ];
+            Session::put('payment_details', $orderData);
+            $razorpayOrder = $api->order->create($orderData);
+
+            $razorpayOrderId = $razorpayOrder['id'];
+
+            Session::put('razorpay_order_id', $razorpayOrderId);
+
+            $displayAmount = $amount = $orderData['amount'];
+
+
+            $checkout = 'automatic';
+
+           
+
+            $data = [
+                "key"               => env('RAZORPAY_KEY'),
+                "amount"            => $amount,
+                "name"              => Auth::user()->first_name. ' ' . Auth::user()->last_name,
+                "description"       => "Rx4uAll",
+                "image"             => URL::asset('assets/front/images/logo.png'),
+                "prefill"           => [
+                "name"              => Auth::user()->first_name. ' ' . Auth::user()->last_name,
+                "email"             => Auth::user()->email,
+                "contact"           => Auth::user()->mobile,
+                ],
+                "notes"             => [
+                "address"           => "Address",
+                "merchant_order_id" => Session::get('order_id'),
+                ],
+                
+                "order_id"          => $razorpayOrderId,
+            ];
+
+            // $json = json_encode($data);
+            return $data;
     }
 
     public function pay(Request $request)
@@ -141,6 +194,34 @@ class CheckoutController extends EcomController
             $payments = 0;
             if( $receiving_amount <= $request->amount ){
                 $flag = true;
+              
+                $payments = Payment::create([
+                    'id' => $uuid,
+                    'transaction_id' => $transaction_id,
+                    'order_id' => $request->order_id,
+                    'mode' => $request->mode,
+                    'amount' => $request->amount,
+                    'payment_status' => 'SUCCESS'
+                ]);
+            }    
+        } 
+
+        // online payment
+
+        if( isset( $request->mode ) && !empty( $request->mode ) && $request->mode == 'ONLINE' ){
+            $request->validate([
+                'order_id' => 'required|string',
+                'mode' => 'required|string',
+                'amount' => 'required|string',
+            ]);
+            
+            $uuid = Str::uuid();
+            $transaction_id = 'Ecom_'. Str::uuid();
+            $payments = 0;
+            if( $receiving_amount <= $request->amount ){
+                $flag = true;
+               
+                
                 $payments = Payment::create([
                     'id' => $uuid,
                     'transaction_id' => $transaction_id,
@@ -155,7 +236,7 @@ class CheckoutController extends EcomController
         if($payments){
             Cart::session($userId)->clear();
             Cart::clear();
-            $request->session()->put( 'order_id', $request->order_id );
+            Session::put( 'order_id', $request->order_id );
             Session::flash('msg', 'Congratulations! Your Order Placed Successfully. Thank You'); 
             return redirect(route('thankyou'))->with('success','Congratulations! Your Order Placed Successfully. Thank You');
         }elseif($flag == false){
@@ -167,6 +248,126 @@ class CheckoutController extends EcomController
             Session::flash('alert-class', 'alert-danger');
             return redirect(route('checkout'))->with('error','Can\'t proceed with this payment method');
         }    
+    }
+
+
+    public function getOrderDetails(){
+        //cart detail
+        $product_ids = $attribute_ids = [];        
+        if (Auth::check()) {
+            $userId = Auth::user()->uuid;
+            Cart::session($userId);
+            $data['cart_list'] = $cartCollection = Cart::getContent();
+            $data['count'] = $cartCollection->count();
+        }
+        if( isset($cartCollection) && !empty($cartCollection) ){
+            foreach($cartCollection as $item_id => $item){
+                $ids = explode('_', $item->id);
+                $product_ids[$item->id] = $ids[0];
+                $attribute_ids[$item->id] = $ids[1] ?? '';
+            }
+        }
+         
+        if( isset($product_ids) && !empty($product_ids) ){
+            $products = Product::whereIn('id', $product_ids)->get()->toArray();
+            foreach($products as $k => $val){
+                $product[$val['id']] = $val;
+            }
+            $data['product'] = $product;
+        }
+        if( isset($attribute_ids) && !empty($attribute_ids) ){
+            $attributes = ProductAttribute::whereIn('attribute_id', $attribute_ids)->get()->toArray();
+            if( isset($attributes) && !empty($attributes) ){
+                foreach($attributes as $k => $val){
+                    $attribute[$val['product_id']] = $val;
+                }
+                $data['attribute'] = $attribute;
+            }    
+        }
+        $data['subTotal'] = Cart::getSubTotal();
+        $data['total'] = Cart::getTotal(); 
+        return $data;       
+    }
+
+    public function razorPayAction(Request $request){
+        $data = $this->getOrderDetails();
+         // razprapy order generate
+         $json = $this->createOrderRazorpay($data);
+       
+        return view('front.razorpay',array('json' =>json_encode($json)));
+         
+    }
+
+
+    public function veryfyRazorpayAction(Request $request){
+        // get payment from razor pay
+        $input = $request->all();
+                  
+        if(empty($input['razorpay_payment_id'])){
+            return redirect(route('thankyou'))->with('error','Your payment has been cancelled');
+        }
+        $paymentDetails = Session::get('paymentDetails');
+        $uuid = Str::uuid();
+        $transaction_id = Helper::randomString(10, 'RX4U-');
+        $response = $this->veryfyPayment($request); // verify payment
+        if($response['status']){ // payment successful
+            $api = new Api (env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
+            $payment = $api->payment->fetch($input['razorpay_payment_id']);
+            if(count($input) && !empty($input['razorpay_payment_id'])) {
+                try {
+                    $response = $api->payment->fetch($input['razorpay_payment_id'])->capture(array('amount' => $payment['amount']));
+                    $paymentArray = [
+                        'id' => $uuid,
+                        'transaction_id' => $transaction_id,
+                        'order_id' => Session::get('order_id'),
+                        'mode' => 'ONLINE',
+                        'amount' => $response['amount']/100,
+                        'payment_status' => 'SUCCESS'
+                    ];
+                    $payments = Payment::create($paymentArray);
+                    // Session::put('paymentResponse', $paymentArray);
+                    return redirect(route('thankyou'))->with('success','Thank you for the payment, we have received your payment successfully. Your transaction id is: ' . $transaction_id);
+                } catch(Exception $e) {
+                    return $e->getMessage();
+                    Session::put('paymentError',$e->getMessage());
+                    return redirect()->back();
+                }
+            }
+        }else{ // payment failed
+            $payments = Payment::create([
+                'id' => $uuid,
+                'transaction_id' => $transaction_id,
+                'order_id' => Session::get('order_id'),
+                'mode' => 'ONLINE',
+                'amount' => $paymentDetails['amount'],
+                'payment_status' => 'FAILED'
+            ]);
+            return redirect(route('thankyou'))->with('error','Your payment has been filed, Please try again to confirm your order');
+        }
+    }
+
+
+    public function veryfyPayment($request){
+        $response= ['status' => true];
+        try{
+        // Please note that the razorpay order ID must
+        // come from a trusted source (session here, but
+        // could be database or something else)
+        $attributes = array(
+            'razorpay_order_id' => Session::get('razorpay_order_id'),
+            'razorpay_payment_id' => $request->razorpay_payment_id,
+            'razorpay_signature' => $request->razorpay_signature
+        );
+        $api = new Api (env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
+        $api->utility->verifyPaymentSignature($attributes);
+        }
+        catch(SignatureVerificationError $e){
+            $response['status'] = false;
+            $response['error'] = 'Razorpay Error : ' . $e->getMessage();
+        }
+        echo '<pre>';
+        print_r($response);
+        return $response;
     }
 
     public function thankyou(Request $request)

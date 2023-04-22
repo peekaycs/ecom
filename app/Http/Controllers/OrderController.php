@@ -146,7 +146,7 @@ class OrderController extends Controller
         }
         
         if($order){
-            $request->session()->put( 'order_id', $uuid );
+            Session::put( 'order_id', $uuid );
             return redirect(route('address'))->with( 'success','Order saved successfully' );
         }else{
             return redirect(route('address'))->with('error','Can\'t save Order');

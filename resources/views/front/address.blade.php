@@ -21,12 +21,15 @@
                                             <span class="float-end address address_{{ $address->uuid }}" data-uuid="{{ $address->uuid }}" style="position:relative">
                                                 <span class="float-end " ><i class="fas fa-ellipsis-v"></i></span>
                                                 <div class="btn_update_address add_box add_box_{{ $address->uuid }} fade">
-                                                    <a href="javascript:void(0)" class="update_address update_address_{{ $address->uuid }}" data-uuid="{{ $address->uuid }}"> Update Address</a><br>
+                                                    <a href="javascript:void(0)" class="update_address update_address_{{ $address->uuid }}" data-uuid="{{ $address->uuid }}"> Update Address</a>
                                                     <a href="{{route('makeDefault', [ 'uuid' => $address->uuid ] ) }}" class="" > Make Default </a>
                                                 </div>
-                                            </span>  
+                                            </span> 
+                                            <div class="px-md-4 mt-2">{{ ucFirst($address->name) ?? ''}}<br>{{ $address->contact ?? ''}} <br>
+                                                {{ isset($address->address) ? $address->address.',' : ''}} {{ isset($address->landmark) ? $address->landmark.',' : ''}} {{ isset($address->city) ? $address->city.',' : ''}}<br>{{ isset($address->state) ? $address->state.'-' : ''}} {{ isset($address->zip) ? $address->zip : ''}}
+                                            </div> 
                                             <div class="edit_address edit_address_{{ $address->uuid }} edit fade" style="display:none;">
-                                                <h5>Edit Address</h5>
+                                                <h6>Edit Address</h6>
                                                 <form action="{{route('update')}}" method="POST" >
                                                     @csrf
                                                     <input type="hidden" name="uuid" value="{{ $address->uuid ?? ''  }}">
@@ -38,7 +41,7 @@
                                                         </div>
                                                         <div class="col-md-6 col-sm-6 col-12">
                                                             <div class="mb-2">
-                                                            <input type="text" name="contact" class="form-control rounded-0" value="{{ $address->contact ?? '' }}" placeholder="Contact Number">
+                                                            <input type="number" pattern="[0-9]{10}" name="contact" class="form-control rounded-0" value="{{ $address->contact ?? '' }}" placeholder="Contact Number">
                                                             </div>				
                                                         </div>
                                                         <div class="col-md-6 col-sm-6 col-12">
@@ -102,9 +105,7 @@
                                                 </form>
                                             </div>
                                         </div>
-                                        <div class="px-md-4 mt-2">{{ ucFirst($address->name) ?? ''}}<br>{{ $address->contact ?? ''}} <br>
-                                        {{ isset($address->address) ? $address->address.',' : ''}} {{ isset($address->landmark) ? $address->landmark.',' : ''}} {{ isset($address->city) ? $address->city.',' : ''}}<br>{{ isset($address->state) ? $address->state.'-' : ''}} {{ isset($address->zip) ? $address->zip : ''}}
-                                        </div>
+                                        
                                     </div>				
                                 </div>
                                 @endif
@@ -129,17 +130,17 @@
                         <div class="row">
                             <div class="col-md-6 col-sm-6 col-12">
                        			<div class="mb-2">
-                                    <input type="text" name="name" class="form-control rounded-0" placeholder="Enter Your Name">
+                                    <input type="text" name="name" class="form-control rounded-0" placeholder="Enter Your Name" required>
                                 </div>				
                             </div>
                             <div class="col-md-6 col-sm-6 col-12">
                                 <div class="mb-2">
-                                 <input type="text" name="contact" class="form-control rounded-0" placeholder="Contact Number">
+                                 <input type="number" pattern="[0-9]{10}" name="contact" class="form-control rounded-0" placeholder="Contact Number" required>
                                 </div>				
                             </div>
                             <div class="col-md-6 col-sm-6 col-12">
                                 <div class="mb-2">
-                                    <input type="text" name="address" class="form-control rounded-0" placeholder="Enter address">
+                                    <input type="text" name="address" class="form-control rounded-0" placeholder="Enter address" required>
                                 </div>				
                             </div>
                             <div class="col-md-6 col-sm-6 col-12">
@@ -149,17 +150,17 @@
                             </div>
                             <div class="col-md-6 col-sm-6 col-12">
                                 <div class="mb-2">
-                                    <input type="text" name="zip" class="form-control rounded-0" placeholder="Pin Number">
+                                    <input type="number" pattern="[0-9]{6}" name="zip" class="form-control rounded-0" placeholder="Pin Number" required>
                                 </div>				
                             </div>
                             <div class="col-md-6 col-sm-6 col-12">
                                 <div class="mb-2">
-                                    <input type="text" name="city" class="form-control rounded-0" placeholder="City">
+                                    <input type="text" name="city" class="form-control rounded-0" placeholder="City" required>
                                 </div>				
                             </div>
                             <div class="col-md-6 col-sm-6 col-12">
                                 <div class="mb-2">
-                                    <input type="text" name="state" class="form-control rounded-0" placeholder="State">
+                                    <input type="text" name="state" class="form-control rounded-0" placeholder="State" required>
                                 </div>				
                             </div>
                             <div class="col-md-2 col-sm-4 col-4">
@@ -223,7 +224,7 @@
 
             <div class="col-md-4 col-sm-4 col-12 m-padding-lr">
                 <div class="cart-section">
-                    <h5 class="alert alert-info">Combo packs for this product</h5>
+                    <h5 class="alert-info">Combo packs for this product</h5>
                     <div class="check-out">
                         <p>
                             MRP Total
@@ -253,12 +254,12 @@
                             <span><strong>Rs {{ $subTotal ?? '' }}</strong></span>
                         </p>
                     </div>
-                    <div class=" alert-success">
+                    <div class="alert-success p-md-3 p-2">
                         <span>Total Savings: <strong>{{ isset($total_discount) ? '₹'. $total_discount : '0'}}</strong></span>
                         <!-- <button type="button" class="btn btn-sm btn-success float-end">CHECKOUT</button> -->
 
                         @if(isset($addresses) && $addresses->count() > 0)
-                        <a href="{{ route( 'checkout', [ 'uuid' => $uuid ] ) }}" class="btn btn-sm btn-success float-end addHref">Payment</a>
+                        <a href="{{ route( 'checkout', [ 'uuid' => $uuid ] ) }}" class="btn btn-sm btn-success float-end addHref">Make Payment</a>
                         @endif
 
                     </div>

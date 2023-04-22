@@ -26,27 +26,28 @@
 						<i class="far fa-envelope"></i> Address
 					</a>
 				</li>
-				<li class="nav-item">
+				<!-- <li class="nav-item">
 					<a href="#bank-details" data-bs-toggle="tab">
 						<i class="fas fa-tasks"></i> Bank Details
 					</a>
-				</li>
+				</li> -->
 				<li class="nav-item">
 					<a href="#change-password" data-bs-toggle="tab">
 						<i class="fas fa-tasks"></i> Change Password
 					</a>
 				</li>
 				<li class="nav-item">
-					<a href="index.php">
-						<i class="fas fa-tasks"></i>
+						
 						@if(Auth::check())
 						<form method="POST" action="{{ route('logout') }}">
 							@csrf
+							
+							<i class="fas fa-tasks"></i>
 							<x-dropdown-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();"> {{ __('Log Out') }}
 							</x-dropdown-link>
+							
 						</form>
 						@endif
-					</a>
 				</li>
 			</ul>
 		</nav>
@@ -166,9 +167,9 @@
 						<h5>My Profile</h5>
 						<hr>
 						<form action="{{ route('update') }}" method="POST">
-							@csrf;
+							@csrf
 							<div class="row gy-2">
-								<div class="col-md-7 col-sm-7 col-12">
+								<div class="col-md-8 col-sm-8 col-12">
 									<div class="row gy-2">
 										<div class="col-md-4 col-sm-4 col-12">
 											<div class="form-group">

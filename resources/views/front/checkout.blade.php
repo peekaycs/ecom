@@ -184,10 +184,19 @@
 					<div class="col-md-12 col-sm-12 col-12">
 						<div class="payment-method">
 							<div class="row">
+							<form action="{{ route('razorpay') }}" method="POST">
 								<div class="col-md-10 col-sm-10 col-8">
 									<div class="form-check">
+									
+										@csrf
+										<input type="hidden" name="mode" value="ONLINE">
+										<input type="hidden" name="order_id" value="{{ $order_id ?? '' }}">
+										<input type="hidden" name="amount" value="{{ $subTotal ?? '' }}">
 										<input type="radio" class="form-check-input pay_method" id="Paytm" name="payment-method" checked onclick="makeActive( this, 'online' )">
 										<label class="form-check-label" for="Paytm"><strong>Online</strong></label>
+										
+										
+					
 										<p>Pay with Paytm</p>
 										<figure>
 											<img src="{{URL::asset('assets/front/images/paytm.svg')}}" alt="">
@@ -197,11 +206,10 @@
 										</figure>
 									</div>
 								</div>
-								<div class="col-md-2 col-sm-2 col-4 text-end">
-									<a href="javascript:void(0)" class="btn btn-info d-block pay online">
-										Pay Rs. {{ $subTotal ?? '' }}
-									</a>
+								<div class="col-md-2 col-sm-2 col-12 text-center">
+									<button type="submit" name="submit" class="btn btn-sm btn-primary pay online ">Pay Now</button>
 								</div>
+							</form>
 							</div>
 						</div>
 

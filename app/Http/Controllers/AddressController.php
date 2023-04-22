@@ -96,7 +96,7 @@ class AddressController extends EcomController
         
         $uuid = Str::uuid();
         $user_id = Auth::user()->uuid;
-        $addresses = Address::WHERE('user_id',$userId)->get();
+        $addresses = Address::WHERE('user_id',$user_id)->get();
         if(isset($addresses) && $addresses->count() > 0){
             $default_address = 0;
         }else{
@@ -119,9 +119,9 @@ class AddressController extends EcomController
         
         
         if($address)
-            return redirect(route('address'))->with('success','Product saved successfully');
+            return redirect(route('address'))->with('success','Address saved successfully');
         else
-            return redirect(route('address'))->with('error','Can\'t save product');
+            return redirect(route('address'))->with('error','Can\'t save address, please try again later');
     }
 
     public function update(Request $request)
@@ -155,9 +155,9 @@ class AddressController extends EcomController
         );
         
         if($address)
-            return redirect(route('address'))->with('success','Product saved successfully');
+            return redirect(route('address'))->with('success','Addredd updated successfully');
         else
-            return redirect(route('address'))->with('error','Can\'t save product');
+            return redirect(route('address'))->with('error','Can\'t update address');
     }
 
     public function makeDefault(Request $request, $uuid)
@@ -169,8 +169,8 @@ class AddressController extends EcomController
         $address = Address::updateOrCreate( [ 'uuid'=>$uuid ], [ 'default_address' => 1] );
         
         if($address)
-            return redirect(route('address'))->with('success','Product saved successfully');
+            return redirect(route('address'))->with('success','Address marked as default successfully');
         else
-            return redirect(route('address'))->with('error','Can\'t save product');
+            return redirect(route('address'))->with('error','Can\'t save address as default');
     }
 }
