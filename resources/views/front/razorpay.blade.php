@@ -2,7 +2,8 @@
 @section('content')
 <!-- <button id="rzp-button1" style="display: none;">Pay with Razorpay</button> -->
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-<form name='razorpayform' action="{{route('verify-payment')}}" method="POST">
+<form id="" name='razorpayform' action="{{route('verify-payment')}}" method="POST">
+    @csrf
     <input type="hidden" name="razorpay_payment_id" id="razorpay_payment_id">
     <input type="hidden" name="razorpay_signature"  id="razorpay_signature" >
 </form>
@@ -26,6 +27,7 @@ options.handler = function (response){
 options.modal = {
     ondismiss: function() {
         console.log("This code runs when the popup is closed");
+        document.razorpayform.submit();
     },
     // Boolean indicating whether pressing escape key 
     // should close the checkout form. (default: true)
@@ -39,7 +41,7 @@ var rzp = new Razorpay(options);
 window.onload = function() {;
 // document.getElementById('rzp-button1').onclick = function(e){
     rzp.open();
-    e.preventDefault();
+    // e.preventDefault();
 // }
 }
 
