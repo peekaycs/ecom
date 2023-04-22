@@ -120,7 +120,7 @@
   display: inline-block;
 }
 .slide-section .product-box a h5 {
-  font-size: 14px;
+  font-size: 13px;
   margin: 0px;
   padding-bottom: 5px;
   color: rgb(0, 0, 0);
@@ -1134,6 +1134,9 @@
 .cart-section .check-out .coupons-apply input:focus-visible {
   outline: -webkit-focus-ring-color auto 0px;
 }
+.cart-section .check-out .coupons-apply .btn {
+  margin-top: -4px;
+}
 .cart-section .alert-success a {
   margin-top: -7px;
 }
@@ -1153,7 +1156,7 @@
     padding: 10px;
     font-size: 12px;
   }
-  .cart-section .alert a {
+  .cart-section .alert button {
     font-size: 11px;
   }
 }
@@ -1217,7 +1220,7 @@
   .cart-section .check-out .coupons-apply input:focus-visible {
     outline: -webkit-focus-ring-color auto 0px;
   }
-  .cart-section .alert-success a {
+  .cart-section .alert-success button {
     margin-top: -5px;
   }
 }
