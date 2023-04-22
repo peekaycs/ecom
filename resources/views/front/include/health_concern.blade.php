@@ -1,4 +1,4 @@
-<section class="product-cat-section mt-5 pb-3">
+<section class="product-cat-section mt-md-5 mt-3 pb-3">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-12">
@@ -10,7 +10,7 @@
                     @foreach($bottom->bannerImages as $banner)
                         @if(isset($banner) && !empty($banner))
                         @if( $loop->iteration <= 4 )
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-12">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-6">
                             <div class="product-cat-box">
                                 <div class="product-cat-image">
                                     <a href="javascript:void(0)">

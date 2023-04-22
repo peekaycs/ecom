@@ -108,6 +108,7 @@
   margin: 5px;
   position: relative;
   overflow: hidden;
+  min-height: 280px;
 }
 .slide-section .product-box a {
   display: block;
@@ -120,7 +121,7 @@
   display: inline-block;
 }
 .slide-section .product-box a h5 {
-  font-size: 14px;
+  font-size: 13px;
   margin: 0px;
   padding-bottom: 5px;
   color: rgb(0, 0, 0);
@@ -224,13 +225,15 @@
   .slide-section .product-box {
     padding: 10px;
     margin: 4px;
+    min-height: 170px;
   }
   .slide-section .product-box a img {
     height: 80px;
   }
   .slide-section .product-box a h5 {
-    font-size: 14px;
+    font-size: 12px;
     padding-bottom: 5px;
+    margin-top: 7px;
   }
   .slide-section .product-box a .circle {
     width: 100px;
@@ -246,7 +249,7 @@
     display: none;
   }
   .slide-section .product-box .item-price {
-    font-size: 16px;
+    font-size: 13px;
     margin-bottom: 0px;
   }
   .slide-section .product-box .item-price ins {
@@ -1134,6 +1137,9 @@
 .cart-section .check-out .coupons-apply input:focus-visible {
   outline: -webkit-focus-ring-color auto 0px;
 }
+.cart-section .check-out .coupons-apply .btn {
+  margin-top: -4px;
+}
 .cart-section .alert-success a {
   margin-top: -7px;
 }
@@ -1153,7 +1159,7 @@
     padding: 10px;
     font-size: 12px;
   }
-  .cart-section .alert a {
+  .cart-section .alert button {
     font-size: 11px;
   }
 }
@@ -1217,7 +1223,7 @@
   .cart-section .check-out .coupons-apply input:focus-visible {
     outline: -webkit-focus-ring-color auto 0px;
   }
-  .cart-section .alert-success a {
+  .cart-section .alert-success button {
     margin-top: -5px;
   }
 }
