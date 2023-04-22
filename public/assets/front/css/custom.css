@@ -108,6 +108,7 @@
   margin: 5px;
   position: relative;
   overflow: hidden;
+  min-height: 280px;
 }
 .slide-section .product-box a {
   display: block;
@@ -224,13 +225,15 @@
   .slide-section .product-box {
     padding: 10px;
     margin: 4px;
+    min-height: 170px;
   }
   .slide-section .product-box a img {
     height: 80px;
   }
   .slide-section .product-box a h5 {
-    font-size: 14px;
+    font-size: 12px;
     padding-bottom: 5px;
+    margin-top: 7px;
   }
   .slide-section .product-box a .circle {
     width: 100px;
@@ -246,7 +249,7 @@
     display: none;
   }
   .slide-section .product-box .item-price {
-    font-size: 16px;
+    font-size: 13px;
     margin-bottom: 0px;
   }
   .slide-section .product-box .item-price ins {

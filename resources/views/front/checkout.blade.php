@@ -237,19 +237,19 @@
 										<input type="hidden" name="amount" value="{{ $subTotal ?? '' }}">
 										<div class="row g-2">
 											<div class="col-md-4 col-sm-4 col-12">
-												<input type="text" name="cheque_dd_number" class="form-control-sm rounded-0 border-end-1 @error('cheque_number') has-error @enderror" placeholder="Cheque/DD number" required>
+												<input type="text" name="cheque_dd_number" class="form-control form-control-sm rounded-0 border-end-1 @error('cheque_number') has-error @enderror" placeholder="Cheque/DD number" required>
 												@error('cheque_number')
 												<p class="text-danger">{{ $message }}</p>
 												@enderror
 											</div>
 											<div class="col-md-3 col-sm-3 col-12">
-												<input type="text" name="bank_name" class="form-control-sm rounded-0 border-end-1 @error('bank_name') has-error @enderror" placeholder="Bank name">
+												<input type="text" name="bank_name" class="form-control form-control-sm rounded-0 border-end-1 @error('bank_name') has-error @enderror" placeholder="Bank name">
 												@error('bank_name')
 												<p class="text-danger">{{ $message }}</p>
 												@enderror
 											</div>
 											<div class="col-md-3 col-sm-3 col-12">
-												<input type="text" name="fill_amount" class="form-control-sm rounded-0 border-end-1 @error('amount') has-error @enderror" placeholder="Check Amount" required>
+												<input type="text" name="fill_amount" class="form-control form-control-sm rounded-0 border-end-1 @error('amount') has-error @enderror" placeholder="Check Amount" required>
 												@error('fill_amount')
 												<p class="text-danger">{{ $message }}</p>
 												@enderror
@@ -294,7 +294,7 @@
 			</div>
 			<div class="col-md-3 col-sm-3 col-12 m-padding-lr">
                 <div class="cart-section">
-                    <h5 class="alert alert-info">Order Summary ( {{$count ?? '0'}} Items)</h5>
+                    <h5 class="alert-info">Order Summary ( {{$count ?? '0'}} Items)</h5>
                     <div class="check-out">
                         <p>
                             MRP Total
@@ -325,7 +325,7 @@
                         </p>
                         <hr>
                     </div>                    
-                    <div class="alert alert-success">
+                    <div class="alert-success p-md-3 p-2">
 						<span>Total Savings: <strong>{{ isset($total_discount) ? '₹'. $total_discount : '0'}}</strong></span>
                         <!-- <button type="button" class="btn btn-sm btn-success float-end">CHECKOUT</button> -->
                         <!-- <a href="address.php" type="button" class="btn btn-sm btn-success float-end">Proceed</a> -->
