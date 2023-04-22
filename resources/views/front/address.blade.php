@@ -253,7 +253,7 @@
                             <span><strong>Rs {{ $subTotal ?? '' }}</strong></span>
                         </p>
                     </div>
-                    <div class="alert alert-success">
+                    <div class=" alert-success">
                         <span>Total Savings: <strong>{{ isset($total_discount) ? '₹'. $total_discount : '0'}}</strong></span>
                         <!-- <button type="button" class="btn btn-sm btn-success float-end">CHECKOUT</button> -->
 
