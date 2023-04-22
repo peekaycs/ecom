@@ -222,7 +222,7 @@
                 @endforeach
             @endif
 
-            <div class="col-md-4 col-sm-4 col-12 m-padding-lr">
+            <div class="col-md-4 col-sm-4 col-12 m-padding-lr mb-3">
                 <div class="cart-section">
                     <h5 class="alert-info">Combo packs for this product</h5>
                     <div class="check-out">

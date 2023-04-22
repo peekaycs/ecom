@@ -106,6 +106,7 @@
         margin: 5px;
         position: relative;
         overflow: hidden;
+        min-height: 280px;
         a{
             @include a-tag;
             img{
@@ -114,7 +115,7 @@
                 display: inline-block;
             }
             h5{
-                font-size: 14px;
+                font-size: 13px;
                 margin: 0px; 
                 padding-bottom: 5px;
                 color: $color-black;
@@ -207,13 +208,15 @@
         .product-box{
             padding: 10px;
             margin: 4px;
+            min-height: 170px;
             a{
                 img{
                     height: 80px;
                 }
                 h5{
-                    font-size: 14px;
+                    font-size: 12px;
                     padding-bottom: 5px;
+                    margin-top: 7px;
                 }            
                 .circle{
                     width: 100px;
@@ -228,7 +231,7 @@
             }
             .categories-name{ display: none;  
             }
-            .item-price{font-size: 16px; margin-bottom: 0px;
+            .item-price{font-size: 13px; margin-bottom: 0px;
                 ins{
                     text-decoration: none; 
                     color: $color-blue; 
@@ -895,6 +898,7 @@
                     outline: -webkit-focus-ring-color auto 0px;
                 }
             }
+            .btn{margin-top: -4px;}
         }        
     } 
     .alert-success{
@@ -909,7 +913,7 @@
         .check-out{font-size: 12px;}        
         .alert{padding: 10px;
             font-size: 12px;
-            a{font-size: 11px;}
+            button{font-size: 11px;}
         }
     }
 }
@@ -951,7 +955,7 @@
             }        
         } 
         .alert-success{
-            a{margin-top: -5px;}
+            button{margin-top: -5px;}
         }   
     }
 }
