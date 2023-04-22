@@ -1,7 +1,16 @@
+@if(session('success'))
 <div class="alert alert-success alert-dismissible add-to-cart-success">
     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-	Successfully add in Cart
+	{{session('success')}}
 </div>
+@endif
+
+@if(session('error'))
+<div class="alert alert-danger alert-dismissible add-to-cart-success">
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+	{{session('error')}}
+</div>
+@endif
 <div class="top-head">
 	<div class="container-fluid">
 		<div class="row">
