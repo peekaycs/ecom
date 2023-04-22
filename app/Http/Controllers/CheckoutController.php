@@ -34,6 +34,9 @@ use Cart;
 use Darryldecode\Cart\Facades\CartFacade;
 
 use Session;
+//use Mail;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\MailNotify;
 
 class CheckoutController extends EcomController
 {
@@ -150,10 +153,11 @@ class CheckoutController extends EcomController
     {
         //dd($request);
         $userId = Auth::user()->uuid;
-        $data['user'] = User::find($userId);
+        $data['user'] = $user = User::find($userId);
         $data['order'] = $order = Order::find($request->order_id);
         $receiving_amount = $order->payable_amount;
         $flag = false;
+
         if( isset( $request->mode ) && !empty( $request->mode ) && $request->mode == 'CHEQUE' ){
             $request->validate([
                 'cheque_dd_number' => 'required|string',
@@ -179,7 +183,17 @@ class CheckoutController extends EcomController
                     'amount' => $request->amount,
                     'payment_status' => 'SUCCESS'
                 ]);
-            }   
+            } 
+            
+            $to_name = 'arvind';
+            $to_email = 'arvindpandeymail@gmail.com';
+            $dat = array('name' => $to_name, 'body' => 'Order Successfull');
+
+            Mail::send('emails.order_mail', $dat, function($message) use ($to_name, $to_email) {
+                    $message->to($to_email, $to_name)->subject('order successfull');
+                    $message->from('help@icarehomeo.com', 'Order Mail');
+                }
+            );
         } 
         
         if( isset( $request->mode ) && !empty( $request->mode ) && $request->mode == 'COD' ){
