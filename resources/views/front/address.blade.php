@@ -304,9 +304,9 @@
                 @endforeach
             @endif
 
-            <div class="col-md-4 col-sm-4 col-12 m-padding-lr">
+            <div class="col-md-4 col-sm-4 col-12 m-padding-lr mb-3">
                 <div class="cart-section">
-                    <h5 class="alert alert-info">Combo packs for this product</h5>
+                    <h5 class=" alert-info">Combo packs for this product</h5>
                     <div class="check-out">
                         <p>
                             MRP Total
@@ -336,7 +336,7 @@
                             <span><strong>Rs {{ $subTotal ?? '' }}</strong></span>
                         </p>
                     </div>
-                    <div class="alert alert-success">
+                    <div class="alert-success p-md-3 p-2">
                         <span>Total Savings: <strong>{{ isset($total_discount) ? '₹'. $total_discount : '0'}}</strong></span>
                         <!-- <button type="button" class="btn btn-sm btn-success float-end">CHECKOUT</button> -->
 
