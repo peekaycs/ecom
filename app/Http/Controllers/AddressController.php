@@ -96,7 +96,7 @@ class AddressController extends EcomController
         
         $uuid = Str::uuid();
         $user_id = Auth::user()->uuid;
-        $addresses = Address::WHERE('user_id',$userId)->get();
+        $addresses = Address::WHERE('user_id',$user_id)->get();
         if(isset($addresses) && $addresses->count() > 0){
             $default_address = 0;
         }else{
