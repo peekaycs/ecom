@@ -29,7 +29,7 @@
                                                 {{ isset($address->address) ? $address->address.',' : ''}} {{ isset($address->landmark) ? $address->landmark.',' : ''}} {{ isset($address->city) ? $address->city.',' : ''}}<br>{{ isset($address->state) ? $address->state.'-' : ''}} {{ isset($address->zip) ? $address->zip : ''}}
                                             </div> 
                                             <div class="edit_address edit_address_{{ $address->uuid }} edit fade" style="display:none;">
-                                                <h5>Edit Address</h5>
+                                                <h6>Edit Address</h6>
                                                 <form action="{{route('update')}}" method="POST" >
                                                     @csrf
                                                     <input type="hidden" name="uuid" value="{{ $address->uuid ?? ''  }}">
@@ -41,7 +41,7 @@
                                                         </div>
                                                         <div class="col-md-6 col-sm-6 col-12">
                                                             <div class="mb-2">
-                                                            <input type="text" name="contact" class="form-control rounded-0" value="{{ $address->contact ?? '' }}" placeholder="Contact Number">
+                                                            <input type="number" pattern="[0-9]{10}" name="contact" class="form-control rounded-0" value="{{ $address->contact ?? '' }}" placeholder="Contact Number">
                                                             </div>				
                                                         </div>
                                                         <div class="col-md-6 col-sm-6 col-12">
@@ -130,17 +130,17 @@
                         <div class="row">
                             <div class="col-md-6 col-sm-6 col-12">
                        			<div class="mb-2">
-                                    <input type="text" name="name" class="form-control rounded-0" placeholder="Enter Your Name">
+                                    <input type="text" name="name" class="form-control rounded-0" placeholder="Enter Your Name" required>
                                 </div>				
                             </div>
                             <div class="col-md-6 col-sm-6 col-12">
                                 <div class="mb-2">
-                                 <input type="text" name="contact" class="form-control rounded-0" placeholder="Contact Number">
+                                 <input type="number" pattern="[0-9]{10}" name="contact" class="form-control rounded-0" placeholder="Contact Number" required>
                                 </div>				
                             </div>
                             <div class="col-md-6 col-sm-6 col-12">
                                 <div class="mb-2">
-                                    <input type="text" name="address" class="form-control rounded-0" placeholder="Enter address">
+                                    <input type="text" name="address" class="form-control rounded-0" placeholder="Enter address" required>
                                 </div>				
                             </div>
                             <div class="col-md-6 col-sm-6 col-12">
@@ -150,17 +150,17 @@
                             </div>
                             <div class="col-md-6 col-sm-6 col-12">
                                 <div class="mb-2">
-                                    <input type="text" name="zip" class="form-control rounded-0" placeholder="Pin Number">
+                                    <input type="number" pattern="[0-9]{6}" name="zip" class="form-control rounded-0" placeholder="Pin Number" required>
                                 </div>				
                             </div>
                             <div class="col-md-6 col-sm-6 col-12">
                                 <div class="mb-2">
-                                    <input type="text" name="city" class="form-control rounded-0" placeholder="City">
+                                    <input type="text" name="city" class="form-control rounded-0" placeholder="City" required>
                                 </div>				
                             </div>
                             <div class="col-md-6 col-sm-6 col-12">
                                 <div class="mb-2">
-                                    <input type="text" name="state" class="form-control rounded-0" placeholder="State">
+                                    <input type="text" name="state" class="form-control rounded-0" placeholder="State" required>
                                 </div>				
                             </div>
                             <div class="col-md-2 col-sm-4 col-4">

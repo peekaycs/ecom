@@ -37,12 +37,15 @@
 					</a>
 				</li>
 				<li class="nav-item">
-						<i class="fas fa-tasks"></i>
+						
 						@if(Auth::check())
 						<form method="POST" action="{{ route('logout') }}">
 							@csrf
+							
+							<i class="fas fa-tasks"></i>
 							<x-dropdown-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();"> {{ __('Log Out') }}
 							</x-dropdown-link>
+							
 						</form>
 						@endif
 				</li>
