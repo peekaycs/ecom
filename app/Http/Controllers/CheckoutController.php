@@ -23,6 +23,7 @@ use App\Models\ProductDetail;
 use App\Rules\AlphaNumSpace;
 use App\Helpers\Helper;
 use Razorpay\Api\Api;
+use Razorpay\Api\Errors\SignatureVerificationError;
 use App\Models\Payment;
 use URL;
 use Image;
@@ -106,9 +107,9 @@ class CheckoutController extends EcomController
                 'receipt'         => Session::get('order_id'),
                 'amount'          => Auth::user()->email == 'prmodcs123@gmail.com' ? 1*100 : $inputData['subTotal'] * 100, // 2000 rupees in paise
                 'currency'        => 'INR',
-                'payment_capture' => 1 // auto capture
+                'payment_capture' => 0 // auto capture
             ];
-
+            Session::put('payment_details', $orderData);
             $razorpayOrder = $api->order->create($orderData);
 
             $razorpayOrderId = $razorpayOrder['id'];
@@ -120,10 +121,7 @@ class CheckoutController extends EcomController
 
             $checkout = 'automatic';
 
-            if (isset($_GET['checkout']) and in_array($_GET['checkout'], ['automatic', 'manual'], true))
-            {
-                $checkout = $_GET['checkout'];
-            }
+           
 
             $data = [
                 "key"               => env('RAZORPAY_KEY'),
@@ -143,8 +141,6 @@ class CheckoutController extends EcomController
                 
                 "order_id"          => $razorpayOrderId,
             ];
-
-           
 
             // $json = json_encode($data);
             return $data;
@@ -295,10 +291,8 @@ class CheckoutController extends EcomController
 
     public function razorPayAction(Request $request){
         $data = $this->getOrderDetails();
-        // echo '<pre>';print_r($data);die;
          // razprapy order generate
          $json = $this->createOrderRazorpay($data);
-         // echo '<pre>';print_r($data);die;
        
         return view('front.razorpay',array('json' =>json_encode($json)));
          
@@ -306,29 +300,74 @@ class CheckoutController extends EcomController
 
 
     public function veryfyRazorpayAction(Request $request){
-         // get payment from razor pay
-         $input = $request->all();
+        // get payment from razor pay
+        $input = $request->all();
                   
-         //   echo $input['razorpay_payment_id'];die;
-           $api = new Api (env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
-           $payment = $api->payment->fetch($input['razorpay_payment_id']);
-           if(count($input) && !empty($input['razorpay_payment_id'])) {
-               try {
-                   $response = $api->payment->fetch($input['razorpay_payment_id'])->capture(array('amount' => $payment['amount']));
-                   $payment = Payment::create([
-                       'r_payment_id' => $response['id'],
-                       'method' => $response['method'],
-                       'currency' => $response['currency'],
-                       'user_email' => $response['email'],
-                       'amount' => $response['amount']/100,
-                       'json_response' => json_encode((array)$response)
-                   ]);
-               } catch(Exception $e) {
-                   return $e->getMessage();
-                   Session::put('error',$e->getMessage());
-                   return redirect()->back();
-               }
-           }
+        if(empty($input['razorpay_payment_id'])){
+            return redirect(route('thankyou'))->with('error','Your payment has been cancelled');
+        }
+        $paymentDetails = Session::get('paymentDetails');
+        $uuid = Str::uuid();
+        $transaction_id = Helper::randomString(10, 'RX4U-');
+        $response = $this->veryfyPayment($request); // verify payment
+        if($response['status']){ // payment successful
+            $api = new Api (env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
+            $payment = $api->payment->fetch($input['razorpay_payment_id']);
+            if(count($input) && !empty($input['razorpay_payment_id'])) {
+                try {
+                    $response = $api->payment->fetch($input['razorpay_payment_id'])->capture(array('amount' => $payment['amount']));
+                    $paymentArray = [
+                        'id' => $uuid,
+                        'transaction_id' => $transaction_id,
+                        'order_id' => Session::get('order_id'),
+                        'mode' => 'ONLINE',
+                        'amount' => $response['amount']/100,
+                        'payment_status' => 'SUCCESS'
+                    ];
+                    $payments = Payment::create($paymentArray);
+                    // Session::put('paymentResponse', $paymentArray);
+                    return redirect(route('thankyou'))->with('success','Thank you for the payment, we have received your payment successfully. Your transaction id is: ' . $transaction_id);
+                } catch(Exception $e) {
+                    return $e->getMessage();
+                    Session::put('paymentError',$e->getMessage());
+                    return redirect()->back();
+                }
+            }
+        }else{ // payment failed
+            $payments = Payment::create([
+                'id' => $uuid,
+                'transaction_id' => $transaction_id,
+                'order_id' => Session::get('order_id'),
+                'mode' => 'ONLINE',
+                'amount' => $paymentDetails['amount'],
+                'payment_status' => 'FAILED'
+            ]);
+            return redirect(route('thankyou'))->with('error','Your payment has been filed, Please try again to confirm your order');
+        }
+    }
+
+
+    public function veryfyPayment($request){
+        $response= ['status' => true];
+        try{
+        // Please note that the razorpay order ID must
+        // come from a trusted source (session here, but
+        // could be database or something else)
+        $attributes = array(
+            'razorpay_order_id' => Session::get('razorpay_order_id'),
+            'razorpay_payment_id' => $request->razorpay_payment_id,
+            'razorpay_signature' => $request->razorpay_signature
+        );
+        $api = new Api (env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
+        $api->utility->verifyPaymentSignature($attributes);
+        }
+        catch(SignatureVerificationError $e){
+            $response['status'] = false;
+            $response['error'] = 'Razorpay Error : ' . $e->getMessage();
+        }
+        echo '<pre>';
+        print_r($response);
+        return $response;
     }
 
     public function thankyou(Request $request)
