@@ -46,10 +46,17 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/address/store', [AddressController::class,'store'])->name('store');
     Route::get('/address/make-default/{uuid}', [AddressController::class,'makeDefault'])->name('makeDefault');
     Route::post('/address/update', [AddressController::class,'update'])->name('update');
+    Route::get('/address/remove/{id}', [AddressController::class,'remove'])->name('address-remove');
 
     Route::post('/apply-coupon', [CartStorageNewController::class,'applyCoupon'])->name('applyCoupon');
     Route::post('/remove-coupon', [CartStorageNewController::class,'removeCoupon'])->name('removeCoupon');
+    
     Route::get('/profile', [ProfileController::class,'index'])->name('user-profile');
+    Route::post('/profile-update/{id}', [ProfileController::class,'update'])->name('profile-update');
+    
+
+
+
 });
 //signup form
 Route::get('/signup', [HomeController::class,'signup'])->name('signup');

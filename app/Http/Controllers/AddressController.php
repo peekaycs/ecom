@@ -168,9 +168,39 @@ class AddressController extends EcomController
         //$address = Address::updateOrCreate( [ 'user_id'=>$userId ], [ 'default_address' => 0] );
         $address = Address::updateOrCreate( [ 'uuid'=>$uuid ], [ 'default_address' => 1] );
         
-        if($address)
-            return redirect(route('address'))->with('success','Address marked as default successfully');
-        else
-            return redirect(route('address'))->with('error','Can\'t save address as default');
+        if( !isset( $request->ajax ) || empty( $request->ajax ) ){
+            if($address)
+                return redirect(route('address'))->with('success','Address marked as default successfully');
+            else
+                return redirect(route('address'))->with('error','Can\'t save address as default');
+        }else{
+            echo 1;
+        }        
+    }
+
+    public function remove(Request $request, $id)
+    {
+        $address = Address::find($id);
+        if($address->user_id == Auth::user()->uuid){
+            $saved = Address::where('uuid', $id)->firstorfail()->delete();
+            //$saved = DB::delete('delete from addresses where uuid = ?', [$id]);
+            $ok = true;
+        }else{
+            $ok = false;
+        }  
+
+        if( !isset( $request->ajax ) || empty( $request->ajax ) ){
+            if($ok){
+                if($saved){
+                    return redirect(route('user-profile'))->with('success','Address removed successfully');
+                }else{
+                    return redirect(route('user-profile'))->with('error','Can\'t removed address');
+                }
+            }else{
+                return redirect(route('user-profile'))->with('success','This address not belongs to you');    
+            }    
+        }else{
+            echo $ok;
+        } 
     }
 }

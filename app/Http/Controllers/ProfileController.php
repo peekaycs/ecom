@@ -42,8 +42,36 @@ class ProfileController extends EcomController
     {
         $userId = Auth::user()->uuid;
         $data['user'] = $user = User::WHERE( 'uuid', $userId )->first();
+        $data['addresses'] = $addresses = Address::WHERE( 'user_id', $userId )->get();
         $data['orders'] = $orders = Order::WHERE( 'user_id', $userId )->get();
-        //dd($user);
-        return $this->createView('front.profile',$data);
-    }    
+        return $this->createView('front.profile', $data);
+    } 
+    
+    public function update(Request $request, $id)
+    {
+        $user = User::find($id);
+        $request->validate([
+            'first_name' => ['required', 'string', 'max:50', 'min:2'],
+            'mobile' => ['required', 'integer', 'min:10', Rule::unique('users')->ignore($user)],
+            'last_name' => ['nullable', 'string', 'max:50', 'min:2'],
+            'middle_name' => ['nullable', 'string', 'max:50', 'min:2'],
+            'email' => ['required', 'email', 'string', Rule::unique('users')->ignore($user)]  
+        ]);
+        $user = User::find(Auth::user()->id);
+        $user->first_name = $request->first_name;
+        $user->middle_name = $request->middle_name;
+        $user->last_name = $request->last_name;
+        $user->mobile = $request->mobile;
+        $user->email = $request->email;
+        $saved = $user->save();
+        if($saved){
+            //Session::flash('msg', 'User updated successfully'); 
+            return redirect(route('user-profile'))->with('success','User updated successfully');
+        }else{
+            //Session::flash('msg', 'Can\'t update user'); 
+            //Session::flash('alert-class', 'alert-danger'); 
+            return redirect(route('user-profile'))->with('error','Can\'t update user');
+        }    
+    }
+
 }
