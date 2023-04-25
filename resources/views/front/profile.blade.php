@@ -188,7 +188,7 @@
 											</div>
 											<hr>
 											<span class="btn btn-sm btn-danger" onclick="removeAddress( '{{ $address->uuid }}' )">Remove</span>
-											<span class="btn btn-sm btn-primary float-end">Edit</span>
+											<span class="btn btn-sm btn-primary float-end" onclick="editAddress( '{{ $address->uuid }}' )">Edit</span>
 										</div>				
 									</div>
 									@endif
@@ -213,99 +213,92 @@
                                 </div>				
                             </div>-->
                         </div>
+						<br><br>
 						<div class="row">
 							<div class="col-md-8 col-sm-8 col-12">
-								<form action="">
-									<div class="row gy-2">
-										<div class="col-md-12 col-sm-12 col-12">
-											<div class="form-group">
-												<label for="name">Name</label>
-												<input type="text" class="form-control rounded-0">
-											</div>								
-										</div>
-										<div class="col-md-6 col-sm-6 col-12">
-											<div class="form-group">
-												<label for="Number">Mobile Number</label>
-												<input type="text" class="form-control rounded-0">
-											</div>								
-										</div>
-										<div class="col-md-6 col-sm-6 col-12">
-											<div class="form-group">
-												<label for="Alternate-Number">Alternate Mobile Number</label>
-												<input type="text" class="form-control rounded-0">
-											</div>								
-										</div>
-										<div class="col-md-12 col-sm-12 col-12">
-											<div class="form-group">
-												<label for="Flat">Flat / House no. / Building / Company*</label>
-												<input type="text" class="form-control rounded-0">
-											</div>								
-										</div>
-										<div class="col-md-12 col-sm-12 col-12">
-											<div class="form-group">
-												<label for="Area">Road Name, Street, Area, Colony*</label>
-												<textarea type="text" rows="1" class="form-control rounded-0"></textarea>
-											</div>								
-										</div>
-										<div class="col-md-12 col-sm-12 col-12">
-											<div class="form-group">
-												<label for="Landmark">Landmark (Optional)</label>
-												<textarea type="text" rows="1" class="form-control rounded-0"></textarea>
-											</div>								
-										</div>
-										<div class="col-md-4 col-sm-4 col-12">
-											<div class="form-group">
-												<label for="pinecode">Pine Code</label>
-												<input type="text" class="form-control rounded-0">
-											</div>								
-										</div>
-										<div class="col-md-4 col-sm-4 col-12">
-											<div class="form-group">
-												<label for="pinecode">Town / City*</label>
-												<input type="text" class="form-control rounded-0">
-											</div>								
-										</div>
-										<div class="col-md-4 col-sm-4 col-12">
-											<div class="form-group">
-												<label for="pinecode">State</label>
-												<select name="" id="" class="form-select rounded-0">
-													<option value="">select city</option>
-												</select>
-											</div>								
-										</div>
-										<div class="col-md-4 col-sm-4 col-6">
-											<div class="form-check">
-												<input type="radio" class="form-check-input" id="Office" name="optradio" value="office">
-												<label class="form-check-label" for="Office">Office</label>
-											</div>		
-										</div>
-										<div class="col-md-4 col-sm-4 col-6">
-											<div class="form-check">
-												<input type="radio" class="form-check-input" id="Home" name="optradio" value="other">
-												<label class="form-check-label" for="Home">Home</label>
-											</div>		
-										</div>
-										<div class="col-md-4 col-sm-4 col-6">
-											<div class="form-check">
-												<input type="radio" class="form-check-input" id="Other" name="optradio" value="other">
-												<label class="form-check-label" for="Other">Other</label>
-											</div>		
-										</div>
-										<div class="col-md-12 col-sm-12 col-6">
-											<div class="mb-2 mt-3">
+								<div class="mb-2 border p-2">
+									<form action="{{route('store')}}" method="POST" class="addHref">
+										@csrf
+										<input type="hidden" name="profile" value="1">
+										<input type="hidden" name="uuid" value="" id="uuid">
+										<div class="row gy-2">
+											<div class="col-md-6 col-sm-6 col-12">
+												<div class="form-group">
+													<label for="name">Name</label>
+													<input type="text" name="name" id="name" class="form-control rounded-0">
+												</div>								
+											</div>
+											<div class="col-md-6 col-sm-6 col-12">
+												<div class="form-group">
+													<label for="Number">Mobile Number</label>
+													<input type="text" name="contact" id="contact" class="form-control rounded-0">
+												</div>								
+											</div>
+											
+											<div class="col-md-6 col-sm-6 col-12">
+												<div class="form-group">
+													<label for="Area">Address*</label>
+													<textarea type="text" rows="2" name="address" id="address" class="form-control rounded-0"></textarea>
+												</div>								
+											</div>
+											<div class="col-md-6 col-sm-6 col-12">
+												<div class="form-group">
+													<label for="Landmark">Landmark (Optional)</label>
+													<textarea type="text" rows="2" name="landmark" id="landmark" class="form-control rounded-0"></textarea>
+												</div>								
+											</div>
+											<div class="col-md-4 col-sm-4 col-12">
+												<div class="form-group">
+													<label for="pinecode">Pine Code</label>
+													<input type="text" name="zip" id="zip" class="form-control rounded-0">
+												</div>								
+											</div>
+											<div class="col-md-4 col-sm-4 col-12">
+												<div class="form-group">
+													<label for="pinecode">Town / City*</label>
+													<input type="text" name="city" id="city" class="form-control rounded-0">
+												</div>								
+											</div>
+											<div class="col-md-4 col-sm-4 col-12">
+												<div class="form-group">
+													<label for="pinecode">State</label>
+													<input type="text" name="state" id="state" class="form-control rounded-0">
+												</div>								
+											</div>
+											<div class="col-md-4 col-sm-4 col-6">
 												<div class="form-check">
-													<input type="checkbox" class="form-check-input" id="Other" name="optradio" value="other">
-													<label class="form-check-label" for="Other">This is my Default Address</label>
-												</div>
-											</div>				
+													<input type="radio" class="form-check-input" id="home" name="optradio" value="home">
+													<label class="form-check-label" for="home">Office</label>
+												</div>		
+											</div>
+											<div class="col-md-4 col-sm-4 col-6">
+												<div class="form-check">
+													<input type="radio" class="form-check-input" id="office" name="optradio" value="office">
+													<label class="form-check-label" for="office">Home</label>
+												</div>		
+											</div>
+											<div class="col-md-4 col-sm-4 col-6">
+												<div class="form-check">
+													<input type="radio" class="form-check-input" id="other" name="optradio" value="other">
+													<label class="form-check-label" for="other">Other</label>
+												</div>		
+											</div>
+											<div class="col-md-12 col-sm-12 col-6">
+												<div class="mb-2 mt-3">
+													<div class="form-check">
+														<input type="checkbox" class="form-check-input" id="default_address" name="default_address" value="1" >
+														<label class="form-check-label" for="default_address">This is my Default Address</label>
+													</div>
+												</div>				
+											</div>
+											<div class="col-md-12 col-sm-12 col-12 text-center mt-md-4 mt-2"><hr>
+												<button type="submit" name="submit" class="btn py-1 px-3 btn-primary rounded-0">
+													Submit / Update
+												</button>
+											</div>
 										</div>
-										<div class="col-md-12 col-sm-12 col-12 text-center mt-md-4 mt-2"><hr>
-											<button type="button" name="submit" class="btn py-1 px-3 btn-primary rounded-0">
-												Submit / Update
-											</button>
-										</div>
-									</div>
-								</form>								
+									</form>	
+								</div>							
 							</div>
 						</div>						
 					</div>
@@ -375,7 +368,68 @@
 					$(".address_" + id).hide();
                 	alert("Address Removed");
 				}else{
-					alert('This address not belongs to you');
+					alert('You are not authorized to do this!');
+				}
+				 
+            }
+        });
+    }
+
+	function editAddress(id){
+		var url = "{{ url('address/get-address') }}" + '/' + id;
+        $.ajax({
+            type: 'get',
+            url: url,
+            data: { _token: "{{ csrf_token() }}", ajax:true },
+            success: function(response) { 
+				var resp = JSON.parse(response);
+				console.log(resp);
+				if(resp){
+					$("#name").val(resp.name);
+					$("#contact").val(resp.contact);
+					$("#address").val(resp.address);
+					$("#landmark").val(resp.landmark);
+					$("#city").val(resp.city);
+					$("#state").val(resp.state);
+					$("#zip").val(resp.zip);
+
+					alert(resp.address_type);
+					alert(resp.default_address);
+
+					if(resp.address_type == 'home'){
+						$("#home").val(resp.address_type);
+						$("#home").attr('checked','checked');
+					}else{
+						$("#home").attr('checked','');
+					}
+
+					if(resp.address_type == 'office'){
+						$("#office").val(resp.address_type);
+						$("#office").attr('checked','checked');
+					}else{
+						$("#office").attr('checked','');
+					}
+
+					if(resp.address_type == 'other'){
+						$("#other").val(resp.address_type);
+						$("#other").attr('checked','checked');
+					}else{
+						$("#other").attr('checked','');
+					}
+					
+					if(parseInt(resp.default_address) == 1){
+						$("#default_address").val(resp.default_address);
+						$("#default_address").attr('checked','checked');
+					}else{
+						$("#default_address").attr('checked','');
+					}
+					
+					var href = "{{ url('address/update') }}"; 
+        			$(".addHref").attr('action', href)
+					$("#uuid").val(resp.uuid);
+                	
+				}else{
+					alert('You are not authorized to do this!');
 				}
 				 
             }

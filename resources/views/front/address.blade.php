@@ -14,7 +14,7 @@
                                 <div class="col-md-12 col-sm-12 col-12">
                                     <div class="mb-2">
                                         <span class="form-check float-start">
-                                            <input type="radio" class="form-check-input optradio_address" name="optradio_address optradio_address_{{ $address->uuid ?? '' }}" data-uuid="{{ $address->uuid ?? '' }}" value="{{ $address->address_type ?? ''}}" onclick="addUrl( '{{ $address->uuid }}' )" {{ ( ( isset( $address->default_address ) && $address->default_address == 1 ) || ( $addresses->count() = 1 ) ) ? 'checked' : '' }} >
+                                            <input type="radio" class="form-check-input optradio_address optradio_address_{{ $address->uuid ?? '' }}" name="optradio_address " data-uuid="{{ $address->uuid ?? '' }}" value="{{ $address->address_type ?? ''}}" onclick="addUrl( '{{ $address->uuid }}' )" {{ ( ( isset( $address->default_address ) && $address->default_address == 1 ) || ( $addresses->count() == 1 ) ) ? 'checked' : '' }} >
                                         </span>
                                         <div class="">
                                             <strong>{{ ucWords($address->address_type) ?? ''}}</strong>

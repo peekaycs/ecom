@@ -47,6 +47,7 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/address/make-default/{uuid}', [AddressController::class,'makeDefault'])->name('makeDefault');
     Route::post('/address/update', [AddressController::class,'update'])->name('update');
     Route::get('/address/remove/{id}', [AddressController::class,'remove'])->name('address-remove');
+    Route::get('/address/get-address/{id}', [AddressController::class,'getAddress'])->name('get-address');
 
     Route::post('/apply-coupon', [CartStorageNewController::class,'applyCoupon'])->name('applyCoupon');
     Route::post('/remove-coupon', [CartStorageNewController::class,'removeCoupon'])->name('removeCoupon');
