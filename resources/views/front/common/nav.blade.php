@@ -91,7 +91,11 @@
 											@foreach($category as $cat)
 												@if (isset($cat) && !empty($cat))
 												<ul>
-													<p><strong>{{ $cat->category ?? '' }}</strong></p>
+													<p>
+														<strong>
+															<a href="{{ route('productByCategory',['slug' => str_replace(' ', '-', $cat->slug)]) }}">{{ $cat->category ?? '' }}</a>
+														</strong>
+													</p>
 													@if (isset($cat->subcategory) && !empty($cat->subcategory))
 														@foreach($cat->subcategory as $subcat)
 															@if (isset($subcat) && !empty($subcat))

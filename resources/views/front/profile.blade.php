@@ -268,13 +268,13 @@
 											<div class="col-md-4 col-sm-4 col-6">
 												<div class="form-check">
 													<input type="radio" class="form-check-input" id="home" name="optradio" value="home">
-													<label class="form-check-label" for="home">Office</label>
+													<label class="form-check-label" for="home">Home</label>
 												</div>		
 											</div>
 											<div class="col-md-4 col-sm-4 col-6">
 												<div class="form-check">
 													<input type="radio" class="form-check-input" id="office" name="optradio" value="office">
-													<label class="form-check-label" for="office">Home</label>
+													<label class="form-check-label" for="office">Office</label>
 												</div>		
 											</div>
 											<div class="col-md-4 col-sm-4 col-6">
@@ -307,30 +307,32 @@
 					<div id="change-password" class="tab-pane">
 						<h5>Update/Change Password</h5>
 						<hr>
-						<form action="">
+						<form action="{{route('password-reset')}}" method="POST">
+							@csrf
 							<div class="row gy-2">
 								<div class="col-md-7 col-sm-7 col-12">
 									<div class="form-group">
 										<label for="Old Password">Old Password</label>
-										<input type="text" class="form-control rounded-0">
+										<input type="password" class="form-control rounded-0" name="old_password" id="old_password">
+										@error('old_password')<p class="text-danger">{{ $message }}</p>@enderror
 									</div>								
 								</div>
 								<div class="col-md-7 col-sm-7 col-12">
 									<div class="form-group">
 										<label for="New Password">New Password</label>
-										<input type="text" class="form-control rounded-0">
+										<input type="password" class="form-control rounded-0" name="password" id="password">
+										@error('password')<p class="text-danger">{{ $message }}</p>@enderror
 									</div>								
 								</div>
 								<div class="col-md-7 col-sm-7 col-12">
 									<div class="form-group">
 										<label for="Confirm Password">Confirm Password</label>
-										<input type="text" class="form-control rounded-0">
+										<input type="password" class="form-control rounded-0" name="password_confirmation" id="password_confirmation">
+										@error('password_confirmation')<p class="text-danger">{{ $message }}</p>@enderror
 									</div>								
 								</div>
 								<div class="col-md-12 col-sm-12 col-12 mt-md-4 mt-2"><hr>
-									<button type="button" name="submit" class="btn py-1 px-3 btn-primary rounded-0">
-										Submit / Update
-									</button>
+									<button type="submit" name="submit" class="btn py-1 px-3 btn-primary rounded-0">Update</button>
 								</div>
 							</div>
 						</form>							
@@ -392,36 +394,22 @@
 					$("#city").val(resp.city);
 					$("#state").val(resp.state);
 					$("#zip").val(resp.zip);
-
-					alert(resp.address_type);
-					alert(resp.default_address);
+					
+					$("#home").prop('checked',false);
+					$("#office").prop('checked',false);
+					$("#other").prop('checked',false);
+					$("#default_address").prop('checked',false);
 
 					if(resp.address_type == 'home'){
-						$("#home").val(resp.address_type);
-						$("#home").attr('checked','checked');
-					}else{
-						$("#home").attr('checked','');
-					}
-
-					if(resp.address_type == 'office'){
-						$("#office").val(resp.address_type);
-						$("#office").attr('checked','checked');
-					}else{
-						$("#office").attr('checked','');
-					}
-
-					if(resp.address_type == 'other'){
-						$("#other").val(resp.address_type);
-						$("#other").attr('checked','checked');
-					}else{
-						$("#other").attr('checked','');
+						$("#home").prop('checked',true);
+					}else if(resp.address_type == 'office'){
+						$("#office").prop('checked',true);
+					}else if(resp.address_type == 'other'){
+						$("#other").prop('checked',true);
 					}
 					
 					if(parseInt(resp.default_address) == 1){
-						$("#default_address").val(resp.default_address);
-						$("#default_address").attr('checked','checked');
-					}else{
-						$("#default_address").attr('checked','');
+						$("#default_address").prop('checked',true);
 					}
 					
 					var href = "{{ url('address/update') }}"; 

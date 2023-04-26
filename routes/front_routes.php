@@ -16,7 +16,7 @@ use App\Http\Controllers\ProfileController;
 Route::get('/', [HomeController::class,'index'])->name('home');
 
 //product
-Route::get('/product/{slug}', [ProductController::class,'productByCategory'])->name('productByCategory');
+Route::get('/product-by-category/{slug}', [ProductController::class,'productByCategory'])->name('productByCategory');
 Route::get('/product/{slug}', [ProductController::class,'productBySubCategory'])->name('productBySubCategory');
 Route::get('/productByBrand/{slug}/', [ProductController::class,'productByBrand'])->name('productByBrand');
 Route::get('/productByBrand/{slug}/{brand}', [ProductController::class,'productByBrand'])->name('productByBrand');
@@ -55,7 +55,7 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/profile', [ProfileController::class,'index'])->name('user-profile');
     Route::post('/profile-update/{id}', [ProfileController::class,'update'])->name('profile-update');
     
-
+    Route::post('/password-reset', [ProfileController::class,'passwordReset'])->name('password-reset');
 
 
 });

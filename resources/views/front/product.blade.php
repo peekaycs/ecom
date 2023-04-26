@@ -12,7 +12,9 @@
 							@if (isset($category) && !empty($category))
 								@foreach($category as $categories)
 									@if (isset($categories) && !empty($categories))				
-									<h4>{{ $categories->category ?? '' }}</h4>
+									<h4>
+										<a class="category {{ request()->is('product-by-category/'.str_replace(' ', '-', $categories->slug)) ? 'actv' : '' }}" href="{{ route('productByCategory',['slug' => str_replace(' ', '-', $categories->slug)]) }}" style="text-decoration:none;color:grey" data-category="{{ str_replace(' ', '-', $categories->slug) }}" >{{ $categories->category ?? '' }}</a>
+									</h4>
 									<!--<div class="search-icon">
 										<input type="type" name="search" class="form-control" placeholder="Search Medicine Name" autocomplete="off">
 									</div>-->
@@ -23,7 +25,7 @@
 												<label class="chk px-0">
 													<input type="radio" name="subcategory" class=" {{ str_replace(' ', '-', $categories->subcategories->slug) }} " value="{{ str_replace(' ', '-', $categories->subcategories->slug) }}" {{ request()->is('product/'.str_replace(' ', '-', $categories->subcategories->slug)) ? 'checked' : '' }}>
 													<span class="checkmark1"></span>
-													<a class="subcategory {{ request()->is('product/'.str_replace(' ', '-', $categories->subcategories->slug)) ? 'actv' : '' }}" href="{{ route('productBySubCategory',['slug' => str_replace(' ', '-', $categories->subcategories->slug)]) }}" style="text-decoration:none;color:grey" data-subcategory="{{ str_replace(' ', '-', $categories->subcategories->slug) }}" data-subcategory="{{ str_replace(' ', '-', $categories->subcategories->slug) }}" >
+													<a class="subcategory {{ request()->is('product/'.str_replace(' ', '-', $categories->subcategories->slug)) ? 'actv' : '' }}" href="{{ route('productBySubCategory',['slug' => str_replace(' ', '-', $categories->subcategories->slug)]) }}" style="text-decoration:none;color:grey" data-subcategory="{{ str_replace(' ', '-', $categories->subcategories->slug) }}" >
 														{{ $categories->subcategories->subcategory ?? ''}}
 													</a>
 												</label>

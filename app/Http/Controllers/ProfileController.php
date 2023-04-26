@@ -74,4 +74,31 @@ class ProfileController extends EcomController
         }    
     }
 
+    public function passwordReset(Request $request)
+    {
+        $request->validate([
+            'old_password' => ['required'],
+            'password' => ['required','confirmed', Rules\Password::defaults()],
+        ]);
+
+        //$old_password = Hash::make($request->old_password);
+        $ok = false;
+        if(Hash::check($request->old_password, Auth::user()->password)){
+            $ok = true;
+            $password = Hash::make($request->password);
+            $user = User::find(Auth::user()->id);
+            $user->password = $password;
+            $saved = $user->save();
+        }
+        if($ok){
+            if($saved){
+                return redirect(route('user-profile'))->with('success','Password updated successfully');
+            }else{
+                return redirect(route('user-profile'))->with('error','Can\'t update password');
+            }
+        }else{
+            return redirect(route('user-profile'))->with('error','Wrong old password');
+        }
+    }
+
 }
