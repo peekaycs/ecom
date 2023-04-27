@@ -44,6 +44,26 @@ class ProfileController extends EcomController
         $data['user'] = $user = User::WHERE( 'uuid', $userId )->first();
         $data['addresses'] = $addresses = Address::WHERE( 'user_id', $userId )->get();
         $data['orders'] = $orders = Order::WHERE( 'user_id', $userId )->get();
+
+        $product = $product_attribute = [];
+        if(isset($orders) && !empty($orders)){
+            foreach($orders as $order){
+                if(isset($order->orderDetails) && !empty($order->orderDetails)){
+                    foreach($order->orderDetails as $orderDetail){
+                        if(isset($orderDetail->product_attribute_id) && !empty($orderDetail->product_attribute_id)){
+                            $product[$order->id][$orderDetail->product_id] = Product::find($orderDetail->product_id);
+                            $product_attribute[$order->id][$orderDetail->product_attribute_id] = ProductAttribute::find($orderDetail->product_attribute_id);
+                        }elseif(isset($orderDetail->product_id) && !empty($orderDetail->product_id)){
+                            $product[$order->id][$orderDetail->product_id] = Product::find($orderDetail->product_id);
+                        } 
+                    }
+                }           
+            }
+            //dd($product);
+            $data['product'] = $product;
+            $data['product_attribute'] = $product_attribute;
+        }
+
         return $this->createView('front.profile', $data);
     } 
     

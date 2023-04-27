@@ -61,32 +61,41 @@
 					@endif
 					<div id="my-orders" class="tab-pane">
 						<h5>My Orders</h5>
+						<?php //echo '<pre>';//print_r($product); ?>
 						@if( isset( $orders ) && !empty( $orders ) )
 							@foreach( $orders as $order )
 								@if( isset( $order ) && !empty( $order ) )
+								<?php 
+								//echo '<pre>';print_r($product[$order->id]); 
+								if(isset($order->orderDetails[0]->product_attribute_id) && !empty($order->orderDetails[0]->product_attribute_id)){
+									$image = $product_attribute[$order->id][$order->orderDetails[0]->product_attribute_id]->productAttributeImage[0]->image;
+								}else{
+									$image = $product[$order->id][$order->orderDetails[0]->product_id]->image;
+								}
+								?>
 								<div class="old-orders p-2 mt-2">
 									<div class="row">
 										<div class="col-md-2 col-sm-2 col-3">
 											<div class="text-center">
-												<figure><img src="images/p1.jpg" alt=""></figure>
+												<figure><img src="{{ URL::asset($image) ?? '' }}" alt=""></figure>
 											</div>
 										</div>
 										<div class="col-md-6 col-sm-6 col-6">
 											<div class="product-title">
-												<strong>Essential Oil Blends – 10mL</strong>                        
+												<strong>Order Id : {{ $order->id ?? '' }}</strong>                        
 											</div>
 											<div class="item-price">
 												<p>                                    
-													<ins>Rs. 255,00</ins>
-													<del>Rs. 240,00</del>
+													<ins>Rs. {{ $order->payable_amount ?? '' }}</ins>
+													<del>Rs. {{ ($order->total + $order->shipping) ?? ''}}</del>
 												</p>
-												<p class="purchage-date">order date - 15-03-2023</p>
+												<p class="purchage-date">order date - {{ $order->created_at ?? '' }}</p>
 											</div>
 										</div>
 										<div class="col-md-4 col-sm-4 col-3 text-end">
-											<a href="javascript:void(0)" class="btn btn-sm py-1 px-3 btn-outline-primary rounded-0">
+											<!--<a href="javascript:void(0)" class="btn btn-sm py-1 px-3 btn-outline-primary rounded-0">
 												Buy Again
-											</a>
+											</a>-->
 										</div>
 									</div>
 								</div>
@@ -226,12 +235,14 @@
 												<div class="form-group">
 													<label for="name">Name</label>
 													<input type="text" name="name" id="name" class="form-control rounded-0">
+													@error('name')<p class="text-danger">{{ $message }}</p>@enderror
 												</div>								
 											</div>
 											<div class="col-md-6 col-sm-6 col-12">
 												<div class="form-group">
 													<label for="Number">Mobile Number</label>
 													<input type="text" name="contact" id="contact" class="form-control rounded-0">
+													@error('contact')<p class="text-danger">{{ $message }}</p>@enderror
 												</div>								
 											</div>
 											
@@ -239,48 +250,56 @@
 												<div class="form-group">
 													<label for="Area">Address*</label>
 													<textarea type="text" rows="2" name="address" id="address" class="form-control rounded-0"></textarea>
+													@error('address')<p class="text-danger">{{ $message }}</p>@enderror
 												</div>								
 											</div>
 											<div class="col-md-6 col-sm-6 col-12">
 												<div class="form-group">
 													<label for="Landmark">Landmark (Optional)</label>
 													<textarea type="text" rows="2" name="landmark" id="landmark" class="form-control rounded-0"></textarea>
+													@error('landmark')<p class="text-danger">{{ $message }}</p>@enderror
 												</div>								
 											</div>
 											<div class="col-md-4 col-sm-4 col-12">
 												<div class="form-group">
 													<label for="pinecode">Pine Code</label>
 													<input type="text" name="zip" id="zip" class="form-control rounded-0">
+													@error('zip')<p class="text-danger">{{ $message }}</p>@enderror
 												</div>								
 											</div>
 											<div class="col-md-4 col-sm-4 col-12">
 												<div class="form-group">
 													<label for="pinecode">Town / City*</label>
 													<input type="text" name="city" id="city" class="form-control rounded-0">
+													@error('city')<p class="text-danger">{{ $message }}</p>@enderror
 												</div>								
 											</div>
 											<div class="col-md-4 col-sm-4 col-12">
 												<div class="form-group">
 													<label for="pinecode">State</label>
 													<input type="text" name="state" id="state" class="form-control rounded-0">
+													@error('state')<p class="text-danger">{{ $message }}</p>@enderror
 												</div>								
 											</div>
 											<div class="col-md-4 col-sm-4 col-6">
 												<div class="form-check">
 													<input type="radio" class="form-check-input" id="home" name="optradio" value="home">
 													<label class="form-check-label" for="home">Home</label>
+													@error('optradio')<p class="text-danger">{{ $message }}</p>@enderror
 												</div>		
 											</div>
 											<div class="col-md-4 col-sm-4 col-6">
 												<div class="form-check">
 													<input type="radio" class="form-check-input" id="office" name="optradio" value="office">
 													<label class="form-check-label" for="office">Office</label>
+													@error('optradio')<p class="text-danger">{{ $message }}</p>@enderror
 												</div>		
 											</div>
 											<div class="col-md-4 col-sm-4 col-6">
 												<div class="form-check">
 													<input type="radio" class="form-check-input" id="other" name="optradio" value="other">
 													<label class="form-check-label" for="other">Other</label>
+													@error('optradio')<p class="text-danger">{{ $message }}</p>@enderror
 												</div>		
 											</div>
 											<div class="col-md-12 col-sm-12 col-6">
@@ -288,6 +307,7 @@
 													<div class="form-check">
 														<input type="checkbox" class="form-check-input" id="default_address" name="default_address" value="1" >
 														<label class="form-check-label" for="default_address">This is my Default Address</label>
+														@error('default_address')<p class="text-danger">{{ $message }}</p>@enderror
 													</div>
 												</div>				
 											</div>

@@ -84,8 +84,8 @@ class AddressController extends EcomController
         //dd($request);
         $request->validate([
             'name' => 'string',
-            'contact' => 'string',
-            'landmark' => 'string',
+            'contact' => 'integer',
+            'landmark' => 'nullable|string',
             'address' => 'string',
             'optradio' => 'string',
             'zip' => 'integer',
@@ -101,6 +101,7 @@ class AddressController extends EcomController
         }else{
            $default_address = 1;
         }
+        
         $address = Address::create([
             'uuid' => $uuid,
             'user_id' => $user_id,
@@ -109,13 +110,16 @@ class AddressController extends EcomController
             'landmark' => $request->landmark,
             'address' => $request->address,
             'address_type' => $request->optradio,
+            'default_address' => $default_address,
             'zip' => $request->zip,
             'city' => $request->city,
             'state' => $request->state
         ]);
 
-        DB::update('update addresses set default_address = ? where user_id = ?',[0, $user_id ]);
-        $address = Address::updateOrCreate( [ 'uuid'=>$uuid ], [ 'default_address' => 1] );
+        if(isset($request->default_address) && !empty($request->default_address)){
+            DB::update('update addresses set default_address = ? where user_id = ?',[0, $user_id ]);
+            $address = Address::updateOrCreate( [ 'uuid'=>$uuid ], [ 'default_address' => 1] );
+        }
         
         if( !isset( $request->profile ) || empty( $request->profile ) ){
             if($address)
@@ -132,11 +136,11 @@ class AddressController extends EcomController
 
     public function update(Request $request)
     {
-        //dd($request);
+        
         $request->validate([
             'name' => 'string',
-            'contact' => 'string',
-            'landmark' => 'string',
+            'contact' => 'integer',
+            'landmark' => 'nullable|string',
             'address' => 'string',
             'optradio' => 'string',
             'zip' => 'integer',
@@ -159,6 +163,14 @@ class AddressController extends EcomController
                 'state' => $request->state 
             ] 
         );
+        
+        if(isset($request->default_address) && !empty($request->default_address)){
+            //dd($request);
+            $user_id = Auth::user()->uuid;
+            DB::update('update addresses set default_address = ? where user_id = ?',[0, $user_id ]);
+            $address = Address::updateOrCreate( [ 'uuid'=>$request->uuid ], [ 'default_address' => 1] );
+        }
+
         if( !isset( $request->profile ) || empty( $request->profile ) ){
             if($address)
                 return redirect(route('address'))->with('success','Addredd updated successfully');
