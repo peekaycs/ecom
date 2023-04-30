@@ -391,16 +391,16 @@ class ProductController extends EcomController
 
         if(!empty($brand) && !empty($order)){
             //DB::enableQueryLog();
-            $data['products'] = Product::WHERE($field_name, $field_value)->whereIn('brand_id', $brand)->orderBy('price', $order)->orderBy('order','ASC')->paginate(2)->withQueryString();
+            $data['products'] = Product::WHERE($field_name, $field_value)->whereIn('brand_id', $brand)->orderBy('price', $order)->orderBy('order','ASC')->paginate(env('PER_PAGE'))->withQueryString();
             //dd(DB::getQueryLog());
         }elseif(!empty($brand)){
             //DB::enableQueryLog();
-            $data['products'] = Product::WHERE($field_name, $field_value)->whereIn('brand_id', $brand)->orderBy('order','ASC')->orderBy('updated_at', 'DESC')->paginate(2)->withQueryString();
+            $data['products'] = Product::WHERE($field_name, $field_value)->whereIn('brand_id', $brand)->orderBy('order','ASC')->orderBy('updated_at', 'DESC')->paginate(env('PER_PAGE'))->withQueryString();
             //dd(DB::getQueryLog());
         }elseif(!empty($order)){
-            $data['products'] = Product::WHERE($field_name, $field_value)->orderBy('price', $order)->orderBy('order','ASC')->paginate(2)->withQueryString();
+            $data['products'] = Product::WHERE($field_name, $field_value)->orderBy('price', $order)->orderBy('order','ASC')->paginate(env('PER_PAGE'))->withQueryString();
         }else{
-            $data['products'] = Product::WHERE($field_name, $field_value)->orderBy('updated_at', 'DESC')->orderBy('order','ASC')->paginate(2)->withQueryString();
+            $data['products'] = Product::WHERE($field_name, $field_value)->orderBy('updated_at', 'DESC')->orderBy('order','ASC')->paginate(env('PER_PAGE'))->withQueryString();
         }
 
         if( isset( $_GET['page'] ) ){
