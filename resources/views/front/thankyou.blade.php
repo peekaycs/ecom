@@ -21,7 +21,7 @@
                     <figure><img src="{{URL::asset('assets/front/images/thankyou.png')}}" alt="thank you"></figure>
                     <h4>Payment Failed</h4>
                     <p>{{session('error')}}</p>
-                    <div class="col-12 mt-md-4 mt-3"><a href="" class="">Pay Now</a></div>                    
+                    <div class="col-12 mt-md-4 mt-3"><a href="{{route('checkout')}}" class="">Pay Now</a></div>                    
                 </div>
             </div>
             @endif

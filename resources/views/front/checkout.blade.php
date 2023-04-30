@@ -207,7 +207,7 @@
 									</div>
 								</div>
 								<div class="col-md-12 col-sm-12 col-12 text-right">
-									<button type="submit" name="submit" class="btn btn-sm btn-primary pay online float-end">Pay Rs. {{ $subTotal ? $subTotal : '' }}</button>
+									<button type="submit" name="submit" class="btn btn-sm btn-primary pay online float-end">Pay ₹{{ $subTotal ? $subTotal : '' }}</button>
 								</div>
 							</form>
 							</div>
@@ -251,7 +251,7 @@
 												@enderror
 											</div>
 											<div class="col-md-12 col-sm-12 col-12 text-right">
-												<button type="submit" name="submit" class="btn btn-sm btn-primary pay cheque disabled float-end">Pay Rs. {{ $subTotal ?? '' }}</button>
+												<button type="submit" name="submit" class="btn btn-sm btn-primary pay cheque disabled float-end">Pay ₹{{ $subTotal ?? '' }}</button>
 											</div>
 										</div>	
 									</form>	
@@ -280,7 +280,7 @@
 										<!--<div class="cod">
 											<span>Total Price (<i class="fa fa-rupee-sign fa-xs"></i>) {{ $subTotal ?? '' }}</span> + <span>20</span>
 										</div>-->
-										<button type="submit" name="submit" class="btn btn-primary d-block pay cod disabled float-end">Pay Rs. {{ $subTotal ? $subTotal : '' }}</button>
+										<button type="submit" name="submit" class="btn btn-sm btn-primary d-block pay cod disabled float-end">Pay ₹{{ $subTotal ? $subTotal : '' }}</button>
 									</form>
 								</div>
 							</div>
@@ -337,12 +337,16 @@
 @section('script')	
 <script>
 
-    function makeActive( thiss, cls ){
+    function makeActive( method, cls ){
+		console.log(method,cls);
+		
         var hasClass = $( "." + cls ).hasClass('disabled');
 		if( hasClass){
 			$( ".pay" ).addClass('disabled');
 			$( "." + cls ).removeClass('disabled');
 		}
+		$(".pay_method").attr("checked",false).trigger('change');
+		$(method).attr("checked", true).trigger('change');
     }    
 
 </script>

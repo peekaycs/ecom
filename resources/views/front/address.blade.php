@@ -255,7 +255,7 @@
                         </p>
                     </div>
                     <div class="alert-success p-md-3 p-2">
-                        <span>Total Savings: <strong>{{ isset($total_discount) ? '₹'. $total_discount : '0'}}</strong></span>
+                        <span>Total Savings: <strong>{{ isset($total_discount) ? '₹'. floor($total_discount) : '0'}}</strong></span>
                         <!-- <button type="button" class="btn btn-sm btn-success float-end">CHECKOUT</button> -->
 
                         @if(isset($addresses) && $addresses->count() > 0)
