@@ -84,9 +84,8 @@ class AddressController extends EcomController
         //dd($request);
         $request->validate([
             'name' => 'string',
-            'contact' => 'string',
-            'email' => 'email',
-            'landmark' => 'string',
+            'contact' => 'integer',
+            'landmark' => 'nullable|string',
             'address' => 'string',
             'optradio' => 'string',
             'zip' => 'integer',
@@ -102,12 +101,12 @@ class AddressController extends EcomController
         }else{
            $default_address = 1;
         }
+        
         $address = Address::create([
             'uuid' => $uuid,
             'user_id' => $user_id,
             'name' => $request->name,
             'contact' => $request->contact,
-            'email' => $request->email,
             'landmark' => $request->landmark,
             'address' => $request->address,
             'address_type' => $request->optradio,
@@ -116,21 +115,32 @@ class AddressController extends EcomController
             'city' => $request->city,
             'state' => $request->state
         ]);
+
+        if(isset($request->default_address) && !empty($request->default_address)){
+            DB::update('update addresses set default_address = ? where user_id = ?',[0, $user_id ]);
+            $address = Address::updateOrCreate( [ 'uuid'=>$uuid ], [ 'default_address' => 1] );
+        }
         
-        
-        if($address)
-            return redirect(route('address'))->with('success','Address saved successfully');
-        else
-            return redirect(route('address'))->with('error','Can\'t save address, please try again later');
+        if( !isset( $request->profile ) || empty( $request->profile ) ){
+            if($address)
+                return redirect(route('address'))->with('success','Address saved successfully');
+            else
+                return redirect(route('address'))->with('error','Can\'t save address, please try again later');
+        }else{
+            if($address)
+                return redirect(route('user-profile'))->with('success','Addredd updated successfully');
+            else
+                return redirect(route('user-profile'))->with('error','Can\'t update address');
+        }        
     }
 
     public function update(Request $request)
     {
-        //dd($request);
+        
         $request->validate([
             'name' => 'string',
-            'contact' => 'string',
-            'landmark' => 'string',
+            'contact' => 'integer',
+            'landmark' => 'nullable|string',
             'address' => 'string',
             'optradio' => 'string',
             'zip' => 'integer',
@@ -154,10 +164,24 @@ class AddressController extends EcomController
             ] 
         );
         
-        if($address)
-            return redirect(route('address'))->with('success','Addredd updated successfully');
-        else
-            return redirect(route('address'))->with('error','Can\'t update address');
+        if(isset($request->default_address) && !empty($request->default_address)){
+            //dd($request);
+            $user_id = Auth::user()->uuid;
+            DB::update('update addresses set default_address = ? where user_id = ?',[0, $user_id ]);
+            $address = Address::updateOrCreate( [ 'uuid'=>$request->uuid ], [ 'default_address' => 1] );
+        }
+
+        if( !isset( $request->profile ) || empty( $request->profile ) ){
+            if($address)
+                return redirect(route('address'))->with('success','Addredd updated successfully');
+            else
+                return redirect(route('address'))->with('error','Can\'t update address');
+        }else{
+            if($address)
+                return redirect(route('user-profile'))->with('success','Addredd updated successfully');
+            else
+                return redirect(route('user-profile'))->with('error','Can\'t update address');
+        }        
     }
 
     public function makeDefault(Request $request, $uuid)
@@ -168,9 +192,49 @@ class AddressController extends EcomController
         //$address = Address::updateOrCreate( [ 'user_id'=>$userId ], [ 'default_address' => 0] );
         $address = Address::updateOrCreate( [ 'uuid'=>$uuid ], [ 'default_address' => 1] );
         
-        if($address)
-            return redirect(route('address'))->with('success','Address marked as default successfully');
-        else
-            return redirect(route('address'))->with('error','Can\'t save address as default');
+        if( !isset( $request->ajax ) || empty( $request->ajax ) ){
+            if($address)
+                return redirect(route('address'))->with('success','Address marked as default successfully');
+            else
+                return redirect(route('address'))->with('error','Can\'t save address as default');
+        }else{
+            echo 1;
+        }        
+    }
+
+    public function remove(Request $request, $id)
+    {
+        $address = Address::find($id);
+        $saved = 0;
+        if($address->user_id == Auth::user()->uuid){
+            $ok = true;
+        }else{
+            $ok = false;
+        } 
+        if($ok) {
+            $saved = Address::where('uuid', $id)->firstorfail()->delete();
+        }
+
+        if( isset( $request->ajax ) && !empty( $request->ajax ) ){
+            echo $ok;
+        } 
+    }
+
+    public function getAddress(Request $request, $id)
+    {
+        $address = Address::find($id);
+        if($address->user_id == Auth::user()->uuid){
+            $ok = true;
+        }else{
+            $ok = false;
+        }  
+
+        if( isset( $request->ajax ) && !empty( $request->ajax ) ){
+            if($ok){
+                echo json_encode($address);
+            }else{
+                echo $ok;    
+            }   
+        } 
     }
 }

@@ -16,7 +16,7 @@ use App\Http\Controllers\ProfileController;
 Route::get('/', [HomeController::class,'index'])->name('home');
 
 //product
-Route::get('/product/{slug}', [ProductController::class,'productByCategory'])->name('productByCategory');
+Route::get('/product-by-category/{slug}', [ProductController::class,'productByCategory'])->name('productByCategory');
 Route::get('/product/{slug}', [ProductController::class,'productBySubCategory'])->name('productBySubCategory');
 Route::get('/productByBrand/{slug}/', [ProductController::class,'productByBrand'])->name('productByBrand');
 Route::get('/productByBrand/{slug}/{brand}', [ProductController::class,'productByBrand'])->name('productByBrand');
@@ -46,10 +46,18 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/address/store', [AddressController::class,'store'])->name('store');
     Route::get('/address/make-default/{uuid}', [AddressController::class,'makeDefault'])->name('makeDefault');
     Route::post('/address/update', [AddressController::class,'update'])->name('update');
+    Route::get('/address/remove/{id}', [AddressController::class,'remove'])->name('address-remove');
+    Route::get('/address/get-address/{id}', [AddressController::class,'getAddress'])->name('get-address');
 
     Route::post('/apply-coupon', [CartStorageNewController::class,'applyCoupon'])->name('applyCoupon');
     Route::post('/remove-coupon', [CartStorageNewController::class,'removeCoupon'])->name('removeCoupon');
+    
     Route::get('/profile', [ProfileController::class,'index'])->name('user-profile');
+    Route::post('/profile-update/{id}', [ProfileController::class,'update'])->name('profile-update');
+    
+    Route::post('/password-reset', [ProfileController::class,'passwordReset'])->name('password-reset');
+
+
 });
 //signup form
 Route::get('/signup', [HomeController::class,'signup'])->name('signup');
