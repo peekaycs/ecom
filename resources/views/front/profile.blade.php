@@ -82,7 +82,7 @@
 										</div>
 										<div class="col-md-6 col-sm-6 col-6">
 											<div class="product-title">
-												<strong>Order Id : {{ $order->order_id ?? '' }}</strong>                        
+												<strong>Order Id : {{ $order->order_code ?? '' }}</strong>                        
 											</div>
 											<div class="item-price">
 												<p>                                    
