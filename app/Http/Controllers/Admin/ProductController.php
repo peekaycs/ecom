@@ -335,41 +335,26 @@ class ProductController extends EcomController
 
     public function productByCategory(Request $request, $slug)
     {
-        //DB::enableQueryLog(); // Enable query log
         $slug = Helper::destructSlug($slug);
         $data = [];
-        //$data['category'] = $category =Category::All();
         $data['categories'] = $categories = Category::WHERE('slug', $slug)->first();
-        
-        $data['products'] = $products = Product::WHERE('category_id', $categories->uuid)->with(['brand'])->orderBy('order','ASC')->orderBy('updated_at','desc')->paginate(env('PER_PAGE'))->withQueryString();
-        foreach($products as $product){
-            $data['brands'][$product->brand->brand]  = $product->brand;
-        }
-
+        //DB::enableQueryLog();
+        $data['products'] = $products = Product::WHERE('category_id', $categories->uuid)->orderBy('order','ASC')->orderBy('updated_at','desc')->paginate(env('PER_PAGE'))->withQueryString();
+        //dd(DB::getQueryLog());
+        $data['brands'] = $brands = Brand::all();
         $data['filter_categories'] = $filter_categories = $categories;
-        //$data['filter_subcategories'] = $filter_subcategories = SubCategory::WHERE('category_id', $categories->uuid)->get();
-        //dd(DB::getQueryLog()); // Show results of log
-        //dd($products);
         return $this->createView('front.product', $data);
     }
 
     public function productBySubCategory(Request $request, $slug)
     {
-        //echo '<pre>';print_r($request);
-        //DB::enableQueryLog(); // Enable query log
         $slug = Helper::destructSlug($slug);
-        //$data['category'] = $category =Category::All();
         $data['subcategories'] = $subcategories = SubCategory::WHERE('slug', $slug)->first();
-
-        $data['products'] = $products = Product::WHERE('subcategory_id', $subcategories->uuid)->with(['brand'])->orderBy('order','ASC')->orderBy('updated_at','DESC')->paginate(env('PER_PAGE'))->withQueryString();
-        foreach($products as $product){
-            $data['brands'][$product->brand->brand]  = $product->brand;
-        }
-        
+        //DB::enableQueryLog();
+        $data['products'] = $products = Product::WHERE('subcategory_id', $subcategories->uuid)->orderBy('order','ASC')->orderBy('updated_at','DESC')->paginate(env('PER_PAGE'))->withQueryString();
+        //dd(DB::getQueryLog());
+        $data['brands'] = $brands = Brand::all();
         $data['filter_categories'] = $filter_categories = $subcategories->category;
-        //$data['filter_subcategories'] = $filter_subcategories = SubCategory::WHERE('category_id', $subcategories->category->uuid)->get();
-        //dd(DB::getQueryLog()); // Show results of log
-        //dd($products->currentPage());
         return $this->createView('front.product', $data);
     }
 
@@ -390,19 +375,40 @@ class ProductController extends EcomController
         if( isset( $request->order ) && !empty( $request->order ) ){
             $order = $request->order;
         }
-        $data = [];
         $subcategories = SubCategory::WHERE('slug', $slug)->orderBy('order','ASC')->first();
+        if(!isset($subcategories) || $subcategories->count() < 1 || empty($subcategories) ){
+            $categories = Category::WHERE('slug', $slug)->orderBy('order','ASC')->first();
+            $data['filter_categories'] = $filter_categories = $categories;
+            $field_name = 'category_id';
+            $field_value = $categories->uuid;
+        }else{
+            $data['filter_categories'] = $filter_categories = $subcategories->category;
+            $field_name = 'subcategory_id';
+            $field_value = $subcategories->uuid;
+            $data['filter_categories'] = $filter_categories = $categories;
+        }
+        
 
         if(!empty($brand) && !empty($order)){
-            $data['products'] = Product::WHERE('subcategory_id', $subcategories->uuid)->whereIn('brand_id', $brand)->orderBy('order','ASC')->orderBy('price', $order)->paginate(env('PER_PAGE'))->withQueryString();
+            //DB::enableQueryLog();
+            $data['products'] = Product::WHERE($field_name, $field_value)->whereIn('brand_id', $brand)->orderBy('price', $order)->orderBy('order','ASC')->paginate(env('PER_PAGE'))->withQueryString();
+            //dd(DB::getQueryLog());
         }elseif(!empty($brand)){
-            $data['products'] = Product::WHERE('subcategory_id', $subcategories->uuid)->whereIn('brand_id', $brand)->orderBy('order','ASC')->orderBy('updated_at', 'DESC')->paginate(env('PER_PAGE'))->withQueryString();
+            //DB::enableQueryLog();
+            $data['products'] = Product::WHERE($field_name, $field_value)->whereIn('brand_id', $brand)->orderBy('order','ASC')->orderBy('updated_at', 'DESC')->paginate(env('PER_PAGE'))->withQueryString();
+            //dd(DB::getQueryLog());
         }elseif(!empty($order)){
-            $data['products'] = Product::WHERE('subcategory_id', $subcategories->uuid)->orderBy('price', $order)->orderBy('order','ASC')->paginate(env('PER_PAGE'))->withQueryString();
+            $data['products'] = Product::WHERE($field_name, $field_value)->orderBy('price', $order)->orderBy('order','ASC')->paginate(env('PER_PAGE'))->withQueryString();
         }else{
-            $data['products'] = Product::WHERE('subcategory_id', $subcategories->uuid)->orderBy('updated_at', 'DESC')->orderBy('order','ASC')->paginate(env('PER_PAGE'))->withQueryString();
+            $data['products'] = Product::WHERE($field_name, $field_value)->orderBy('updated_at', 'DESC')->orderBy('order','ASC')->paginate(env('PER_PAGE'))->withQueryString();
+        }
+
+        if( isset( $_GET['page'] ) ){
+            $data['brands'] = Brand::all();
+            return $this->createView('front.product', $data);
+        }else{    
+            echo view('front.tpl.brand-wise-product', $data);
         }    
-        echo view('front.tpl.brand-wise-product', $data);
     }
 
     public function productDetail(Request $request, $slug)

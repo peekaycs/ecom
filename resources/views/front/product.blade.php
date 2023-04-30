@@ -9,11 +9,26 @@
 					<div class="aside-desk-filter">
 						<h3>FILTERS BY</h3>
 						<div class="cat-box">		
+							<?php 
+							$queryString  = url()->current();
+							$queryString = explode('//',$queryString);
+							$queryString = explode('/',$queryString[1]);
+							$slug = $queryString[2];
+
+							$brandCheck = [];
+							if( isset($queryString[3]) && !empty($queryString[3]) ){
+								$brandCheck = explode(',',$queryString[3]);
+							}
+							$orderCheck;
+							if( isset($queryString[4]) && !empty($queryString[4]) ){
+								echo $orderCheck = $queryString[4];
+							}
+							?>	
 							@if (isset($category) && !empty($category))
 								@foreach($category as $categories)
 									@if (isset($categories) && !empty($categories))				
 									<h4>
-										<a class="category {{ request()->is('product-by-category/'.str_replace(' ', '-', $categories->slug)) ? 'actv' : '' }}" href="{{ route('productByCategory',['slug' => str_replace(' ', '-', $categories->slug)]) }}" style="text-decoration:none;color:grey" data-category="{{ str_replace(' ', '-', $categories->slug) }}" >{{ $categories->category ?? '' }}</a>
+										<a class="category {{ str_replace(' ', '-', $categories->slug) == $slug ? 'actv' : '' }}" href="{{ route('productByCategory',['slug' => str_replace(' ', '-', $categories->slug)]) }}" style="text-decoration:none;color:grey" data-category="{{ str_replace(' ', '-', $categories->slug) }}" >{{ $categories->category ?? '' }}</a>
 									</h4>
 									<!--<div class="search-icon">
 										<input type="type" name="search" class="form-control" placeholder="Search Medicine Name" autocomplete="off">
@@ -23,9 +38,9 @@
 											@foreach($categories->subcategory as $categories->subcategories)
 												@if (isset($categories->subcategories) && !empty($categories->subcategories))
 												<label class="chk px-0">
-													<input type="radio" name="subcategory" class=" {{ str_replace(' ', '-', $categories->subcategories->slug) }} " value="{{ str_replace(' ', '-', $categories->subcategories->slug) }}" {{ request()->is('product/'.str_replace(' ', '-', $categories->subcategories->slug)) ? 'checked' : '' }}>
+													<input type="radio" name="subcategory" class=" {{ str_replace(' ', '-', $categories->subcategories->slug) }} " value="{{ str_replace(' ', '-', $categories->subcategories->slug) }}" {{ request()->is('product/'.str_replace(' ', '-', $categories->subcategories->slug)) ? 'checked' : '' }} >
 													<span class="checkmark1"></span>
-													<a class="subcategory {{ request()->is('product/'.str_replace(' ', '-', $categories->subcategories->slug)) ? 'actv' : '' }}" href="{{ route('productBySubCategory',['slug' => str_replace(' ', '-', $categories->subcategories->slug)]) }}" style="text-decoration:none;color:grey" data-subcategory="{{ str_replace(' ', '-', $categories->subcategories->slug) }}" >
+													<a class="subcategory {{ str_replace(' ', '-', $categories->subcategories->slug) == $slug ? 'actv' : '' }}" href="{{ route('productBySubCategory',['slug' => str_replace(' ', '-', $categories->subcategories->slug)]) }}" style="text-decoration:none;color:grey" data-subcategory="{{ str_replace(' ', '-', $categories->subcategories->slug) }}" >
 														{{ $categories->subcategories->subcategory ?? ''}}
 													</a>
 												</label>
@@ -47,7 +62,7 @@
 									@foreach($brands as $brand)
 										@if (isset($brand) && !empty($brand))					
 										<label class="chk">
-											<input type="checkbox" name="brand[]" class="brand {{ $brand->id ? 'brand_'.$brand->id : '' }}" data-brand="{{ $brand->id ?? ''}}" onclick="getProduct( this,'brand', '{{ $brand->id }}')">
+											<input type="checkbox" name="brand[]" class="brand {{ $brand->id ? 'brand_'.$brand->id : '' }}" data-brand="{{ $brand->id ?? ''}}" onclick="getProduct( this,'brand', '{{ $brand->id }}')" <?php if(in_array($brand->id, $brandCheck)){ echo 'checked'; }else{ echo ''; }?>>
 											<span class="checkmark"></span>{{ $brand->brand ?? ''}}
 										</label>
 										@endif
@@ -75,7 +90,7 @@
 									@foreach($brands as $brand)
 										@if (isset($brand) && !empty($brand))					
 										<label class="chk">
-											<input type="checkbox" name="brand[]" class="brand {{ $brand->id ? 'brand_'.$brand->id : '' }}" data-brand="{{ $brand->id ?? ''}}" onclick="getProduct( this,'brand', '{{ $brand->id }}')">
+											<input type="checkbox" name="brand[]" class="brand {{ $brand->id ? 'brand_'.$brand->id : '' }}" data-brand="{{ $brand->id ?? ''}}" onclick="getProduct( this,'brand', '{{ $brand->id }}')" >
 											<span class="checkmark"></span>{{ $brand->brand ?? ''}}
 										</label>
 										@endif
@@ -97,9 +112,8 @@
 						<div class="sort-by">
 							<label>Sort By </label>
 							<select class="form-select-sm rounded-0 order" onChange="getProduct( this,'order' )">
-								<option value = "">--Select Option--</option>
-								<option value = "ASC">Price Low to High</option>
-								<option value = "DESC">Price High to Low</option>
+								<option value = "ASC" <?php echo ( ( isset($orderCheck) && $orderCheck == 'ASC' ) ? 'selected' : '' );?> >Price Low to High</option>
+								<option value = "DESC" <?php echo ( ( isset($orderCheck) && $orderCheck = 'DESC' ) ? 'selected' : '' );?>>Price High to Low</option>
 							</select>
 						</div>
 					</div>
@@ -126,14 +140,6 @@
 										<ins>Rs. {{ $price ?? ''}}</ins>
 										<del>{{ $product->price ?? ''}}</del>
 									</p>
-									<!--<ul class="star-rating">
-										<li class="str-color"><i class="fas fa-star"></i></li>
-										<li class="str-color"><i class="fas fa-star"></i></li>
-										<li class="str-color"><i class="fas fa-star"></i></li>
-										<li class="str-color"><i class="fas fa-star"></i></li>
-										<li class="str-color"><i class="fas fa-star-half-alt"></i></li>
-										<li><small class="px-1">1 review(2)</small></li>-->
-									</ul>
 									<div class="add-to-cart">
 										<a href="{{ route('product_detail',['slug' => str_replace(' ', '-', $product->slug)]) }}" class="btn-sm btn-outlinr-danger">Add to Cart</a>
 									</div>
@@ -142,7 +148,10 @@
 							@endif
 						@endforeach
 					@endif
+					<br>
+					<div class="text-center" id="links" ><span>{{ $products->links() }}</span></div>
 				</div>
+				
 			</div>	
 		</div>
 	</div>
@@ -159,12 +168,17 @@
 		var brand = order = '';	
 		if(label == 'brand'){	
 			var attr = $(thiss).attr('checked');
+			
 			if (typeof attr !== 'undefined' && attr !== false) {
 				$(thiss).removeAttr('checked')
+				$(thiss).prop('checked',false)
 			}else{
 				$(thiss).attr('checked','checked')
+				$(thiss).prop('checked',true)
 			}
 		}
+
+		order = $('.order').val();
 		if(label == 'order'){	
 			order = $(thiss).val()
 		}	
@@ -188,42 +202,26 @@
 				subcat = $('.' + subcategory).val();
 			}
 		});
+		if(subcat == '' || subcat == null){
+			$(".category").each(function() {
+				var cls = $(this).hasClass('actv');
+				if(cls == true){
+					var category = $(this).data('category');
+					subcat = category;
+				}
+			});
+		}	
 
-		/*user = { 
-            "brand": brand, 
-            "slug": subcat 
-        }
-        // Options to be given as parameter in fetch for making requests other then GET
-        let options = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 
-                    'application/json;charset=utf-8'
-            },
-            body: JSON.stringify(user)
-        }*/
         // Fake api for making post requests
         fetch( "{{ url('productByBrand') }}/" +subcat+ '/' + brand + order) 
 		.then(res => res.text())
 		.then(html => {
-			//console.log(html);
-			document.getElementById("add_item").innerHTML = html
+			document.getElementById("add_item").innerHTML = '';
+			document.getElementById("add_item").innerHTML = html;
 		})
+		window.history.pushState( {}, "", "{{ url('productByBrand') }}/" +subcat+ '/' + brand + order + '?page=1' );
 		//.catch(error => {console.log(error)});
     }
-
-
-
-	/*$.ajax({
-		type: 'GET',
-		url: "{{ url('productByBrand') }}",
-		data: { slug : subcat, brand : brand },
-		success: function(response) { 
-			console.log(response); 
-			//response = JSON.parse(response);
-			//alert( key + ": " + value );
-		}
-	});*/
 </script>
 @endsection	
 

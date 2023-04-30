@@ -175,7 +175,7 @@
 						</form>
 					</div>
 					<div id="Address" class="tab-pane">
-						<h5>Add/Edit Address</h5>
+						<h5>Your Addresses</h5>
 						<hr>
 						<div class="row">
 							@if( isset( $addresses ) && !empty( $addresses ) )
@@ -224,6 +224,8 @@
                         </div>
 						<br><br>
 						<div class="row">
+							<h5>Add/Edit Addresses</h5>
+							<hr>
 							<div class="col-md-8 col-sm-8 col-12">
 								<div class="mb-2 border p-2">
 									<form action="{{route('store')}}" method="POST" class="addHref">
