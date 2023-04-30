@@ -757,6 +757,25 @@ footer .container-fluid .footer-contant .btn {
   background-color: #14a8b2;
   color: rgb(255, 255, 255);
 }
+footer .container-fluid .footer-contant p {
+  margin: 0px;
+}
+footer .container-fluid .footer-contant p span {
+  font-weight: 600;
+}
+footer .container-fluid .footer-contant p a {
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+  font-size: 16px;
+  font-style: italic;
+}
+footer .container-fluid .footer-contant p i {
+  font-size: 20px;
+  color: #00fff3;
+  float: left;
+  margin-right: 10px;
+  margin-top: 4px;
+}
 footer .all-right {
   width: 90%;
   margin: 0px auto;
@@ -787,6 +806,7 @@ footer .all-right .social h5 {
 footer .all-right .social a {
   height: 30px;
   width: 30px;
+  border: 1px solid #fff;
   border-radius: 51%;
   display: inline-block;
   margin: 3px;
@@ -811,7 +831,8 @@ footer .all-right .accept-card a {
 footer .all-right .accept-card a img {
   width: auto;
   height: 30px;
-  border: 1px solid #ccc;
+  border: 1px solid #5a7a93;
+  background-color: rgb(255, 255, 255);
 }
 
 @media only screen and (max-width: 767px) {
