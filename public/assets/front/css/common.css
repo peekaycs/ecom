@@ -349,7 +349,15 @@ div, p {
   text-align: left;
   margin: 10px 40px 0px 0px;
   padding-left: 0px;
-  margin-right: 40px;
+  margin-right: 10px;
+}
+.head .header-menu ul li .dropdown-on-hover .ddp-inner ul p a {
+  padding: 2px 0px;
+  background-color: inherit;
+  color: #000;
+  text-transform: inherit;
+  font-size: 14px;
+  padding: 0px;
 }
 .head .header-menu ul li .dropdown-on-hover .ddp-inner ul li {
   display: block;
@@ -540,6 +548,9 @@ div, p {
     margin: 10px 0px 0px;
     padding-left: 10px;
     padding-bottom: 5px;
+  }
+  .head .header-menu ul li .dropdown-on-hover .ddp-inner ul p a {
+    padding: 0px;
   }
   .head .header-menu ul li .dropdown-on-hover .ddp-inner ul li {
     display: block;
