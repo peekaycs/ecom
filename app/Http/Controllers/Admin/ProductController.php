@@ -378,16 +378,21 @@ class ProductController extends EcomController
         $subcategories = SubCategory::WHERE('slug', $slug)->orderBy('order','ASC')->first();
         if(!isset($subcategories) || $subcategories->count() < 1 || empty($subcategories) ){
             $categories = Category::WHERE('slug', $slug)->orderBy('order','ASC')->first();
+            $data['filter_categories'] = $filter_categories = $categories;
             $field_name = 'category_id';
             $field_value = $categories->uuid;
         }else{
+            $data['filter_categories'] = $filter_categories = $subcategories->category;
             $field_name = 'subcategory_id';
             $field_value = $subcategories->uuid;
+            $data['filter_categories'] = $filter_categories = $categories;
         }
         
 
         if(!empty($brand) && !empty($order)){
-            $data['products'] = Product::WHERE($field_name, $field_value)->whereIn('brand_id', $brand)->orderBy('order','ASC')->orderBy('price', $order)->paginate(2)->withQueryString();
+            //DB::enableQueryLog();
+            $data['products'] = Product::WHERE($field_name, $field_value)->whereIn('brand_id', $brand)->orderBy('price', $order)->orderBy('order','ASC')->paginate(2)->withQueryString();
+            //dd(DB::getQueryLog());
         }elseif(!empty($brand)){
             //DB::enableQueryLog();
             $data['products'] = Product::WHERE($field_name, $field_value)->whereIn('brand_id', $brand)->orderBy('order','ASC')->orderBy('updated_at', 'DESC')->paginate(2)->withQueryString();

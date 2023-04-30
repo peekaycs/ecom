@@ -19,6 +19,10 @@
 							if( isset($queryString[3]) && !empty($queryString[3]) ){
 								$brandCheck = explode(',',$queryString[3]);
 							}
+							$orderCheck;
+							if( isset($queryString[4]) && !empty($queryString[4]) ){
+								echo $orderCheck = $queryString[4];
+							}
 							?>	
 							@if (isset($category) && !empty($category))
 								@foreach($category as $categories)
@@ -36,7 +40,7 @@
 												<label class="chk px-0">
 													<input type="radio" name="subcategory" class=" {{ str_replace(' ', '-', $categories->subcategories->slug) }} " value="{{ str_replace(' ', '-', $categories->subcategories->slug) }}" {{ request()->is('product/'.str_replace(' ', '-', $categories->subcategories->slug)) ? 'checked' : '' }} >
 													<span class="checkmark1"></span>
-													<a class="subcategory {{ request()->is('product/'.str_replace(' ', '-', $categories->subcategories->slug)) ? 'actv' : '' }}" href="{{ route('productBySubCategory',['slug' => str_replace(' ', '-', $categories->subcategories->slug)]) }}" style="text-decoration:none;color:grey" data-subcategory="{{ str_replace(' ', '-', $categories->subcategories->slug) }}" >
+													<a class="subcategory {{ str_replace(' ', '-', $categories->subcategories->slug) == $slug ? 'actv' : '' }}" href="{{ route('productBySubCategory',['slug' => str_replace(' ', '-', $categories->subcategories->slug)]) }}" style="text-decoration:none;color:grey" data-subcategory="{{ str_replace(' ', '-', $categories->subcategories->slug) }}" >
 														{{ $categories->subcategories->subcategory ?? ''}}
 													</a>
 												</label>
@@ -108,9 +112,8 @@
 						<div class="sort-by">
 							<label>Sort By </label>
 							<select class="form-select-sm rounded-0 order" onChange="getProduct( this,'order' )">
-								<option value = "">--Select Option--</option>
-								<option value = "ASC">Price Low to High</option>
-								<option value = "DESC">Price High to Low</option>
+								<option value = "ASC" <?php echo ( ( isset($orderCheck) && $orderCheck == 'ASC' ) ? 'selected' : '' );?> >Price Low to High</option>
+								<option value = "DESC" <?php echo ( ( isset($orderCheck) && $orderCheck = 'DESC' ) ? 'selected' : '' );?>>Price High to Low</option>
 							</select>
 						</div>
 					</div>
@@ -174,6 +177,8 @@
 				$(thiss).prop('checked',true)
 			}
 		}
+
+		order = $('.order').val();
 		if(label == 'order'){	
 			order = $(thiss).val()
 		}	
@@ -214,7 +219,7 @@
 			document.getElementById("add_item").innerHTML = '';
 			document.getElementById("add_item").innerHTML = html;
 		})
-		window.history.pushState("", "" , "", "{{ url('productByBrand') }}/" +subcat+ '/' + brand + order);
+		window.history.pushState( {}, "", "{{ url('productByBrand') }}/" +subcat+ '/' + brand + order + '?page=1' );
 		//.catch(error => {console.log(error)});
     }
 </script>
