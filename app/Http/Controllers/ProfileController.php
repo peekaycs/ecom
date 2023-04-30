@@ -43,7 +43,7 @@ class ProfileController extends EcomController
         $userId = Auth::user()->uuid;
         $data['user'] = $user = User::WHERE( 'uuid', $userId )->first();
         $data['addresses'] = $addresses = Address::WHERE( 'user_id', $userId )->get();
-        $data['orders'] = $orders = Order::WHERE( 'user_id', $userId )->get();
+        $data['orders'] = $orders = Order::WHERE( 'user_id', $userId )->orderBy('updated_at','DESC')->get();
 
         $product = $product_attribute = [];
         if(isset($orders) && !empty($orders)){

@@ -15,7 +15,7 @@ class AddColumnOrderId extends Migration
     {
         Schema::table('orders', function (Blueprint $table) {
             //
-            $table->string('order_id', 36)->index()->unique()->after('user_id')->nullable();
+            $table->string('order_code', 36)->index()->unique()->after('user_id')->nullable();
         });
     }
 
