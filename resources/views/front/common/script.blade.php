@@ -4,3 +4,9 @@
 <script  src="{{URL::asset('assets/front/js/marq.js')}}" type="text/javascript"></script>
 <!-- <script src="js/animate.js" type="text/javascript"></script> -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
+
+@if(session('login_error') || session('view_login_form'))
+<script>
+    $("#login").show();
+</script>
+@endif

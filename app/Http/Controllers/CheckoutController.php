@@ -80,7 +80,7 @@ class CheckoutController extends EcomController
                 $data['attribute'] = $attribute;
             }    
         }
-        $data['subTotal'] = Cart::getSubTotal();
+        $data['subTotal'] = Cart::getSubTotal() ? floor(Cart::getSubTotal()) : 0;
         $data['total'] = Cart::getTotal();        
         $data['conditions'] = $conditions = Cart::getConditions();
         //end
@@ -169,7 +169,7 @@ class CheckoutController extends EcomController
             ]);
             
             $uuid = Str::uuid();
-            $transaction_id = 'Ecom_'. Str::uuid();
+            $transaction_id = Helper::randomString(12,'RXTNCQ-');
             $payments = 0;
             if( ( $request->amount <= $request->fill_amount ) && ( $receiving_amount <= $request->amount ) ){
                 $flag = true;
@@ -204,7 +204,7 @@ class CheckoutController extends EcomController
             ]);
             
             $uuid = Str::uuid();
-            $transaction_id = 'Ecom_'. Str::uuid();
+            $transaction_id = Helper::randomString(12,'RXTNCD-');
             $payments = 0;
             if( $receiving_amount <= $request->amount ){
                 $flag = true;
@@ -230,7 +230,7 @@ class CheckoutController extends EcomController
             ]);
             
             $uuid = Str::uuid();
-            $transaction_id = 'Ecom_'. Str::uuid();
+            $transaction_id = Helper::randomString(12,'RXTNON-');
             $payments = 0;
             if( $receiving_amount <= $request->amount ){
                 $flag = true;
@@ -298,7 +298,7 @@ class CheckoutController extends EcomController
                 $data['attribute'] = $attribute;
             }    
         }
-        $data['subTotal'] = Cart::getSubTotal();
+        $data['subTotal'] = Cart::getSubTotal() ? floor(Cart::getSubTotal()) : 0;
         $data['total'] = Cart::getTotal(); 
         return $data;       
     }
@@ -322,7 +322,7 @@ class CheckoutController extends EcomController
         }
         $paymentDetails = Session::get('paymentDetails');
         $uuid = Str::uuid();
-        $transaction_id = Helper::randomString(10, 'RX4U-');
+        $transaction_id = Helper::randomString(12, 'RXTXN-');
         $response = $this->veryfyPayment($request); // verify payment
         if($response['status']){ // payment successful
             $api = new Api (env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
@@ -379,8 +379,7 @@ class CheckoutController extends EcomController
             $response['status'] = false;
             $response['error'] = 'Razorpay Error : ' . $e->getMessage();
         }
-        echo '<pre>';
-        print_r($response);
+        
         return $response;
     }
 

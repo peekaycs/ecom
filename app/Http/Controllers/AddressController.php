@@ -67,7 +67,7 @@ class AddressController extends EcomController
                 $data['attribute'] = $attribute;
             }    
         }
-        $data['subTotal'] = Cart::getSubTotal();
+        $data['subTotal'] = Cart::getSubTotal() ? floor(Cart::getSubTotal()) :0;
         $data['total'] = Cart::getTotal();        
         $data['conditions'] = $conditions = Cart::getConditions();
         //end

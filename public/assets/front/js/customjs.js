@@ -265,9 +265,7 @@ $(document).ready(function() {
 })
 // auto hide add-to-cart-success
 window.setTimeout(function() {
-    $(".alert").fadeTo(500, 0).slideUp(500, function(){
-        $(this).remove(); 
-    });
-}, 2000);
+    $(".alert").fadeTo(6000, 0);
+}, 3000);
 // auto hide add-to-cart-success end
 

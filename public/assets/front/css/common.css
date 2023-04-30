@@ -906,11 +906,13 @@ footer .all-right .accept-card a img {
 
 .add-to-cart-success {
   position: absolute;
-  width: 300px;
+  width: fit-content;
+  min-width: 300px;
   max-width: 90%;
   top: 2px;
   margin: 0px auto;
   right: 3%;
+  
   z-index: 99999;
 }
 

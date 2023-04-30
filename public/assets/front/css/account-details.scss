@@ -83,7 +83,7 @@
 
 .old-orders{ background-color: $color-light-gray;
   figure{ margin-bottom: 0px; 
-      img{width: 100%}
+      img{width: 20%}
   }
   a{
       @include ul-tag;

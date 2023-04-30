@@ -91,10 +91,10 @@
 			<div class="col-md-6 col-sm-6 col-12">
 				<div class="social mb-2 text-start">
 					<h5>Follow US </h5>
-					<a href="https://www.facebook.com/" target="_blank"><img src="{{URL::asset('assets/front/images/facebook.png')}}"></a>
-					<a href="#" target="_blank"><img src="{{URL::asset('assets/front/images/instagram.png')}}"></a>
-					<a href="#" target="_blank"><img src="{{URL::asset('assets/front/images/twitter.png')}}"></a>
-					<a href="#" target="_blank"><img src="{{URL::asset('assets/front/images/linkedin.png')}}"></a>
+					<a href="https://www.facebook.com/homeopathicforallIndia" target="_blank"><img src="{{URL::asset('assets/front/images/facebook.png')}}"></a>
+					<a href="https://www.instagram.com/homeopathicforallindia/" target="_blank"><img src="{{URL::asset('assets/front/images/instagram.png')}}"></a>
+					<a href="https://twitter.com/homeopathyall" target="_blank"><img src="{{URL::asset('assets/front/images/twitter.png')}}"></a>
+					<!-- <a href="#" target="_blank"><img src="{{URL::asset('assets/front/images/linkedin.png')}}"></a> -->
 				</div>
 			</div>
 			<div class="col-md-6 col-sm-6 col-12">
@@ -126,7 +126,14 @@
 	     	 <img src="{{URL::asset('assets/front/images/login_icon.png')}}" alt="Avatar" class="avatar">
 	    </div>
 		@csrf
+		<input type="hidden" name="redirect_url" value="{{url()->current()}}" />
 	    <div class="container">
+			@if(session('login_error'))
+			<div class="col-md-12 col-sm-12 col-xs-12">
+	      		<h3>{{session('login_error')}}</h3>
+	      		
+	      	</div>
+			@endif
 	    	<div class="col-md-12 col-sm-12 col-xs-12">
 	      		<label for="uname"><b>Email Address</b></label>
 	      		<input type="email" placeholder="Email Address" name="email" required>
