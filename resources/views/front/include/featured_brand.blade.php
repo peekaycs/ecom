@@ -11,7 +11,7 @@
                         @if (isset($featured) && !empty($featured))
                             @foreach($featured->bannerImages as $banner)
                                 @if(isset($banner) && !empty($banner))
-                                <div class="product-box">
+                                <div class="product-box featured-product-box">
                                     <a href="javascript:void(0)" class="text-center">
                                         <span class="zoomimg">
                                             <img src="{{ URL::asset($banner->image) ?? '' }}" alt="" class="circle">
