@@ -181,7 +181,7 @@
 							@if( isset( $addresses ) && !empty( $addresses ) )
 								@foreach( $addresses as $address )
 									@if( isset( $address ) && !empty( $address ) )
-									<div class="col-md-6 col-sm-6 col-12 address_{{ $address->uuid ?? '' }}" >
+									<div class="col-md-4 col-sm-4 col-12 address_{{ $address->uuid ?? '' }}" >
 										<div class="mb-2 border p-2">
 											<span class="form-check float-start">
 												<input type="radio" class="form-check-input" name="optradio" value="{{ $address->address_type ?? '' }}" onclick="makeDefault( '{{ $address->uuid }}' )"

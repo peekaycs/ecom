@@ -118,7 +118,8 @@
                         </div>
                         <div class="col-md-12 col-sm-12 col-6 text-center">
                             @if(isset($addresses) && $addresses->count() > 0)
-                                <a href="{{ route( 'checkout', [ 'uuid' => $uuid ] ) }}" class="btn btn-sm btn-success rounded-0 d-block addHref">CONTINUE</a>
+                                <a href="{{ route( 'checkout', [ 'uuid' => $uuid ] ) }}" class="btn btn-sm btn-success rounded-0 addHref continue" style="display:none"></a>
+                                <a href="javascript:void(0)" class="btn btn-sm btn-success rounded-0 d-block" onclick="checkAddress('continue')">CONTINUE</a>
                             @endif
                         </div>
                     </div>
@@ -259,7 +260,8 @@
                         <!-- <button type="button" class="btn btn-sm btn-success float-end">CHECKOUT</button> -->
 
                         @if(isset($addresses) && $addresses->count() > 0)
-                        <a href="{{ route( 'checkout', [ 'uuid' => $uuid ] ) }}" class="btn btn-sm btn-success float-end addHref">Make Payment</a>
+                        <a href="{{ route( 'checkout', [ 'uuid' => $uuid ] ) }}" class="btn btn-sm btn-success float-end addHref makePayment" style="display:none;"></a>
+                        <a href="javascript:void(0)" class="btn btn-sm btn-success float-end d-block" onclick="checkAddress('makePayment')">Make Payment</a>
                         @endif
 
                     </div>
@@ -304,6 +306,22 @@
         var href = "{{ url('checkout') }}/" + uuid; 
         $(".addHref").attr('href', href)
     }    
+
+    function checkAddress( cls ){			
+        var ok = false;
+		$(".optradio_address").each(function() {
+			var attr = $(this).attr('checked');
+			if (typeof attr !== 'undefined' && attr !== false) {
+				ok = true;
+			}
+		});
+
+		if(!ok){
+			alert('Select address first!');
+		}else{
+            $('.' + cls)[0].click();
+        }
+    }
 
 </script>
 @endsection	

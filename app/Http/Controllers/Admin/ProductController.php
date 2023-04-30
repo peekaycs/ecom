@@ -385,7 +385,6 @@ class ProductController extends EcomController
             $data['filter_categories'] = $filter_categories = $subcategories->category;
             $field_name = 'subcategory_id';
             $field_value = $subcategories->uuid;
-            $data['filter_categories'] = $filter_categories = $categories;
         }
         
 
