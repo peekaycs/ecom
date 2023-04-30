@@ -14,7 +14,7 @@ class Order extends Model
     public $incrementing = false;
     
 
-    protected $fillable = ['id','user_id','total','discount','applied_coupon','shipping','coupon_code','coupon_amount','coupon_amount_percent','payable_amount','cart_count'];
+    protected $fillable = ['id','user_id','order_code','total','discount','applied_coupon','shipping','coupon_code','coupon_amount','coupon_amount_percent','payable_amount','cart_count'];
 
 
     public function user(){

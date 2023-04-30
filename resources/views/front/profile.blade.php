@@ -77,12 +77,12 @@
 									<div class="row">
 										<div class="col-md-2 col-sm-2 col-3">
 											<div class="text-center">
-												<figure><img src="{{ URL::asset($image) ?? '' }}" alt=""></figure>
+												<figure><img width="20%" src="{{ URL::asset($image) ?? '' }}" alt=""></figure>
 											</div>
 										</div>
 										<div class="col-md-6 col-sm-6 col-6">
 											<div class="product-title">
-												<strong>Order Id : {{ $order->id ?? '' }}</strong>                        
+												<strong>Order Id : {{ $order->order_code ?? '' }}</strong>                        
 											</div>
 											<div class="item-price">
 												<p>                                    

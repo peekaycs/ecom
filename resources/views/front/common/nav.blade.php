@@ -93,7 +93,7 @@
 												<ul>
 													<p>
 														<strong>
-															<a href="{{ route('productByCategory',['slug' => str_replace(' ', '-', $cat->slug)]) }}">{{ $cat->category ?? '' }}</a>
+															<a style="all:unset; cursor:pointer"  href="{{ route('productByCategory',['slug' => str_replace(' ', '-', $cat->slug)]) }}">{{ $cat->category ?? '' }}</a>
 														</strong>
 													</p>
 													@if (isset($cat->subcategory) && !empty($cat->subcategory))

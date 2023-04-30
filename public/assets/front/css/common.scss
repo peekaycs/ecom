@@ -195,7 +195,14 @@ div, p{font-size: 14px;}
                         float: left;
                         width: auto;
                         ul{ width: 200px; padding-right: 15px;
-                            p{text-align: left; margin:10px 40px 0px 0px; padding-left: 0px; margin-right: 40px;}                   
+                            p{text-align: left; margin:10px 40px 0px 0px; padding-left: 0px; margin-right: 10px;
+                                a{padding:2px 0px;
+                                    background-color: inherit;
+                                    color: #000;
+                                    text-transform: inherit; font-size: 14px;
+                                    padding: 0px;
+                                }
+                            }                   
                             li{display: block; float: none; text-align: left;padding: 0px; margin-right: 0px;
                                 a{padding:2px 0px;
                                     background-color: inherit;
@@ -311,7 +318,9 @@ div, p{font-size: 14px;}
                             float: left;
                             width: 100%;
                             ul{ width: 100%; padding-right: 0px;
-                                p{text-align: left; margin:10px 0px 0px; padding-left: 10px; padding-bottom: 5px;} 
+                                p{text-align: left; margin:10px 0px 0px; padding-left: 10px; padding-bottom: 5px;
+                                    a{ padding: 0px; }
+                                } 
                                 li{display: block;
                                     a{padding:3px 10px; border-bottom: 0px solid $color-gray;
                                         text-transform: inherit; font-size: 12px;
@@ -486,7 +495,11 @@ footer{position: relative; width: 100%; letter-spacing: 0.3px; min-height: 100px
                 }
             } 
             .btn{background-color: $btn-color; color: $color-white;}
-          
+            p{margin: 0px;
+                span{font-weight: 600;}
+                a{text-decoration: none; color: $color-white; font-size: 16px; font-style: italic;}
+                i{font-size: 20px; color: #00fff3; float: left;  margin-right: 10px; margin-top: 4px;}
+            } 
         }
     }
     .all-right{width: 90%; margin: 0px auto; padding: 20px 0px; min-height: 50px; border-top:1px solid #b1b1bb; text-align: center; font-size: 12px;
@@ -494,7 +507,7 @@ footer{position: relative; width: 100%; letter-spacing: 0.3px; min-height: 100px
         a{color: #74b4f9;text-decoration: none;}
         .social{margin: 0px 0px; width: auto; float: left;
             h5{margin: 0; padding: 0px 0px 10px 0px; font-size: 18px;}
-            a{height: 30px; width: 30px;  border-radius: 51%; display: inline-block; margin: 3px;
+            a{height: 30px; width: 30px; border: 1px solid #fff;  border-radius: 51%; display: inline-block; margin: 3px;
                 img{transition: 0.5s; width: 30px; height: 30px; }
                 &:hover{
                     -webkit-transform: rotate(360deg);
@@ -505,7 +518,8 @@ footer{position: relative; width: 100%; letter-spacing: 0.3px; min-height: 100px
         .accept-card{
             h5{margin: 0; padding: 0px 0px 10px 48%; font-size: 18px;}
             a{height: 30px; margin: 2px;
-                img{ width: auto; height: 30px; border: 1px solid $color-gray; }                
+                img{ width: auto; height: 30px; border: 1px solid #5a7a93; 
+                    background-color: $color-white; }                
             }
         }
     }
@@ -519,7 +533,7 @@ footer{position: relative; width: 100%; letter-spacing: 0.3px; min-height: 100px
                     li {
                         a{font-size: 12px;}
                     }
-                } 
+                }                
             }
         }
         .all-right{ padding: 20px 0px; min-height: 50px;

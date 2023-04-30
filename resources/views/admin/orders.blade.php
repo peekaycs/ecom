@@ -13,6 +13,7 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">Order Id</th>
                         <th scope="col">Customer Name</th>
                         <th scope="col">Email</th>
                         <th scope="col">Mobile</th>
@@ -29,6 +30,7 @@
                     @foreach($orders as $order)
                     <tr>
                         <td>{{$loop->iteration}}</td>
+                        <td>{{ $order->user?->order_code }}</td>
                         <td>{{ $order->user?->first_name }}</td>
                         <td>{{ $order->user?->email }}</td>
                         <td>{{ $order->user?->mobile }}</td>

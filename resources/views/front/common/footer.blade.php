@@ -43,7 +43,7 @@
 					@endif
 				</div>
 			</div>
-			<div class="col-md-2 col-sm-2 col-6">
+			<!-- <div class="col-md-2 col-sm-2 col-6">
 				<div class="footer-contant">
 					<h3>Top Products</h3>
 					<ul>
@@ -53,16 +53,21 @@
 						<li><a href="javascript:void(0)">Lorem ipsum dolor</a></li>								
 					</ul>
 				</div>
-			</div>
-			<div class="col-md-2 col-sm-2 col-6">
+			</div> -->
+			<div class="col-md-4 col-sm-4 col-12">
 				<div class="footer-contant">
 					<h3>Address</h3>
-					<ul>
-						<li><a href="javascript:void(0)">Lorem ipsum dolor</a></li>
-						<li><a href="javascript:void(0)">Lorem ipsum dolor</a></li>
-						<li><a href="javascript:void(0)">Lorem ipsum dolor</a></li>
-						<li><a href="javascript:void(0)">Lorem ipsum dolor</a></li>								
-					</ul>
+					<p>R-176 B, Ramesh Park, Laxmi Nagar , <br>Delhi: 110092</p>
+					<p>CM-508 Amrapali Village, Nyay Khand-2, Indirapuram, GhaziabadUttar Pradesh-201014, India</p>
+					<p class="my-2"><span>Need Healp</span></p>
+					<p class="mb-1">
+						<i class="fas fa-headset"></i>
+						<a href="tel:9711985200"> +91-9711985200</a>
+					</p>
+					<p>
+						<i class="far fa-envelope"></i>
+						<a href="javascript:void(0)">rx4uall@gmail.com</a>
+					</p>
 				</div>
 			</div>			
 			<div class="col-md-3 col-sm-3 col-12">
@@ -86,9 +91,10 @@
 			<div class="col-md-6 col-sm-6 col-12">
 				<div class="social mb-2 text-start">
 					<h5>Follow US </h5>
-					<a href="#"><img src="{{URL::asset('assets/front/images/fb.png')}}"></a>
-					<a href="#"><img src="{{URL::asset('assets/front/images/g-plus.png')}}"></a>
-					<a href="#"><img src="{{URL::asset('assets/front/images/tweeter.png')}}"></a>
+					<a href="https://www.facebook.com/homeopathicforallIndia" target="_blank"><img src="{{URL::asset('assets/front/images/facebook.png')}}"></a>
+					<a href="https://www.instagram.com/homeopathicforallindia/" target="_blank"><img src="{{URL::asset('assets/front/images/instagram.png')}}"></a>
+					<a href="https://twitter.com/homeopathyall" target="_blank"><img src="{{URL::asset('assets/front/images/twitter.png')}}"></a>
+					<!-- <a href="#" target="_blank"><img src="{{URL::asset('assets/front/images/linkedin.png')}}"></a> -->
 				</div>
 			</div>
 			<div class="col-md-6 col-sm-6 col-12">
@@ -120,7 +126,14 @@
 	     	 <img src="{{URL::asset('assets/front/images/login_icon.png')}}" alt="Avatar" class="avatar">
 	    </div>
 		@csrf
+		<input type="hidden" name="redirect_url" value="{{url()->current()}}" />
 	    <div class="container">
+			@if(session('login_error'))
+			<div class="col-md-12 col-sm-12 col-xs-12">
+	      		<h3>{{session('login_error')}}</h3>
+	      		
+	      	</div>
+			@endif
 	    	<div class="col-md-12 col-sm-12 col-xs-12">
 	      		<label for="uname"><b>Email Address</b></label>
 	      		<input type="email" placeholder="Email Address" name="email" required>

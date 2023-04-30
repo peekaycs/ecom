@@ -22,7 +22,7 @@ class AdminMiddleware
             if(Auth::user()->user_type == 'admin'){
                 return $next($request);
             }   
-            return abort(401);
+            return abort(404);
         }
         return abort(404);
     }

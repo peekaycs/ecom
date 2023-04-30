@@ -20,7 +20,8 @@ class AuthenticatedSessionController extends Controller
      */
     public function create()
     {
-        return view('auth.login');
+        // return view('auth.login');
+        return redirect(RouteServiceProvider::HOME)->with('view_login_form','view login from');
     }
 
     /**
@@ -31,9 +32,12 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
-        $request->authenticate();
-
         $request->session()->regenerate();
+        if(!empty($request->redirect_url)){
+            redirect()->setIntendedUrl($request->redirect_url);
+        }
+    
+        $request->authenticate();
         if(Auth::check()){
             $userProfile = User::with('userProfile')->find(Auth::user()->id);
             Auth::user()->userProfile = $userProfile;

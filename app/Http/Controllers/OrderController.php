@@ -29,7 +29,7 @@ use DB;
 
 use Cart;
 use Darryldecode\Cart\Facades\CartFacade;
-
+use PHPUnit\TextUI\Help;
 use Session;
 
 class OrderController extends Controller
@@ -40,8 +40,10 @@ class OrderController extends Controller
         ######################################
         $product_ids = $attribute_ids = $order_detail = []; 
         if (Auth::check()) {
-            $order_detail['id'] = $uuid = Str::uuid();
+            $uuid = Str::uuid();
+            $order_detail['id'] = $uuid; 
             $order_detail['user_id'] = $userId = Auth::user()->uuid;
+            $order_detail['order_code'] = Helper::randomString(12, 'RXORD-');
             Cart::session($userId);
             $data['cart_list'] = $cartCollection = Cart::getContent();
             // count carts contents
@@ -81,7 +83,7 @@ class OrderController extends Controller
             }
         }
         
-        $order_detail['payable_amount'] = $data['subTotal'] = $subTotal = $payable_amount = round(Cart::getSubTotal(), 2);
+        $order_detail['payable_amount'] = $data['subTotal'] = $subTotal = $payable_amount = floor(Cart::getSubTotal());
 
         $data['total'] = Cart::getTotal();
         $data['conditions'] = $conditions = Cart::getConditions();
@@ -136,7 +138,7 @@ class OrderController extends Controller
         }
         //dd($product);
         ############################################
-                
+        // echo 'pre>';print_r($order_detail);die;
         $order = Order::create($order_detail);
         if($order){
             foreach($product as $prod){
