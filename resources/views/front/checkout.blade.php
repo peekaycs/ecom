@@ -197,7 +197,7 @@
 										
 										
 					
-										<p>Pay with Paytm</p>
+										<!-- <p>Pay with Paytm</p> -->
 										<figure>
 											<img src="{{URL::asset('assets/front/images/paytm.svg')}}" alt="">
 											<img src="{{URL::asset('assets/front/images/visa.png')}}" alt="">
@@ -206,8 +206,8 @@
 										</figure>
 									</div>
 								</div>
-								<div class="col-md-2 col-sm-2 col-12 text-center">
-									<button type="submit" name="submit" class="btn btn-sm btn-primary pay online ">Pay Now</button>
+								<div class="col-md-12 col-sm-12 col-12 text-right">
+									<button type="submit" name="submit" class="btn btn-sm btn-primary pay online float-end">Pay Rs. {{ $subTotal ? $subTotal : '' }}</button>
 								</div>
 							</form>
 							</div>
@@ -215,21 +215,17 @@
 
 						<div class="payment-method">
 							<div class="row">
-								<div class="col-md-10 col-sm-10 col-8">
+								<div class="col-md-12 col-sm-12 col-12">
 									<div class="form-check">
 										<input type="radio" class="form-check-input pay_method" id="DCU" name="payment-method" onclick="makeActive( this, 'cheque' )">
 										<label class="form-check-label" for="DCU"><strong>Cheque / Demand Draft (DD)</strong></label>
 										<p>Pay via Cheque or Demand draft (DD)</p>
 									</div>
 								</div>
-								<div class="col-md-2 col-sm-2 col-4 text-end">
-									<a data-bs-toggle="tab" href="#check" class="btn btn-info d-block pay cheque disabled">
-										Pay Rs. {{ $subTotal ?? '' }}
-									</a>
-								</div>
+								
 							</div>
 							<div class="row tab-pane " id="check">
-								<div class="col-md-9 col-sm-12 col-12">
+								<div class="col-md-12 col-sm-12 col-12">
 									<form action="{{ route('pay') }}" method="POST">
 										@csrf
 										<input type="hidden" name="mode" value="CHEQUE">
@@ -249,13 +245,13 @@
 												@enderror
 											</div>
 											<div class="col-md-3 col-sm-3 col-12">
-												<input type="text" name="fill_amount" class="form-control form-control-sm rounded-0 border-end-1 @error('amount') has-error @enderror" placeholder="Check Amount" required>
+												<input type="number" name="fill_amount" class="form-control form-control-sm rounded-0 border-end-1 @error('amount') has-error @enderror" value="{{ $subTotal ?? '' }}" readonly placeholder="Check Amount" min="{{$subTotal ?? ''}}" required>
 												@error('fill_amount')
 												<p class="text-danger">{{ $message }}</p>
 												@enderror
 											</div>
-											<div class="col-md-2 col-sm-2 col-12 text-center">
-												<button type="submit" name="submit" class="btn btn-sm btn-primary pay cheque disabled">Pay Now</button>
+											<div class="col-md-12 col-sm-12 col-12 text-right">
+												<button type="submit" name="submit" class="btn btn-sm btn-primary pay cheque disabled float-end">Pay Rs. {{ $subTotal ?? '' }}</button>
 											</div>
 										</div>	
 									</form>	
@@ -275,7 +271,7 @@
 									</div>
 								</div>
 
-								<div class="col-md-2 col-sm-2 col-4 text-end">
+								<div class="col-md-12 col-sm-12 col-12 text-end">
 									<form action="{{ route('pay') }}" method="POST">
 										@csrf
 										<input type="hidden" name="mode" value="COD">
@@ -284,7 +280,7 @@
 										<!--<div class="cod">
 											<span>Total Price (<i class="fa fa-rupee-sign fa-xs"></i>) {{ $subTotal ?? '' }}</span> + <span>20</span>
 										</div>-->
-										<button type="submit" name="submit" class="btn btn-info d-block pay cod disabled">Pay Rs. {{ $subTotal ? $subTotal : '' }}</button>
+										<button type="submit" name="submit" class="btn btn-primary d-block pay cod disabled float-end">Pay Rs. {{ $subTotal ? $subTotal : '' }}</button>
 									</form>
 								</div>
 							</div>

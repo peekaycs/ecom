@@ -120,7 +120,14 @@
 	     	 <img src="{{URL::asset('assets/front/images/login_icon.png')}}" alt="Avatar" class="avatar">
 	    </div>
 		@csrf
+		<input type="hidden" name="redirect_url" value="{{url()->current()}}" />
 	    <div class="container">
+			@if(session('login_error'))
+			<div class="col-md-12 col-sm-12 col-xs-12">
+	      		<h3>{{session('login_error')}}</h3>
+	      		
+	      	</div>
+			@endif
 	    	<div class="col-md-12 col-sm-12 col-xs-12">
 	      		<label for="uname"><b>Email Address</b></label>
 	      		<input type="email" placeholder="Email Address" name="email" required>
