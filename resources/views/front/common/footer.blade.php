@@ -91,10 +91,10 @@
 			<div class="col-md-6 col-sm-6 col-12">
 				<div class="social mb-2 text-start">
 					<h5>Follow US </h5>
-					<a href="https://www.facebook.com/" target="_blank"><img src="{{URL::asset('assets/front/images/facebook.png')}}"></a>
-					<a href="#" target="_blank"><img src="{{URL::asset('assets/front/images/instagram.png')}}"></a>
-					<a href="#" target="_blank"><img src="{{URL::asset('assets/front/images/twitter.png')}}"></a>
-					<a href="#" target="_blank"><img src="{{URL::asset('assets/front/images/linkedin.png')}}"></a>
+					<a href="https://www.facebook.com/homeopathicforallIndia" target="_blank"><img src="{{URL::asset('assets/front/images/facebook.png')}}"></a>
+					<a href="https://www.instagram.com/homeopathicforallindia/" target="_blank"><img src="{{URL::asset('assets/front/images/instagram.png')}}"></a>
+					<a href="https://twitter.com/homeopathyall" target="_blank"><img src="{{URL::asset('assets/front/images/twitter.png')}}"></a>
+					<!-- <a href="#" target="_blank"><img src="{{URL::asset('assets/front/images/linkedin.png')}}"></a> -->
 				</div>
 			</div>
 			<div class="col-md-6 col-sm-6 col-12">
