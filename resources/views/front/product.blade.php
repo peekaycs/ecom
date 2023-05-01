@@ -16,12 +16,17 @@
 							$slug = $queryString[2];
 
 							$brandCheck = [];
+							$orderCheck = '';
 							if( isset($queryString[3]) && !empty($queryString[3]) ){
-								$brandCheck = explode(',',$queryString[3]);
+								if( $queryString[3] == 'ASC' || $queryString[3] == 'DESC' ){
+									$orderCheck = $queryString[3];
+								}else{
+									$brandCheck = explode( ',', $queryString[3] );
+								}
 							}
-							$orderCheck;
+							
 							if( isset($queryString[4]) && !empty($queryString[4]) ){
-								echo $orderCheck = $queryString[4];
+								$orderCheck = $queryString[4];
 							}
 							?>	
 							@if (isset($category) && !empty($category))
