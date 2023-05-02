@@ -37,7 +37,7 @@ class ProductController extends EcomController
     public function index()
     {
         //
-        $products = Product::with(['brand'])->orderBy('updated_at','desc')->paginate(env('PER_PAGE'))->withQueryString();
+        $products = Product::WHERE( 'status', 1 )->WHERE( 'published', 1 )->with(['brand'])->orderBy('updated_at','desc')->paginate(env('PER_PAGE'))->withQueryString();
         return view('admin.products',array('products' => $products));
     }
 
@@ -416,7 +416,7 @@ class ProductController extends EcomController
         $slug = Helper::destructSlug($slug);
         //$data['category'] = Category::All();
         $data['product'] = Product::WHERE('slug',$slug)->first();
-        $data['popular_health'] = Product::orderBy('order','ASC')->get();
+        $data['popular_health'] = Product::WHERE( 'status', 1 )->WHERE( 'published', 1 )->orderBy('order','ASC')->get();
 
         //$userId = 100; // or any string represents user identifier
         /*if (Auth::check()) {

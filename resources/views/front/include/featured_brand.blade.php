@@ -12,12 +12,12 @@
                             @foreach($featured->bannerImages as $banner)
                                 @if(isset($banner) && !empty($banner))
                                 <div class="product-box featured-product-box">
-                                    <a href="javascript:void(0)" class="text-center">
+                                    <a href="{{ $banner->link ?? 'javascript:void(0)' }}" class="text-center">
                                         <span class="zoomimg">
                                             <img src="{{ URL::asset($banner->image) ?? '' }}" alt="" class="circle">
                                         </span>
                                     </a>
-                                    <a href="javascript:void(0)" class="text-center">
+                                    <a href="{{ $banner->link ?? 'javascript:void(0)' }}" class="text-center">
                                         <h5 class="product-name">{{ $featured->name ?? '' }}</h5>
                                         <span class="offer-btn">up to 50% off</span>
                                     </a>

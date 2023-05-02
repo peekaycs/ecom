@@ -18,7 +18,7 @@ class EcomController extends Controller
     public function createView($page, $data = array()) {
         
         // categories
-        $category = Category::orderBy('order','ASC')->get();
+        $category = Category::WHERE( 'status', 1 )->WHERE( 'visibility', 1 )->orderBy('order','ASC')->get();
         // dynamic pages
         $pages = Page::where('published', true)->get();
         // Cart Items

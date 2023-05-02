@@ -20,62 +20,6 @@
                                 @endif    
                             @endforeach
                         @endif    
-                        
-                        <!--<div class="best-selling-box">
-                            <a href="javascript:void(0)">
-                                <img src="{{URL::asset('assets/front/images/a2.jpg')}}" alt="">
-                            </a>
-                        </div>
-                        <div class="best-selling-box">
-                            <a href="javascript:void(0)">
-                                <img src="{{URL::asset('assets/front/images/a3.jpg')}}" alt="">
-                            </a>
-                        </div>
-                        <div class="best-selling-box">
-                            <a href="javascript:void(0)">
-                                <img src="{{URL::asset('assets/front/images/a4.jpg')}}" alt="">
-                            </a>
-                        </div>
-                        <div class="best-selling-box">
-                            <a href="javascript:void(0)">
-                                <img src="{{URL::asset('assets/front/images/a5.jpg')}}" alt="">
-                            </a>
-                        </div>
-                        <div class="best-selling-box">
-                            <a href="javascript:void(0)">
-                                <img src="{{URL::asset('assets/front/images/a2.jpg')}}" alt="">
-                            </a>
-                        </div>
-                        <div class="best-selling-box">
-                            <a href="javascript:void(0)">
-                                <img src="{{URL::asset('assets/front/images/a4.jpg')}}" alt="">
-                            </a>
-                        </div>
-                        <div class="best-selling-box">
-                            <a href="javascript:void(0)">
-                                <img src="{{URL::asset('assets/front/images/a1.jpg')}}" alt="">
-                            </a>
-                        </div>
-                        <div class="best-selling-box">
-                            <a href="javascript:void(0)">
-                                <img src="{{URL::asset('assets/front/images/a2.jpg')}}" alt="">
-                            </a>
-                        </div>
-                        <div class="best-selling-box">
-                            <a href="javascript:void(0)">
-                                <img src="{{URL::asset('assets/front/images/a3.jpg')}}" alt="">
-                            </a>
-                        </div>
-                        <div class="best-selling-box">
-                            <a href="javascript:void(0)">
-                                <img src="images/a4.jpg')}}" alt="">
-                            </a>
-                        </div>
-                        <div class="best-selling-box">
-                            <a href="javascript:void(0)">
-                                <img src="{{URL::asset('assets/front/images/a5.jpg')}}" alt="">
-                            </a>
-                        </div>-->
                     </div>
                 </div>
             </div>

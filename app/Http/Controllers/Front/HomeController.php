@@ -10,6 +10,8 @@ use App\Models\Banner;
 use App\Models\Category;
 use App\Http\Classes\EcomController;
 use Cart;
+
+use Illuminate\Support\Facades\DB;
 // use Darryldecode\Cart\Facades\CartFacade;
 
 class HomeController extends EcomController
@@ -23,7 +25,21 @@ class HomeController extends EcomController
     {
         $data = [];
         
-        $data['best_selling'] = Product::orderBy('order','ASC')->get();
+        $data['best_selling'] = Product::WHERE( 'status', 1 )->WHERE( 'published', 1 )->orderBy( 'order', 'ASC' )->get();
+        $data['topRating'] = Product::WHERE( 'status', 1 )->WHERE( 'published', 1 )->orderBy( 'order', 'ASC' )->get();
+         
+        /*$data['topRating'] = $topRating = DB::table('products AS P') 
+            ->leftJoin('order_details AS OD', 'P.id', '=', 'OD.product_id')
+            ->select('P.*', count('OD.product_id'))
+            ->groupBy('OD.product_id')
+            ->having(count('OD.product_id'), '>=', 5)
+            ->get();
+        dd($topRating);
+        */
+
+        $data['latest'] = Product::WHERE( 'status', 1 )->WHERE( 'published', 1 )->orderBy( 'created_at', 'DESC' )->get();
+        $data['feature'] = Product::WHERE( 'status', 1 )->WHERE( 'published', 1 )->WHERE( 'featured',  1 )->orderBy( 'order','DESC' )->get();
+        
         $banners = Banner::where('status', '1')->with('bannerImages')->get();
         foreach($banners as $banner){
             $data[$banner->type] = $banner;

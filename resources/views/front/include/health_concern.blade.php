@@ -13,13 +13,13 @@
                         <div class="col-lg-3 col-md-3 col-sm-3 col-6">
                             <div class="product-cat-box">
                                 <div class="product-cat-image">
-                                    <a href="javascript:void(0)">
+                                    <a href="{{ $banner->link ?? 'javascript:void(0)' }}">
                                         <img src="{{ URL::asset($banner->image) ?? '' }}" alt="">
                                     </a>
                                 </div>
                                 <div class="product-cat-details">
-                                    <h4><a href="javascript:void(0)">{{ $bottom->name ?? ''}}</a></h4>
-                                    <a href="javascript:void(0)" class="shop-now">shop now</a>                        
+                                    <h4><a href="{{ $banner->link ?? 'javascript:void(0)' }}">{{ $bottom->name ?? ''}}</a></h4>
+                                    <a href="{{ $banner->link ?? 'javascript:void(0)' }}" class="shop-now">shop now</a>                        
                                 </div>                    
                             </div>
                         </div>
