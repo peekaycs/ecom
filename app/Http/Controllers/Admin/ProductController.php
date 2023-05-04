@@ -412,25 +412,9 @@ class ProductController extends EcomController
 
     public function productDetail(Request $request, $slug)
     {
-        //
         $slug = Helper::destructSlug($slug);
-        //$data['category'] = Category::All();
         $data['product'] = Product::WHERE('slug',$slug)->first();
         $data['popular_health'] = Product::WHERE( 'status', 1 )->WHERE( 'published', 1 )->orderBy('order','ASC')->get();
-
-        //$userId = 100; // or any string represents user identifier
-        /*if (Auth::check()) {
-            $userId = Auth::user()->uuid;
-            Cart::session($userId);
-            $data['cart_list'] = $cartCollection = Cart::getContent();
-            // count carts contents
-            $data['count'] = $cartCollection->count();
-        }*/
-        //Cart::session($userId);
-        //$cartCollection = Cart::getContent();
-        // count carts contents
-        //$data['count'] = $cartCollection->count();
-        //$data['count'] = getTotalQuantity();
 
         return $this->createView('front.product_detail', $data);
     }
@@ -438,6 +422,26 @@ class ProductController extends EcomController
     public function delete(Request $request, $id){
         Product::find($id)->delete();
         return redirect()->back()->with('success','Product deleted successfully');
-   }
+    }
+
+    public function search(Request $request){
+        $term = $request->search_term;
+
+        $data['products'] = $products = DB::table('products AS P') 
+            ->leftJoin('categories AS C', 'C.id', '=', 'P.category_id')
+            ->leftJoin('subcategories AS SC', 'SC.uuid', '=', 'P.subcategory_id')
+            ->Where('P.slug','LIKE',"%$term%")
+            ->orWhere('C.slug','LIKE',"%$term%")
+            ->orWhere('SC.slug','LIKE',"%$term%")
+            ->select('P.*')
+            ->orderBy('P.order','ASC')
+            ->paginate(15)
+            ->withQueryString();
+            //->get();
+
+        //dd($products);    
+
+        return $this->createView('front.product', $data);
+    }
 
 }

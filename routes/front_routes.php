@@ -21,6 +21,7 @@ Route::get('/product/{slug}', [ProductController::class,'productBySubCategory'])
 Route::get('/productByBrand/{slug}/', [ProductController::class,'productByBrand'])->name('productByBrand');
 Route::get('/productByBrand/{slug}/{brand}', [ProductController::class,'productByBrand'])->name('productByBrand');
 Route::get('/productByBrand/{slug}/{brand}/{order}', [ProductController::class,'productByBrand'])->name('productByBrand');
+Route::get('/search', [ProductController::class,'search'])->name('search');
 
 
 Route::get('/product-detail/{slug}', [ProductController::class,'productDetail'])->name('product_detail');

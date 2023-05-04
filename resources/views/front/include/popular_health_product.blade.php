@@ -32,14 +32,14 @@
                                     <ins>{{ $price ?? '' }}</ins>
                                     <del>{{ $popular->price ?? '' }}</del>
                                 </p>
-                                <ul class="star-rating">
+                                <!--<ul class="star-rating">
                                     <li class="str-color"><i class="fas fa-star"></i></li>
                                     <li class="str-color"><i class="fas fa-star"></i></li>
                                     <li class="str-color"><i class="fas fa-star"></i></li>
                                     <li class="str-color"><i class="fas fa-star"></i></li>
                                     <li class="str-color"><i class="fas fa-star-half-alt"></i></li>
                                     <li><small class="px-1">1 review(2)</small></li>
-                                </ul>
+                                </ul>-->
                                 <div class="add-to-cart">
                                     <a href="{{ route('product_detail',['slug' => str_replace(' ', '-', $popular->slug)]) }}" class="btn-sm btn-outlinr-danger">Add to Cart</a>
                                 </div>
