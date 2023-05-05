@@ -32,148 +32,18 @@
                                     <ins>{{ $price ?? '' }}</ins>
                                     <del>{{ $popular->price ?? '' }}</del>
                                 </p>
-                                <ul class="star-rating">
+                                <!--<ul class="star-rating">
                                     <li class="str-color"><i class="fas fa-star"></i></li>
                                     <li class="str-color"><i class="fas fa-star"></i></li>
                                     <li class="str-color"><i class="fas fa-star"></i></li>
                                     <li class="str-color"><i class="fas fa-star"></i></li>
                                     <li class="str-color"><i class="fas fa-star-half-alt"></i></li>
                                     <li><small class="px-1">1 review(2)</small></li>
-                                </ul>
+                                </ul>-->
                                 <div class="add-to-cart">
                                     <a href="{{ route('product_detail',['slug' => str_replace(' ', '-', $popular->slug)]) }}" class="btn-sm btn-outlinr-danger">Add to Cart</a>
                                 </div>
                             </div>
-                            <!--<div class="product-box">
-                                <a href="javascript:void(0)" class="text-center">
-                                    <img src="images/b2.jpg" alt="">
-                                </a>
-                                <div class="categories-name">
-                                    <a href="javascript:void(0)">Personal Care</a>
-                                    <a href="javascript:void(0)">Stomach Pain</a>
-                                </div>
-                                <a href="javascript:void(0)">
-                                    <h5 class="product-name">Essential Oil Blends – 10mL</h5>
-                                </a>
-                                <p class="item-price">                                    
-                                    <ins>$255,00</ins>
-                                    <del>$240,00</del>
-                                </p>
-                                <ul class="star-rating">
-                                    <li><i class="fas fa-star"></i></li>
-                                    <li><i class="fas fa-star"></i></li>
-                                    <li><i class="fas fa-star"></i></li>
-                                    <li><i class="fas fa-star"></i></li>
-                                    <li><i class="fas fa-star-half-alt"></i></li>
-                                </ul>
-                                <div class="add-to-cart">
-                                    <a href="javascript:void(0)" class="btn-sm btn-outlinr-danger">Add to Cart</a>
-                                </div>
-                            </div>
-                            <div class="product-box">
-                                <a href="javascript:void(0)" class="text-center">
-                                    <img src="images/b3.jpg" alt="">
-                                </a>
-                                <div class="categories-name">
-                                    <a href="javascript:void(0)">Personal Care</a>
-                                    <a href="javascript:void(0)">Stomach Pain</a>
-                                </div>
-                                <a href="javascript:void(0)">
-                                    <h5 class="product-name">Essential Oil Blends – 10mL</h5>
-                                </a>
-                                <p class="item-price">                                    
-                                    <ins>$255,00</ins>
-                                    <del>$240,00</del>
-                                </p>
-                                <ul class="star-rating">
-                                    <li><i class="fas fa-star"></i></li>
-                                    <li><i class="fas fa-star"></i></li>
-                                    <li><i class="fas fa-star"></i></li>
-                                    <li><i class="fas fa-star"></i></li>
-                                    <li><i class="fas fa-star-half-alt"></i></li>
-                                </ul>
-                                <div class="add-to-cart">
-                                    <a href="javascript:void(0)" class="btn-sm btn-outlinr-danger">Add to Cart</a>
-                                </div>
-                            </div>
-                            <div class="product-box">
-                                <a href="javascript:void(0)" class="text-center">
-                                    <img src="images/b4.jpg" alt="">
-                                </a>
-                                <div class="categories-name">
-                                    <a href="javascript:void(0)">Personal Care</a>
-                                    <a href="javascript:void(0)">Stomach Pain</a>
-                                </div>
-                                <a href="javascript:void(0)">
-                                    <h5 class="product-name">Essential Oil Blends – 10mL</h5>
-                                </a>
-                                <p class="item-price">                                    
-                                    <ins>$255,00</ins>
-                                    <del>$240,00</del>
-                                </p>
-                                <ul class="star-rating">
-                                    <li><i class="fas fa-star"></i></li>
-                                    <li><i class="fas fa-star"></i></li>
-                                    <li><i class="fas fa-star"></i></li>
-                                    <li><i class="fas fa-star"></i></li>
-                                    <li><i class="fas fa-star-half-alt"></i></li>
-                                </ul>
-                                <div class="add-to-cart">
-                                    <a href="javascript:void(0)" class="btn-sm btn-outlinr-danger">Add to Cart</a>
-                                </div>
-                            </div>
-                            <div class="product-box">
-                                <a href="javascript:void(0)" class="text-center">
-                                    <img src="images/b5.jpg" alt="">
-                                </a>
-                                <div class="categories-name">
-                                    <a href="javascript:void(0)">Personal Care</a>
-                                    <a href="javascript:void(0)">Stomach Pain</a>
-                                </div>
-                                <a href="javascript:void(0)">
-                                    <h5 class="product-name">Essential Oil Blends – 10mL</h5>
-                                </a>
-                                <p class="item-price">                                    
-                                    <ins>$255,00</ins>
-                                    <del>$240,00</del>
-                                </p>
-                                <ul class="star-rating">
-                                    <li><i class="fas fa-star"></i></li>
-                                    <li><i class="fas fa-star"></i></li>
-                                    <li><i class="fas fa-star"></i></li>
-                                    <li><i class="fas fa-star"></i></li>
-                                    <li><i class="fas fa-star-half-alt"></i></li>
-                                </ul>
-                                <div class="add-to-cart">
-                                    <a href="javascript:void(0)" class="btn-sm btn-outlinr-danger">Add to Cart</a>
-                                </div>
-                            </div>
-                            <div class="product-box">
-                                <a href="javascript:void(0)">
-                                    <img src="images/b3.jpg" alt="">
-                                </a>
-                                <div class="categories-name">
-                                    <a href="javascript:void(0)">Personal Care</a>
-                                    <a href="javascript:void(0)">Stomach Pain</a>
-                                </div>
-                                <a href="javascript:void(0)">
-                                    <h5 class="product-name">Essential Oil Blends – 10mL</h5>
-                                </a>
-                                <p class="item-price">                                    
-                                    <ins>$255,00</ins>
-                                    <del>$240,00</del>
-                                </p>
-                                <ul class="star-rating">
-                                    <li><i class="fas fa-star"></i></li>
-                                    <li><i class="fas fa-star"></i></li>
-                                    <li><i class="fas fa-star"></i></li>
-                                    <li><i class="fas fa-star"></i></li>
-                                    <li><i class="fas fa-star-half-alt"></i></li>
-                                </ul>
-                                <div class="add-to-cart">
-                                    <a href="javascript:void(0)" class="btn-sm btn-outlinr-danger">Add to Cart</a>
-                                </div>
-                            </div>-->
                             @endif
                         @endforeach
                     @endif	

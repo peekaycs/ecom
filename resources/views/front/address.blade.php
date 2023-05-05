@@ -310,8 +310,7 @@
     function checkAddress( cls ){			
         var ok = false;
 		$(".optradio_address").each(function() {
-			var attr = $(this).attr('checked');
-			if (typeof attr !== 'undefined' && attr !== false) {
+            if($(this).prop('checked') == true){
 				ok = true;
 			}
 		});

@@ -25,8 +25,8 @@
 				<div class="">
 					<div id="Latest_Products" class="tab-pane active slide-popular">
 						<div class="product-slide">
-							@if (isset($best_selling) && !empty($best_selling))
-								@foreach($best_selling as $best) 
+							@if (isset($latest) && !empty($latest))
+								@foreach($latest as $best) 
 									@if (isset($best) && !empty($best))
 									<div class="product-box">
 										<span class="product-offer">-{{ $best->discount ?? ''}}%</span>
@@ -45,14 +45,6 @@
 											<ins>{{ $price ?? '' }}</ins>
 											<del>{{ $best->price ?? '' }}</del>
 										</p>
-										<!-- <ul class="star-rating">
-											<li class="str-color"><i class="fas fa-star"></i></li>
-											<li class="str-color"><i class="fas fa-star"></i></li>
-											<li class="str-color"><i class="fas fa-star"></i></li>
-											<li class="str-color"><i class="fas fa-star"></i></li>
-											<li class="str-color"><i class="fas fa-star-half-alt"></i></li>
-											<li><small class="px-1">1 review(2)</small></li>
-										</ul> -->
 										<div class="add-to-cart">
 											<a href="{{ route('product_detail',['slug' => str_replace(' ', '-', $best->slug)]) }}" class="btn-sm btn-outlinr-danger">Add to Cart</a>
 										</div>
@@ -64,13 +56,13 @@
 					</div>
 					<div id="Top_Rating_Products" class="tab-pane slide-popular" style="height: 0px;">
 						<div class="product-slide">
-							@if (isset($best_selling) && !empty($best_selling))
-								@foreach($best_selling as $top_rated) 
+							@if (isset($topRating) && !empty($topRating))
+								@foreach($topRating as $top_rated) 
 									@if (isset($top_rated) && !empty($top_rated))
 									<div class="product-box">
 										<span class="product-offer">-{{ $top_rated->discount ?? '' }}%</span>
 										<a href="javascript:void(0)" class="text-center">
-											<img src="{{URL::asset($best->image)}}" alt="">
+											<img src="{{URL::asset($top_rated->image)}}" alt="">
 										</a>
 										<div class="categories-name">
 											<a href="javascript:void(0)">{{ $top_rated->category->category ?? '' }}</a>
@@ -84,14 +76,6 @@
 											<ins>{{ $price ?? '' }}</ins>
 											<del>{{ $top_rated->price ?? '' }}</del>
 										</p>
-										<!-- <ul class="star-rating">
-											<li class="str-color"><i class="fas fa-star"></i></li>
-											<li class="str-color"><i class="fas fa-star"></i></li>
-											<li class="str-color"><i class="fas fa-star"></i></li>
-											<li class="str-color"><i class="fas fa-star"></i></li>
-											<li class="str-color"><i class="fas fa-star-half-alt"></i></li>
-											<li><small class="px-1">1 review(2)</small></li>
-										</ul> -->
 										<div class="add-to-cart">
 											<a href="{{ route('product_detail',['slug' => str_replace(' ', '-', $top_rated->slug)]) }}" class="btn-sm btn-outlinr-danger">Add to Cart</a>
 										</div>
@@ -103,8 +87,8 @@
 					</div>
 					<div id="Featured_Products" class="tab-pane slide-popular" style="height:0px">
 						<div class="product-slide">
-							@if (isset($best_selling) && !empty($best_selling))
-								@foreach($best_selling as $featured) 
+							@if (isset($feature) && !empty($feature))
+								@foreach($feature as $featured) 
 									@if (isset($featured) && !empty($featured))
 									<div class="product-box">
 										<span class="product-offer">-{{ $featured->discount ?? '' }}%</span>
@@ -123,14 +107,6 @@
 											<ins>{{ $price ?? '' }}</ins>
 											<del>{{ $featured->price ?? '' }}</del>
 										</p>
-										<!-- <ul class="star-rating">
-											<li class="str-color"><i class="fas fa-star"></i></li>
-											<li class="str-color"><i class="fas fa-star"></i></li>
-											<li class="str-color"><i class="fas fa-star"></i></li>
-											<li class="str-color"><i class="fas fa-star"></i></li>
-											<li class="str-color"><i class="fas fa-star-half-alt"></i></li>
-											<li><small class="px-1">1 review(2)</small></li>
-										</ul> -->
 										<div class="add-to-cart">
 											<a href="{{ route('product_detail',['slug' => str_replace(' ', '-', $featured->slug)]) }}" class="btn-sm btn-outlinr-danger">Add to Cart</a>
 										</div>

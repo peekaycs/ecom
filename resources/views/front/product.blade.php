@@ -11,23 +11,27 @@
 						<div class="cat-box">		
 							<?php 
 							$queryString  = url()->current();
-							$queryString = explode('//',$queryString);
-							$queryString = explode('/',$queryString[1]);
-							$slug = $queryString[2];
-
+							$queryStringArr = explode('//',$queryString);
 							$brandCheck = [];
 							$orderCheck = '';
-							if( isset($queryString[3]) && !empty($queryString[3]) ){
-								if( $queryString[3] == 'ASC' || $queryString[3] == 'DESC' ){
-									$orderCheck = $queryString[3];
-								}else{
-									$brandCheck = explode( ',', $queryString[3] );
+							$slug = '';
+
+							if( isset( $queryStringArr[1] ) && !empty( $queryStringArr[1] ) ){
+								$queryString = explode( '/', $queryStringArr[1] );
+								if( isset( $queryString[2] ) && !empty( $queryString[2] ) ){
+									$slug = $queryString[2];
 								}
-							}
-							
-							if( isset($queryString[4]) && !empty($queryString[4]) ){
-								$orderCheck = $queryString[4];
-							}
+								if( isset( $queryString[3] ) && !empty( $queryString[3] ) ){
+									if( $queryString[3] == 'ASC' || $queryString[3] == 'DESC' ){
+										$orderCheck = $queryString[3];
+									}else{
+										$brandCheck = explode( ',', $queryString[3] );
+									}
+								}
+								if( isset( $queryString[4] ) && !empty( $queryString[4] ) ){
+									$orderCheck = $queryString[4];
+								}	
+							}			
 							?>	
 							@if (isset($category) && !empty($category))
 								@foreach($category as $categories)
@@ -109,8 +113,20 @@
 			<div class="col-md-9 col-sm-9 col-12 mb-3">
 				<div class="row mt-2 mb-3 px-1">
 					<div class="col-md-7 col-sm-7 col-12">
+						<?php
+						$currentPage = $perPage = $total = 0;
+						if( $products->currentPage() ){
+							$currentPage = $products->currentPage();
+						}
+						if( $products->perPage() ){
+							$perPage = $products->perPage();
+						}
+						if( $products->total() ){
+							$total = $products->total();
+						}
+						?>
 						<h1 class="page-title">{{ $filter_categories->category ?? ''}} - {{ $subcategories->subcategory ?? ''}}
-							<span class="pagination_info">(Showing {{ ((($products->currentPage()-1)*$products->perPage())+1) ?? '' }} – {{ $products->count() ?? '' }} products of total {{ $products->total() ?? '' }} products)</span>
+							<span class="pagination_info">(Showing {{ ( ( ( $currentPage-1 ) * $perPage ) + 1 ) ?? '' }} – {{ $products->count() ?? '' }} products of total {{ $total ?? '' }} products)</span>
 						</h1>
 					</div>
 					<div class="col-md-5 col-sm-5 col-12">
@@ -154,7 +170,7 @@
 						@endforeach
 					@endif
 					<br>
-					<div class="text-center" id="links" ><span>{{ $products->links() }}</span></div>
+					<div class="text-center" id="links" ><span>{{ $products->links() ?? '' }}</span></div>
 				</div>
 				
 			</div>	
@@ -215,16 +231,19 @@
 					subcat = category;
 				}
 			});
+		}
+		if(subcat != ''){
+			subcat = subcat +'/';
 		}	
 
         // Fake api for making post requests
-        fetch( "{{ url('productByBrand') }}/" +subcat+ '/' + brand + order) 
+        fetch( "{{ url('productByBrand') }}/" +subcat + brand + order) 
 		.then(res => res.text())
 		.then(html => {
 			document.getElementById("add_item").innerHTML = '';
 			document.getElementById("add_item").innerHTML = html;
 		})
-		window.history.pushState( {}, "", "{{ url('productByBrand') }}/" +subcat+ '/' + brand + order + '?page=1' );
+		window.history.pushState( {}, "", "{{ url('productByBrand') }}/" +subcat + brand + order + '?page=1' );
 		//.catch(error => {console.log(error)});
     }
 </script>
