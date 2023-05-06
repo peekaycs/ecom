@@ -10,26 +10,44 @@
 						<h3>FILTERS BY</h3>
 						<div class="cat-box">		
 							<?php 
-							$queryString  = url()->current();
-							$queryStringArr = explode('//',$queryString);
 							$brandCheck = [];
-							$orderCheck = '';
-							$slug = '';
-
-							if( isset( $queryStringArr[1] ) && !empty( $queryStringArr[1] ) ){
-								$queryString = explode( '/', $queryStringArr[1] );
-								if( isset( $queryString[2] ) && !empty( $queryString[2] ) ){
-									$slug = $queryString[2];
+							$orderCheck = $slug = '';
+							
+							$queryString = explode( '?', $_SERVER['REQUEST_URI'] );
+							$queryStringArr = explode( '/', $queryString[0] );
+							
+							if( isset( $queryStringArr[1] ) && !empty( $queryStringArr[1] ) && ( $queryStringArr[1] == 'search' || $queryStringArr[1] == 'searchBy' ) ){
+								$search = 'search';
+								if( isset( $queryString[1] ) ){
+									$query_String = explode('&',$queryString[1]);
+									$query_string = $query_String[0];
 								}
-								if( isset( $queryString[3] ) && !empty( $queryString[3] ) ){
-									if( $queryString[3] == 'ASC' || $queryString[3] == 'DESC' ){
-										$orderCheck = $queryString[3];
+
+								if( isset( $queryStringArr[2] ) && !empty( $queryStringArr[2] ) ){
+									if( $queryStringArr[2] == 'ASC' || $queryStringArr[2] == 'DESC' ){
+										$orderCheck = $queryStringArr[2];
 									}else{
-										$brandCheck = explode( ',', $queryString[3] );
+										$brandCheck = explode( ',', $queryStringArr[2] );
 									}
 								}
-								if( isset( $queryString[4] ) && !empty( $queryString[4] ) ){
-									$orderCheck = $queryString[4];
+								if( isset( $queryStringArr[3] ) && !empty( $queryStringArr[3] ) ){
+									$orderCheck = $queryStringArr[3];
+								}	
+							}else{
+								$search = 'productByBrand';
+								$query_string = '';
+								if( isset( $queryStringArr[2] ) && !empty( $queryStringArr[2] ) ){
+									$slug = $queryStringArr[2];
+								}
+								if( isset( $queryStringArr[3] ) && !empty( $queryStringArr[3] ) ){
+									if( $queryStringArr[3] == 'ASC' || $queryStringArr[3] == 'DESC' ){
+										$orderCheck = $queryStringArr[3];
+									}else{
+										$brandCheck = explode( ',', $queryStringArr[3] );
+									}
+								}
+								if( isset( $queryStringArr[4] ) && !empty( $queryStringArr[4] ) ){
+									$orderCheck = $queryStringArr[4];
 								}	
 							}			
 							?>	
@@ -71,7 +89,7 @@
 									@foreach($brands as $brand)
 										@if (isset($brand) && !empty($brand))					
 										<label class="chk">
-											<input type="checkbox" name="brand[]" class="brand {{ $brand->id ? 'brand_'.$brand->id : '' }}" data-brand="{{ $brand->id ?? ''}}" onclick="getProduct( this,'brand', '{{ $brand->id }}')" <?php if(in_array($brand->id, $brandCheck)){ echo 'checked'; }else{ echo ''; }?>>
+											<input type="checkbox" name="brand[]" class="brand {{ $brand->id ? 'brand_'.$brand->id : '' }}" data-brand="{{ $brand->id ?? ''}}" onclick="getProduct( this,'brand', '{{ $brand->id }}', '{{ $search }}' )" <?php if(in_array($brand->id, $brandCheck)){ echo 'checked'; }else{ echo ''; }?>>
 											<span class="checkmark"></span>{{ $brand->brand ?? ''}}
 										</label>
 										@endif
@@ -99,7 +117,7 @@
 									@foreach($brands as $brand)
 										@if (isset($brand) && !empty($brand))					
 										<label class="chk">
-											<input type="checkbox" name="brand[]" class="brand {{ $brand->id ? 'brand_'.$brand->id : '' }}" data-brand="{{ $brand->id ?? ''}}" onclick="getProduct( this,'brand', '{{ $brand->id }}')" >
+											<input type="checkbox" name="brand[]" class="brand {{ $brand->id ? 'brand_'.$brand->id : '' }}" data-brand="{{ $brand->id ?? ''}}" onclick="getProduct( this,'brand', '{{ $brand->id }}', '{{ $search }}' )" >
 											<span class="checkmark"></span>{{ $brand->brand ?? ''}}
 										</label>
 										@endif
@@ -132,7 +150,7 @@
 					<div class="col-md-5 col-sm-5 col-12">
 						<div class="sort-by">
 							<label>Sort By </label>
-							<select class="form-select-sm rounded-0 order" onChange="getProduct( this,'order' )">
+							<select class="form-select-sm rounded-0 order" onChange="getProduct( this, 'order', '', '{{ $search }}' )">
 								<option value = "ASC" <?php echo ( ( isset($orderCheck) && $orderCheck == 'ASC' ) ? 'selected' : '' );?> >Price Low to High</option>
 								<option value = "DESC" <?php echo ( ( isset($orderCheck) && $orderCheck = 'DESC' ) ? 'selected' : '' );?>>Price High to Low</option>
 							</select>
@@ -184,7 +202,7 @@
 
 @section('script')	
 <script>
-	function getProduct(thiss, label, idd="ASC"){
+	function getProduct(thiss, label, idd="ASC", search){
     	//$('.brand').click(function(e){ 
 		var brand = order = '';	
 		if(label == 'brand'){	
@@ -206,7 +224,7 @@
 
 		$(".brand").each(function() {
 			var attr = $(this).attr('checked');
-			if (typeof attr !== 'undefined' && attr !== false) {
+			if (typeof attr != 'undefined' && attr != false) {
 				var data = $(this).data('brand');
 				brand = brand+','+data
 			}
@@ -215,6 +233,7 @@
 		if(brand != ''){
 			brand = brand +'/';
 		}
+		
 		var subcat = '';
 		$(".subcategory").each(function() {
 			var cls = $(this).hasClass('actv');
@@ -234,16 +253,25 @@
 		}
 		if(subcat != ''){
 			subcat = subcat +'/';
-		}	
+		}
+
+		if(search == 'search'){
+			var queryString = '<?php echo $query_string;?>';
+			var url = "{{ url('searchBy') }}/" + brand + order + '?' +queryString;
+			var url1 = "{{ url('searchBy') }}/" + brand + order + '?' +queryString + '&page=1';
+		}else{
+			var url = "{{ url('productByBrand') }}/" +subcat + brand + order;
+			var url1 = "{{ url('productByBrand') }}/" +subcat + brand + order + '?page=1';
+		}
 
         // Fake api for making post requests
-        fetch( "{{ url('productByBrand') }}/" +subcat + brand + order) 
+        fetch( url ) 
 		.then(res => res.text())
 		.then(html => {
 			document.getElementById("add_item").innerHTML = '';
 			document.getElementById("add_item").innerHTML = html;
 		})
-		window.history.pushState( {}, "", "{{ url('productByBrand') }}/" +subcat + brand + order + '?page=1' );
+		window.history.pushState( {}, "", url1 );
 		//.catch(error => {console.log(error)});
     }
 </script>

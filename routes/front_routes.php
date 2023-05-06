@@ -18,12 +18,20 @@ Route::get('/', [HomeController::class,'index'])->name('home');
 //product
 Route::get('/product-by-category/{slug}', [ProductController::class,'productByCategory'])->name('productByCategory');
 Route::get('/product/{slug}', [ProductController::class,'productBySubCategory'])->name('productBySubCategory');
-Route::get('/productByBrand/{slug}/', [ProductController::class,'productByBrand'])->name('productByBrand');
-Route::get('/productByBrand/{slug}/{brand}', [ProductController::class,'productByBrand'])->name('productByBrand');
-Route::get('/productByBrand/{slug}/{brand}/{order}', [ProductController::class,'productByBrand'])->name('productByBrand');
+
+//ajax route
+Route::get('/productByBrand/{slug}', [ProductController::class,'productByBrand'])->name('product-with-slug');
+Route::get('/productByBrand/{slug}/{brand}', [ProductController::class,'productByBrand'])->name('product-with-slug-brand');
+Route::get('/productByBrand/{slug}/{brand}/{order}', [ProductController::class,'productByBrand'])->name('product-with-slug-brand-order');
+
+//Search
 Route::get('/search', [ProductController::class,'search'])->name('search');
 
+//ajax route
+Route::get('/searchBy/{brand}', [ProductController::class,'searchBy'])->name('search-brand');
+Route::get('/searchBy/{brand}/{order}', [ProductController::class,'searchBy'])->name('search-brand-order');
 
+//detail
 Route::get('/product-detail/{slug}', [ProductController::class,'productDetail'])->name('product_detail');
 
 //cart
