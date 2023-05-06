@@ -49,7 +49,8 @@
 								if( isset( $queryStringArr[4] ) && !empty( $queryStringArr[4] ) ){
 									$orderCheck = $queryStringArr[4];
 								}	
-							}			
+							}
+							echo 'Avind'.$orderCheck;			
 							?>	
 							@if (isset($category) && !empty($category))
 								@foreach($category as $categories)
@@ -151,8 +152,9 @@
 						<div class="sort-by">
 							<label>Sort By </label>
 							<select class="form-select-sm rounded-0 order" onChange="getProduct( this, 'order', '', '{{ $search }}' )">
+								<option value = "" > -- price -- </option>
 								<option value = "ASC" <?php echo ( ( isset($orderCheck) && $orderCheck == 'ASC' ) ? 'selected' : '' );?> >Price Low to High</option>
-								<option value = "DESC" <?php echo ( ( isset($orderCheck) && $orderCheck = 'DESC' ) ? 'selected' : '' );?>>Price High to Low</option>
+								<option value = "DESC" <?php echo ( ( isset($orderCheck) && $orderCheck == 'DESC' ) ? 'selected' : '' );?>>Price High to Low</option>
 							</select>
 						</div>
 					</div>

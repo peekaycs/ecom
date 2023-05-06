@@ -28,6 +28,7 @@ Route::get('/productByBrand/{slug}/{brand}/{order}', [ProductController::class,'
 Route::get('/search', [ProductController::class,'search'])->name('search');
 
 //ajax route
+Route::get('/searchBy', [ProductController::class,'searchBy'])->name('searchBy');
 Route::get('/searchBy/{brand}', [ProductController::class,'searchBy'])->name('search-brand');
 Route::get('/searchBy/{brand}/{order}', [ProductController::class,'searchBy'])->name('search-brand-order');
 
