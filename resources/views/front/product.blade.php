@@ -152,8 +152,8 @@
 							<label>Sort By </label>
 							<select class="form-select-sm rounded-0 order" onChange="getProduct( this, 'order', '', '{{ $search }}' )">
 								<option value = "" > -- price -- </option>
-								<option value = "ASC" <?php echo ( ( isset($orderCheck) && $orderCheck == 'ASC' ) ? 'selected' : '' );?> >Price Low to High</option>
-								<option value = "DESC" <?php echo ( ( isset($orderCheck) && $orderCheck == 'DESC' ) ? 'selected' : '' );?>>Price High to Low</option>
+								<option value = "ASC" <?php echo ( ( isset($orderCheck) && $orderCheck == 'ASC' ) ? 'selected' : '' );?> >Low to High</option>
+								<option value = "DESC" <?php echo ( ( isset($orderCheck) && $orderCheck == 'DESC' ) ? 'selected' : '' );?>>High to Low</option>
 							</select>
 						</div>
 					</div>

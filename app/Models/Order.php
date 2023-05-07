@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Payment;
 use App\Models\OrderDetail;
+use App\Models\Product;
+use App\Models\ProductAttribute;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
+
 class Order extends Model
 {
     use HasFactory;
@@ -23,6 +27,20 @@ class Order extends Model
 
     public function payment(){
         return $this->hasOne(Payment::class,'order_id', 'id');
+    }
+
+    public static function products($order){
+        $products = array(); //
+        foreach($order->orderDetails as $orderDetail){
+            if(isset($orderDetail->product_attribute_id) && !empty($orderDetail->product_attribute_id)){
+                $products[$orderDetail->product_id] = Product::find($orderDetail->product_id);
+                $products[$orderDetail->product_attribute_id] = ProductAttribute::find($orderDetail->product_attribute_id);
+            }elseif(isset($orderDetail->product_id) && !empty($orderDetail->product_id)){
+                $products[$orderDetail->product_id] = Product::find($orderDetail->product_id);
+            } 
+        }
+
+        return $products;
     }
 
     public function orderDetails(){

@@ -25,8 +25,8 @@
                     <option></option>
                     <option value="main" {{old('type') ?? ($banner->type == 'main' ? 'selected' : '')}}>Main</option>
                     <option value="popular" {{old('type') ?? ($banner->type == 'popular' ? 'selected' : '')}}>Popular</option>
-                    <option value="featured" {{old('type') ?? ($banner->type == 'featured' ? 'selected' : '')}}>Featured</option>
-                    <option value="bottom" {{old('type') ?? ($banner->type == 'bottom' ? 'selected' : '')}}>Bottom Banner</option>
+                    <option value="featured" {{old('type') ?? ($banner->type == 'featured' ? 'selected' : '')}}>Featured Brands</option>
+                    <option value="bottom" {{old('type') ?? ($banner->type == 'bottom' ? 'selected' : '')}}>Shop by Health Concerns</option>
                 </select>
                 <label for="selectFloatingLabel" class="placeholder">Banner Type</label>
                 @error('type')

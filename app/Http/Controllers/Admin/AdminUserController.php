@@ -56,7 +56,7 @@ class AdminUserController extends Controller
                 'middle_name' => 'nullable|string|min:2|max:50',
                 'last_name' => 'nullable|string|min:2|max:50',
                 'email' => 'required|email|unique:users',
-                'mobile' => 'nullable|integer|',
+                'mobile' => 'nullable|integer|unique:users',
                 'age' => 'nullable|integer',
                 'gender' => 'nullable|string',
                 'password' => ['required', 'confirmed', Rules\Password::defaults()],

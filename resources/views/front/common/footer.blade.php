@@ -129,8 +129,8 @@
 		<input type="hidden" name="redirect_url" value="{{url()->current()}}" />
 	    <div class="container">
 			@if(session('login_error'))
-			<div class="col-md-12 col-sm-12 col-xs-12">
-	      		<h3>{{session('login_error')}}</h3>
+			<div class="col-md-12 col-sm-12 col-xs-12 text-center">
+	      		<h3 class="text-danger">{{session('login_error')}}</h3>
 	      		
 	      	</div>
 			@endif

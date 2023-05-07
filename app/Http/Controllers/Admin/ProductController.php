@@ -449,7 +449,7 @@ class ProductController extends EcomController
         ->paginate(env('PER_PAGE'))
         ->withQueryString();
 
-        $data['brands'] = Brand::all();
+        $data['brands'] = Brand::where('status',1)->orderBy('order','ASC')->get();
         return $this->createView('front.product', $data);
     }
 

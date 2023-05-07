@@ -164,8 +164,10 @@ class OrderController extends Controller
     public function orderDetail(Request $request, $id){
         $order = Order::with(['user','payment','orderDetails'])->where('id',$id)->get();
         $order = $order[0] ?? null;
+        $order['products'] = Order::products($order);
+        // dd($order);
         if(empty($order)){
-            return redirect(back());
+            return redirect(back())->with('error','Product detail not found!');
         }
         // dd($order);
         return view('admin.order-detail',array('order'=>$order));

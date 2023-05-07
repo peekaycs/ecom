@@ -87,7 +87,7 @@ class CheckoutController extends EcomController
         $address = Address::where('uuid', $uuid)->get();
         if(isset($address) && !empty($address)){
             foreach($address as $add){
-                $address_comp = ucFirst($add->name)  .' \n '.$add->contact .' \n '. $add->address . ' , ' . $add->landmark .' , '. $add->city .' , \n ' . $add->state . ' - ' . $add->zip;
+                $address_comp = ucFirst($add->name)  .' <br/> '.$add->contact .' <br/> '. $add->address . ' , ' . $add->landmark .' , '. $add->city .' , <br/>' . $add->state . ' - ' . $add->zip;
             }
             $data['order_id'] = $order_id = Session::get('order_id');
             $address = DB::update('update orders set shipping_address = ? where id = ?',[$address_comp, $order_id ]);
@@ -153,8 +153,9 @@ class CheckoutController extends EcomController
     {
         //dd($request);
         $userId = Auth::user()->uuid;
-        $data['user'] = $user = User::find($userId);
-        $data['order'] = $order = Order::find($request->order_id);
+        $payment_id = Str::uuid();
+        // $data['user'] = $user = User::find($userId);
+        $order = Order::find($request->order_id);
         $receiving_amount = $order->payable_amount;
         $flag = false;
 
@@ -168,13 +169,13 @@ class CheckoutController extends EcomController
                 'fill_amount' => 'required|integer',
             ]);
             
-            $uuid = Str::uuid();
+            // $uuid = Str::uuid();
             $transaction_id = Helper::randomString(12,'RXTNCQ-');
             $payments = 0;
             if( ( $request->amount <= $request->fill_amount ) && ( $receiving_amount <= $request->amount ) ){
                 $flag = true;
                 $payments = Payment::create([
-                    'id' => $uuid,
+                    'id' => $payment_id,
                     'transaction_id' => $transaction_id,
                     'order_id' => $request->order_id,
                     'mode' => $request->mode,
@@ -183,6 +184,8 @@ class CheckoutController extends EcomController
                     'amount' => $request->amount,
                     'payment_status' => 'SUCCESS'
                 ]);
+
+                Order::where('id', $request->order_id)->update(['payment_mode'=> $request->mode,'payment_id' => $payment_id ]);
             } 
             
             $to_name = 'arvind';
@@ -203,20 +206,23 @@ class CheckoutController extends EcomController
                 'amount' => 'required|string',
             ]);
             
-            $uuid = Str::uuid();
+            // $uuid = Str::uuid();
             $transaction_id = Helper::randomString(12,'RXTNCD-');
             $payments = 0;
             if( $receiving_amount <= $request->amount ){
                 $flag = true;
               
                 $payments = Payment::create([
-                    'id' => $uuid,
+                    'id' => $payment_id,
                     'transaction_id' => $transaction_id,
                     'order_id' => $request->order_id,
                     'mode' => $request->mode,
                     'amount' => $request->amount,
                     'payment_status' => 'SUCCESS'
                 ]);
+                if($payments){
+                    Order::where('id', $request->order_id)->update(['payment_mode' => $request->mode,'payment_id' => $payment_id ]);
+                }
             }    
         } 
 
@@ -229,7 +235,7 @@ class CheckoutController extends EcomController
                 'amount' => 'required|string',
             ]);
             
-            $uuid = Str::uuid();
+            // $uuid = Str::uuid();
             $transaction_id = Helper::randomString(12,'RXTNON-');
             $payments = 0;
             if( $receiving_amount <= $request->amount ){
@@ -237,13 +243,16 @@ class CheckoutController extends EcomController
                
                 
                 $payments = Payment::create([
-                    'id' => $uuid,
+                    'id' => $payment_id,
                     'transaction_id' => $transaction_id,
                     'order_id' => $request->order_id,
                     'mode' => $request->mode,
                     'amount' => $request->amount,
                     'payment_status' => 'SUCCESS'
                 ]);
+                if($payments){
+                    Order::where('id', $request->order_id)->update(['payment_mode'=> $request->mode,'payment_id' => $payment_id ]);
+                }
             }    
         } 
          
