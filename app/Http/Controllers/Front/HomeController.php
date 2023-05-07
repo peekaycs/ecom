@@ -118,6 +118,6 @@ class HomeController extends EcomController
     }
 
     public function signup(Request $request){
-        return view('front.signup');
+        return $this->createView('front.signup');
     }
 }

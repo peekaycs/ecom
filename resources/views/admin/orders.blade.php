@@ -30,7 +30,7 @@
                     @foreach($orders as $order)
                     <tr>
                         <td>{{$loop->iteration}}</td>
-                        <td>{{ $order->user?->order_code }}</td>
+                        <td>{{ $order->order_code }}</td>
                         <td>{{ $order->user?->first_name }}</td>
                         <td>{{ $order->user?->email }}</td>
                         <td>{{ $order->user?->mobile }}</td>
@@ -38,7 +38,7 @@
                         <td>{{ $order->payable_amount }}</td>
                         <td>{{ $order->payment_status }}</td>
                         <td>{{ $order->payment_mode }}</td>
-                        <td></td>
+                        <td>{{ucfirst(strtolower($order->shipping_status))}}</td>
                         <td>
                         <a href="{{route('order-detail',$order->id) }}" title="view"><i class="far fa-eye"></i></a>
                         </td>

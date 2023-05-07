@@ -24,8 +24,8 @@
                     <option></option>
                     <option value="main">Main</option>
                     <option value="popular">Popular</option>
-                    <option value="featured">Featured</option>
-                    <option value="bottom">Bottom Banner</option>
+                    <option value="featured">Featured Brands</option>
+                    <option value="bottom">Shop by Health Concerns</option>
                 </select>
                 <label for="selectFloatingLabel" class="placeholder">Banner Type</label>
                 @error('type')

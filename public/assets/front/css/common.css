@@ -566,7 +566,7 @@ div, p {
   .head .cart {
     top: 14px;
     width: 50px;
-    right: 2%;
+    right: 0.5%;
   }
   .head .cart a img {
     width: 22px;
