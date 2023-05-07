@@ -249,6 +249,8 @@ class CheckoutController extends EcomController
          
         if($payments){
             Cart::session($userId)->clear();
+            Cart::session($userId)->clearCartConditions();
+            Cart::clearCartConditions();
             Cart::clear();
             Session::put( 'order_id', $request->order_id );
             Session::flash('msg', 'Congratulations! Your Order Placed Successfully. Thank You'); 
@@ -390,6 +392,7 @@ class CheckoutController extends EcomController
         $data['user'] = User::find($userId);
         $order_id = Session::get('order_id');
         $data['order'] = Order::find($order_id);
+        //dd($data['order']);
         
         return $this->createView('front.thankyou',$data);
     }

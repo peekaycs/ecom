@@ -413,7 +413,10 @@ class ProductController extends EcomController
     public function productDetail(Request $request, $slug)
     {
         $slug = Helper::destructSlug($slug);
-        $data['product'] = Product::WHERE('slug',$slug)->first();
+        $data['product'] = $product = Product::WHERE('slug',$slug)->first();
+
+        $data['similer_product'] = $similer_product = Product::WHERE('subcategory_id', $product->subcategory_id )->WHERE('id', '!=', $product->id )->get();
+
         $data['popular_health'] = Product::WHERE( 'status', 1 )->WHERE( 'published', 1 )->orderBy('order','ASC')->get();
 
         return $this->createView('front.product_detail', $data);

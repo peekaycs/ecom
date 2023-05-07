@@ -9,7 +9,7 @@
                 <div class="cart-section">
                     <h5>Items NOT Requiring Prescription (1)</h5>
                     <div class="col-md-12 col-sm-12 col-12">
-                        <?php $total_discount = $total_price = $shipping = 0;?>
+                        <?php $total_discount = $total_price = $shipping = $coupon_discount = 0;?>
                         @if( isset($cart_list) && !empty($cart_list) )
                             @foreach($cart_list as $item_id => $item)
                             <?php 
@@ -92,6 +92,14 @@
                         <hr>
                         @if( isset($conditions) && !empty($conditions) )
                             @foreach($conditions as $key => $condition)
+                            <?php
+                            $string = $condition->getValue();
+                            if(strpos($string, '%')){
+                                $coupon_discount = ( ( $total_price + $shipping - $total_discount) * abs( ( int )rtrim( $string, '%' ) ) ) / 100;
+                            }else{
+                                $coupon_discount = ( $total_price + $shipping - $total_discount) - abs( ( int )rtrim( $string, '%' ) );
+                            }
+                            ?>
                             <p>
                                 <strong>{{ $condition->getType() != null ? ucwords($condition->getType()) . ' Discount' : '' }} 
                                     <small style="color:red"><a href="javascript:void(0)" onclick="removeCoupon(this, '{{ $condition->getName() ?? ''}}')">Remove</a></small>
@@ -124,7 +132,7 @@
                         <input type="hidden" name="discount" value="{{ $total_discount ?? '0' }}" class="discount" id="discount">
                     
                         <div class="alert-success p-md-3 p-2">
-                            <span>Total Savings: <strong>{{ isset($total_discount) ? '₹'. abs($total_discount) : '0'}}</strong></span>
+                            <span>Total Savings: <strong>{{ isset( $total_discount ) ? '₹'. ( ceil( $total_discount ) + $coupon_discount ) : '0' }}</strong></span>
                             <button type="submit" name="submit" class="btn btn-sm btn-success float-end">CHECKOUT</button>
                         </div>
                     </form>

@@ -69,18 +69,6 @@
                                     @endif
                                 </div>
                             </div>
-                            <!--<div class="delivery-pin">
-                                <form>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Enter Delivery Pincode">
-                                        <span class="input-group-text">Check</span>
-                                    </div>
-                                    <p>
-                                        <span> Delivery by18 Mar, Saturday</span> 
-                                        | Free <span>₹40</span>
-                                    </p>
-                                </form>
-                            </div>-->
                         </div>
                         @endif
                     </div>
@@ -123,47 +111,12 @@
                 <h5>Description</h5>
                 <div class="product-overview">  
                     {!! $product->productDetail->description ?? 'N/A' !!}                  
-                    <!--<h6>Also known as</h6>
-					<p>Syzygium jamb</p>
-					<h6>Properties</h6>					
-					<ul>
-						<li>Potency</li>
-						<li>1X (Q)</li>
-					</ul>
-					<ul>
-						<li>Weight</li>
-						<li>75 (gms)</li>
-					</ul>
-					<ul>
-						<li>Dimensions</li>
-						<li>3 (cm) x 3 (cm) x 9.4 (cm)</li>
-					</ul>
-					<h6>About Willmar Schwabe Syzygium Jambolinum 1x (Mother Tincture)</h6>
-					<p>Common Name:  Jambol seeds</p><br>
-					<h6>Causes & Symptoms for Willmar Schwabe Syzygium Jambolinum 1x (Mother Tincture)</h6>
-					<p>Syzygium is a native of India and has effective results in Increased Blood sugar levels. </p>
-					<p>Syzygium is a native of India and has effective results in Increased Blood sugar levels. </p>
-					<p>Syzygium is a native of India and has effective results in Increased Blood sugar levels. </p>-->
                 </div>
                 <h5>Frequently Asked Questions (FAQs)</h5>
                 <div class="productFAQ">
                     <div class="product-faq-inner">
                         {{ $product->faq ?? 'N/A' }}  
                     </div>    
-                    <!--<div class="product-faq-inner">
-                        <div class="question-icon">Q</div>
-                        <div class="question-answer">
-                            <p class="question">How many days do I need to use R 89 (Lipocol) medicine to see effective results?</p>
-                            <p class="answer">Depending upon the symptoms we can decide the duration of the medicines. For better results you can take the medicines minimum for 1 to 2 months.</p>
-                        </div>
-                    </div>
-                    <div class="product-faq-inner">
-                        <div class="question-icon">Q</div>
-                        <div class="question-answer">
-                            <p class="question">How many days do I need to use R 89 (Lipocol) medicine to see effective results?</p>
-                            <p class="answer">Depending upon the symptoms we can decide the duration of the medicines. For better results you can take the medicines minimum for 1 to 2 months.</p>
-                        </div>
-                    </div>-->
                 </div>
                 <div class="clear border-one"></div>  
                 @endif
@@ -173,34 +126,27 @@
                 <div class="similar-product right-sticky">
                     <h5>Similar Product</h5>
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="additional-discount">
-                            <div class="ad-img">
-                                <p>Pack of 2</p>
-                                <img src="{{URL::asset('assets/front/images/b2.jpg')}}" alt="">
-                            </div>
-                            <div class="ad-price">
-                                <h5>Rs 275</h5>
-                                <h6>
-                                    <span class="mrp">MRP 200</span>
-                                    <span class="off">17% OFF</span>							
-                                </h6>
-                                <a href="#" class="btn btn-sm btn-primary">BUY NOW</a>
-                            </div>
-                        </div>
-                        <div class="additional-discount">
-                            <div class="ad-img">
-                                <p>Pack of 2</p>
-                                <img src="{{URL::asset('assets/front/images/b2.jpg')}}" alt="">
-                            </div>
-                            <div class="ad-price">
-                                <h5>Rs 275</h5>
-                                <h6>
-                                    <span class="mrp">MRP 200</span>
-                                    <span class="off">17% OFF</span>							
-                                </h6>
-                                <a href="#" class="btn btn-sm btn-primary">BUY NOW</a>
-                            </div>
-                        </div>
+                        @if (isset($similer_product) && !empty($similer_product))
+                            @foreach($similer_product as $product)
+                                @if (isset($product) && !empty($product))
+                                <div class="additional-discount">
+                                    <div class="ad-img">
+                                        <p>{{ $product->product ?? ''}} {{ (isset($c->productAttribute[0])) ? ' - '.$product->productAttribute[0]->attribute->name : '' }}</p>
+                                        <img src="{{ URL::asset($product->image) ?? '' }}" alt="">
+                                    </div>
+                                    <div class="ad-price">
+                                        <?php $price = $product->price - (($product->price * $product->discount) / 100); ?>                                  
+                                        <h5>Rs {{ $price ?? 0 }}</h5>
+                                        <h6>
+                                            <span class="mrp">MRP {{ $product->price ?? 0 }}</span>
+                                            <span class="off">{{ $product->discount ?? 0 }}% OFF</span>							
+                                        </h6>
+                                        <a href="{{ route('product_detail',['slug' => str_replace(' ', '-', $product->slug)]) }}" class="btn btn-sm btn-primary">BUY NOW</a>
+                                    </div>
+                                </div>
+                                @endif
+                            @endforeach
+                        @endif
                     </div>
                 </div>
             </div>           
