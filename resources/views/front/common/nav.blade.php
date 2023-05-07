@@ -117,7 +117,7 @@
 					</div>
 				</div>
 				<div class="cart">
-					<a href="{{route('cart_list')}}">
+					<a href="{{ Auth::check() ? route('cart_list') : '#'}}" @if(!Auth::check()) onclick="document.getElementById('login').style.display='block'" @endif>
 						<img src="{{URL::asset('assets/front/images/cart.png')}}" alt="">
 						<span class="badge bg-success">{{ $count ?? '' }}</span>
 					</a>

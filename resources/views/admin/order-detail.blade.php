@@ -10,6 +10,7 @@
         @csrf
         @method('put')
         <div class="card-body">
+           
             <div class="card-sub">
                 <h3>Customer Detail</h3>
             </div>
@@ -31,7 +32,23 @@
                             <td>{{$order?->user?->email }}</td>
                             <td>{{$order?->user?->mobile }}</td>
                             <td>{{$order?->user?->created_at }}</td>
-                            <td><a href="{{route('admin-profile', $order->user?->uuid)}}">View Detail</a></td>
+                            <td><a href="{{route('edit-admin-user', $order->user?->uuid)}}">View Detail</a></td>
+                            
+                        </tr>
+                        
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-sub">
+                <h3>Shipping Detail</h3>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    
+                    <tbody>
+                        <tr>
+                            <td>{{$order->shipping_address}}</td>
+                            
                             
                         </tr>
                         
@@ -56,9 +73,10 @@
                     <tbody>
                         <tr>
                         <td>{{ $order->created_at }}</td>
-                        <td>{{ $order->payable_amount }}</td>
+                        <td>₹ {{ $order->payable_amount }}</td>
                         <td>{{ $order->payment_status }}</td>
                         <td>{{ $order->payment_mode }}</td>
+                        <td>{{ucfirst(strtolower($order->shipping_status))}}</td>
                             <!-- <td><a href="{{route('admin-profile', $order->user?->uuid)}}">View Detail</a></td> -->
                             
                         </tr>
@@ -89,14 +107,14 @@
                         @foreach($order->orderDetails as $orderDetail)
                         <tr>
                             <td>{{$loop->iteration}}</td>
-                        <td>{{ $orderDetail->product_id }}</td>
-                        <td>{{ $orderDetail->quantity }}</td>
-                        <td>{{ $orderDetail->price }}</td>
-                        <td>{{ $orderDetail->discount }}</td>
-                        <td>{{ $orderDetail->shipping }}</td>
-                        <td>{{ $orderDetail->commission }}</td>
-                        <td>{{ $orderDetail->total_price }}</td>
-                            <!-- <td><a href="{{route('admin-profile', $order->user?->uuid)}}">View Detail</a></td> -->
+                            <td>{{$order['products'][$orderDetail->product_id]?->product}}</td>
+                            <td>{{ $orderDetail->quantity }}</td>
+                            <td>₹ {{ $orderDetail->price }}</td>
+                            <td>{{ $orderDetail->discount }}</td>
+                            <td>₹ {{ $orderDetail->shipping }}</td>
+                            <td>₹ {{ $orderDetail->commission ?? 0 }}</td>
+                            <td>₹ {{ $orderDetail->total_price }}</td>
+                                <!-- <td><a href="{{route('admin-profile', $order->user?->uuid)}}">View Detail</a></td> -->
                             
                         </tr>
                         @endforeach
@@ -104,10 +122,16 @@
                     </tbody>
                 </table>
             </div>
+            <!-- <div class="card-sub">
+                <h3>Payment Detail</h3>
+            </div>
+            <div class="table-responsive">
+                
+            </div> -->
         </div>
         <div class="card-action text-right">
-            <button type="submit" class="btn btn-success">Submit</button>
-            <a href="{{route('orders')}}" class="btn btn-danger">Cancel</a>
+            <!-- <button type="submit" class="btn btn-success">Submit</button> -->
+            <!-- <a href="{{route('orders')}}" class="btn btn-danger">Cancel</a> -->
         </div>
         </form>
     </div>
