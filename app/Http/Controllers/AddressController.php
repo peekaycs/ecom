@@ -83,14 +83,14 @@ class AddressController extends EcomController
     {
         //dd($request);
         $request->validate([
-            'name' => 'string',
-            'contact' => 'integer',
+            'name' => ['required', 'string', 'max:50', 'min:2'],
+            'contact' => 'required|numeric|size:10',
             'landmark' => 'nullable|string',
-            'address' => 'string',
-            'optradio' => 'string',
-            'zip' => 'integer',
-            'city' => 'string',
-            'state' => 'string'
+            'address' => ['required', 'string', 'max:500'],
+            'optradio' => ['required', 'string'],
+            'zip' => ['required', 'integer', 'min:6'],
+            'city' => ['required', 'string'],
+            'state' => ['required', 'string']
         ]);
         
         $uuid = Str::uuid();
@@ -138,14 +138,14 @@ class AddressController extends EcomController
     {
         
         $request->validate([
-            'name' => 'string',
-            'contact' => 'integer',
+            'name' => ['required', 'string', 'max:50', 'min:2'],
+            'contact' => 'required|numeric|size:10',
             'landmark' => 'nullable|string',
-            'address' => 'string',
-            'optradio' => 'string',
-            'zip' => 'integer',
-            'city' => 'string',
-            'state' => 'string'
+            'address' => ['required', 'string', 'max:500'],
+            'optradio' => ['required', 'string'],
+            'zip' => ['required', 'integer', 'min:6'],
+            'city' => ['required', 'string'],
+            'state' => ['required', 'string']
         ]);
         
         $address = Address::updateOrCreate( 
