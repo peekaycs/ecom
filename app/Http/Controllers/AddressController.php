@@ -84,7 +84,7 @@ class AddressController extends EcomController
         //dd($request);
         $request->validate([
             'name' => ['required', 'string', 'max:50', 'min:2'],
-            'contact' => ['required', 'integer', 'min:10'],
+            'contact' => 'required|numeric|size:10',
             'landmark' => 'nullable|string',
             'address' => ['required', 'string', 'max:500'],
             'optradio' => ['required', 'string'],
@@ -139,7 +139,7 @@ class AddressController extends EcomController
         
         $request->validate([
             'name' => ['required', 'string', 'max:50', 'min:2'],
-            'contact' => ['required', 'integer', 'min:10'],
+            'contact' => 'required|numeric|size:10',
             'landmark' => 'nullable|string',
             'address' => ['required', 'string', 'max:500'],
             'optradio' => ['required', 'string'],

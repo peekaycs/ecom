@@ -415,7 +415,7 @@ class ProductController extends EcomController
         $slug = Helper::destructSlug($slug);
         $data['product'] = $product = Product::WHERE('slug',$slug)->first();
 
-        $data['similer_product'] = $similer_product = Product::WHERE('subcategory_id', $product->subcategory_id )->WHERE('id', '!=', $product->id )->get();
+        $data['similer_product'] = $similer_product = Product::WHERE('subcategory_id', $product->subcategory_id )->WHERE('id', '!=', $product->id )->limit(2)->get();
 
         $data['popular_health'] = Product::WHERE( 'status', 1 )->WHERE( 'published', 1 )->orderBy('order','ASC')->get();
 

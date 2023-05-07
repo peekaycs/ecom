@@ -29,8 +29,8 @@ class ProfileController extends EcomController
 
     public function update(Request $request, $id){
         $request->validate([
-            'first_name' => ['required', 'string', 'max:255'],
-            'mobile' => ['required', 'integer','min:10'],
+            'first_name' => ['required', 'string', 'max:50'],
+            'mobile' => 'required|numeric|size:10',
             'gender' => ['required'],
             'address' => ['nullable','string', 'max:255','min:3'],
             'city' => ['nullable','string', 'max:255','min:3'],
