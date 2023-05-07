@@ -50,7 +50,6 @@
 									$orderCheck = $queryStringArr[4];
 								}	
 							}
-							echo 'Avind'.$orderCheck;			
 							?>	
 							@if (isset($category) && !empty($category))
 								@foreach($category as $categories)
