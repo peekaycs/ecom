@@ -16,7 +16,7 @@
                 </a>
                 <p class="item-price">  
                     <?php $price = $product->price - (($product->price * $product->discount) / 100); ?>                                  
-                    <ins>{{ $price ?? ''}}</ins>
+                    <ins>Rs. {{ $price ?? ''}}</ins>
                     <del>{{ $product->price ?? ''}}</del>
                 </p>
                 <div class="add-to-cart">

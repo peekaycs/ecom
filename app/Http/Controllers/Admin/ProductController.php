@@ -339,7 +339,7 @@ class ProductController extends EcomController
         $data = [];
         $data['categories'] = $categories = Category::WHERE('slug', $slug)->first();
         //DB::enableQueryLog();
-        $data['products'] = $products = Product::WHERE('category_id', $categories->uuid)->orderBy('order','ASC')->orderBy('updated_at','desc')->paginate(env('PER_PAGE'))->withQueryString();
+        $data['products'] = $products = Product::WHERE('category_id', $categories->uuid)->WHERE( 'status', 1 )->WHERE( 'published', 1 )->orderBy('order','ASC')->orderBy('updated_at','desc')->paginate(env('PER_PAGE'))->withQueryString();
         //dd(DB::getQueryLog());
         $data['brands'] = $brands = Brand::all();
         $data['filter_categories'] = $filter_categories = $categories;
@@ -351,7 +351,7 @@ class ProductController extends EcomController
         $slug = Helper::destructSlug($slug);
         $data['subcategories'] = $subcategories = SubCategory::WHERE('slug', $slug)->first();
         //DB::enableQueryLog();
-        $data['products'] = $products = Product::WHERE('subcategory_id', $subcategories->uuid)->orderBy('order','ASC')->orderBy('updated_at','DESC')->paginate(env('PER_PAGE'))->withQueryString();
+        $data['products'] = $products = Product::WHERE('subcategory_id', $subcategories->uuid)->WHERE( 'status', 1 )->WHERE( 'published', 1 )->orderBy('order','ASC')->orderBy('updated_at','DESC')->paginate(env('PER_PAGE'))->withQueryString();
         //dd(DB::getQueryLog());
         $data['brands'] = $brands = Brand::all();
         $data['filter_categories'] = $filter_categories = $subcategories->category;
@@ -390,16 +390,16 @@ class ProductController extends EcomController
 
         if(!empty($brand) && !empty($order)){
             //DB::enableQueryLog();
-            $data['products'] = Product::WHERE($field_name, $field_value)->whereIn('brand_id', $brand)->orderBy('price', $order)->orderBy('order','ASC')->paginate(env('PER_PAGE'))->withQueryString();
+            $data['products'] = Product::WHERE($field_name, $field_value)->WHERE( 'status', 1 )->WHERE( 'published', 1 )->whereIn('brand_id', $brand)->orderBy('price', $order)->orderBy('order','ASC')->paginate(env('PER_PAGE'))->withQueryString();
             //dd(DB::getQueryLog());
         }elseif(!empty($brand)){
             //DB::enableQueryLog();
-            $data['products'] = Product::WHERE($field_name, $field_value)->whereIn('brand_id', $brand)->orderBy('order','ASC')->orderBy('updated_at', 'DESC')->paginate(env('PER_PAGE'))->withQueryString();
+            $data['products'] = Product::WHERE($field_name, $field_value)->WHERE( 'status', 1 )->WHERE( 'published', 1 )->whereIn('brand_id', $brand)->orderBy('order','ASC')->orderBy('updated_at', 'DESC')->paginate(env('PER_PAGE'))->withQueryString();
             //dd(DB::getQueryLog());
         }elseif(!empty($order)){
-            $data['products'] = Product::WHERE($field_name, $field_value)->orderBy('price', $order)->orderBy('order','ASC')->paginate(env('PER_PAGE'))->withQueryString();
+            $data['products'] = Product::WHERE($field_name, $field_value)->WHERE( 'status', 1 )->WHERE( 'published', 1 )->orderBy('price', $order)->orderBy('order','ASC')->paginate(env('PER_PAGE'))->withQueryString();
         }else{
-            $data['products'] = Product::WHERE($field_name, $field_value)->orderBy('updated_at', 'DESC')->orderBy('order','ASC')->paginate(env('PER_PAGE'))->withQueryString();
+            $data['products'] = Product::WHERE($field_name, $field_value)->WHERE( 'status', 1 )->WHERE( 'published', 1 )->orderBy('updated_at', 'DESC')->orderBy('order','ASC')->paginate(env('PER_PAGE'))->withQueryString();
         }
 
         if( isset( $_GET['page'] ) ){
@@ -424,24 +424,127 @@ class ProductController extends EcomController
         return redirect()->back()->with('success','Product deleted successfully');
     }
 
-    public function search(Request $request){
+    public function search(Request $request)
+    {
         $term = $request->search_term;
+        $filter_categories = [];
+        $filter_categories['category'] = $term;
+        $data['filter_categories'] = (object)$filter_categories;
 
         $data['products'] = $products = DB::table('products AS P') 
-            ->leftJoin('categories AS C', 'C.id', '=', 'P.category_id')
+        ->leftJoin('categories AS C', 'C.uuid', '=', 'P.category_id')
+        ->leftJoin('subcategories AS SC', 'SC.uuid', '=', 'P.subcategory_id')
+        ->Where( 'P.status', 1 )
+        ->Where( 'P.published', 1 )
+        ->Where(function ($query) use ($term) {
+            $query->Where('P.slug','LIKE',"%$term%")
+                ->orWhere('C.slug','LIKE',"%$term%")
+                ->orWhere('SC.slug','LIKE',"%$term%");
+        })
+        ->select('P.*')
+        ->orderBy('P.order','DESC')
+        ->paginate(env('PER_PAGE'))
+        ->withQueryString();
+
+        $data['brands'] = Brand::all();
+        return $this->createView('front.product', $data);
+    }
+
+    public function searchBy(Request $request)
+    {
+        $term = $request->search_term;
+        $brand = $order = '';
+        if( isset( $request->brand ) && !empty( $request->brand ) ){
+            if( $request->brand == 'ASC' || $request->brand == 'DESC' ){
+                $order = $request->brand;
+            }else{
+                $brand = explode( ',', $request->brand );
+            }
+         }
+            
+        if( isset( $request->order ) && !empty( $request->order ) ){
+            $order = $request->order;
+        }
+        $filter_categories = [];
+        $filter_categories['category'] = $term;
+        $data['filter_categories'] = (object)$filter_categories;
+
+        if(!empty($brand) && !empty($order)){
+            //DB::enableQueryLog();
+            $data['products'] = $products = DB::table('products AS P') 
+            ->leftJoin('categories AS C', 'C.uuid', '=', 'P.category_id')
             ->leftJoin('subcategories AS SC', 'SC.uuid', '=', 'P.subcategory_id')
-            ->Where('P.slug','LIKE',"%$term%")
-            ->orWhere('C.slug','LIKE',"%$term%")
-            ->orWhere('SC.slug','LIKE',"%$term%")
+            ->Where( 'P.status', 1 )
+            ->Where( 'P.published', 1 )
+            ->whereIn('P.brand_id', $brand)
+            ->Where(function ($query) use ($term) {
+                $query->Where('P.slug','LIKE',"%$term%")
+                    ->orWhere('C.slug','LIKE',"%$term%")
+                    ->orWhere('SC.slug','LIKE',"%$term%");
+            })
+            ->select('P.*')
+            ->orderBy('P.price', $order)
+            ->paginate(env('PER_PAGE'))
+            ->withQueryString();
+            //dd(DB::getQueryLog());
+        }elseif(!empty($brand)){
+            //DB::enableQueryLog();
+            $data['products'] = $products = DB::table('products AS P') 
+            ->leftJoin('categories AS C', 'C.uuid', '=', 'P.category_id')
+            ->leftJoin('subcategories AS SC', 'SC.uuid', '=', 'P.subcategory_id')
+            ->Where( 'P.status', 1 )
+            ->Where( 'P.published', 1 )
+            ->whereIn('P.brand_id', $brand)
+            ->Where(function ($query) use ($term) {
+                $query->Where('P.slug','LIKE',"%$term%")
+                    ->orWhere('C.slug','LIKE',"%$term%")
+                    ->orWhere('SC.slug','LIKE',"%$term%");
+            })
             ->select('P.*')
             ->orderBy('P.order','ASC')
-            ->paginate(15)
+            ->paginate(env('PER_PAGE'))
             ->withQueryString();
-            //->get();
+            //dd(DB::getQueryLog());
+        }elseif(!empty($order)){
+            //DB::enableQueryLog();
+            $data['products'] = $products = DB::table('products AS P') 
+            ->leftJoin('categories AS C', 'C.uuid', '=', 'P.category_id')
+            ->leftJoin('subcategories AS SC', 'SC.uuid', '=', 'P.subcategory_id')
+            ->Where( 'P.status', 1 )
+            ->Where( 'P.published', 1 )
+            ->Where(function ($query) use ($term) {
+                $query->Where('P.slug','LIKE',"%$term%")
+                    ->orWhere('C.slug','LIKE',"%$term%")
+                    ->orWhere('SC.slug','LIKE',"%$term%");
+            })
+            ->select('P.*')
+            ->orderBy('P.price', $order)
+            ->paginate(env('PER_PAGE'))
+            ->withQueryString();
+            //dd(DB::getQueryLog());
+        }else{
+            $data['products'] = $products = DB::table('products AS P') 
+            ->leftJoin('categories AS C', 'C.uuid', '=', 'P.category_id')
+            ->leftJoin('subcategories AS SC', 'SC.uuid', '=', 'P.subcategory_id')
+            ->Where( 'P.status', 1 )
+            ->Where( 'P.published', 1 )
+            ->Where(function ($query) use ($term) {
+                $query->Where('P.slug','LIKE',"%$term%")
+                    ->orWhere('C.slug','LIKE',"%$term%")
+                    ->orWhere('SC.slug','LIKE',"%$term%");
+            })
+            ->select('P.*')
+            ->orderBy('P.order','DESC')
+            ->paginate(env('PER_PAGE'))
+            ->withQueryString();
+        }
 
-        //dd($products);    
-
-        return $this->createView('front.product', $data);
+        if( isset( $_GET['page'] ) ){
+            $data['brands'] = Brand::all();
+            return $this->createView('front.product', $data);
+        }else{    
+            echo view('front.tpl.brand-wise-product', $data);
+        }    
     }
 
 }
