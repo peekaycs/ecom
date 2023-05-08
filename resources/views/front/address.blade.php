@@ -132,36 +132,43 @@
                             <div class="col-md-6 col-sm-6 col-12">
                        			<div class="mb-2">
                                     <input type="text" name="name" class="form-control rounded-0" placeholder="Enter Your Name" required>
+                                    @error('name')<p class="text-danger">{{ $message }}</p>@enderror
                                 </div>				
                             </div>
                             <div class="col-md-6 col-sm-6 col-12">
                                 <div class="mb-2">
                                  <input type="number" pattern="[0-9]{10}" name="contact" class="form-control rounded-0" placeholder="Contact Number" required>
+                                 @error('contact')<p class="text-danger">{{ $message }}</p>@enderror
                                 </div>				
                             </div>
                             <div class="col-md-6 col-sm-6 col-12">
                                 <div class="mb-2">
                                     <input type="text" name="address" class="form-control rounded-0" placeholder="Enter address" required>
+                                    @error('address')<p class="text-danger">{{ $message }}</p>@enderror
                                 </div>				
                             </div>
                             <div class="col-md-6 col-sm-6 col-12">
                                 <div class="mb-2">
                                     <input type="text" name="landmark" class="form-control rounded-0" placeholder="Landmark (optional)">
+                                    @error('landmark')<p class="text-danger">{{ $message }}</p>@enderror
                                 </div>				
                             </div>
                             <div class="col-md-6 col-sm-6 col-12">
                                 <div class="mb-2">
                                     <input type="number" pattern="[0-9]{6}" name="zip" class="form-control rounded-0" placeholder="Pin Number" required>
+                                    @error('zip')<p class="text-danger">{{ $message }}</p>@enderror
                                 </div>				
                             </div>
                             <div class="col-md-6 col-sm-6 col-12">
                                 <div class="mb-2">
                                     <input type="text" name="city" class="form-control rounded-0" placeholder="City" required>
+                                    @error('city')<p class="text-danger">{{ $message }}</p>@enderror
                                 </div>				
                             </div>
                             <div class="col-md-6 col-sm-6 col-12">
                                 <div class="mb-2">
                                     <input type="text" name="state" class="form-control rounded-0" placeholder="State" required>
+                                    @error('state')<p class="text-danger">{{ $message }}</p>@enderror
                                 </div>				
                             </div>
                             <div class="col-md-2 col-sm-4 col-4">

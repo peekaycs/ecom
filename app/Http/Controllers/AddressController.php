@@ -84,7 +84,7 @@ class AddressController extends EcomController
         //dd($request);
         $request->validate([
             'name' => ['required', 'string', 'max:50', 'min:2'],
-            'contact' => 'required|numeric|size:10',
+            'contact' => ['required', 'numeric', 'min:10'],
             'landmark' => 'nullable|string',
             'address' => ['required', 'string', 'max:500'],
             'optradio' => ['required', 'string'],
@@ -92,7 +92,6 @@ class AddressController extends EcomController
             'city' => ['required', 'string'],
             'state' => ['required', 'string']
         ]);
-        
         $uuid = Str::uuid();
         $user_id = Auth::user()->uuid;
         $addresses = Address::WHERE('user_id',$user_id)->get();
@@ -139,7 +138,7 @@ class AddressController extends EcomController
         
         $request->validate([
             'name' => ['required', 'string', 'max:50', 'min:2'],
-            'contact' => 'required|numeric|size:10',
+            'contact' => ['required', 'numeric', 'min:10'],
             'landmark' => 'nullable|string',
             'address' => ['required', 'string', 'max:500'],
             'optradio' => ['required', 'string'],
