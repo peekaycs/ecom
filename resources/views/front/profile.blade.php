@@ -264,7 +264,7 @@
 											</div>
 											<div class="col-md-4 col-sm-4 col-12">
 												<div class="form-group">
-													<label for="pinecode">Pine Code</label>
+													<label for="pinecode">Pin Code</label>
 													<input type="text" name="zip" id="zip" class="form-control rounded-0">
 													@error('zip')<p class="text-danger">{{ $message }}</p>@enderror
 												</div>								
@@ -285,7 +285,7 @@
 											</div>
 											<div class="col-md-4 col-sm-4 col-6">
 												<div class="form-check">
-													<input type="radio" class="form-check-input" id="home" name="optradio" value="home">
+													<input type="radio" class="form-check-input" id="home" name="optradio" value="home" checked>
 													<label class="form-check-label" for="home">Home</label>
 													@error('optradio')<p class="text-danger">{{ $message }}</p>@enderror
 												</div>		
