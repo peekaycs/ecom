@@ -32,7 +32,7 @@
                             <td>{{$order?->user?->email }}</td>
                             <td>{{$order?->user?->mobile }}</td>
                             <td>{{$order?->user?->created_at }}</td>
-                            <td><a href="{{route('edit-admin-user', $order->user?->uuid)}}">View Detail</a></td>
+                            <td><a href="{{route('edit-admin-user', $order->user?->id)}}">View Detail</a></td>
                             
                         </tr>
                         

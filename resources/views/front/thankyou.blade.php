@@ -8,7 +8,7 @@
             <div class="col-md-12 col-sm-12 col-12">
                 <div class="thankyou">
                     <figure><img src="{{URL::asset('assets/front/images/thankyou.png')}}" alt="thank you"></figure>
-                    <p>Hi, {{ $order->user->first_name ?? '' }}, Your Order ( Order ID :- {{ $order->id}} ) is placed successfully.</p>
+                    <p>Hi, {{ $order->user->first_name ?? '' }}, Your Order ( Order ID :- {{ $order->order_code}} ) is placed successfully.</p>
                     <h4>THANK YOU</h4>
                     <p>{{session('success')}}</p>
                     

@@ -165,14 +165,14 @@
 							<div class="col-md-3 col-sm-3 col-6">
 								<div class="category-product-box">
 									<span class="product-offer">-{{ $product->discount ?? '' }}%</span>
-									<a href="javascript:void(0)" class="text-center">
+									<a href="{{ route('product_detail',['slug' => str_replace(' ', '-', $product->slug)]) }}" class="text-center">
 										<img src="{{ URL::asset($product->image) ?? '' }}" alt="">
 									</a>
 									<div class="categories-name">
-										<a href="javascript:void(0)">{{ $product->category->category ?? ''}}</a>
-										<a href="javascript:void(0)">{{ $product->subcategory->subcategory ?? ''}}</a>
+										<a href="{{ route('product_detail',['slug' => str_replace(' ', '-', $product->slug)]) }}">{{ $product->category->category ?? ''}}</a>
+										<a href="{{ route('product_detail',['slug' => str_replace(' ', '-', $product->slug)]) }}">{{ $product->subcategory->subcategory ?? ''}}</a>
 									</div>
-									<a href="javascript:void(0)">
+									<a href="{{ route('product_detail',['slug' => str_replace(' ', '-', $product->slug)]) }}">
 										<h5 class="javascript:void(0)">{{ $product->product ?? ''}} {{ (isset($c->productAttribute[0])) ? ' - '.$product->productAttribute[0]->attribute->name : '' }}</h5>
 									</a>
 									<p class="item-price">  
@@ -180,9 +180,9 @@
 										<ins>Rs. {{ $price ?? ''}}</ins>
 										<del>{{ $product->price ?? ''}}</del>
 									</p>
-									<div class="add-to-cart">
+									<!-- <div class="add-to-cart">
 										<a href="{{ route('product_detail',['slug' => str_replace(' ', '-', $product->slug)]) }}" class="btn-sm btn-outlinr-danger">Add to Cart</a>
-									</div>
+									</div> -->
 								</div>
 							</div>
 							@endif

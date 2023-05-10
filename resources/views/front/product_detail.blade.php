@@ -44,6 +44,7 @@
                         @if( isset($product) && !empty($product) )
                         <h4>{{ $product->product ?? '' }} {{ isset($product->productAttribute[0]->attribute->name) ? '('.$product->productAttribute[0]->attribute->name.')' : '' }} </h4>
                         <h5>{{ $product->short_description ?? '' }}</h5>
+                        <h5>SKU: {{ $product->sku ?? '' }}</h5>
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <div class="additional-discount">
                                 <div class="ad-price">

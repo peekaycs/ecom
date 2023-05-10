@@ -192,11 +192,11 @@ class CheckoutController extends EcomController
             $to_email = 'arvindpandeymail@gmail.com';
             $dat = array('name' => $to_name, 'body' => 'Order Successfull');
 
-            Mail::send('emails.order_mail', $dat, function($message) use ($to_name, $to_email) {
-                    $message->to($to_email, $to_name)->subject('order successfull');
-                    $message->from('help@icarehomeo.com', 'Order Mail');
-                }
-            );
+            // Mail::send('emails.order_mail', $dat, function($message) use ($to_name, $to_email) {
+            //         $message->to($to_email, $to_name)->subject('order successfull');
+            //         $message->from('help@icarehomeo.com', 'Order Mail');
+            //     }
+            // );
         } 
         
         if( isset( $request->mode ) && !empty( $request->mode ) && $request->mode == 'COD' ){
