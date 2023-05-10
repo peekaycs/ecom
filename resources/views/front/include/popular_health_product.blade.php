@@ -13,14 +13,14 @@
                             @if (isset($popular) && !empty($popular))
                             <div class="product-box">
                                 <span class="product-offer">-{{ $popular->discount ?? '' }}%</span>
-                                <a href="javascript:void(0)" class="text-center">
+                                <a href="{{ route('product_detail',['slug' => str_replace(' ', '-', $popular->slug)]) }}" class="text-center">
                                     <img src="{{ URL::asset($popular->image) ?? '' }}" alt="">
                                 </a>
                                 <div class="categories-name">
-                                    <a href="javascript:void(0)">{{ $popular->category->category ?? '' }}</a>
-                                    <a href="javascript:void(0)">{{ $popular->subcategory->subcategory ?? '' }}</a>
+                                    <a href="{{ route('product_detail',['slug' => str_replace(' ', '-', $popular->slug)]) }}">{{ $popular->category->category ?? '' }}</a>
+                                    <a href="{{ route('product_detail',['slug' => str_replace(' ', '-', $popular->slug)]) }}">{{ $popular->subcategory->subcategory ?? '' }}</a>
                                 </div>
-                                <a href="javascript:void(0)">
+                                <a href="{{ route('product_detail',['slug' => str_replace(' ', '-', $popular->slug)]) }}">
                                     <h5 class="product-name">
                                         {{ $popular->product ?? '' }} 
                                         {{ (isset($popular->productAttribute[0]->attribute->name)) ? ' - '.$popular->productAttribute[0]->attribute->name : '' }}
@@ -40,9 +40,9 @@
                                     <li class="str-color"><i class="fas fa-star-half-alt"></i></li>
                                     <li><small class="px-1">1 review(2)</small></li>
                                 </ul>-->
-                                <div class="add-to-cart">
+                                <!-- <div class="add-to-cart">
                                     <a href="{{ route('product_detail',['slug' => str_replace(' ', '-', $popular->slug)]) }}" class="btn-sm btn-outlinr-danger">Add to Cart</a>
-                                </div>
+                                </div> -->
                             </div>
                             @endif
                         @endforeach

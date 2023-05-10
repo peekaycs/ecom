@@ -30,14 +30,14 @@
 									@if (isset($best) && !empty($best))
 									<div class="product-box">
 										<span class="product-offer">-{{ $best->discount ?? ''}}%</span>
-										<a href="javascript:void(0)" class="text-center">
+										<a href="{{ route('product_detail',['slug' => str_replace(' ', '-', $best->slug)]) }}" class="text-center">
 											<img src="{{URL::asset($best->image)}}" alt="">
 										</a>
 										<div class="categories-name">
-											<a href="javascript:void(0)">{{ $best->category->category ?? '' }}</a>
-											<a href="javascript:void(0)">{{ $best->subcategory->subcategory ?? '' }}</a>
+											<a href="{{ route('product_detail',['slug' => str_replace(' ', '-', $best->slug)]) }}">{{ $best->category->category ?? '' }}</a>
+											<a href="{{ route('product_detail',['slug' => str_replace(' ', '-', $best->slug)]) }}">{{ $best->subcategory->subcategory ?? '' }}</a>
 										</div>
-										<a href="javascript:void(0)">
+										<a href="{{ route('product_detail',['slug' => str_replace(' ', '-', $best->slug)]) }}">
 											<h5 class="product-name">{{ $best->product ?? '' }} – {{ (isset($best->productAttribute[0]->attribute->name)) ? $best->productAttribute[0]->attribute->name : '' }}</h5>
 										</a>
 										<p class="item-price">     
@@ -45,9 +45,9 @@
 											<ins>{{ $price ?? '' }}</ins>
 											<del>{{ $best->price ?? '' }}</del>
 										</p>
-										<div class="add-to-cart">
+										<!-- <div class="add-to-cart">
 											<a href="{{ route('product_detail',['slug' => str_replace(' ', '-', $best->slug)]) }}" class="btn-sm btn-outlinr-danger">Add to Cart</a>
-										</div>
+										</div> -->
 									</div>
 									@endif
 								@endforeach	
@@ -92,14 +92,14 @@
 									@if (isset($featured) && !empty($featured))
 									<div class="product-box">
 										<span class="product-offer">-{{ $featured->discount ?? '' }}%</span>
-										<a href="javascript:void(0)" class="text-center">
+										<a href="{{ route('product_detail',['slug' => str_replace(' ', '-', $featured->slug)]) }}" class="text-center">
 											<img src="{{ URL::asset($featured->image) ?? '' }}" alt="">
 										</a>
 										<div class="categories-name">
-											<a href="javascript:void(0)">{{ $featured->category->category ?? '' }}</a>
-											<a href="javascript:void(0)">{{ $featured->subcategory->subcategory ?? '' }}</a>
+											<a href="{{ route('product_detail',['slug' => str_replace(' ', '-', $featured->slug)]) }}">{{ $featured->category->category ?? '' }}</a>
+											<a href="{{ route('product_detail',['slug' => str_replace(' ', '-', $featured->slug)]) }}">{{ $featured->subcategory->subcategory ?? '' }}</a>
 										</div>
-										<a href="javascript:void(0)">
+										<a href="{{ route('product_detail',['slug' => str_replace(' ', '-', $featured->slug)]) }}">
 											<h5 class="product-name">{{ $featured->product ?? '' }} – {{ (isset($featured->productAttribute[0]->attribute->name)) ? $featured->productAttribute[0]->attribute->name : '' }}</h5>
 										</a>
 										<p class="item-price">     
@@ -107,9 +107,9 @@
 											<ins>{{ $price ?? '' }}</ins>
 											<del>{{ $featured->price ?? '' }}</del>
 										</p>
-										<div class="add-to-cart">
+										<!-- <div class="add-to-cart">
 											<a href="{{ route('product_detail',['slug' => str_replace(' ', '-', $featured->slug)]) }}" class="btn-sm btn-outlinr-danger">Add to Cart</a>
-										</div>
+										</div> -->
 									</div>
 									@endif
 								@endforeach

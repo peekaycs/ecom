@@ -90,6 +90,7 @@
                 <p class="text-danger">{{ $message }}</p>
                 @enderror
             </div>
+            @if($user->user_type == 'admin')
             <div class="form-group">
                 <label class="form-label">Select Roles</label>
                 <div class="selectgroup selectgroup-pills">
@@ -101,6 +102,7 @@
                     @endforeach
                 </div>
             </div>
+            @endif
             <!-- <div class="form-group"><hr></div>
             <div class="form-group">
                 <label class="form-label">Select Permissions</label>
@@ -116,7 +118,7 @@
         </div>
         <div class="card-action text-right">
             <button type="submit" class="btn btn-success">Submit</button>
-            <a href="{{route('admin-users')}}" class="btn btn-danger">Cancel</a>
+            <a href="{{url()->previous()}}" class="btn btn-danger">Cancel</a>
         </div>
         </form>
     </div>

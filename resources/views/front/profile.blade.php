@@ -87,7 +87,9 @@
 											<div class="item-price">
 												<p>                                    
 													<ins>Rs. {{ $order->payable_amount ?? '' }}</ins>
-													<del>Rs. {{ ($order->total + $order->shipping) ?? ''}}</del>
+													@if(($order->total + $order->shipping) > $order->payable_amount)
+														<del>Rs. {{ ($order->total + $order->shipping) ?? ''}}</del>
+													@endif
 												</p>
 												<p class="purchage-date">order date - {{ $order->created_at ?? '' }}</p>
 											</div>

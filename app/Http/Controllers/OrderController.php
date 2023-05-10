@@ -156,7 +156,7 @@ class OrderController extends Controller
     }
 
     public function listOrders(Request $request){
-        $orders = Order::with(['user'])->paginate(env('PER_PAGE'))->withQueryString();
+        $orders = Order::with(['user'])->orderBy('created_at','DESC')->paginate(env('PER_PAGE'))->withQueryString();
         // dd($orders);
         return view('admin.orders',array('orders'=>$orders));
     }

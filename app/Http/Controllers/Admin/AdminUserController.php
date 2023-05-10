@@ -106,7 +106,7 @@ class AdminUserController extends Controller
         
         $user = User::with(['userProfile','userPermissions','roles'])->find($id);
         // $user->roles = $user->getRoleNames() ?? array();
-        // dd($user->roles);
+        // dd($user);
         $roles = Role::all();
         $permissions = Permission::all();
         return view('admin.edit-admin-user', array('user' => $user, 'roles' => $roles, 'permissions' => $permissions));
