@@ -29,9 +29,7 @@ class CartStorageNewController extends EcomController
 {
     public function cart_list()
     {
-        //
         $product_ids = $attribute_ids = [];
-        
         $data['popular_health'] = Product::orderby('order','ASC')->get();
         
         if (Auth::check()) {
@@ -87,6 +85,7 @@ class CartStorageNewController extends EcomController
         
         /* // shipping on cart (whole cart value)
         $conditionName = 'Express Shipping ₹10';
+        $data['subTotal'] = round( Cart::getSubTotal(), 2 );
         if(isset($data['subTotal']) && $data['subTotal'] < 500){
             Cart::removeCartCondition($conditionName);
             $condition = new \Darryldecode\Cart\CartCondition(array(
@@ -148,6 +147,7 @@ class CartStorageNewController extends EcomController
                 'type' => "price",
                 'value' => "-$discount%"
             ));
+            /*
             // shipping on item wise
             $shipping_name = "Shipping ₹$shipping";
             //Cart::removeItemCondition($product_id, $shipping_name);
@@ -155,7 +155,7 @@ class CartStorageNewController extends EcomController
                 'name' => $shipping_name,
                 'type' => "shipping",
                 'value' => "+$shipping"
-            ));
+            ));*/
 
             Cart::add(
                 array(
@@ -167,10 +167,37 @@ class CartStorageNewController extends EcomController
                         'size' => 'L',
                         'color' => 'blue'
                     ),
-                    'conditions' =>[$discount_on, $shipping_on],
+                    'conditions' =>[$discount_on],
                     'associatedModel' => 'products'
                 )
             );
+
+            $data['subTotal'] = round( Cart::getSubTotal(), 2 );
+            $shipping_name = "Shipping ₹$shipping";
+            $shipping_cost = 50;   
+            if(isset($data['subTotal']) && $data['subTotal'] < 500){
+                $data['cart_list'] = $cartCollection = Cart::getContent();
+                $data['count'] = $cartCollection->count();
+                $conditions = Cart::getConditions();
+                $data['type'] = [];
+                if(isset($conditions) && !empty($conditions)){
+                    foreach($conditions as $condition){
+                        $data['type'][$condition->getType()] = $condition->getType(); // the type
+                    }
+                }
+                if( !in_array('shipping', $data['type']) ){
+                    $condition = new \Darryldecode\Cart\CartCondition(array(
+                        'name' => $shipping_name,
+                        'type' => 'shipping',
+                        'target' => 'subtotal', // this condition will be applied to cart's subtotal when getSubTotal() is called.
+                        'value' => "+$shipping",
+                    ));
+                    Cart::condition($condition);
+                }
+            }else{
+                Cart::removeCartCondition($shipping_name);
+            }
+                
         } 
         if( isset( $submit ) && $submit == 'buyNow' ){
             return redirect()->route('order');

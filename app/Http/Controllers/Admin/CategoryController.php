@@ -102,8 +102,9 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category, $id)
     {
         //
+        $categorie = Category::WHERE('uuid', $id)->first();
         $request->validate([
-            'slug' => ['required',new AlphaNumSpace, Rule::unique('categories')->ignore($id)]
+            'slug' => ['required',new AlphaNumSpace, Rule::unique('categories')->ignore($categorie->id)]
         ]);
         $this->validateCategory($request);
 
