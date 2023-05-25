@@ -49,14 +49,15 @@
                                             $discount = $condition->getValue();
                                             $total_discount = $total_discount + ( ( $item->price * abs((int)rtrim($discount,'%')) ) / 100 ) * $item->quantity;
                                         }
-                                        if($condition->getType() == 'shipping'){
+                                        /*if($condition->getType() == 'shipping'){
                                             $shipping_cost = $condition->getValue();
                                             $shipping = $shipping + $condition->getValue() * $item->quantity;
-                                        }   
+                                        }*/   
                                     }        
                                 }
                                 $total_price = $total_price + ($item->price * $item->quantity);
-                                $total_price_without_shipping = ($item->getPriceWithConditions() - $shipping_cost) * $item->quantity;
+                                //$total_price_without_shipping = ($item->getPriceWithConditions() - $shipping_cost) * $item->quantity;
+                                $total_price_without_shipping = ($item->getPriceWithConditions()) * $item->quantity;
                                 ?>
                                 <div class="cart-data product-plus-minus">
                                     <p>₹{{ $total_price_without_shipping ?? '0' }} </p>
@@ -85,27 +86,41 @@
                             {{ isset($total_discount) ? 'Price Discount' : ''}}
                             <span>{{ isset($total_discount) ? '-'. $total_discount : '-0'}}</span>
                         </p>
-                        <p>
+                        <!--<p>
                             {{ 'Shipping Charges' }} 
-                            <span>{{ '+'.$shipping ?? '+0' }}</span>
+                            <span>{{ '+₹'.$shipping ?? '+₹0' }}</span>
                         </p>
-                        <hr>
+                        <hr>-->
                         @if( isset($conditions) && !empty($conditions) )
                             @foreach($conditions as $key => $condition)
                             <?php
-                            $string = $condition->getValue();
-                            if(strpos($string, '%')){
-                                $coupon_discount = ( ( $total_price + $shipping - $total_discount) * abs( ( int )rtrim( $string, '%' ) ) ) / 100;
-                            }else{
-                                $coupon_discount = ( $total_price + $shipping - $total_discount) - abs( ( int )rtrim( $string, '%' ) );
+                            $type = $condition->getType() ?? '';
+                            if( isset( $type ) && $type == 'shipping' ){
+                                $shipping = $condition->getValue();
+                                ?>
+                                <p>
+                                    {{ 'Shipping Charges' }} 
+                                    <span>{{ $condition->getValue() ?? '+0' }}</span>
+                                </p>
+                                <hr>
+                                <?php
+                            }elseif( isset( $type ) && $type == 'coupon' ){
+                                $string = $condition->getValue();
+                                if(strpos($string, '%')){
+                                    $coupon_discount = ( ( $total_price + $shipping - $total_discount) * abs( ( int )rtrim( $string, '%' ) ) ) / 100;
+                                }else{
+                                    $coupon_discount = ( $total_price + $shipping - $total_discount) - abs( ( int )rtrim( $string, '%' ) );
+                                }
+                                ?>
+                                <p>
+                                    <strong>{{ $condition->getType() != null ? ucwords($condition->getType()) . ' Discount' : '' }} 
+                                        <small style="color:red"><a href="javascript:void(0)" onclick="removeCoupon(this, '{{ $condition->getName() ?? ''}}')">Remove</a></small>
+                                    </strong>
+                                    <span><strong>₹{{ $condition->getValue() ?? '+0' }}</strong></span>
+                                </p>
+                                <?php
                             }
-                            ?>
-                            <p>
-                                <strong>{{ $condition->getType() != null ? ucwords($condition->getType()) . ' Discount' : '' }} 
-                                    <small style="color:red"><a href="javascript:void(0)" onclick="removeCoupon(this, '{{ $condition->getName() ?? ''}}')">Remove</a></small>
-                                </strong>
-                                <span><strong>₹{{ $condition->getValue() ?? ''}}</strong></span>
-                            </p>
+                            ?>    
                             @endforeach
                         @endif    
                         <p class="coupons-apply">
