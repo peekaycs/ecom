@@ -23,6 +23,12 @@ use Image;
 use File;
 use DB;
 
+//use Input;  
+//use Illuminate\Support\Facades\Input;
+//use Excel;  
+use App\Imports\PorductImport;
+use Maatwebsite\Excel\Facades\Excel;
+
 use Cart;
 use Darryldecode\Cart\Facades\CartFacade;
 use Illuminate\Validation\Rule;
@@ -417,7 +423,7 @@ class ProductController extends EcomController
 
         $data['similer_product'] = $similer_product = Product::WHERE('subcategory_id', $product->subcategory_id )->WHERE('id', '!=', $product->id )->limit(2)->get();
 
-        $data['popular_health'] = Product::WHERE( 'status', 1 )->WHERE( 'published', 1 )->orderBy('order','ASC')->get();
+        $data['popular_health'] = Product::WHERE( 'status', 1 )->WHERE( 'published', 1 )->orderBy('order','ASC')->limit(env('PER_PAGE'))->get();
 
         return $this->createView('front.product_detail', $data);
     }
@@ -548,6 +554,61 @@ class ProductController extends EcomController
         }else{    
             echo view('front.tpl.brand-wise-product', $data);
         }    
+    }
+
+    public function bulkUpload(Request $request){
+        $inputs = request()->validate([
+            'import_file' => 'required|file|mimes:csv,txt,xls,xlsx'
+        ]);
+        $path = request()->file('import_file')->getRealPath();
+        if (request()->has('header')) {
+            $data = Excel::load($path, function($reader) {})->get()->toArray();
+        } else {
+            $data = array_map('str_getcsv', file($path));
+        }
+        if (count($data) > 0) {
+            //if (request()->has('header')) {
+                $header = [];
+                foreach ($data[0] as $key => $value) {
+                    $header[] = $value;
+                }
+           // }
+            //$csv_data = array_slice($data, 0, 2);
+
+            foreach($data as $key => $val) {
+                if($key !== 0){
+                   $dd[] = array_combine($header, $val);
+                }
+            }    
+        } else {
+            return redirect()->back();
+        }
+        //dd($dd);
+        foreach($dd as $key=>$val){
+            $val['id'] = Str::uuid();
+            Product::create($val);
+        }
+        
+
+        /*if($request->hasFile('import_file')){  
+            $path = $request->file('import_file')->getRealPath();  
+            $data = Excel::load($path, function($reader) { })->get()->toArray(); 
+
+            debug($data);
+            if(!empty($data) && $data->count()){  
+                foreach ($data as $key => $value) {  
+                    $insert[] = ['title' => $value->title, 'description' => $value->description];  
+                }  
+                if(!empty($insert)){  
+                    DB::table('products')->insert($insert);  
+                    dd('Insert Record successfully.');  
+                }  
+            }  
+        }  */
+        //Excel::import(new PorductImport, request()->file('import_file'));
+        //return redirect('/')->with('success', 'All good!');
+        //session()->flash('msg','CSV File is Uploded');
+        return back()->with('success', 'File is Imported');
     }
 
 }

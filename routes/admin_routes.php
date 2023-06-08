@@ -66,6 +66,10 @@ Route::group(['prefix'=>'admin','middleware' => ['auth','isAdmin']], function(){
     Route::put('/products/update/{id}', [ProductController::class,'update'])->name('update-product');
     Route::delete('/products/delete/{id}', [ProductController::class,'delete'])->name('delete-product');
 
+
+    Route::post('/bulkUpload', [ProductController::class,'bulkUpload'])->name('bulkUpload');
+
+
     // Brnads 
 
     Route::get('/brands',[BrandController::class,'index'])->name('brands');

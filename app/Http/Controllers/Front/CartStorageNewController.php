@@ -173,9 +173,9 @@ class CartStorageNewController extends EcomController
             );
 
             $data['subTotal'] = round( Cart::getSubTotal(), 2 );
-            $shipping_name = "Shipping ₹$shipping";
-            $shipping_cost = 50;   
-            if(isset($data['subTotal']) && $data['subTotal'] < 500){
+            $shipping_cost = 40;  
+            $shipping_name = "Shipping ₹$shipping_cost";
+            //if(isset($data['subTotal']) && $data['subTotal'] < 500){
                 $data['cart_list'] = $cartCollection = Cart::getContent();
                 $data['count'] = $cartCollection->count();
                 $conditions = Cart::getConditions();
@@ -190,13 +190,13 @@ class CartStorageNewController extends EcomController
                         'name' => $shipping_name,
                         'type' => 'shipping',
                         'target' => 'subtotal', // this condition will be applied to cart's subtotal when getSubTotal() is called.
-                        'value' => "+$shipping",
+                        'value' => "+$shipping_cost",
                     ));
                     Cart::condition($condition);
                 }
-            }else{
-                Cart::removeCartCondition($shipping_name);
-            }
+            //}else{
+                //Cart::removeCartCondition($shipping_name);
+            //}
                 
         } 
         if( isset( $submit ) && $submit == 'buyNow' ){

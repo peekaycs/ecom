@@ -175,6 +175,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Maatwebsite\Excel\ExcelServiceProvider::class, 
 
         /*
          * Application Service Providers...
@@ -247,6 +248,8 @@ return [
         //Cart alias
         'Cart' => Darryldecode\Cart\Facades\CartFacade::class,
         // 'Razor' => Razorpay\Api\Api::class,
+        'Excel' =>
+            Maatwebsite\Excel\Facades\Excel::class,
 
     ],
 

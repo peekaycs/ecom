@@ -149,6 +149,7 @@
 	      	</div>
 	      	<div class="col-md-12 col-sm-12 col-xs-12">
 	      		<!-- <label><input type="checkbox" checked="checked" name="remember"> Remember me</label> -->
+				  <span class=""><a href="{{route('forget_password')}}">Forgrt Password</a></span>
 	      	</div>
 	    </div>
 

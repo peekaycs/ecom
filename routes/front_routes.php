@@ -35,6 +35,10 @@ Route::get('/searchBy/{brand}/{order}', [ProductController::class,'searchBy'])->
 //detail
 Route::get('/product-detail/{slug}', [ProductController::class,'productDetail'])->name('product_detail');
 
+Route::get('/forget-password', [HomeController::class,'forget_password'])->name('forget_password');
+Route::post('/reset-password', [HomeController::class,'reset_password'])->name('reset_password');
+Route::post('/set-password', [HomeController::class,'set_password'])->name('set_password');
+
 //cart
 Route::group(['middleware' => ['auth']], function(){
     
